@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+	--color-background: hsl(210deg 20% 98.04%);
+	--color-card: hsl(0deg 0% 100%);
+	--color-border: hsl(220deg 12% 90.2%);
+	--color-background-soft: hsl(220deg 12% 90.2%);
+	--color-secondary-foreground: hsl(216.92deg 5.63% 45.29%);
+	--color-foreground: hsl(215deg 21.43% 10.98%);
+	--color-primary: hsl(213.9deg 82.64% 47.45%);
+	--color-primary-soft: hsl(211.03deg 100% 94.31%);
+	--color-success: hsl(154.83deg 95.97% 29.22%);
+	--color-warning: hsl(37.91deg 83.4% 47.25%);
+	--color-destructive: hsl(357.27deg 70.97% 51.37%);
+
+	--default-font-family: "Inter", sans-serif;
+}
