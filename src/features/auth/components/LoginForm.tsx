@@ -8,7 +8,7 @@ export function LoginForm() {
       <div className="mb-4">
         <h3 className="font-semibold text-2xl mb-2">Bienvenido de nuevo</h3>
         <p className=" text-secondary-foreground">
-          Ingresá con el usuario que te dio el dueño del comercio.
+          Ingresá con el usuario otorgado por el dueño del comercio.
         </p>
       </div>
       <form className="pt-2 text-foreground">
