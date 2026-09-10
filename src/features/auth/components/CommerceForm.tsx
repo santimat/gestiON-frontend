@@ -1,5 +1,5 @@
-import { StoreIcon } from "@/shared/icons/StoreIcon";
 import { TextInput } from "@mantine/core";
+import { Store } from "lucide-react";
 
 export function CommerceForm() {
   return (
@@ -10,7 +10,7 @@ export function CommerceForm() {
       <TextInput
         leftSectionPointerEvents="none"
         name="businessName"
-        leftSection={<StoreIcon className="w-5 h-5" />}
+        leftSection={<Store className="w-5 h-5" />}
         placeholder="Almacén don pepe"
         label="Nombre del comercio"
         mb={"sm"}

@@ -1,6 +1,5 @@
-import { AtIcon } from "@/shared/icons/AtIcon";
-import { LockIcon } from "@/shared/icons/LockIcon";
 import { Button, PasswordInput, TextInput } from "@mantine/core";
+import { AtSign, Lock } from "lucide-react";
 
 export function LoginForm() {
   return (
@@ -14,7 +13,7 @@ export function LoginForm() {
       <form className="pt-2 text-foreground">
         <TextInput
           name="email"
-          leftSection={<AtIcon />}
+          leftSection={<AtSign />}
           leftSectionPointerEvents="none"
           label="Email"
           placeholder="pepe@example.com"
@@ -24,7 +23,7 @@ export function LoginForm() {
           name="password"
           label="Contraseña"
           placeholder="*******"
-          leftSection={<LockIcon />}
+          leftSection={<Lock />}
           leftSectionPointerEvents="none"
         />
         <Button variant="filled" fullWidth mt={"lg"} className="bg-primary">

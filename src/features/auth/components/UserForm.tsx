@@ -1,7 +1,5 @@
-import { AtIcon } from "@/shared/icons/AtIcon";
-import { LockIcon } from "@/shared/icons/LockIcon";
-import { UserIcon } from "@/shared/icons/UserIcon";
 import { PasswordInput, TextInput } from "@mantine/core";
+import { AtSign, Lock, User } from "lucide-react";
 
 export function UserForm() {
   return (
@@ -14,7 +12,7 @@ export function UserForm() {
         label="Nombre y Apellido"
         placeholder="Carlitos Tevez"
         leftSectionPointerEvents="none"
-        leftSection={<UserIcon />}
+        leftSection={<User />}
         mb={"sm"}
       />
       <TextInput
@@ -22,7 +20,7 @@ export function UserForm() {
         label="Correo Electrónico"
         placeholder="pepe@example.com"
         leftSectionPointerEvents="none"
-        leftSection={<AtIcon />}
+        leftSection={<AtSign />}
         mb={"sm"}
       />
       <PasswordInput
@@ -30,7 +28,7 @@ export function UserForm() {
         label="Contraseña"
         placeholder="*******"
         leftSectionPointerEvents="none"
-        leftSection={<LockIcon />}
+        leftSection={<Lock />}
       />
     </section>
   );
