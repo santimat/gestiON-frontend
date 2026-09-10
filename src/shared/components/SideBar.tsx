@@ -44,7 +44,7 @@ export function SideBar() {
 				</ul>
 			</main>
 
-			<footer className="group flex items-center px-4 gap-2 w-full mt-auto pt-4 border-t border-background-soft">
+			<footer className="group flex items-center p-4 gap-2 w-full mt-auto  border-t border-background-soft">
 				<UserIcon />
 				<div className="flex flex-col text-sm">
 					<p className="text-black">Nombre de usuario</p>
