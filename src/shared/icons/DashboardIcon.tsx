@@ -1,5 +1,4 @@
 import type { SVGProps } from "react";
-import type { SideBar } from "../components/SideBar";
 
 export function DashboardIcon(props: SVGProps<SVGSVGElement>) {
   return (
