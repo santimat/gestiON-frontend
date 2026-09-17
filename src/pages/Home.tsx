@@ -1,10 +1,14 @@
 import { SideBar } from "@/components/SideBar";
+import { Route, Routes } from "react-router";
+import { Cashiers } from "./Cashiers";
 
-export function HomePage() {
+export function HomePage({children}) {
 	return (
-		<div className="flex gap-4 h-full">
+		<div className="flex h-full">
 			<SideBar />
-			<section className="flex-1">Esto va a ser el resto de la página</section>
+			<section className="flex-1">
+				{children}
+			</section>
 		</div>
 	);
 }

@@ -25,20 +25,32 @@ export function Cashiers() {
     ));
 
     return (
-        <Table.ScrollContainer minWidth={500}>
-            <Table>
-                <Table.Thead>
-                    <Table.Tr>
-                        <Table.Th>Nombre</Table.Th>
-                        <Table.Th>Email</Table.Th>
-                        <Table.Th>Alta</Table.Th>
-                        <Table.Th>Estado</Table.Th>
-                        <Table.Th>Acceso</Table.Th>
-                    </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>{rows}</Table.Tbody>
-            </Table>
-        </Table.ScrollContainer>
+
+        <aside>
+            <header className='flex items-center justify-between w-full p-4 border-b border-background-soft'>
+                <div>
+                    <h2 className="font-semibold text-xl">Cajeros</h2>
+                    <p>() activos de () usuarios</p>
+                </div>
+                <button className=' bg-primary rounded-md p-2 text-white'>+ Nuevo Cajero</button>
+            </header>
+
+            <Table.ScrollContainer minWidth={500} className='p-4'>
+                <Table className='border border-background-soft mt-8 rounded-lg'>
+                    <Table.Thead className='bg-background-soft'>
+                        <Table.Tr>
+                            <Table.Th>Nombre</Table.Th>
+                            <Table.Th>Email</Table.Th>
+                            <Table.Th>Alta</Table.Th>
+                            <Table.Th>Estado</Table.Th>
+                            <Table.Th>Acceso</Table.Th>
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>{rows}</Table.Tbody>
+                </Table>
+            </Table.ScrollContainer>
+
+        </aside>
     );
 }
 
