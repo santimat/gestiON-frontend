@@ -5,6 +5,8 @@ export type ZodIssue = {
 	message: string;
 	field: string;
 };
+export type RawZodIssue = z.core.$ZodIssue;
+export type ZodParseResult = z.ZodSafeParseResult<z.output<typeof schema>>;
 
 export type AuthError = {
 	type:
