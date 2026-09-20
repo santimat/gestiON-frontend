@@ -8,7 +8,7 @@ import { handleAxiosErrors } from "@/utils/handleAxiosError";
 export const authService = {
 	login: async (loginRequest: LoginDTO) => {
 		const parsedLogin = LoginSchema.safeParse(loginRequest);
-		// handleZodParsingError(parsedLogin);
+		handleZodParsingError(parsedLogin);
 
 		try {
 			const { data } = await backendAPI.post("/auth/login", parsedLogin.data);
