@@ -1,7 +1,7 @@
 import type { AuthError, LoginDTO, ZodIssue } from "@/types";
 import { LoginSchema } from "@/schemas/LoginSchema";
 import { isAxiosError } from "axios";
-import { authAPI } from "./axios";
+import { backendAPI } from "./axios";
 
 export const authService = {
 	login: async (loginRequest: LoginDTO) => {
@@ -23,7 +23,7 @@ export const authService = {
 		}
 
 		try {
-			const response = await authAPI.post("/auth/login", parsedLogin.data);
+			const response = await backendAPI.post("/auth/login", parsedLogin.data);
 			console.log(response);
 		} catch (error) {
 			if (isAxiosError(error) && error.response?.status === 401) {
