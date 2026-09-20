@@ -1,3 +1,16 @@
+import { backendAPI } from "@/services/axios";
+
 export function Test() {
-  return <h1 className="text-red-700 text-9xl">Hola!</h1>;
+	const testingFetch = async () => {
+		const res = await backendAPI.post("/auth/login", { a: "pepe" });
+		console.log(res);
+	};
+
+	return (
+		<>
+			<button className="bg-background-soft p-2 m-auto" onClick={testingFetch}>
+				Clickeame cagón
+			</button>
+		</>
+	);
 }

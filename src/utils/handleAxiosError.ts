@@ -1,16 +1,16 @@
-import { isAxiosError } from "axios";
-import type { AuthError } from "@/types";
+import { AxiosError } from "axios";
+import type { AppError } from "@/types";
 
-export function handleAxiosErrors(error: unknown) {
-	if (isAxiosError(error) && error.response?.status === 401) {
+export function handleAxiosErrors(error: AxiosError) {
+	if (error.response?.status === 401) {
 		throw {
 			type: "INVALID_CREDENTIALS",
 			message: "Email o Contraseña incorrectos.",
-		} satisfies AuthError;
+		} satisfies AppError;
 	}
 
 	throw {
 		type: "NETWORK_ERROR",
 		message: "Error de conexión, intentá de nuevo.",
-	} satisfies AuthError;
+	} satisfies AppError;
 }

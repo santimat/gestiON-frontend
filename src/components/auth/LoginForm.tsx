@@ -1,17 +1,36 @@
-import { type SubmitEvent } from "react";
-import { Button, PasswordInput, TextInput } from "@mantine/core";
+import { useState, type SubmitEvent } from "react";
+import { useNavigate } from "react-router";
 import { AtSign, Lock } from "lucide-react";
-import type { LoginDTO } from "@/types";
-import { useLogin } from "@/hooks/useLogin";
-export function LoginForm() {
-	const { handleLogin, isLoading, error } = useLogin();
+import { Button, PasswordInput, TextInput } from "@mantine/core";
+import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
+import type { AppError, FieldErrors, LoginDTO } from "@/types";
 
-	const handleSubmit = (event: SubmitEvent) => {
+export function LoginForm() {
+	const [errors, setErrors] = useState<FieldErrors>({});
+	const [isLoading, setIsLoading] = useState(false);
+	const { handleLogin } = useAuth();
+	const navigate = useNavigate();
+
+	const handleSubmit = async (event: SubmitEvent) => {
 		event.preventDefault();
 		const form = event.target;
 		const formData = new FormData(form);
 		const rawData = Object.fromEntries(formData.entries()) as LoginDTO;
-		handleLogin(rawData);
+		setIsLoading(true);
+		setErrors({});
+		try {
+			await handleLogin(rawData);
+			navigate("/dashboard");
+		} catch (err) {
+			const appError = err as AppError;
+			if (appError.fieldErrors) {
+				return setErrors(appError.fieldErrors);
+			}
+			toast.error(appError.message);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -30,7 +49,7 @@ export function LoginForm() {
 					label="Email"
 					placeholder="pepe@example.com"
 					mb={"sm"}
-					error={error?.email}
+					error={errors?.email}
 				/>
 				<PasswordInput
 					name="password"
@@ -38,7 +57,7 @@ export function LoginForm() {
 					placeholder="*******"
 					leftSection={<Lock size={20} />}
 					leftSectionPointerEvents="none"
-					error={error?.password}
+					error={errors?.password}
 				/>
 				<Button
 					type="submit"

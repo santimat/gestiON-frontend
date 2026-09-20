@@ -1,22 +1,30 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route, Outlet } from "react-router";
 import { AuthPage } from "@/pages/Auth";
-import { HomePage } from "@/pages/Home";
+import { MainLayout } from "@/layouts/MainLayout";
 import "@/global.css";
 import { Cashiers } from "@/pages/Cashiers";
-import { Products } from "./pages/Products";
+import { Products } from "@/pages/Products";
 
 function App() {
 	return (
-		<Routes>
-			<Route index element={<AuthPage />} />
-			<Route path="/dashboard" element={<HomePage><p>hola</p></HomePage>} />
-			<Route path="/cashiers" element= {<HomePage><Cashiers/></HomePage>}/>
-			<Route path="/products" element= {<HomePage><Products/></HomePage>}/>
-		</Routes>
+		<>
+			<Routes>
+				<Route index element={<AuthPage />} />
+				<Route
+					// se renderiza el mismo layout para todas las rutas dentro
+					element={
+						<MainLayout>
+							<Outlet />
+						</MainLayout>
+					}
+				>
+					<Route path="/dashboard" element={<p>hola</p>} />
+					<Route path="/cashiers" element={<Cashiers />} />
+					<Route path="/products" element={<Products />} />
+				</Route>
+			</Routes>
+		</>
 	);
 }
 
 export default App;
-
-
-	

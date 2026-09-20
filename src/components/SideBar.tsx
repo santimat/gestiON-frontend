@@ -27,7 +27,7 @@ export function SideBar() {
 			<main className="w-full p-4 text-gray-600">
 				<ul className="flex flex-col gap-4">
 					{sidebarItems.map((itemProps) => (
-						<SideBarItem {...itemProps} />
+						<SideBarItem {...itemProps} key={`item-${itemProps.text}`} />
 					))}
 				</ul>
 			</main>
