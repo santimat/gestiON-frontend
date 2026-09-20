@@ -1,7 +1,7 @@
 import type { LoginDTO } from "@/types";
 import { LoginSchema } from "@/schemas/LoginSchema";
 import { isAxiosError } from "axios";
-import { backendAPI } from "@/services/axios";
+import { backendAPI } from "@/services/axios/axios";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
 
@@ -18,5 +18,11 @@ export const authService = {
 				throw handleAxiosErrors(error);
 			}
 		}
+	},
+	checkAuth: async () => {
+		const { data } = await backendAPI.get("/auth/me", {
+			withCredentials: true,
+		});
+		return data;
 	},
 };

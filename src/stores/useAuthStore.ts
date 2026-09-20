@@ -3,14 +3,21 @@ import type { AuthUser, LoginDTO } from "@/types";
 import { authService } from "@/services/auth/authService";
 
 interface UseAuthStore {
-	user: AuthUser | null;
+	authenticatedUser: AuthUser | null;
+	isPending: true;
 	login: (loginRequest: LoginDTO) => Promise<void>;
+	hydrateUser: () => Promise<void>;
 }
 
 export const useAuthStore = create<UseAuthStore>((set) => ({
-	user: null,
+	authenticatedUser: null,
+	isPending: true,
 	login: async (loginRequest: LoginDTO) => {
-		const user = await authService.login(loginRequest);
-		set({ user });
+		const loggingUser = await authService.login(loginRequest);
+		set({ authenticatedUser: loggingUser });
+	},
+	hydrateUser: async () => {
+		const authenticatedUser = await authService.checkAuth();
+		set({ authenticatedUser });
 	},
 }));

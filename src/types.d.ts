@@ -17,6 +17,7 @@ export type FieldErrors = Optional<Record<AuthFormFields, string>>;
 export type LoginDTO = z.infer<typeof LoginSchema>;
 
 type UserRole = "OWNER" | "CASHIER" | "SUDO";
+
 type UserStatus = "ACTIVE" | "INACTIVE";
 
 export type AuthUser = {
