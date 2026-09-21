@@ -6,7 +6,13 @@ export type ZodParseResult = z.ZodSafeParseResult<z.output<typeof schema>>;
 
 export type AppError = {
 	type:
-		"VALIDATION_ERROR" | "NETWORK_ERROR" | "INVALID_CREDENTIALS" | "UNKNOWN";
+		| "VALIDATION_ERROR"
+		| "NETWORK_ERROR"
+		| "INVALID_CREDENTIALS"
+		| "FORBIDDEN"
+		| "ALREADY_EXISTS"
+		| "BAD_REQUEST"
+		| "UNKNOWN";
 	message: string;
 	fieldErrors?: FieldErrors;
 };

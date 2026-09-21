@@ -1,8 +1,8 @@
-import { useAuthStore } from "@/stores/useAuthStore";
-import type { LoginDTO } from "@/types";
-import { handleAxiosErrors } from "@/utils/handleAxiosError";
-import { isAxiosError } from "axios";
 import { useShallow } from "zustand/shallow";
+
+import type { LoginDTO } from "@/types";
+import { useAuthStore } from "@/stores/useAuthStore";
+
 export function useAuth() {
 	const { login, hydrateUser, authenticatedUser } = useAuthStore(
 		useShallow((s) => ({
@@ -13,16 +13,11 @@ export function useAuth() {
 	);
 	const handleLogin = async (rawData: LoginDTO) => {
 		await login(rawData);
+		console.log(authenticatedUser);
 	};
 
 	const checkAuth = async () => {
-		try {
-			await hydrateUser();
-		} catch (err) {
-			if (isAxiosError(err)) {
-				handleAxiosErrors(err);
-			}
-		}
+		await hydrateUser();
 	};
 
 	return { handleLogin, checkAuth, authenticatedUser };

@@ -1,9 +1,10 @@
 import { lazy } from "react";
 import { Routes, Route, Outlet } from "react-router";
-import { MainLayout } from "@/layouts/MainLayout";
-import { AuthPage } from "@/pages/Auth";
-import { ProtectedRoute } from "@/routes/ProtectedRoute";
+
 import "@/global.css";
+import { AuthPage } from "@/pages/Auth";
+import { MainLayout } from "@/layouts/MainLayout";
+import { ProtectedRoute } from "@/routes/ProtectedRoute";
 
 const Cashiers = lazy(() =>
 	import("@/pages/Cashiers").then((module) => ({ default: module.Cashiers })),

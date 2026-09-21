@@ -1,9 +1,10 @@
+import { isAxiosError } from "axios";
+
 import type { LoginDTO } from "@/types";
 import { LoginSchema } from "@/schemas/LoginSchema";
-import { isAxiosError } from "axios";
 import { backendAPI } from "@/services/axios/axios";
-import { handleZodParsingError } from "@/utils/handleZodParseError";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
+import { handleZodParsingError } from "@/utils/handleZodParseError";
 
 export const authService = {
 	login: async (loginRequest: LoginDTO) => {
@@ -11,8 +12,9 @@ export const authService = {
 		handleZodParsingError(parsedLogin);
 
 		try {
-			const { data } = await backendAPI.post("/auth/login", parsedLogin.data);
-			return data;
+			const response = await backendAPI.post("/auth/login", parsedLogin.data);
+			console.log(response);
+			// return data;
 		} catch (error) {
 			if (isAxiosError(error)) {
 				throw handleAxiosErrors(error);
@@ -20,9 +22,20 @@ export const authService = {
 		}
 	},
 	checkAuth: async () => {
-		const { data } = await backendAPI.get("/auth/me", {
-			withCredentials: true,
-		});
-		return data;
+		try {
+			const response = await backendAPI.get("/auth/me", {
+				withCredentials: true,
+			});
+			console.log(response);
+		} catch (error) {
+			if (isAxiosError(error)) {
+				throw handleAxiosErrors(error, {
+					401: {
+						type: "INVALID_CREDENTIALS",
+						message: "Debes estar autorizado para acceder a este sitio.",
+					},
+				});
+			}
+		}
 	},
 };

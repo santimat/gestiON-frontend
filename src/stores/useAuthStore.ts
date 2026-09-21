@@ -1,4 +1,5 @@
 import { create } from "zustand";
+
 import type { AuthUser, LoginDTO } from "@/types";
 import { authService } from "@/services/auth/authService";
 

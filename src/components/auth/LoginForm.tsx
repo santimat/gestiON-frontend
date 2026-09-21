@@ -1,8 +1,9 @@
-import { useState, type SubmitEvent } from "react";
+import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { AtSign, Lock } from "lucide-react";
+import { useState, type SubmitEvent } from "react";
 import { Button, PasswordInput, TextInput } from "@mantine/core";
-import { toast } from "sonner";
+
 import { useAuth } from "@/hooks/useAuth";
 import type { AppError, FieldErrors, LoginDTO } from "@/types";
 
@@ -27,6 +28,7 @@ export function LoginForm() {
 			if (appError.fieldErrors) {
 				return setErrors(appError.fieldErrors);
 			}
+
 			toast.error(appError.message);
 		} finally {
 			setIsLoading(false);
