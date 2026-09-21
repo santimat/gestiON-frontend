@@ -5,7 +5,7 @@ import { authService } from "@/services/auth/authService";
 
 interface UseAuthStore {
 	authenticatedUser: AuthUser | null;
-	isPending: true;
+	isPending: boolean;
 	login: (loginRequest: LoginDTO) => Promise<void>;
 	hydrateUser: () => Promise<void>;
 }
@@ -19,6 +19,6 @@ export const useAuthStore = create<UseAuthStore>((set) => ({
 	},
 	hydrateUser: async () => {
 		const authenticatedUser = await authService.checkAuth();
-		set({ authenticatedUser });
+		set({ authenticatedUser, isPending: false });
 	},
 }));

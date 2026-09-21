@@ -1,19 +1,28 @@
 import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router";
-import { useAuth } from "@/hooks/useAuth";
+
 import type { UserRole } from "@/types";
+import { useAuth } from "@/hooks/useAuth";
+import { LoadingPage } from "@/pages/Loading";
 
 export function ProtectedRoute({ allowedRoles }: { allowedRoles: UserRole[] }) {
-	const { checkAuth, authenticatedUser } = useAuth();
+	const { checkAuth, authenticatedUser, isCheckingAuth } = useAuth();
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth]);
+
+	if (isCheckingAuth) {
+		return <LoadingPage />;
+	}
 
 	if (!authenticatedUser?.email) {
 		return <Navigate to="/" />;
 	}
 
-	if (!allowedRoles.includes(authenticatedUser?.role || "")) {
+	if (
+		!allowedRoles.includes(authenticatedUser?.role || "") &&
+		!isCheckingAuth
+	) {
 		return <Navigate to={"/unauthorized"} replace />;
 	}
 

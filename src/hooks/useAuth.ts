@@ -4,13 +4,15 @@ import type { LoginDTO } from "@/types";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 export function useAuth() {
-	const { login, hydrateUser, authenticatedUser } = useAuthStore(
-		useShallow((s) => ({
-			login: s.login,
-			hydrateUser: s.hydrateUser,
-			authenticatedUser: s.authenticatedUser,
-		})),
-	);
+	const { login, hydrateUser, authenticatedUser, isCheckingAuth } =
+		useAuthStore(
+			useShallow((s) => ({
+				login: s.login,
+				hydrateUser: s.hydrateUser,
+				authenticatedUser: s.authenticatedUser,
+				isCheckingAuth: s.isPending,
+			})),
+		);
 	const handleLogin = async (rawData: LoginDTO) => {
 		await login(rawData);
 		console.log(authenticatedUser);
@@ -20,5 +22,5 @@ export function useAuth() {
 		await hydrateUser();
 	};
 
-	return { handleLogin, checkAuth, authenticatedUser };
+	return { handleLogin, checkAuth, authenticatedUser, isCheckingAuth };
 }

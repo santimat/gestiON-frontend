@@ -12,9 +12,8 @@ export const authService = {
 		handleZodParsingError(parsedLogin);
 
 		try {
-			const response = await backendAPI.post("/auth/login", parsedLogin.data);
-			console.log(response);
-			// return data;
+			const { data } = await backendAPI.post("/auth/login", parsedLogin.data);
+			return data;
 		} catch (error) {
 			if (isAxiosError(error)) {
 				throw handleAxiosErrors(error);
@@ -23,10 +22,8 @@ export const authService = {
 	},
 	checkAuth: async () => {
 		try {
-			const response = await backendAPI.get("/auth/me", {
-				withCredentials: true,
-			});
-			console.log(response);
+			const { data } = await backendAPI.get("/auth/me");
+			return data;
 		} catch (error) {
 			if (isAxiosError(error)) {
 				throw handleAxiosErrors(error, {
