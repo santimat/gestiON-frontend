@@ -90,7 +90,21 @@ export function Products() {
           <NewProductForm onSuccess={close} onCancel={close} />
         </Modal>
       </header>
-      
+
+      {/* Aca faltaria el cartel de alerta de stock */}
+
+      <div className="flex w-full items-center gap-4 p-6">
+        <div className="flex-1">
+          <TextInput placeholder=" Buscar por nombre o codigo" />
+        </div>
+        <div className="border-background-soft w-64">
+          <Select
+            placeholder="Seleccione Categoria"
+            data={["Almacen", "Bebidas", "Perfumeria", "Limpieza"]}
+          />
+        </div>
+      </div>
+
       <Table.ScrollContainer minWidth={500} className="p-4">
         <Table className="border-background-soft mt-8 rounded-lg border">
           <Table.Thead className="bg-background-soft">
