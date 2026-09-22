@@ -24,7 +24,8 @@ export function useAuth() {
 		);
 
 	const handleLogin = async (rawData: LoginDTO) => {
-		await login(rawData);
+		const userRole = await login(rawData);
+		return userRole;
 	};
 
 	const checkAuth = async () => {

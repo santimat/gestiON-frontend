@@ -37,16 +37,15 @@ function App() {
 						</MainLayout>
 					}
 				>
+					<Route element={<ProtectedRoute allowedRoles={["SUDO"]} />}>
+						<Route path="/commerces" element={<CommercesPage />} />
+					</Route>
 					<Route
 						element={<ProtectedRoute allowedRoles={["CASHIER", "OWNER"]} />}
 					>
 						<Route path="/dashboard" element={<p>hola</p>} />
 						<Route path="/products" element={<ProductsPage />} />
 						<Route path="/cashiers" element={<CashiersPage />} />
-					</Route>
-
-					<Route element={<ProtectedRoute allowedRoles={["SUDO"]} />}>
-						<Route path="/commerces" element={<CommercesPage />} />
 					</Route>
 				</Route>
 			</Routes>

@@ -1,22 +1,23 @@
 import { create } from "zustand";
 
-import type { AuthUser, LoginDTO } from "@/types";
+import type { AuthUser, LoginDTO, UserRole } from "@/types";
 import { authService } from "@/services/auth/authService";
 
 interface UseAuthStore {
 	authenticatedUser: AuthUser | null;
 	isCheckingAuth: boolean;
-	login: (loginRequest: LoginDTO) => Promise<void>;
+	login: (loginRequest: LoginDTO) => Promise<UserRole | undefined>;
 	logout: () => Promise<void>;
 	hydrateUser: () => Promise<void>;
 }
 
-export const useAuthStore = create<UseAuthStore>((set) => ({
+export const useAuthStore = create<UseAuthStore>((set, get) => ({
 	authenticatedUser: null,
 	isCheckingAuth: true,
 	login: async (loginRequest: LoginDTO) => {
 		const loggingUser = await authService.login(loginRequest);
 		set({ authenticatedUser: loggingUser });
+		return get().authenticatedUser?.role;
 	},
 	logout: async () => {
 		try {
