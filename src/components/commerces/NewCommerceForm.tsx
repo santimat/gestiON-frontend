@@ -1,4 +1,4 @@
-import type { SubmitEvent } from "react";
+import { useEffect, useState, type SubmitEvent } from "react";
 import {
   Button,
   Fieldset,
@@ -17,18 +17,42 @@ import {
   UserIcon,
   UserKey,
 } from "lucide-react";
+import type { AppError, FieldErrors, RegisterDTO } from "@/types";
+import { commerceService } from "@/services/commerce/commerceService";
 
 type NewCommerceFormProps = {
   closeModal: UseDisclosureHandlers["close"];
 };
 
 export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
+  const [errors, setErrors] = useState<FieldErrors>({});
+
+  useEffect(() => {
+    if (errors) {
+      const clearErrorsTimeout = setTimeout(() => {
+        setErrors({});
+      }, 3000);
+
+      return () => {
+        clearTimeout(clearErrorsTimeout);
+      };
+    }
+  }, [errors]);
+
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const rawData = Object.fromEntries(formData.entries());
-    console.log(rawData);
+    const rawData = Object.fromEntries(formData.entries()) as RegisterDTO;
+
+    try {
+      await commerceService.createCommerce(rawData);
+    } catch (error) {
+      const appError = error as AppError;
+      if (appError?.fieldErrors) {
+        return setErrors(appError?.fieldErrors);
+      }
+    }
   };
 
   const handleClick = () => {
@@ -46,14 +70,14 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
           name="businessName"
           placeholder="Comercio lo de tota"
           leftSection={<StoreIcon size={20} />}
-          required
+          error={errors?.businessName}
         />
         <TextInput
           label="Dirección"
           name="address"
           placeholder="Paso de la patria 117"
           leftSection={<MapPinHouse size={20} />}
-          required
+          error={errors?.address}
         />
 
         <FileInput
@@ -70,14 +94,14 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             placeholder="Juan Román Riquelme"
             name="name"
             leftSection={<UserIcon size={20} />}
-            required
+            error={errors?.name}
           />
           <TextInput
             label="C-U-I-T (sin guiones)"
             placeholder="20455705631"
             name="cuit"
             leftSection={<IdCard size={20} />}
-            required
+            error={errors?.cuit}
           />
           <TextInput
             label="Número de Teléfono"
@@ -85,7 +109,7 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             name="phoneNumber"
             type="number"
             leftSection={<Phone size={20} />}
-            required
+            error={errors?.phoneNumber}
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -94,14 +118,14 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             placeholder="juanroman@gmail.com"
             name="email"
             leftSection={<AtSignIcon size={20} />}
-            required
+            error={errors?.email}
           />
           <PasswordInput
             label="Contraseña"
-            required
             name="password"
             leftSection={<UserKey size={20} />}
             placeholder="*******"
+            error={errors?.password}
           />
         </div>
       </Fieldset>

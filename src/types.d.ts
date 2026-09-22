@@ -2,6 +2,7 @@ import z from "zod";
 import type { LucideIcon } from "lucide-react";
 
 import { LoginSchema } from "@/schemas/LoginSchema";
+import type { UserRequestSchema } from "@/schemas/CreateUserSchema";
 import type { ProductSchema } from "@/schemas/products/ProductSchema";
 import type { CommerceRequestSchema } from "@/schemas/CreateCommerceSchema";
 
@@ -29,12 +30,18 @@ export type AppError = {
 };
 
 export type FormFields =
-  "email" | "password" | "name" | "address" | "businessName" | "phoneNumber";
+  | "email"
+  | "password"
+  | "name"
+  | "address"
+  | "businessName"
+  | "phoneNumber"
+  | "cuit";
 export type FieldErrors = Optional<Record<FormFields, string>>;
 
 // USER
 export type LoginDTO = z.infer<typeof LoginSchema>;
-
+type UserDTO = z.infer<typeof UserRequestSchema>;
 type UserRole = "OWNER" | "CASHIER" | "SUDO";
 
 type UserStatus = "ACTIVE" | "INACTIVE";
@@ -50,6 +57,8 @@ export type AuthUser = {
 // COMMERCE
 export type CommerceDTO = z.infer<typeof CommerceRequestSchema>;
 
+export type Commerce = CommerceDTO & { logoUrl?: string };
+
 // PRODUCT
 export enum ProductStatus {
   ACTIVE,
@@ -60,3 +69,6 @@ export type Product = z.infer<typeof ProductSchema> & {
   category: string;
   status: ProductStatus;
 };
+
+// Create commerce and user
+export type RegisterDTO = CommerceDTO & UserDTO;
