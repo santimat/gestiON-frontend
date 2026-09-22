@@ -90,42 +90,7 @@ export function Products() {
           <NewProductForm onSuccess={close} onCancel={close} />
         </Modal>
       </header>
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <Modal
-                    opened={opened}
-                    onClose={close}
-                    title={
-                        <div>
-                            <h3 className="font-semibold text-xl">Productos</h3>
-                            <p className="text-sm">Definí precio y stock mínimo para que el sistema avise cuando haya que reponer.</p>
-                        </div>
-                    }
-                    centered
-                >
-                    <NewProductForm onSuccess={close} onCancel={close} />
-                </Modal>
-            </header>
-=======
-			{/* Aca faltaria el cartel de alerta de stock */}
->>>>>>> d9620dc (improve private routes handling and polish styling and organization details)
-=======
-      {/* Aca faltaria el cartel de alerta de stock */}
->>>>>>> d07918f (working on the new commerce form)
-
-      <div className="flex w-full items-center gap-4 p-6">
-        <div className="flex-1">
-          <TextInput placeholder=" Buscar por nombre o codigo" />
-        </div>
-        <div className="border-background-soft w-64">
-          <Select
-            placeholder="Seleccione Categoria"
-            data={["Almacen", "Bebidas", "Perfumeria", "Limpieza"]}
-          />
-        </div>
-      </div>
-
+      
       <Table.ScrollContainer minWidth={500} className="p-4">
         <Table className="border-background-soft mt-8 rounded-lg border">
           <Table.Thead className="bg-background-soft">
