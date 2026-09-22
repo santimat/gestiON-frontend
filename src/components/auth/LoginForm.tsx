@@ -1,11 +1,12 @@
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { redirect, useNavigate } from "react-router";
 import { AtSign, Lock } from "lucide-react";
 import { useState, type SubmitEvent } from "react";
 import { Button, PasswordInput, TextInput } from "@mantine/core";
 
 import { useAuth } from "@/hooks/useAuth";
 import type { AppError, FieldErrors, LoginDTO } from "@/types";
+import { getRedirectByRole } from "@/utils/getRedirectByRole";
 
 export function LoginForm() {
 	const [errors, setErrors] = useState<FieldErrors>({});
@@ -21,8 +22,9 @@ export function LoginForm() {
 		setIsLoading(true);
 		setErrors({});
 		try {
-			await handleLogin(rawData);
-			navigate("/dashboard");
+			const userRole = await handleLogin(rawData);
+			const redirectTo = getRedirectByRole(userRole);
+			navigate(redirectTo);
 		} catch (err) {
 			const appError = err as AppError;
 			if (appError.fieldErrors) {

@@ -6,23 +6,23 @@ import { useAuth } from "@/hooks/useAuth";
 import { LoadingPage } from "@/components/Loading";
 
 export function ProtectedRoute({ allowedRoles }: { allowedRoles: UserRole[] }) {
-	const { checkAuth, authenticatedUser, isCheckingAuth } = useAuth();
+  const { checkAuth, authenticatedUser, isCheckingAuth } = useAuth();
 
-	useEffect(() => {
-		checkAuth();
-	}, [checkAuth]);
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
-	if (isCheckingAuth) {
-		return <LoadingPage />;
-	}
+  if (isCheckingAuth) {
+    return <LoadingPage />;
+  }
 
-	if (!authenticatedUser?.email) {
-		return <Navigate to="/" replace />;
-	}
+  if (!authenticatedUser?.email) {
+    return <Navigate to="/" replace />;
+  }
 
-	if (!allowedRoles.includes(authenticatedUser?.role)) {
-		return <Navigate to={"/unauthorized"} replace />;
-	}
+  // if (!allowedRoles.includes(authenticatedUser?.role)) {
+  // 	return <Navigate to={"/unauthorized"} replace />;
+  // }
 
-	return <Outlet />;
+  return <Outlet />;
 }
