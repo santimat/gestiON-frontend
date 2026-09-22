@@ -7,7 +7,16 @@ import {
   PasswordInput,
 } from "@mantine/core";
 import type { UseDisclosureHandlers } from "@mantine/hooks";
-import { FileImage } from "lucide-react";
+import {
+  AtSignIcon,
+  FileImage,
+  IdCard,
+  MapPinHouse,
+  Phone,
+  StoreIcon,
+  UserIcon,
+  UserKey,
+} from "lucide-react";
 
 type NewCommerceFormProps = {
   closeModal: UseDisclosureHandlers["close"];
@@ -32,20 +41,22 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
           label="Nombre del comercio"
           name="businessName"
           placeholder="Comercio lo de tota"
+          leftSection={<StoreIcon size={20} />}
           required
         />
         <TextInput
           label="Dirección"
           name="address"
           placeholder="Paso de la patria 117"
+          leftSection={<MapPinHouse size={20} />}
           required
         />
 
         <FileInput
           label="Imagen del comercio"
           placeholder="Máximo de imagen 10MB"
-          rightSection={<FileImage />}
-          rightSectionPointerEvents="none"
+          leftSection={<FileImage size={20} />}
+          leftSectionPointerEvents="none"
         />
       </Fieldset>
       <Fieldset className="grid gap-4" legend="Información del dueño">
@@ -54,12 +65,14 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             label="Nombre del dueño"
             placeholder="Juan Román Riquelme"
             name="name"
+            leftSection={<UserIcon size={20} />}
             required
           />
           <TextInput
             label="C-U-I-T (sin guiones)"
             placeholder="20455705631"
             name="cuit"
+            leftSection={<IdCard size={20} />}
             required
           />
           <TextInput
@@ -67,6 +80,7 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             placeholder="2346509733"
             name="phoneNumber"
             type="number"
+            leftSection={<Phone size={20} />}
             required
           />
         </div>
@@ -75,21 +89,23 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             label="Email"
             placeholder="juanroman@gmail.com"
             name="email"
+            leftSection={<AtSignIcon size={20} />}
             required
           />
           <PasswordInput
             label="Contraseña"
             required
             name="password"
+            leftSection={<UserKey size={20} />}
             placeholder="*******"
           />
         </div>
       </Fieldset>
       <div className="flex justify-end gap-4">
-        <Button type="submit">Agregar</Button>
         <Button className="bg-destructive!" onClick={handleClick}>
           Cancelar
         </Button>
+        <Button type="submit">Agregar</Button>
       </div>
     </form>
   );
