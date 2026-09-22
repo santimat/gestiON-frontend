@@ -51,7 +51,12 @@ export function Products() {
                 <Modal
                     opened={opened}
                     onClose={close}
-                    title="Ingresar Nuevo Producto"
+                    title={
+                        <div>
+                            <h3 className="font-semibold text-xl">Productos</h3>
+                            <p className="text-sm">Definí precio y stock mínimo para que el sistema avise cuando haya que reponer.</p>
+                        </div>
+                    }
                     centered
                 >
                     <NewProductForm onSuccess={close} onCancel={close} />

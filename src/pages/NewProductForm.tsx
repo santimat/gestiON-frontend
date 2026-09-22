@@ -14,7 +14,7 @@ export function NewProductForm({ onSuccess, onCancel }: NewProductFormProps) {
 
         // Cierra el modal tras guardar con éxito
         if (onSuccess) onSuccess();
-    };
+    }
 
     return (
         <form onSubmit={handleSubmit}>

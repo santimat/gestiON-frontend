@@ -1,5 +1,7 @@
-import { Table } from '@mantine/core';
+import { Button, Modal, Table } from '@mantine/core';
 import { Switch } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { NewCashierForm } from './NewCashierForm';
 
 export function Cashiers() {
 
@@ -8,6 +10,8 @@ export function Cashiers() {
         { name: "Julián Ferreyra", email: "julian@donpepe.com", createdAt: "02/04/2026", status: "Activo", access: true },
         { name: "Camila Ledesma", email: "camila@donpepe.com", createdAt: "18/01/2026", status: "Inactivo", access: false },
     ]
+
+    const [opened, { open, close }] = useDisclosure(false)
 
     const rows = elements.map((element) => (
         <Table.Tr key={element.name}>
@@ -32,7 +36,22 @@ export function Cashiers() {
                     <h2 className="font-semibold text-xl">Cajeros</h2>
                     <p>() activos de () usuarios</p>
                 </div>
-                <button className=' bg-primary rounded-md p-2 text-white'>+ Nuevo Cajero</button>
+                <Button onClick={open} className=' bg-primary rounded-md p-2 text-white'>
+                    + Nuevo Cajero</Button>
+
+                <Modal
+                    opened={opened}
+                    onClose={close}
+                    title={
+                        <div>
+                            <h3 className='font-semibold text-lg'>Ingresar Nuevo Cajero</h3>
+                            <p className='text-sm'>El cajero sólo va a poder acceder al punto de venta del comercio.</p>
+                        </div>
+                    }  
+                    centered
+                >
+                    <NewCashierForm onSuccess={close} onCancel={close} />
+                </Modal>
             </header>
 
             <Table.ScrollContainer minWidth={500} className='p-4'>
