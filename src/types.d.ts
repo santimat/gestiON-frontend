@@ -1,4 +1,6 @@
 import z from "zod";
+import type { LucideIcon } from "lucide-react";
+
 import { LoginSchema } from "@/schemas/LoginSchema";
 
 export type ZodIssue = z.core.$ZodIssue;
@@ -32,4 +34,10 @@ export type AuthUser = {
 	email: string;
 	role: UserRole;
 	status: UserStatus;
+};
+
+export type NavItem = {
+	text: string;
+	href: string;
+	icon: LucideIcon;
 };

@@ -20,6 +20,16 @@ export const authService = {
 			}
 		}
 	},
+	logout: async () => {
+		try {
+			const { data } = await backendAPI.post("/auth/logout");
+			console.log(data);
+		} catch (error) {
+			if (isAxiosError(error)) {
+				throw handleAxiosErrors(error);
+			}
+		}
+	},
 	checkAuth: async () => {
 		try {
 			const { data } = await backendAPI.get("/auth/me");

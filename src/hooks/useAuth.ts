@@ -4,23 +4,42 @@ import type { LoginDTO } from "@/types";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 export function useAuth() {
-	const { login, hydrateUser, authenticatedUser, isCheckingAuth } =
+	const { login, logout, hydrateUser, authenticatedUser, isCheckingAuth } =
 		useAuthStore(
-			useShallow((s) => ({
-				login: s.login,
-				hydrateUser: s.hydrateUser,
-				authenticatedUser: s.authenticatedUser,
-				isCheckingAuth: s.isPending,
-			})),
+			useShallow(
+				({
+					login,
+					logout,
+					hydrateUser,
+					authenticatedUser,
+					isCheckingAuth,
+				}) => ({
+					login,
+					hydrateUser,
+					authenticatedUser,
+					isCheckingAuth,
+					logout,
+				}),
+			),
 		);
+
 	const handleLogin = async (rawData: LoginDTO) => {
 		await login(rawData);
-		console.log(authenticatedUser);
 	};
 
 	const checkAuth = async () => {
 		await hydrateUser();
 	};
 
-	return { handleLogin, checkAuth, authenticatedUser, isCheckingAuth };
+	const handleLogout = async () => {
+		await logout();
+	};
+
+	return {
+		handleLogout,
+		handleLogin,
+		checkAuth,
+		authenticatedUser,
+		isCheckingAuth,
+	};
 }
