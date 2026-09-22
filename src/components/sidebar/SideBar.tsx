@@ -1,9 +1,8 @@
 import { Link } from "react-router";
 import { Store } from "lucide-react";
 
-import { SIDEBAR_ITEMS } from "@/utils/constants";
+import { ALLOWEDS_ROUTES_BY_ROLE, SIDEBAR_ITEMS } from "@/utils/constants";
 import { SideBarItem } from "@/components/sidebar/SiderBarItem";
-import { getRedirectByRole } from "@/utils/getRedirectByRole";
 import { useAuth } from "@/hooks/useAuth";
 import { SidebarFooter } from "./SideBarFooter";
 
@@ -13,7 +12,7 @@ export function SideBar() {
   if (!authenticatedUser?.email) return;
 
   const sidebarItemsToShow = SIDEBAR_ITEMS.filter(({ href }) =>
-    getRedirectByRole(authenticatedUser?.role).includes(href),
+    ALLOWEDS_ROUTES_BY_ROLE[authenticatedUser?.role].includes(href),
   );
 
   return (

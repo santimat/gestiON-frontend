@@ -25,6 +25,10 @@ type NewCommerceFormProps = {
 export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const rawData = Object.fromEntries(formData.entries());
+    console.log(rawData);
   };
 
   const handleClick = () => {

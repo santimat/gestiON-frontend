@@ -1,10 +1,10 @@
 import { SideBar } from "@/components/sidebar/SideBar";
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
-	return (
-		<div className="flex h-full">
-			<SideBar />
-			<section className="flex-1">{children}</section>
-		</div>
-	);
+  return (
+    <div className="flex h-full">
+      <SideBar />
+      <section className="flex-1">{children}</section>
+    </div>
+  );
 }

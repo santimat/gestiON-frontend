@@ -8,42 +8,42 @@ import { email } from "zod";
 import { LogOut } from "lucide-react";
 
 type SidebarFooterProps = {
-	authenticatedUser: AuthUser | null;
-	handleLogout: () => void;
+  authenticatedUser: AuthUser | null;
+  handleLogout: () => void;
 };
 
 export function SidebarFooter({
-	authenticatedUser,
-	handleLogout,
+  authenticatedUser,
+  handleLogout,
 }: SidebarFooterProps) {
-	const navigate = useNavigate();
-	const handleClick = () => {
-		handleLogout();
-		navigate("/");
-	};
+  const navigate = useNavigate();
+  const handleClick = () => {
+    handleLogout();
+    navigate("/");
+  };
 
-	if (!authenticatedUser?.email) return;
+  if (!authenticatedUser?.email) return;
 
-	const roleToShow = ROLE_DICTIONARY[authenticatedUser?.role];
-	const avatarColor = getAvatarColor(authenticatedUser?.id);
+  const roleToShow = ROLE_DICTIONARY[authenticatedUser?.role];
+  const avatarColor = getAvatarColor(authenticatedUser?.id);
 
-	return (
-		<footer className="group flex items-center p-4 gap-2 w-full mt-auto  border-t border-background-soft">
-			<Avatar alt="Me" color={avatarColor} />
-			<div className="flex flex-col text-sm">
-				<p className="text-black capitalize font-bold">
-					{authenticatedUser?.name}
-				</p>
-				<p className="text-gray-500 line-clamp-1" title={roleToShow}>
-					{roleToShow}
-				</p>
-			</div>
-			<button
-				onClick={handleClick}
-				className=" text-gray-400 cursor-pointer hover:bg-background-soft box-content rounded-md p-1 active:scale-95 transition-transform"
-			>
-				<LogOut />
-			</button>
-		</footer>
-	);
+  return (
+    <footer className="border-background-soft mt-auto flex w-full items-center gap-3 border-t p-4">
+      <Avatar alt="Me" color={avatarColor} />
+      <div className="flex flex-1 flex-col text-sm">
+        <p className="font-bold text-black capitalize">
+          {authenticatedUser?.name}
+        </p>
+        <p className="line-clamp-1 text-gray-500" title={roleToShow}>
+          {roleToShow}
+        </p>
+      </div>
+      <button
+        onClick={handleClick}
+        className="hover:bg-background-soft cursor-pointer rounded-lg p-1 text-gray-400 transition-transform active:scale-95"
+      >
+        <LogOut />
+      </button>
+    </footer>
+  );
 }

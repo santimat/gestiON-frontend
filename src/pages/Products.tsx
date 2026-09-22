@@ -1,37 +1,32 @@
-import {
-  ActionIcon,
-  Table,
-  TextInput,
-  Select,
-  Button,
-  Modal,
-} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { QrCode, Pencil, Trash, PackagePlus } from "lucide-react";
+import { Table, TextInput, Select, Button, Modal } from "@mantine/core";
+import { QrCode, Pencil, Trash, PackagePlus, PackageIcon } from "lucide-react";
 
+import { ProductItems } from "@/components/products/ProductItems";
 import { NewProductForm } from "@/components/products/NewProductForm";
+import { ProductHeaderTable } from "@/components/products/ProductHeaderTable";
 
 export function Products() {
   const products = [
     {
-      product: "Café Molido 500gr",
+      name: "Café Molido 500gr",
       category: "Almacen",
-      price: "$7850",
-      stock: "24/8",
+      salePrice: "$7850",
+      currentStock: "24/8",
       status: "En stock",
     },
     {
-      product: "Yerba Mate 1kg",
+      name: "Yerba Mate 1kg",
       category: "Almacen",
-      price: "$6390",
-      stock: "5/10",
+      salePrice: "$6390",
+      currentStock: "5/10",
       status: "Stock bajo",
     },
     {
-      product: "Agua saborizada 1.5lts",
+      name: "Agua saborizada 1.5lts",
       category: "Bebidas",
-      price: "$1980",
-      stock: "48/12",
+      salePrice: "$1980",
+      currentStock: "48/12",
       status: "En stock",
     },
   ];
@@ -42,27 +37,7 @@ export function Products() {
     { Icon: Trash, label: "Eliminar" },
   ];
 
-  const [opened, { open, close }] = useDisclosure(false);
-
-  const rows = products.map((products) => (
-    <Table.Tr key={products.product}>
-      <Table.Td>{products.product}</Table.Td>
-      <Table.Td>{products.category}</Table.Td>
-      <Table.Td>{products.price}</Table.Td>
-      <Table.Td>{products.stock}</Table.Td>
-      <Table.Td>{products.status}</Table.Td>
-      <Table.Td>
-        <ActionIcon.Group>
-          {actionsIcons.map((action, index) => (
-            <ActionIcon key={index} variant="default">
-              <action.Icon className="hover:bg-background-soft size-4 bg-white" />
-              {/* aca hay que mejorar el hover */}
-            </ActionIcon>
-          ))}
-        </ActionIcon.Group>
-      </Table.Td>
-    </Table.Tr>
-  ));
+  const [opened, { open, close: closeModal }] = useDisclosure(false);
 
   return (
     <>
@@ -78,19 +53,23 @@ export function Products() {
         >
           Nuevo Producto
         </Button>
-
-        <Modal
-          opened={opened}
-          onClose={close}
-          title="Ingresar Nuevo Producto"
-          centered
-          size="xl"
-          transitionProps={{ transition: "fade-down", duration: 300 }}
-        >
-          <NewProductForm onSuccess={close} onCancel={close} />
-        </Modal>
       </header>
-
+      <Modal
+        opened={opened}
+        onClose={close}
+        centered
+        size="xl"
+        transitionProps={{ transition: "fade-down", duration: 300 }}
+        withCloseButton={false}
+      >
+        <header className="mb-4">
+          <div className="flex gap-2">
+            <PackageIcon className="text-primary" />
+            <p className="font-semibold">Nuevo Producto</p>
+          </div>
+        </header>
+        <NewProductForm closeModal={closeModal} />
+      </Modal>
       {/* Aca faltaria el cartel de alerta de stock */}
 
       <div className="flex w-full items-center gap-4 p-6">
@@ -107,17 +86,10 @@ export function Products() {
 
       <Table.ScrollContainer minWidth={500} className="p-4">
         <Table className="border-background-soft mt-8 rounded-lg border">
-          <Table.Thead className="bg-background-soft">
-            <Table.Tr>
-              <Table.Th>Producto</Table.Th>
-              <Table.Th>Categoria</Table.Th>
-              <Table.Th>Precio</Table.Th>
-              <Table.Th>Stock</Table.Th>
-              <Table.Th>Estado</Table.Th>
-              <Table.Th>Acciones</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
+          <ProductHeaderTable />
+          <Table.Tbody>
+            <ProductItems products={products} actionsIcons={actionsIcons} />
+          </Table.Tbody>
         </Table>
       </Table.ScrollContainer>
     </>

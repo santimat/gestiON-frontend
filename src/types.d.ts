@@ -2,6 +2,7 @@ import z from "zod";
 import type { LucideIcon } from "lucide-react";
 
 import { LoginSchema } from "@/schemas/LoginSchema";
+import type { ProductSchema } from "@/schemas/products/ProductSchema";
 import type { CommerceRequestSchema } from "@/schemas/CreateCommerceSchema";
 
 // GENERAL TYPES
@@ -48,3 +49,14 @@ export type AuthUser = {
 
 // COMMERCE
 export type CommerceDTO = z.infer<typeof CommerceRequestSchema>;
+
+// PRODUCT
+export enum ProductStatus {
+  ACTIVE,
+  INACTIVE,
+}
+export type Product = z.infer<typeof ProductSchema> & {
+  id: number;
+  category: string;
+  status: ProductStatus;
+};
