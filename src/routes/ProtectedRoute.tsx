@@ -3,10 +3,11 @@ import { Navigate, Outlet } from "react-router";
 
 import type { UserRole } from "@/types";
 import { useAuth } from "@/hooks/useAuth";
-import { LoadingPage } from "@/pages/Loading";
+import { LoadingPage } from "@/components/Loading";
 
 export function ProtectedRoute({ allowedRoles }: { allowedRoles: UserRole[] }) {
 	const { checkAuth, authenticatedUser, isCheckingAuth } = useAuth();
+
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth]);
@@ -16,13 +17,10 @@ export function ProtectedRoute({ allowedRoles }: { allowedRoles: UserRole[] }) {
 	}
 
 	if (!authenticatedUser?.email) {
-		return <Navigate to="/" />;
+		return <Navigate to="/" replace />;
 	}
 
-	if (
-		!allowedRoles.includes(authenticatedUser?.role || "") &&
-		!isCheckingAuth
-	) {
+	if (!allowedRoles.includes(authenticatedUser?.role)) {
 		return <Navigate to={"/unauthorized"} replace />;
 	}
 
