@@ -3,6 +3,7 @@ import {
 	Package,
 	ScanBarcode,
 	StoreIcon,
+	UserGroupIcon,
 	Users,
 } from "lucide-react";
 
@@ -10,8 +11,8 @@ import type { NavItem } from "@/types";
 
 export const ALLOWEDS_ROUTES_BY_ROLE = {
 	SUDO: ["/commerces"],
-	OWNER: ["/dashboard", "/cashiers", "/products", "/sell"],
-	CASHIER: ["/sell", "/products"],
+	OWNER: ["/dashboard", "/cashiers", "/products", "/sell","/clients" ],
+	CASHIER: ["/sell", "/products", "/clients"],
 };
 
 export const SIDEBAR_ITEMS: NavItem[] = [
@@ -20,6 +21,7 @@ export const SIDEBAR_ITEMS: NavItem[] = [
 	{ icon: ScanBarcode, text: "Puntos de venta", href: "/sell" },
 	{ icon: Package, text: "Productos", href: "/products" },
 	{ icon: Users, text: "Cajeros", href: "/cashiers" },
+	{ icon: UserGroupIcon, text: "Clientes", href: "/clients" }
 ];
 
 export const ROLE_DICTIONARY = {
