@@ -41,11 +41,11 @@ export type FieldErrors = Optional<Record<FormFields, string>>;
 
 // USER
 export type LoginDTO = z.infer<typeof LoginSchema>;
-type UserDTO = z.infer<typeof UserRequestSchema>;
+type UserDTO = z.infer<typeof UserRequestSchema> & { commerceId: number };
+
 type UserRole = "OWNER" | "CASHIER" | "SUDO";
-
 type UserStatus = "ACTIVE" | "INACTIVE";
-
+export type User = UserDTO & { id: number };
 export type AuthUser = {
   id: number;
   name: string;
@@ -56,8 +56,7 @@ export type AuthUser = {
 
 // COMMERCE
 export type CommerceDTO = z.infer<typeof CommerceRequestSchema>;
-
-export type Commerce = CommerceDTO & { logoUrl?: string };
+export type Commerce = CommerceDTO & { id: number; logoUrl?: string };
 
 // PRODUCT
 export enum ProductStatus {
@@ -71,4 +70,4 @@ export type Product = z.infer<typeof ProductSchema> & {
 };
 
 // Create commerce and user
-export type RegisterDTO = CommerceDTO & UserDTO;
+export type RegisterDTO = CommerceDTO & Omit<UserDTO, "commerceId">;

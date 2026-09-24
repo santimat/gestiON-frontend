@@ -1,4 +1,3 @@
-import { useEffect, useState, type SubmitEvent } from "react";
 import {
   Button,
   Fieldset,
@@ -6,7 +5,6 @@ import {
   FileInput,
   PasswordInput,
 } from "@mantine/core";
-import type { UseDisclosureHandlers } from "@mantine/hooks";
 import {
   AtSignIcon,
   FileImage,
@@ -17,8 +15,15 @@ import {
   UserIcon,
   UserKey,
 } from "lucide-react";
+import { toast } from "sonner";
+import type { UseDisclosureHandlers } from "@mantine/hooks";
+import { useEffect, useState, type SubmitEvent } from "react";
+
+import { useUser } from "@/hooks/useUser";
+import { useCommerce } from "@/hooks/useCommerce";
+import { CommerceMapper } from "@/mappers/CommerceMapper";
 import type { AppError, FieldErrors, RegisterDTO } from "@/types";
-import { commerceService } from "@/services/commerce/commerceService";
+import { UserMapper } from "@/mappers/UserMapper";
 
 type NewCommerceFormProps = {
   closeModal: UseDisclosureHandlers["close"];
@@ -26,6 +31,8 @@ type NewCommerceFormProps = {
 
 export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
   const [errors, setErrors] = useState<FieldErrors>({});
+  const { handleCreateCommerce } = useCommerce();
+  const { handleCreateUser } = useUser();
 
   useEffect(() => {
     if (errors) {
@@ -44,14 +51,20 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
     const form = e.target;
     const formData = new FormData(form);
     const rawData = Object.fromEntries(formData.entries()) as RegisterDTO;
+    const commerceRequest = CommerceMapper.toCommerceRequest(rawData);
+    const userRequest = UserMapper.toUserRequest(rawData);
+
+    // TODO: AGREGAR LA VALIDACION DE ZOD TAMBIEN ACA PARA USER Y COMMERCE
 
     try {
-      await commerceService.createCommerce(rawData);
+      const commerceId = await handleCreateCommerce(commerceRequest);
+      await handleCreateUser({ ...userRequest, commerceId });
     } catch (error) {
       const appError = error as AppError;
       if (appError?.fieldErrors) {
         return setErrors(appError?.fieldErrors);
       }
+      toast.error(appError?.message);
     }
   };
 

@@ -1,21 +1,18 @@
 import { isAxiosError } from "axios";
 
-import type { RegisterDTO } from "@/types";
-import { RegisterSchema } from "@/schemas/RegisterSchema";
+import type { CommerceDTO } from "@/types";
+import { backendAPI } from "@/services/axios/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
-import { backendAPI } from "../axios/axiosConfig";
-import { CommerMapper } from "@/mappers/CommerceMapper";
+import { CommerceRequestSchema } from "@/schemas/CreateCommerceSchema";
 
 export const commerceService = {
-  createCommerce: async (rawData: RegisterDTO) => {
-    const parsedCommerce = RegisterSchema.safeParse(rawData);
+  createCommerce: async (commerce: CommerceDTO) => {
+    const parsedCommerce = CommerceRequestSchema.safeParse(commerce);
     handleZodParsingError(parsedCommerce);
 
-    const parsedData = CommerMapper.toCommerceRequest(parsedCommerce);
-
     try {
-      const { data } = await backendAPI.post("/commerces", parsedData);
+      const { data } = await backendAPI.post("/commerces", parsedCommerce);
       return data;
     } catch (error) {
       if (isAxiosError(error)) {

@@ -1,8 +1,8 @@
 import { useCommerceStore } from "@/stores/useCommerceStore";
-import type { RegisterDTO } from "@/types";
+import type { CommerceDTO } from "@/types";
 import { useShallow } from "zustand/react/shallow";
 
-export function useAuth() {
+export const useCommerce = () => {
   const { createCommerce, commerces } = useCommerceStore(
     useShallow(({ commerces, createCommerce }) => ({
       commerces,
@@ -10,9 +10,10 @@ export function useAuth() {
     })),
   );
 
-  const handleCreateCommerce = async (rawData: RegisterDTO) => {
-    await createCommerce(rawData);
+  const handleCreateCommerce = async (commerce: CommerceDTO) => {
+    const createdCommerce = await createCommerce(commerce);
+    return createdCommerce?.id;
   };
 
   return { commerces, handleCreateCommerce };
-}
+};
