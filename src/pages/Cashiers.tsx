@@ -44,16 +44,6 @@ export function Cashiers() {
 
   return (
     <>
-      <header className="border-background-soft flex w-full items-center justify-between border-b p-4">
-        <div>
-          <h1 className="text-xl font-semibold">Cajeros</h1>
-          <p>() activos de () usuarios</p>
-        </div>
-        <button className="bg-primary rounded-md p-2 text-white">
-          + Nuevo Cajero
-        </button>
-      </header>
-      return (
       <aside>
         <header className="border-background-soft flex w-full items-center justify-between border-b p-4">
           <div>
@@ -101,20 +91,6 @@ export function Cashiers() {
         </Table.ScrollContainer>
       </aside>
       );
-      <Table.ScrollContainer minWidth={500} className="p-4">
-        <Table className="border-background-soft mt-8 rounded-lg border">
-          <Table.Thead className="bg-background-soft">
-            <Table.Tr>
-              <Table.Th>Nombre</Table.Th>
-              <Table.Th>Email</Table.Th>
-              <Table.Th>Alta</Table.Th>
-              <Table.Th>Estado</Table.Th>
-              <Table.Th>Acceso</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
-        </Table>
-      </Table.ScrollContainer>
     </>
   );
 }
