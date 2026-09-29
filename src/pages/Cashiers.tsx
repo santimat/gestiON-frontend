@@ -1,7 +1,7 @@
 import { Button, Modal, Table } from "@mantine/core";
 import { Switch } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { NewCashierForm } from "./NewCashierForm";
+import { NewCashierForm } from "../components/cashiers/NewCashierForm";
 
 export function Cashiers() {
   const elements = [
