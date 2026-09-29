@@ -1,10 +1,8 @@
 import z from "zod";
 import type { LucideIcon } from "lucide-react";
 
-import { LoginSchema } from "@/schemas/LoginSchema";
-import type { UserRequestSchema } from "@/schemas/CreateUserSchema";
-import type { ProductSchema } from "@/schemas/products/ProductSchema";
-import type { CommerceRequestSchema } from "@/schemas/CreateCommerceSchema";
+import { LoginSchema } from "@/schemas/users/LoginSchema";
+import { ProductSchema } from "@/schemas/products/ProductSchema";
 
 // GENERAL TYPES
 export type NavItem = {
@@ -41,33 +39,34 @@ export type FieldErrors = Optional<Record<FormFields, string>>;
 
 // USER
 export type LoginDTO = z.infer<typeof LoginSchema>;
-type UserDTO = z.infer<typeof UserRequestSchema> & { commerceId: number };
 
 type UserRole = "OWNER" | "CASHIER" | "SUDO";
-type UserStatus = "ACTIVE" | "INACTIVE";
-export type User = UserDTO & { id: number };
-export type AuthUser = {
+export type User = {
   id: number;
   name: string;
   email: string;
+  phoneNumber: string;
+  createdAt: Date;
   role: UserRole;
-  status: UserStatus;
+  active: boolean;
 };
 
+export type AuthUser = Omit<User, "phoneNumber" | "createdAt">;
+
 // COMMERCE
-export type CommerceDTO = z.infer<typeof CommerceRequestSchema>;
-export type Commerce = CommerceDTO & { id: number; logoUrl?: string };
+export type Commerce = {
+  id: number;
+  businessName: string;
+  address: string;
+  logoUrl: string;
+  cuit: string;
+};
+export type CommerceWithOwnerDTO = Commerce & Omit<User, "role" | "createdAt">;
 
 // PRODUCT
-export enum ProductStatus {
-  ACTIVE,
-  INACTIVE,
-}
+
 export type Product = z.infer<typeof ProductSchema> & {
   id: number;
   category: string;
-  status: ProductStatus;
+  active: boolean;
 };
-
-// Create commerce and user
-export type RegisterDTO = CommerceDTO & Omit<UserDTO, "commerceId">;
