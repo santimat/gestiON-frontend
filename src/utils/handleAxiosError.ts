@@ -16,7 +16,11 @@ const HANDLED_ERRORS: Record<number, AppError> = {
   },
   404: {
     type: "NOT_FOUND",
-    message: "La cuenta con la que está intentando acceder no existe",
+    message: "La cuenta con la que está intentando acceder no existe.",
+  },
+  409: {
+    type: "DUPLICATE_RESOURCE",
+    message: "El comercio que intentas registrar ya existe.",
   },
 };
 

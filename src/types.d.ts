@@ -23,6 +23,7 @@ export type AppError = {
     | "ALREADY_EXISTS"
     | "BAD_REQUEST"
     | "NOT_FOUND"
+    | "DUPLICATE_RESOURCE"
     | "UNKNOWN";
   message: string;
   fieldErrors?: FieldErrors;
