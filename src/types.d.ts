@@ -39,11 +39,10 @@ export type FieldErrors = Optional<Record<FormFields, string>>;
 
 // USER
 export type LoginDTO = z.infer<typeof LoginSchema>;
-
 type UserRole = "OWNER" | "CASHIER" | "SUDO";
 export type User = {
   id: number;
-  name: string;
+  name: username;
   email: string;
   phoneNumber: string;
   createdAt: Date;
@@ -54,14 +53,18 @@ export type User = {
 export type AuthUser = Omit<User, "phoneNumber" | "createdAt">;
 
 // COMMERCE
-export type Commerce = {
-  id: number;
+export type CommerceWithOwnerDTO = {
+  userId: number;
+  commerceId: number;
+  username: string;
+  email: string;
+  phoneNumber: string;
   businessName: string;
   address: string;
-  logoUrl: string;
-  cuit: string;
+  businessLogoUrl: string;
+  businessActive: boolean;
+  createdAt: Date;
 };
-export type CommerceWithOwnerDTO = Commerce & Omit<User, "role" | "createdAt">;
 
 // PRODUCT
 
