@@ -6,6 +6,7 @@ import { commerceService } from "@/services/commerce/commerceService";
 type UseCommerceStore = {
   commercesWithOwner: CommerceWithOwnerDTO[] | [];
   createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
+  getCommercesWithOwner: () => Promise<void>;
 };
 
 export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
@@ -18,6 +19,12 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
         ...prevState.commercesWithOwner,
         newCommerceWithOwner,
       ],
+    }));
+  },
+  getCommercesWithOwner: async () => {
+    const commercesWOwner = await commerceService.getCommercesWithOwner();
+    set((prevState) => ({
+      commercesWithOwner: [...prevState.commercesWithOwner, ...commercesWOwner],
     }));
   },
 }));

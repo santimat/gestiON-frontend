@@ -11,9 +11,16 @@ import { useDisclosure } from "@mantine/hooks";
 import { CommerceList } from "@/components/commerces/CommerceList";
 import { NewCommerceForm } from "@/components/commerces/NewCommerceForm";
 import { CommerceStatsCard } from "@/components/commerces/CommerceStatsCard";
+import { useCommerce } from "@/hooks/useCommerce";
+import { useEffect } from "react";
 
 export function Commerces() {
   const [opened, { open, close: closeModal }] = useDisclosure(false);
+  const { commercesWithOwner, getCommercesWithOwner } = useCommerce();
+
+  useEffect(() => {
+    getCommercesWithOwner();
+  }, []);
 
   return (
     <>
@@ -73,7 +80,7 @@ export function Commerces() {
             iconClasses: "text-warning bg-warning/40",
           }}
         />
-        <CommerceList />
+        <CommerceList commercesWithOwner={commercesWithOwner} />
       </main>
     </>
   );

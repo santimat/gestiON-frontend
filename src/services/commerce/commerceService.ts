@@ -12,11 +12,20 @@ export const commerceService = {
     handleZodParsingError(parsedData);
 
     try {
-      const { data } = await backendAPI.post(
-        "/commerces-users",
-        commerceWithOwner,
-      );
+      const { data } = await backendAPI.post("/commerces", commerceWithOwner);
       return data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        throw handleAxiosErrors(error);
+      }
+    }
+  },
+  getCommercesWithOwner: async () => {
+    try {
+      const {
+        data: { content },
+      } = await backendAPI.get("/commerces");
+      return content;
     } catch (error) {
       if (isAxiosError(error)) {
         throw handleAxiosErrors(error);
