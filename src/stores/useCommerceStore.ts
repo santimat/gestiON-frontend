@@ -23,8 +23,8 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   },
   getCommercesWithOwner: async () => {
     const commercesWOwner = await commerceService.getCommercesWithOwner();
-    set((prevState) => ({
-      commercesWithOwner: [...prevState.commercesWithOwner, ...commercesWOwner],
+    set(() => ({
+      commercesWithOwner: commercesWOwner,
     }));
   },
 }));
