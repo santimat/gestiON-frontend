@@ -22,6 +22,7 @@ export type AppError = {
     | "FORBIDDEN"
     | "ALREADY_EXISTS"
     | "BAD_REQUEST"
+    | "NOT_FOUND"
     | "UNKNOWN";
   message: string;
   fieldErrors?: FieldErrors;

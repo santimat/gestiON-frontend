@@ -32,6 +32,7 @@ export function LoginForm() {
       }
 
       toast.error(appError.message);
+      form.reset();
     } finally {
       setIsLoading(false);
     }
