@@ -25,6 +25,10 @@ const SellPage = lazy(() =>
   import("@/pages/Sell").then((module) => ({ default: module.Sell })),
 );
 
+const ClientsPage = lazy(() =>
+  import("@/pages/Clients").then((module) => ({ default: module.Clients })),
+);
+
 function App() {
   return (
     <>
@@ -51,6 +55,7 @@ function App() {
             <Route path="/dashboard" element={<p>hola</p>} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/cashiers" element={<CashiersPage />} />
+            <Route path="/clients" element={<ClientsPage />} />
           </Route>
         </Route>
       </Routes>
