@@ -1,19 +1,18 @@
-import { useCommerceStore } from "@/stores/useCommerceStore";
-import type { CommerceDTO } from "@/types";
 import { useShallow } from "zustand/react/shallow";
 
+import { useCommerceStore } from "@/stores/useCommerceStore";
+
 export const useCommerce = () => {
-  const { createCommerce, commerces } = useCommerceStore(
-    useShallow(({ commerces, createCommerce }) => ({
-      commerces,
-      createCommerce,
+  const { commercesWithOwner, createCommerceWithOwner } = useCommerceStore(
+    useShallow(({ commercesWithOwner, createCommerceWithOwner }) => ({
+      commercesWithOwner,
+      createCommerceWithOwner,
     })),
   );
 
-  const handleCreateCommerce = async (commerce: CommerceDTO) => {
-    const createdCommerce = await createCommerce(commerce);
-    return createdCommerce?.id;
+  const handleCreateCommerceWithOwner = async (commerceWithOwner: FormData) => {
+    await createCommerceWithOwner(commerceWithOwner);
   };
 
-  return { commerces, handleCreateCommerce };
+  return { commercesWithOwner, handleCreateCommerceWithOwner };
 };

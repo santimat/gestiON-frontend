@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import type { AuthUser } from "@/types";
 import { ROLE_DICTIONARY } from "@/utils/constants";
 import { getAvatarColor } from "@/utils/getAvatarColor";
-import { email } from "zod";
 import { LogOut } from "lucide-react";
 
 type SidebarFooterProps = {

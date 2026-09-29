@@ -8,6 +8,7 @@ import {
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
+import { CommerceList } from "@/components/commerces/CommerceList";
 import { NewCommerceForm } from "@/components/commerces/NewCommerceForm";
 import { CommerceStatsCard } from "@/components/commerces/CommerceStatsCard";
 
@@ -44,7 +45,7 @@ export function Commerces() {
           Agregar comercio
         </Button>
       </header>
-      <main className="mx-auto grid max-w-300 grid-cols-3 gap-4 py-6">
+      <main className="mx-auto grid max-w-300 grid-cols-3 gap-4 p-6">
         <CommerceStatsCard
           section="Comercios registrados"
           quantity={0}
@@ -72,6 +73,7 @@ export function Commerces() {
             iconClasses: "text-warning bg-warning/40",
           }}
         />
+        <CommerceList />
       </main>
     </>
   );

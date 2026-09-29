@@ -1,7 +1,7 @@
 import { isAxiosError } from "axios";
 
 import type { LoginDTO } from "@/types";
-import { LoginSchema } from "@/schemas/LoginSchema";
+import { LoginSchema } from "@/schemas/users/LoginSchema";
 import { backendAPI } from "@/services/axios/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";

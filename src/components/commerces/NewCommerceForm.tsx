@@ -19,11 +19,8 @@ import { toast } from "sonner";
 import type { UseDisclosureHandlers } from "@mantine/hooks";
 import { useEffect, useState, type SubmitEvent } from "react";
 
-import { useUser } from "@/hooks/useUser";
 import { useCommerce } from "@/hooks/useCommerce";
-import { CommerceMapper } from "@/mappers/CommerceMapper";
-import type { AppError, FieldErrors, RegisterDTO } from "@/types";
-import { UserMapper } from "@/mappers/UserMapper";
+import type { AppError, FieldErrors } from "@/types";
 
 type NewCommerceFormProps = {
   closeModal: UseDisclosureHandlers["close"];
@@ -31,8 +28,7 @@ type NewCommerceFormProps = {
 
 export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
   const [errors, setErrors] = useState<FieldErrors>({});
-  const { handleCreateCommerce } = useCommerce();
-  const { handleCreateUser } = useUser();
+  const { handleCreateCommerceWithOwner } = useCommerce();
 
   useEffect(() => {
     if (errors) {
@@ -50,21 +46,15 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const rawData = Object.fromEntries(formData.entries()) as RegisterDTO;
-    const commerceRequest = CommerceMapper.toCommerceRequest(rawData);
-    const userRequest = UserMapper.toUserRequest(rawData);
-
-    // TODO: AGREGAR LA VALIDACION DE ZOD TAMBIEN ACA PARA USER Y COMMERCE
 
     try {
-      const commerceId = await handleCreateCommerce(commerceRequest);
-      await handleCreateUser({ ...userRequest, commerceId });
+      await handleCreateCommerceWithOwner(formData);
+      toast.success("Comercio creado con exito");
+      closeModal();
     } catch (error) {
       const appError = error as AppError;
-      if (appError?.fieldErrors) {
-        return setErrors(appError?.fieldErrors);
-      }
-      toast.error(appError?.message);
+      if (appError.fieldErrors) return setErrors(appError.fieldErrors);
+      toast.error(appError.message);
     }
   };
 
@@ -95,6 +85,7 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
 
         <FileInput
           label="Imagen del comercio"
+          name="businessLogo"
           placeholder="Máximo de imagen 10MB"
           leftSection={<FileImage size={20} />}
           leftSectionPointerEvents="none"
@@ -105,9 +96,9 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
           <TextInput
             label="Nombre del dueño"
             placeholder="Juan Román Riquelme"
-            name="name"
+            name="username"
             leftSection={<UserIcon size={20} />}
-            error={errors?.name}
+            error={errors?.username}
           />
           <TextInput
             label="C-U-I-T (sin guiones)"

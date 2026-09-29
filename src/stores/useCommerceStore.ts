@@ -1,19 +1,23 @@
 import { create } from "zustand";
-import type { Commerce, CommerceDTO } from "@/types";
+
+import type { CommerceWithOwnerDTO } from "@/types";
 import { commerceService } from "@/services/commerce/commerceService";
 
 type UseCommerceStore = {
-  commerces: Commerce[] | [];
-  createCommerce: (commerce: CommerceDTO) => Promise<Commerce>;
+  commercesWithOwner: CommerceWithOwnerDTO[] | [];
+  createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
 };
 
 export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
-  commerces: [],
-  createCommerce: async (commerce: CommerceDTO) => {
-    const newCommerce = await commerceService.createCommerce(commerce);
-    set(({ commerces }) => ({
-      commerces: [...commerces, newCommerce],
+  commercesWithOwner: [],
+  createCommerceWithOwner: async (commercesWithOwner: FormData) => {
+    const newCommerceWithOwner =
+      await commerceService.createCommerceWithOwner(commercesWithOwner);
+    set((prevState) => ({
+      commercesWithOwner: [
+        ...prevState.commercesWithOwner,
+        newCommerceWithOwner,
+      ],
     }));
-    return newCommerce as Commerce;
   },
 }));

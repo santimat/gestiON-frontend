@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const UserRequestSchema = z.object({
-  name: z
+  username: z
     .string("Formato inválido")
     .min(3, "El nombre debe tener al menos 3 caracteres")
     .max(50, "El nombre no puede tener más de 50 caracteres")
