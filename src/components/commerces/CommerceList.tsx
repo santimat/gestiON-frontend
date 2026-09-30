@@ -1,5 +1,5 @@
 import type { MouseEvent } from "react";
-import { Badge, Switch } from "@mantine/core";
+import { Badge, Button, Switch } from "@mantine/core";
 
 import type { CommerceWithOwnerDTO } from "@/types";
 
@@ -46,10 +46,7 @@ export function CommerceList({ commercesWithOwner }: CommerceListProps) {
                 <p>{commerce.email}</p>
                 <p>{`${day}/${month}/${year}`}</p>
                 <Badge color={badgeColor}>{badgeText}</Badge>
-                <Switch
-                  data-commerce={commerce.commerceId}
-                  checked={commerce.businessActive}
-                />
+                <Button>Dar de baja</Button>
               </li>
             );
           })}
