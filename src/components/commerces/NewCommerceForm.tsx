@@ -68,9 +68,13 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value;
-    const field = e.currentTarget.name;
+    const field = e.target.name;
+    const value = e.target.value;
     setFormData((prevState) => ({ ...prevState, [field]: value }));
+  };
+
+  const handleChangeFile = (payload: File | null) => {
+    setFormData((prevState) => ({ ...prevState, businessLogo: payload }));
   };
 
   return (
@@ -103,6 +107,7 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
           name="businessLogo"
           placeholder="Máximo de imagen 10MB"
           leftSection={<FileImage size={20} />}
+          onChange={handleChangeFile}
           leftSectionPointerEvents="none"
         />
       </Fieldset>
