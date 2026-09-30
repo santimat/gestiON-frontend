@@ -45,3 +45,14 @@ export const AVAILABLE_AVATAR_COLORS = [
   "green",
   "blue",
 ];
+
+export const DEFAULT_COMMERCE_WITH_OWNER = {
+  userId: 0,
+  commerceId: 0,
+  username: "",
+  email: "",
+  phoneNumber: "",
+  businessName: "",
+  address: "",
+  businessLogoUrl: "",
+};

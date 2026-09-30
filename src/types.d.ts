@@ -62,11 +62,17 @@ export type CommerceWithOwnerDTO = {
   email: string;
   phoneNumber: string;
   businessName: string;
+  cuit: string;
   address: string;
   businessLogoUrl: string;
   businessActive: boolean;
   createdAt: Date;
 };
+
+export type CommerceWithOwnerForm = Omit<
+  CommerceWithOwnerDTO,
+  "createdAt" | "businessActive" | "businessLogoUrl"
+> & { password: string; businessLogo: File };
 
 export type CommerceStats = {
   total: number;

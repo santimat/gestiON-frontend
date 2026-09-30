@@ -1,11 +1,4 @@
 import {
-  Button,
-  Fieldset,
-  TextInput,
-  FileInput,
-  PasswordInput,
-} from "@mantine/core";
-import {
   AtSignIcon,
   FileImage,
   IdCard,
@@ -15,18 +8,30 @@ import {
   UserIcon,
   UserKey,
 } from "lucide-react";
+import {
+  Button,
+  Fieldset,
+  TextInput,
+  FileInput,
+  PasswordInput,
+} from "@mantine/core";
 import { toast } from "sonner";
 import type { UseDisclosureHandlers } from "@mantine/hooks";
-import { useEffect, useState, type SubmitEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
 import { useCommerce } from "@/hooks/useCommerce";
-import type { AppError, FieldErrors } from "@/types";
+import type { AppError, CommerceWithOwnerForm, FieldErrors } from "@/types";
+import { DEFAULT_COMMERCE_WITH_OWNER } from "@/utils/constants";
 
 type NewCommerceFormProps = {
   closeModal: UseDisclosureHandlers["close"];
 };
 
 export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
+  const [formData, setFormData] = useState<CommerceWithOwnerForm>(
+    DEFAULT_COMMERCE_WITH_OWNER,
+  );
+
   const [errors, setErrors] = useState<FieldErrors>({});
   const { handleCreateCommerceWithOwner } = useCommerce();
 
@@ -62,6 +67,12 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
     closeModal();
   };
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    const field = e.currentTarget.name;
+    setFormData((prevState) => ({ ...prevState, [field]: value }));
+  };
+
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
       <Fieldset
@@ -74,6 +85,8 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
           placeholder="Comercio lo de tota"
           leftSection={<StoreIcon size={20} />}
           error={errors?.businessName}
+          value={formData?.businessName}
+          onChange={handleChange}
         />
         <TextInput
           label="Dirección"
@@ -81,6 +94,8 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
           placeholder="Paso de la patria 117"
           leftSection={<MapPinHouse size={20} />}
           error={errors?.address}
+          value={formData?.address}
+          onChange={handleChange}
         />
 
         <FileInput
@@ -99,6 +114,8 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             name="username"
             leftSection={<UserIcon size={20} />}
             error={errors?.username}
+            value={formData?.username}
+            onChange={handleChange}
           />
           <TextInput
             label="C-U-I-T (sin guiones)"
@@ -106,6 +123,8 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             name="cuit"
             leftSection={<IdCard size={20} />}
             error={errors?.cuit}
+            value={formData?.cuit}
+            onChange={handleChange}
           />
           <TextInput
             label="Número de Teléfono"
@@ -114,6 +133,8 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             type="number"
             leftSection={<Phone size={20} />}
             error={errors?.phoneNumber}
+            value={formData?.phoneNumber}
+            onChange={handleChange}
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -123,6 +144,8 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             name="email"
             leftSection={<AtSignIcon size={20} />}
             error={errors?.email}
+            value={formData?.email}
+            onChange={handleChange}
           />
           <PasswordInput
             label="Contraseña"
@@ -130,6 +153,8 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             leftSection={<UserKey size={20} />}
             placeholder="*******"
             error={errors?.password}
+            value={formData?.password}
+            onChange={handleChange}
           />
         </div>
       </Fieldset>
