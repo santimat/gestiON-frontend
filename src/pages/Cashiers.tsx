@@ -90,7 +90,6 @@ export function Cashiers() {
           </Table>
         </Table.ScrollContainer>
       </aside>
-      );
     </>
   );
 }
