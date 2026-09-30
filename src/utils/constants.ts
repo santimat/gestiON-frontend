@@ -7,7 +7,7 @@ import {
   Users,
 } from "lucide-react";
 
-import type { NavItem } from "@/types";
+import type { CommerceWithOwnerForm, NavItem } from "@/types";
 
 export const ALLOWEDS_ROUTES_BY_ROLE = {
   SUDO: ["/commerces"],
@@ -46,13 +46,15 @@ export const AVAILABLE_AVATAR_COLORS = [
   "blue",
 ];
 
-export const DEFAULT_COMMERCE_WITH_OWNER = {
+export const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerForm = {
   userId: 0,
   commerceId: 0,
   username: "",
   email: "",
+  cuit: "",
+  password: "",
   phoneNumber: "",
   businessName: "",
   address: "",
-  businessLogoUrl: "",
+  businessLogo: null,
 };
