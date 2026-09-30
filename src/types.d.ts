@@ -68,6 +68,12 @@ export type CommerceWithOwnerDTO = {
   createdAt: Date;
 };
 
+export type CommerceStats = {
+  total: number;
+  active: number;
+  inactive: number;
+};
+
 // PRODUCT
 
 export type Product = z.infer<typeof ProductSchema> & {

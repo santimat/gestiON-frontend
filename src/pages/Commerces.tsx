@@ -15,12 +15,14 @@ import { useCommerce } from "@/hooks/useCommerce";
 import { useEffect } from "react";
 
 export function Commerces() {
-  const [opened, { open, close: closeModal }] = useDisclosure(false);
-  const { commercesWithOwner, getCommercesWithOwner } = useCommerce();
+  const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
+  const { commerceStats, getCommercesWithOwner, getCommerceStats } =
+    useCommerce();
 
   useEffect(() => {
+    getCommerceStats();
     getCommercesWithOwner();
-  }, []);
+  }, [getCommercesWithOwner, getCommerceStats]);
 
   return (
     <>
@@ -48,14 +50,14 @@ export function Commerces() {
             Gestión de comercios y registro de comercios.
           </p>
         </div>
-        <Button onClick={open} leftSection={<BuildingComplexPlus />}>
+        <Button onClick={openModal} leftSection={<BuildingComplexPlus />}>
           Agregar comercio
         </Button>
       </header>
       <main className="mx-auto grid max-w-300 grid-cols-3 gap-4 p-6">
         <CommerceStatsCard
           section="Comercios registrados"
-          quantity={0}
+          quantity={commerceStats?.total || 0}
           description="Total en la plataforma"
           icon={{
             iconName: StoreIcon,
@@ -64,7 +66,7 @@ export function Commerces() {
         />
         <CommerceStatsCard
           section="Activos"
-          quantity={0}
+          quantity={commerceStats?.active || 0}
           description="Operando actualmente"
           icon={{
             iconName: CircleCheck,
@@ -73,14 +75,14 @@ export function Commerces() {
         />
         <CommerceStatsCard
           section="Inactivos"
-          quantity={0}
+          quantity={commerceStats?.inactive || 0}
           description="Dados de baja"
           icon={{
             iconName: UsersIcon,
             iconClasses: "text-warning bg-warning/40",
           }}
         />
-        <CommerceList commercesWithOwner={commercesWithOwner} />
+        <CommerceList openModal={openModal} />
       </main>
     </>
   );
