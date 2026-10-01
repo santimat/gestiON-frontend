@@ -8,15 +8,19 @@ import type { CommerceWithOwnerDTO } from "@/types";
 type CommerceItemProps = {
   commerce: CommerceWithOwnerDTO;
   openModal: () => void;
+  columns: string;
 };
 
-export function CommerceItem({ commerce, openModal }: CommerceItemProps) {
+export function CommerceItem({
+  commerce,
+  openModal,
+  columns,
+}: CommerceItemProps) {
   const { startEditing } = useCommerce();
   const createdAt = new Date(commerce.updatedAt);
   const day = createdAt.getDay();
   const month = createdAt.getMonth();
   const year = createdAt.getFullYear();
-  const switchText = commerce.businessActive ? "Activo" : "Inactivo";
 
   const handleEdit = (e: MouseEvent<HTMLButtonElement>) => {
     const button = e.target as HTMLElement;
@@ -28,7 +32,7 @@ export function CommerceItem({ commerce, openModal }: CommerceItemProps) {
   return (
     <li
       data-commerce={commerce.commerceId}
-      className="grid grid-cols-7 items-center p-2"
+      className={`${columns} items-center p-2`}
     >
       <Avatar
         src={commerce.businessLogoUrl}
@@ -41,7 +45,6 @@ export function CommerceItem({ commerce, openModal }: CommerceItemProps) {
       <Switch
         aria-label="Cambiar estado del comercio"
         title="Cambiar estado del comercio"
-        label={switchText}
         color="green"
         checked={commerce.businessActive}
       />

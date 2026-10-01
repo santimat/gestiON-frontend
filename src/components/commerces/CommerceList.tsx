@@ -12,6 +12,9 @@ type CommerceListProps = {
 export function CommerceList({ openModal }: CommerceListProps) {
   const { commercesWithOwner, handleToggleCommerceActive } = useCommerce();
 
+  const columns =
+    "grid grid-cols-[72px_1fr_1fr_1.4fr_120px_90px_90px] items-center gap-x-4";
+
   const handleClick = async (event: MouseEvent<HTMLUListElement>) => {
     const clicked = event.target as HTMLElement;
     if (clicked.tagName == "INPUT") {
@@ -22,8 +25,10 @@ export function CommerceList({ openModal }: CommerceListProps) {
 
   return (
     <section className="bg-background border-border col-span-3 rounded-lg border">
-      <main className="grid grid-cols-7">
-        <div className="border-border text-secondary-foreground col-span-7 grid grid-cols-7 border-b p-2 text-sm">
+      <main>
+        <div
+          className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
+        >
           <p>Logo</p>
           <p>Comercio</p>
           <p>Dueño</p>
@@ -33,7 +38,7 @@ export function CommerceList({ openModal }: CommerceListProps) {
           <p>Acciones</p>
         </div>
         <ul
-          className="[&>li]:not-first:border-border col-span-7 p-2 [&>li]:not-first:border-t"
+          className="[&>li]:not-first:border-border [&>li]:not-first:border-t"
           onClick={handleClick}
         >
           {commercesWithOwner.length ? (
@@ -43,6 +48,7 @@ export function CommerceList({ openModal }: CommerceListProps) {
                   key={`commerce-owner-${commerce.commerceId}`}
                   commerce={commerce}
                   openModal={openModal}
+                  columns={columns}
                 />
               );
             })

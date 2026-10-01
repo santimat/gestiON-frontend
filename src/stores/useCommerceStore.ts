@@ -13,6 +13,7 @@ type UseCommerceStore = {
   editingCommerce: number | null;
   isEditing: boolean;
   startEditing: (commerceId: number) => void;
+  endEditing: () => void;
   createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
   getCommercesWithOwner: () => Promise<void>;
   getCommerceStats: () => Promise<void>;
@@ -37,6 +38,7 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   startEditing: (commerceId: number) => {
     set(() => ({ editingCommerce: commerceId, isEditing: true }));
   },
+  endEditing: () => set(() => ({ editingCommerce: null, isEditing: false })),
   getEditingCommerce: () => {
     const commerceId = get().editingCommerce;
     const commerceWithOwner = get().commercesWithOwner.find(

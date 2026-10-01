@@ -1,5 +1,4 @@
 import {
-  BuildingComplex,
   BuildingComplexPlus,
   CircleCheck,
   StoreIcon,
@@ -20,14 +19,19 @@ const NewCommerceForm = lazy(() =>
 );
 
 export function Commerces() {
-  const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
-  const { commerceStats, getCommercesWithOwner, getCommerceStats } =
+  const [opened, { open: openModal, close }] = useDisclosure(false);
+  const { commerceStats, getCommercesWithOwner, getCommerceStats, endEditing } =
     useCommerce();
 
   useEffect(() => {
     getCommerceStats();
     getCommercesWithOwner();
   }, [getCommercesWithOwner, getCommerceStats]);
+
+  const closeModal = () => {
+    close();
+    endEditing();
+  };
 
   return (
     <>
@@ -39,12 +43,6 @@ export function Commerces() {
         size="xl"
         transitionProps={{ transition: "fade-down", duration: 300 }}
       >
-        <header className="mb-4">
-          <div className="flex gap-2">
-            <BuildingComplex className="text-primary" />
-            <p className="font-semibold">Nuevo Comercio</p>
-          </div>
-        </header>
         <NewCommerceForm closeModal={closeModal} />
       </Modal>
 
