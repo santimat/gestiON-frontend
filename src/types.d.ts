@@ -71,7 +71,7 @@ export type CommerceWithOwnerDTO = {
 
 export type CommerceWithOwnerForm = Omit<
   CommerceWithOwnerDTO,
-  "createdAt" | "businessActive" | "businessLogoUrl"
+  "createdAt" | "businessActive" | "businessLogoUrl" | "updatedAt"
 > & { businessLogo: File | null; password?: string };
 
 export type CommerceStats = {
@@ -82,8 +82,16 @@ export type CommerceStats = {
 
 // PRODUCT
 
-export type Product = z.infer<typeof ProductSchema> & {
+export type ProductDTO = z.infer<typeof ProductSchema>;
+
+export type Product = {
   id: number;
+  name: string;
+  description: string;
+  costPrice: number;
+  salePrice: number;
+  minStock: number;
+  currentStock: number;
   category: string;
   active: boolean;
 };

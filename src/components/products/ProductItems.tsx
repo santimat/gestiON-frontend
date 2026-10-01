@@ -7,7 +7,7 @@ type ProductItemsProps = {
   actionsIcons: {
     Icon: LucideIcon;
     label: string;
-  };
+  }[];
 };
 
 export function ProductItems({ products, actionsIcons }: ProductItemsProps) {
@@ -17,7 +17,7 @@ export function ProductItems({ products, actionsIcons }: ProductItemsProps) {
       <Table.Td>{product.category}</Table.Td>
       <Table.Td>{product.salePrice}</Table.Td>
       <Table.Td>{product.currentStock}</Table.Td>
-      <Table.Td>{product.status}</Table.Td>
+      <Table.Td>{product.active}</Table.Td>
       <Table.Td>
         <div className="flex items-center gap-1">
           {actionsIcons.map(({ Icon, label }) => (

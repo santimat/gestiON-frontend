@@ -10,7 +10,14 @@ import {
 import type { CommerceWithOwnerForm, NavItem } from "@/types";
 
 export const ALLOWEDS_ROUTES_BY_ROLE = {
-  SUDO: ["/commerces"],
+  SUDO: [
+    "/commerces",
+    "/dashboard",
+    "/cashiers",
+    "/products",
+    "/sell",
+    "/clients",
+  ],
   OWNER: ["/dashboard", "/cashiers", "/products", "/sell", "/clients"],
   CASHIER: ["/sell", "/products", "/clients"],
 };

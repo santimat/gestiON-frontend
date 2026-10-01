@@ -1,6 +1,6 @@
 import { useDisclosure } from "@mantine/hooks";
 import { Table, TextInput, Select, Button, Modal } from "@mantine/core";
-import { QrCode, Pencil, Trash, PackagePlus, PackageIcon } from "lucide-react";
+import { QrCode, Pencil, Trash, PackagePlus } from "lucide-react";
 
 import { ProductItems } from "@/components/products/ProductItems";
 import { NewProductForm } from "@/components/products/NewProductForm";
@@ -11,23 +11,34 @@ export function Products() {
     {
       name: "Café Molido 500gr",
       category: "Almacen",
+      description:
+        "Café molido de alta calidad, ideal para preparar en cafetera o prensa francesa.",
       salePrice: "$7850",
-      currentStock: "24/8",
-      status: "En stock",
+      costPrice: "$5200",
+      currentStock: 20,
+      minStock: 10,
+      active: "En stock",
     },
     {
       name: "Yerba Mate 1kg",
       category: "Almacen",
+      description: "Yerba mate en grano, ideal para preparar en termo o pava.",
       salePrice: "$6390",
-      currentStock: "5/10",
-      status: "Stock bajo",
+      costPrice: "$4500",
+      currentStock: 5,
+      minStock: 10,
+      active: "Stock bajo",
     },
     {
       name: "Agua saborizada 1.5lts",
       category: "Bebidas",
+      description:
+        "Agua saborizada de 1.5 litros, ideal para consumir en cualquier momento.",
       salePrice: "$1980",
-      currentStock: "48/12",
-      status: "En stock",
+      currentStock: 12,
+      minStock: 10,
+      costPrice: "$1200",
+      active: "En stock",
     },
   ];
 
@@ -62,15 +73,8 @@ export function Products() {
         transitionProps={{ transition: "fade-down", duration: 300 }}
         withCloseButton={false}
       >
-        <header className="mb-4">
-          <div className="flex gap-2">
-            <PackageIcon className="text-primary" />
-            <p className="font-semibold">Nuevo Producto</p>
-          </div>
-        </header>
         <NewProductForm closeModal={closeModal} />
       </Modal>
-      {/* Aca faltaria el cartel de alerta de stock */}
 
       <div className="flex w-full items-center gap-4 p-6">
         <div className="flex-1">
