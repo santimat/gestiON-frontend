@@ -9,36 +9,39 @@ import { ProductHeaderTable } from "@/components/products/ProductHeaderTable";
 export function Products() {
   const products = [
     {
+      id: 1,
       name: "Café Molido 500gr",
       category: "Almacen",
       description:
         "Café molido de alta calidad, ideal para preparar en cafetera o prensa francesa.",
-      salePrice: "$7850",
-      costPrice: "$5200",
+      salePrice: 7850,
+      costPrice: 5200,
       currentStock: 20,
       minStock: 10,
-      active: "En stock",
+      active: true,
     },
     {
+      id: 2,
       name: "Yerba Mate 1kg",
       category: "Almacen",
       description: "Yerba mate en grano, ideal para preparar en termo o pava.",
-      salePrice: "$6390",
-      costPrice: "$4500",
+      salePrice: 6390,
+      costPrice: 4500,
       currentStock: 5,
       minStock: 10,
-      active: "Stock bajo",
+      active: false,
     },
     {
+      id: 3,
       name: "Agua saborizada 1.5lts",
       category: "Bebidas",
       description:
         "Agua saborizada de 1.5 litros, ideal para consumir en cualquier momento.",
-      salePrice: "$1980",
+      salePrice: 1980,
+      costPrice: 1200,
       currentStock: 12,
       minStock: 10,
-      costPrice: "$1200",
-      active: "En stock",
+      active: true,
     },
   ];
 
