@@ -11,20 +11,31 @@ type UseCommerceStore = {
   commercesWithOwner: CommerceWithOwnerDTO[] | [];
   commerceStats: CommerceStats | null;
   editingCommerce: number | null;
+  isEditing: boolean;
   startEditing: (commerceId: number) => void;
   createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
   getCommercesWithOwner: () => Promise<void>;
   getCommerceStats: () => Promise<void>;
   toggleCommerceActive: (commerceId: number) => Promise<void>;
   getEditingCommerce: () => CommerceWithOwnerForm;
+  updateCommerceWithOwner: ({
+    commerceId,
+    userId,
+    formData,
+  }: {
+    commerceId: number;
+    userId: number;
+    formData: FormData;
+  }) => Promise<void>;
 };
 
 export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   commercesWithOwner: [],
   commerceStats: null,
   editingCommerce: null,
+  isEditing: false,
   startEditing: (commerceId: number) => {
-    set(() => ({ editingCommerce: commerceId }));
+    set(() => ({ editingCommerce: commerceId, isEditing: true }));
   },
   getEditingCommerce: () => {
     const commerceId = get().editingCommerce;
@@ -71,6 +82,29 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
 
         return { ...commerce, active: newStatus.active };
       }),
+    }));
+  },
+  updateCommerceWithOwner: async ({
+    commerceId,
+    userId,
+    formData,
+  }: {
+    commerceId: number;
+    userId: number;
+    formData: FormData;
+  }) => {
+    const commerceWithOwnerUpdated =
+      await commerceService.updateCommerceWithOwner({
+        commerceId,
+        userId,
+        formData,
+      });
+    set((prevState) => ({
+      commercesWithOwner: prevState.commercesWithOwner.map((commerce) =>
+        commerce.commerceId === commerceWithOwnerUpdated.commerceId
+          ? commerceWithOwnerUpdated
+          : commerce,
+      ),
     }));
   },
 }));

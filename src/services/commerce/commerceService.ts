@@ -4,6 +4,7 @@ import { backendAPI } from "@/services/axios/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
 import { CommerceWithOwnerRequestSchema } from "@/schemas/commerces/CommerceWithOwnerRequestSchema";
+import { CommerceWithOwnerUpdateSchema } from "@/schemas/commerces/CommerceWithOwnerUpdateSchema";
 
 export const commerceService = {
   createCommerceWithOwner: async (commerceWithOwner: FormData) => {
@@ -55,6 +56,29 @@ export const commerceService = {
               "No tienes permitido actualizara el estado de un comercio.",
           },
         });
+    }
+  },
+  updateCommerceWithOwner: async ({
+    commerceId,
+    userId,
+    formData,
+  }: {
+    commerceId: number;
+    userId: number;
+    formData: FormData;
+  }) => {
+    const dataToparse = Object.fromEntries(formData);
+    const parsedData = CommerceWithOwnerUpdateSchema.safeParse(dataToparse);
+    handleZodParsingError(parsedData);
+
+    try {
+      const { data } = await backendAPI.put(
+        `/commerces/${commerceId}/user/${userId}`,
+        formData,
+      );
+      return data;
+    } catch (error) {
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
     }
   },
 };

@@ -66,7 +66,7 @@ export type CommerceWithOwnerDTO = {
   address: string;
   businessLogoUrl: string;
   businessActive: boolean;
-  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type CommerceWithOwnerForm = Omit<

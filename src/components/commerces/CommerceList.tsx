@@ -1,16 +1,16 @@
+import { Button } from "@mantine/core";
 import type { MouseEvent } from "react";
-import { Button, Switch } from "@mantine/core";
-import { BuildingComplexIcon, PenBoxIcon } from "lucide-react";
+import { BuildingComplexIcon } from "lucide-react";
 
 import { useCommerce } from "@/hooks/useCommerce";
+import { CommerceItem } from "@/components/commerces/CommerceItem";
 
 type CommerceListProps = {
   openModal: () => void;
 };
 
 export function CommerceList({ openModal }: CommerceListProps) {
-  const { commercesWithOwner, handleToggleCommerceActive, startEditing } =
-    useCommerce();
+  const { commercesWithOwner, handleToggleCommerceActive } = useCommerce();
 
   const handleClick = async (event: MouseEvent<HTMLUListElement>) => {
     const clicked = event.target as HTMLElement;
@@ -20,66 +20,30 @@ export function CommerceList({ openModal }: CommerceListProps) {
     }
   };
 
-  const handleEdit = (e: MouseEvent<HTMLButtonElement>) => {
-    const button = e.target as HTMLElement;
-    const commerceId = Number(button.closest("li")?.dataset.commerce);
-    startEditing(commerceId);
-    openModal();
-  };
-
   return (
     <section className="bg-background border-border col-span-3 rounded-lg border">
-      <main className="grid grid-cols-6">
-        <div className="border-border text-secondary-foreground col-span-6 grid grid-cols-6 border-b p-2 text-sm">
+      <main className="grid grid-cols-7">
+        <div className="border-border text-secondary-foreground col-span-7 grid grid-cols-7 border-b p-2 text-sm">
+          <p>Logo</p>
           <p>Comercio</p>
           <p>Dueño</p>
           <p>Email</p>
-          <p>Alta</p>
+          <p>Modificación</p>
           <p>Estado</p>
           <p>Acciones</p>
         </div>
         <ul
-          className="[&>li]:not-first:border-border col-span-6 p-2 [&>li]:not-first:border-t"
+          className="[&>li]:not-first:border-border col-span-7 p-2 [&>li]:not-first:border-t"
           onClick={handleClick}
         >
           {commercesWithOwner.length ? (
             commercesWithOwner.map((commerce) => {
-              const createdAt = new Date(commerce.createdAt);
-              const day = createdAt.getDay();
-              const month = createdAt.getMonth();
-              const year = createdAt.getFullYear();
-              const switchText = commerce.businessActive
-                ? "Activo"
-                : "Inactivo";
-
               return (
-                <li
-                  data-commerce={commerce.commerceId}
+                <CommerceItem
                   key={`commerce-owner-${commerce.commerceId}`}
-                  className="grid grid-cols-6 items-center p-2"
-                >
-                  <p className="first-letter:uppercase">
-                    {commerce.businessName}
-                  </p>
-                  <p className="first-letter:uppercase">{commerce.username}</p>
-                  <p>{commerce.email}</p>
-                  <p>{`${day}/${month}/${year}`}</p>
-                  <Switch
-                    aria-label="Cambiar estado del comercio"
-                    title="Cambiar estado del comercio"
-                    label={switchText}
-                    color="green"
-                    checked={commerce.businessActive}
-                  />
-                  <Button
-                    size="compact-sm"
-                    aria-label="Editar comercio"
-                    title="Editar comercio"
-                    onClick={handleEdit}
-                  >
-                    <PenBoxIcon pointerEvents={"none"} size={20} />
-                  </Button>
-                </li>
+                  commerce={commerce}
+                  openModal={openModal}
+                />
               );
             })
           ) : (

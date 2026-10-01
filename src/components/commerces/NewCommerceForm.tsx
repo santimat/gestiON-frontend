@@ -28,13 +28,14 @@ type NewCommerceFormProps = {
 };
 
 export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
-  const { getEditingCommerce } = useCommerce();
+  const { getEditingCommerce, isEditing, handleUpdateCommerceWithOwner } =
+    useCommerce();
 
-  const [formData, setFormData] = useState<CommerceWithOwnerForm>(
+  const [commerceForm, setCommerceForm] = useState<CommerceWithOwnerForm>(
     getEditingCommerce() ?? DEFAULT_COMMERCE_WITH_OWNER,
   );
 
-  const [errors, setErrors] = useState<FieldErrors>({});
+  const [errors, setErrors] = useState<FieldErrors | null>(null);
   const { handleCreateCommerceWithOwner } = useCommerce();
 
   useEffect(() => {
@@ -55,8 +56,17 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
     const formData = new FormData(form);
 
     try {
-      await handleCreateCommerceWithOwner(formData);
-      toast.success("Comercio creado con exito");
+      if (isEditing) {
+        await handleUpdateCommerceWithOwner({
+          commerceId: commerceForm?.commerceId,
+          userId: commerceForm?.userId,
+          formData,
+        });
+        toast.success("Comercio actualizado con éxito");
+      } else {
+        await handleCreateCommerceWithOwner(formData);
+        toast.success("Comercio creado con éxito");
+      }
       closeModal();
     } catch (error) {
       const appError = error as AppError;
@@ -72,11 +82,11 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const field = e.target.name;
     const value = e.target.value;
-    setFormData((prevState) => ({ ...prevState, [field]: value }));
+    setCommerceForm((prevState) => ({ ...prevState, [field]: value }));
   };
 
   const handleChangeFile = (payload: File | null) => {
-    setFormData((prevState) => ({ ...prevState, businessLogo: payload }));
+    setCommerceForm((prevState) => ({ ...prevState, businessLogo: payload }));
   };
 
   return (
@@ -91,7 +101,7 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
           placeholder="Comercio lo de tota"
           leftSection={<StoreIcon size={20} />}
           error={errors?.businessName}
-          value={formData?.businessName}
+          value={commerceForm?.businessName}
           onChange={handleChange}
         />
         <TextInput
@@ -100,7 +110,7 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
           placeholder="Paso de la patria 117"
           leftSection={<MapPinHouse size={20} />}
           error={errors?.address}
-          value={formData?.address}
+          value={commerceForm?.address}
           onChange={handleChange}
         />
 
@@ -109,6 +119,7 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
           name="businessLogo"
           placeholder="Máximo de imagen 10MB"
           leftSection={<FileImage size={20} />}
+          value={commerceForm?.businessLogo}
           onChange={handleChangeFile}
           leftSectionPointerEvents="none"
         />
@@ -121,7 +132,7 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             name="username"
             leftSection={<UserIcon size={20} />}
             error={errors?.username}
-            value={formData?.username}
+            value={commerceForm?.username}
             onChange={handleChange}
           />
           <TextInput
@@ -130,7 +141,7 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             name="cuit"
             leftSection={<IdCard size={20} />}
             error={errors?.cuit}
-            value={formData?.cuit}
+            value={commerceForm?.cuit}
             onChange={handleChange}
           />
           <TextInput
@@ -140,28 +151,28 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             type="number"
             leftSection={<Phone size={20} />}
             error={errors?.phoneNumber}
-            value={formData?.phoneNumber}
+            value={commerceForm?.phoneNumber}
             onChange={handleChange}
           />
         </div>
-        <div className={`grid ${formData?.email ? "" : "grid-cols-2"} gap-4`}>
+        <div className={`grid ${isEditing ? "" : "grid-cols-2"} gap-4`}>
           <TextInput
             label="Email"
             placeholder="juanroman@gmail.com"
             name="email"
             leftSection={<AtSignIcon size={20} />}
             error={errors?.email}
-            value={formData?.email}
+            value={commerceForm?.email}
             onChange={handleChange}
           />
-          {!formData?.email && (
+          {!isEditing && (
             <PasswordInput
               label="Contraseña"
               name="password"
               leftSection={<UserKey size={20} />}
               placeholder="*******"
               error={errors?.password}
-              value={formData?.password}
+              value={commerceForm?.password}
               onChange={handleChange}
             />
           )}

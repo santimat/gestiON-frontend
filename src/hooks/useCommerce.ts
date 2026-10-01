@@ -6,12 +6,14 @@ export const useCommerce = () => {
   const {
     commercesWithOwner,
     commerceStats,
+    isEditing,
     startEditing,
     getEditingCommerce,
     createCommerceWithOwner,
     getCommercesWithOwner,
     getCommerceStats,
     toggleCommerceActive,
+    updateCommerceWithOwner,
   } = useCommerceStore(
     useShallow(
       ({
@@ -24,16 +26,20 @@ export const useCommerce = () => {
         getCommercesWithOwner,
         getCommerceStats,
         toggleCommerceActive,
+        updateCommerceWithOwner,
+        isEditing,
       }) => ({
         commercesWithOwner,
         editingCommerce,
         commerceStats,
+        isEditing,
         getEditingCommerce,
         startEditing,
         createCommerceWithOwner,
         getCommercesWithOwner,
         getCommerceStats,
         toggleCommerceActive,
+        updateCommerceWithOwner,
       }),
     ),
   );
@@ -50,10 +56,24 @@ export const useCommerce = () => {
     await getCommerceStats();
   };
 
+  const handleUpdateCommerceWithOwner = async ({
+    commerceId,
+    userId,
+    formData,
+  }: {
+    commerceId: number;
+    userId: number;
+    formData: FormData;
+  }) => {
+    await updateCommerceWithOwner({ commerceId, userId, formData });
+  };
+
   return {
     commercesWithOwner,
     commerceStats,
+    isEditing,
     startEditing,
+    handleUpdateCommerceWithOwner,
     getEditingCommerce,
     handleCreateCommerceWithOwner,
     handleToggleCommerceActive,
