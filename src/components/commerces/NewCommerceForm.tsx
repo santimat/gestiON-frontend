@@ -55,6 +55,10 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
     const form = e.target;
     const formData = new FormData(form);
 
+    if (commerceForm?.businessLogo == null) {
+      formData.delete("businessLogo");
+    }
+
     try {
       if (isEditing) {
         await handleUpdateCommerceWithOwner({

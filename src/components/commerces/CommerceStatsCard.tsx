@@ -17,7 +17,7 @@ export function CommerceStatsCard({
   icon: { iconName: Icon, iconClasses },
 }: CommerceStatsCardProps) {
   return (
-    <article className="border-border flex h-30 flex-col justify-between rounded-lg border p-3">
+    <article className="border-border bg-background flex h-30 flex-col justify-between rounded-lg border p-3">
       <div className="flex items-center justify-between">
         <p className="text-secondary-foreground font-semibold">{section}</p>
         <Icon className={`h-auto w-7 rounded-lg p-1 ${iconClasses}`} />
