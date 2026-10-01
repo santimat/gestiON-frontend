@@ -25,7 +25,7 @@ export function CommerceList({ openModal }: CommerceListProps) {
 
   return (
     <section className="bg-background border-border col-span-3 rounded-lg border">
-      <main>
+      <div>
         <div
           className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
         >
@@ -61,7 +61,7 @@ export function CommerceList({ openModal }: CommerceListProps) {
             </div>
           )}
         </ul>
-      </main>
+      </div>
     </section>
   );
 }

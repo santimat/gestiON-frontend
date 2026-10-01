@@ -30,10 +30,7 @@ export function CommerceItem({
   };
 
   return (
-    <li
-      data-commerce={commerce.commerceId}
-      className={`${columns} items-center p-2`}
-    >
+    <li data-commerce={commerce.commerceId} className={`${columns} p-2`}>
       <Avatar
         src={commerce.businessLogoUrl}
         alt={`${commerce.businessName} logo`}

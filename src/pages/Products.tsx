@@ -5,6 +5,7 @@ import { QrCode, Pencil, Trash, PackagePlus } from "lucide-react";
 import { ProductItems } from "@/components/products/ProductItems";
 import { NewProductForm } from "@/components/products/NewProductForm";
 import { ProductHeaderTable } from "@/components/products/ProductHeaderTable";
+import { ProductList } from "@/components/products/ProductList";
 
 export function Products() {
   const products = [
@@ -44,7 +45,6 @@ export function Products() {
       active: true,
     },
   ];
-
   const actionsIcons = [
     { Icon: QrCode, label: "Etiquetas" },
     { Icon: Pencil, label: "Editar" },
@@ -91,14 +91,15 @@ export function Products() {
         </div>
       </div>
 
-      <Table.ScrollContainer minWidth={500} className="p-4">
+      {/* <Table.ScrollContainer minWidth={500} className="p-4">
         <Table className="border-background-soft mt-8 rounded-lg border">
           <ProductHeaderTable />
           <Table.Tbody>
             <ProductItems products={products} actionsIcons={actionsIcons} />
           </Table.Tbody>
         </Table>
-      </Table.ScrollContainer>
+      </Table.ScrollContainer> */}
+      <ProductList />
     </>
   );
 }
