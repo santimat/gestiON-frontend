@@ -72,7 +72,7 @@ export type CommerceWithOwnerDTO = {
 export type CommerceWithOwnerForm = Omit<
   CommerceWithOwnerDTO,
   "createdAt" | "businessActive" | "businessLogoUrl"
-> & { password: string; businessLogo: File | null };
+> & { businessLogo: File | null; password?: string };
 
 export type CommerceStats = {
   total: number;

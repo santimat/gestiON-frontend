@@ -5,14 +5,19 @@ import {
   StoreIcon,
   UsersIcon,
 } from "lucide-react";
+import { lazy, useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
-import { CommerceList } from "@/components/commerces/CommerceList";
-import { NewCommerceForm } from "@/components/commerces/NewCommerceForm";
-import { CommerceStatsCard } from "@/components/commerces/CommerceStatsCard";
 import { useCommerce } from "@/hooks/useCommerce";
-import { useEffect } from "react";
+import { CommerceList } from "@/components/commerces/CommerceList";
+import { CommerceStatsCard } from "@/components/commerces/CommerceStatsCard";
+
+const NewCommerceForm = lazy(() =>
+  import("@/components/commerces/NewCommerceForm").then((module) => ({
+    default: module.NewCommerceForm,
+  })),
+);
 
 export function Commerces() {
   const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);

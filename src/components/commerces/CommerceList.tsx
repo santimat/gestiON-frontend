@@ -1,6 +1,7 @@
 import type { MouseEvent } from "react";
 import { Button, Switch } from "@mantine/core";
-import { BuildingComplexIcon, PenIcon } from "lucide-react";
+import { BuildingComplexIcon, PenBoxIcon } from "lucide-react";
+
 import { useCommerce } from "@/hooks/useCommerce";
 
 type CommerceListProps = {
@@ -8,15 +9,22 @@ type CommerceListProps = {
 };
 
 export function CommerceList({ openModal }: CommerceListProps) {
-  const { commercesWithOwner, handleToggleCommerceActive } = useCommerce();
+  const { commercesWithOwner, handleToggleCommerceActive, startEditing } =
+    useCommerce();
 
   const handleClick = async (event: MouseEvent<HTMLUListElement>) => {
     const clicked = event.target as HTMLElement;
-
     if (clicked.tagName == "INPUT") {
-      const commerceId = Number(clicked.dataset.commerce);
-      await handleToggleCommerceActive(commerceId);
+      const commerceId = Number(clicked.closest("li")?.dataset.commerce);
+      return await handleToggleCommerceActive(commerceId);
     }
+  };
+
+  const handleEdit = (e: MouseEvent<HTMLButtonElement>) => {
+    const button = e.target as HTMLElement;
+    const commerceId = Number(button.closest("li")?.dataset.commerce);
+    startEditing(commerceId);
+    openModal();
   };
 
   return (
@@ -46,6 +54,7 @@ export function CommerceList({ openModal }: CommerceListProps) {
 
               return (
                 <li
+                  data-commerce={commerce.commerceId}
                   key={`commerce-owner-${commerce.commerceId}`}
                   className="grid grid-cols-6 items-center p-2"
                 >
@@ -56,16 +65,20 @@ export function CommerceList({ openModal }: CommerceListProps) {
                   <p>{commerce.email}</p>
                   <p>{`${day}/${month}/${year}`}</p>
                   <Switch
-                    data-commerce={commerce.commerceId}
+                    aria-label="Cambiar estado del comercio"
+                    title="Cambiar estado del comercio"
                     label={switchText}
                     color="green"
                     checked={commerce.businessActive}
                   />
-                  <div>
-                    <Button size="compact-sm">
-                      <PenIcon size={20} />
-                    </Button>
-                  </div>
+                  <Button
+                    size="compact-sm"
+                    aria-label="Editar comercio"
+                    title="Editar comercio"
+                    onClick={handleEdit}
+                  >
+                    <PenBoxIcon pointerEvents={"none"} size={20} />
+                  </Button>
                 </li>
               );
             })

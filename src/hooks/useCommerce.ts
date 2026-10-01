@@ -6,6 +6,8 @@ export const useCommerce = () => {
   const {
     commercesWithOwner,
     commerceStats,
+    startEditing,
+    getEditingCommerce,
     createCommerceWithOwner,
     getCommercesWithOwner,
     getCommerceStats,
@@ -15,13 +17,19 @@ export const useCommerce = () => {
       ({
         commercesWithOwner,
         commerceStats,
+        editingCommerce,
+        startEditing,
+        getEditingCommerce,
         createCommerceWithOwner,
         getCommercesWithOwner,
         getCommerceStats,
         toggleCommerceActive,
       }) => ({
         commercesWithOwner,
+        editingCommerce,
         commerceStats,
+        getEditingCommerce,
+        startEditing,
         createCommerceWithOwner,
         getCommercesWithOwner,
         getCommerceStats,
@@ -45,6 +53,8 @@ export const useCommerce = () => {
   return {
     commercesWithOwner,
     commerceStats,
+    startEditing,
+    getEditingCommerce,
     handleCreateCommerceWithOwner,
     handleToggleCommerceActive,
     getCommercesWithOwner,

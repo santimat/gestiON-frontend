@@ -20,16 +20,18 @@ import type { UseDisclosureHandlers } from "@mantine/hooks";
 import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
 import { useCommerce } from "@/hooks/useCommerce";
-import type { AppError, CommerceWithOwnerForm, FieldErrors } from "@/types";
 import { DEFAULT_COMMERCE_WITH_OWNER } from "@/utils/constants";
+import type { AppError, CommerceWithOwnerForm, FieldErrors } from "@/types";
 
 type NewCommerceFormProps = {
   closeModal: UseDisclosureHandlers["close"];
 };
 
 export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
+  const { getEditingCommerce } = useCommerce();
+
   const [formData, setFormData] = useState<CommerceWithOwnerForm>(
-    DEFAULT_COMMERCE_WITH_OWNER,
+    getEditingCommerce() ?? DEFAULT_COMMERCE_WITH_OWNER,
   );
 
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -142,7 +144,7 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             onChange={handleChange}
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className={`grid ${formData?.email ? "" : "grid-cols-2"} gap-4`}>
           <TextInput
             label="Email"
             placeholder="juanroman@gmail.com"
@@ -152,15 +154,17 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
             value={formData?.email}
             onChange={handleChange}
           />
-          <PasswordInput
-            label="Contraseña"
-            name="password"
-            leftSection={<UserKey size={20} />}
-            placeholder="*******"
-            error={errors?.password}
-            value={formData?.password}
-            onChange={handleChange}
-          />
+          {!formData?.email && (
+            <PasswordInput
+              label="Contraseña"
+              name="password"
+              leftSection={<UserKey size={20} />}
+              placeholder="*******"
+              error={errors?.password}
+              value={formData?.password}
+              onChange={handleChange}
+            />
+          )}
         </div>
       </Fieldset>
       <div className="flex justify-end gap-4">
