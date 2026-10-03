@@ -1,8 +1,13 @@
+import { Pencil } from "lucide-react";
+
+import { ProductItem } from "@/components/products/ProductItem";
+
 export function ProductList() {
   const products = [
     {
       id: 1,
       name: "Café Molido 500gr",
+      imageUrl: "https://example.com/cafe-molido.jpg",
       category: "Almacen",
       description:
         "Café molido de alta calidad, ideal para preparar en cafetera o prensa francesa.",
@@ -15,6 +20,7 @@ export function ProductList() {
     {
       id: 2,
       name: "Yerba Mate 1kg",
+      imageUrl: "https://example.com/yerba-mate.jpg",
       category: "Almacen",
       description: "Yerba mate en grano, ideal para preparar en termo o pava.",
       salePrice: 6390,
@@ -26,6 +32,7 @@ export function ProductList() {
     {
       id: 3,
       name: "Agua saborizada 1.5lts",
+      imageUrl: "https://example.com/agua-saborizada.jpg",
       category: "Bebidas",
       description:
         "Agua saborizada de 1.5 litros, ideal para consumir en cualquier momento.",
@@ -37,31 +44,39 @@ export function ProductList() {
     },
   ];
 
+  const headers = [
+    "Foto",
+    "Producto",
+    "Categoría",
+    "Precio",
+    "Stock",
+    "Estado",
+    "Acciones",
+  ];
+
+  const actionsIcons = [{ Icon: Pencil, label: "Editar" }];
+
   const columns =
-    "grid grid-cols-[1fr_0.8fr_0.3fr_0.3fr_0.3fr_0.8fr] items-center gap-x-4";
+    "grid grid-cols-[0.2fr_1fr_0.8fr_0.4fr_0.4fr_0.4fr_0.2fr] items-center gap-x-4";
 
   return (
     <section className="bg-background border-border col-span-3 rounded-lg border">
       <ul
         className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
       >
-        <li>Producto</li>
-        <li>Categoría</li>
-        <li>Precio</li>
-        <li>Stock</li>
-        <li>Estado</li>
-        <li>Acciones</li>
+        {headers.map((header) => (
+          <li key={header}>{header}</li>
+        ))}
       </ul>
       <ul>
         {products.map((product) => {
           return (
-            <li className={`p-2 ${columns}`}>
-              <p>{product.name}</p>
-              <p>{product.category}</p>
-              <p>{product.salePrice}</p>
-              <p>{product.currentStock}</p>
-              <Switch />
-            </li>
+            <ProductItem
+              key={`product-${product.id}`}
+              product={product}
+              columns={columns}
+              actionsIcons={actionsIcons}
+            />
           );
         })}
       </ul>

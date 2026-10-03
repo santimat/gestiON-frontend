@@ -57,34 +57,37 @@ export function Commerces() {
           Agregar comercio
         </Button>
       </header>
-      <main className="mx-auto grid max-w-300 grid-cols-3 gap-4 p-6">
-        <CommerceStatsCard
-          section="Comercios registrados"
-          quantity={commerceStats?.total || 0}
-          description="Total en la plataforma"
-          icon={{
-            iconName: StoreIcon,
-            iconClasses: "text-primary bg-primary/40",
-          }}
-        />
-        <CommerceStatsCard
-          section="Activos"
-          quantity={commerceStats?.active || 0}
-          description="Operando actualmente"
-          icon={{
-            iconName: CircleCheck,
-            iconClasses: "text-success bg-success/40",
-          }}
-        />
-        <CommerceStatsCard
-          section="Inactivos"
-          quantity={commerceStats?.inactive || 0}
-          description="Dados de baja"
-          icon={{
-            iconName: UsersIcon,
-            iconClasses: "text-warning bg-warning/40",
-          }}
-        />
+
+      <main className="flex flex-col gap-8 p-6">
+        <div className="grid grid-cols-3 gap-4">
+          <CommerceStatsCard
+            section="Comercios registrados"
+            quantity={commerceStats?.total || 0}
+            description="Total en la plataforma"
+            icon={{
+              iconName: StoreIcon,
+              iconClasses: "text-primary bg-primary/40",
+            }}
+          />
+          <CommerceStatsCard
+            section="Activos"
+            quantity={commerceStats?.active || 0}
+            description="Operando actualmente"
+            icon={{
+              iconName: CircleCheck,
+              iconClasses: "text-success bg-success/40",
+            }}
+          />
+          <CommerceStatsCard
+            section="Inactivos"
+            quantity={commerceStats?.inactive || 0}
+            description="Dados de baja"
+            icon={{
+              iconName: UsersIcon,
+              iconClasses: "text-warning bg-warning/40",
+            }}
+          />
+        </div>
         <CommerceList openModal={openModal} />
       </main>
     </>

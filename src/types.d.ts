@@ -87,6 +87,7 @@ export type ProductDTO = z.infer<typeof ProductSchema>;
 export type Product = {
   id: number;
   name: string;
+  imageUrl: string;
   description: string;
   costPrice: number;
   salePrice: number;
