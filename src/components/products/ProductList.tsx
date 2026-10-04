@@ -2,7 +2,7 @@ import { Pencil } from "lucide-react";
 
 import { ProductItem } from "@/components/products/ProductItem";
 
-export function ProductList() {
+export const ProductList = () => {
   const products = [
     {
       id: 1,
@@ -82,4 +82,4 @@ export function ProductList() {
       </ul>
     </section>
   );
-}
+};

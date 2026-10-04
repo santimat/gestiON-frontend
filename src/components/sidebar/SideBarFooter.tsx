@@ -11,10 +11,10 @@ type SidebarFooterProps = {
   handleLogout: () => void;
 };
 
-export function SidebarFooter({
+export const SidebarFooter = ({
   authenticatedUser,
   handleLogout,
-}: SidebarFooterProps) {
+}: SidebarFooterProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
     handleLogout();
@@ -45,4 +45,4 @@ export function SidebarFooter({
       </button>
     </footer>
   );
-}
+};

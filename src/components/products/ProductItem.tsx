@@ -11,11 +11,11 @@ type ProductItemsProps = {
   columns: string;
 };
 
-export function ProductItem({
+export const ProductItem = ({
   product,
   actionsIcons,
   columns,
-}: ProductItemsProps) {
+}: ProductItemsProps) => {
   return (
     <li className={`p-2 ${columns}`}>
       <Avatar src={product.imageUrl} />
@@ -46,4 +46,4 @@ export function ProductItem({
       </ul>
     </li>
   );
-}
+};

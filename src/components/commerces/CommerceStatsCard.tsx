@@ -10,12 +10,12 @@ type CommerceStatsCardProps = {
   };
 };
 
-export function CommerceStatsCard({
+export const CommerceStatsCard = ({
   section,
   quantity,
   description,
   icon: { iconName: Icon, iconClasses },
-}: CommerceStatsCardProps) {
+}: CommerceStatsCardProps) => {
   return (
     <article className="border-border bg-background flex h-30 flex-col justify-between rounded-lg border p-3">
       <div className="flex items-center justify-between">
@@ -28,4 +28,4 @@ export function CommerceStatsCard({
       </div>
     </article>
   );
-}
+};

@@ -7,6 +7,7 @@ export const useCommerce = () => {
     commercesWithOwner,
     commerceStats,
     isEditing,
+    isPendingToggleActive,
     startEditing,
     endEditing,
     getEditingCommerce,
@@ -19,9 +20,11 @@ export const useCommerce = () => {
     useShallow(
       ({
         commercesWithOwner,
+
         commerceStats,
         editingCommerce,
         isEditing,
+        isPendingToggleActive,
         startEditing,
         endEditing,
         getEditingCommerce,
@@ -35,6 +38,7 @@ export const useCommerce = () => {
         editingCommerce,
         commerceStats,
         isEditing,
+        isPendingToggleActive,
         getEditingCommerce,
         startEditing,
         endEditing,
@@ -55,7 +59,6 @@ export const useCommerce = () => {
   const handleToggleCommerceActive = async (commerceId?: number) => {
     if (!commerceId) return;
     await toggleCommerceActive(commerceId);
-    await getCommercesWithOwner();
     await getCommerceStats();
   };
 
@@ -75,6 +78,7 @@ export const useCommerce = () => {
     commercesWithOwner,
     commerceStats,
     isEditing,
+    isPendingToggleActive,
     startEditing,
     endEditing,
     handleUpdateCommerceWithOwner,

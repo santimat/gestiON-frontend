@@ -1,4 +1,4 @@
-import type { MouseEvent } from "react";
+import type { ChangeEvent, MouseEvent } from "react";
 import { PenBoxIcon } from "lucide-react";
 import { Avatar, Button, Switch } from "@mantine/core";
 
@@ -11,14 +11,15 @@ type CommerceItemProps = {
   columns: string;
 };
 
-export function CommerceItem({
+export const CommerceItem = ({
   commerce,
   openModal,
   columns,
-}: CommerceItemProps) {
-  const { startEditing } = useCommerce();
+}: CommerceItemProps) => {
+  const { startEditing, handleToggleCommerceActive, isPendingToggleActive } =
+    useCommerce();
   const createdAt = new Date(commerce.updatedAt);
-  const day = createdAt.getDay();
+  const day = createdAt.getDate();
   const month = createdAt.getMonth();
   const year = createdAt.getFullYear();
 
@@ -27,6 +28,12 @@ export function CommerceItem({
     const commerceId = Number(button.closest("li")?.dataset.commerce);
     startEditing(commerceId);
     openModal();
+  };
+
+  const handleChangeActive = async (e: ChangeEvent<HTMLInputElement>) => {
+    const clicked = e.target as HTMLElement;
+    const commerceId = Number(clicked.closest("li")?.dataset.commerce);
+    return await handleToggleCommerceActive(commerceId);
   };
 
   return (
@@ -44,6 +51,8 @@ export function CommerceItem({
         title="Cambiar estado del comercio"
         color="green"
         checked={commerce.businessActive}
+        onChange={handleChangeActive}
+        disabled={isPendingToggleActive}
       />
       <div className="justify-center">
         <Button
@@ -57,4 +66,4 @@ export function CommerceItem({
       </div>
     </li>
   );
-}
+};

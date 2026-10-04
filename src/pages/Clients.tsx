@@ -3,7 +3,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { UserPen, UserPlus } from "lucide-react";
 import { NewClientForm } from "@/components/clients/NewClientForm";
 
-export function Clients() {
+export const Clients = () => {
   const clients = [
     {
       name: "Ernesto",
@@ -87,4 +87,4 @@ export function Clients() {
       </Table.ScrollContainer>
     </>
   );
-}
+};

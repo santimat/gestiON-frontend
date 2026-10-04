@@ -5,7 +5,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { ProductList } from "@/components/products/ProductList";
 import { NewProductForm } from "@/components/products/NewProductForm";
 
-export function Products() {
+export const Products = () => {
   const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
 
   return (
@@ -40,4 +40,4 @@ export function Products() {
       </main>
     </>
   );
-}
+};

@@ -6,7 +6,7 @@ import { SideBarItem } from "@/components/sidebar/SiderBarItem";
 import { useAuth } from "@/hooks/useAuth";
 import { SidebarFooter } from "./SideBarFooter";
 
-export function SideBar() {
+export const SideBar = () => {
   const { authenticatedUser, handleLogout } = useAuth();
 
   if (!authenticatedUser?.email) return;
@@ -38,4 +38,4 @@ export function SideBar() {
       />
     </aside>
   );
-}
+};

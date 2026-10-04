@@ -1,5 +1,4 @@
 import { Button } from "@mantine/core";
-import type { MouseEvent } from "react";
 import { BuildingComplexIcon } from "lucide-react";
 
 import { useCommerce } from "@/hooks/useCommerce";
@@ -10,18 +9,10 @@ type CommerceListProps = {
 };
 
 export function CommerceList({ openModal }: CommerceListProps) {
-  const { commercesWithOwner, handleToggleCommerceActive } = useCommerce();
+  const { commercesWithOwner } = useCommerce();
 
   const columns =
     "grid grid-cols-[72px_1fr_1fr_1.4fr_120px_90px_90px] items-center gap-x-4";
-
-  const handleClick = async (event: MouseEvent<HTMLUListElement>) => {
-    const clicked = event.target as HTMLElement;
-    if (clicked.tagName == "INPUT") {
-      const commerceId = Number(clicked.closest("li")?.dataset.commerce);
-      return await handleToggleCommerceActive(commerceId);
-    }
-  };
 
   return (
     <section className="bg-background border-border col-span-3 rounded-lg border">
@@ -37,10 +28,7 @@ export function CommerceList({ openModal }: CommerceListProps) {
           <p>Estado</p>
           <p>Acciones</p>
         </div>
-        <ul
-          className="[&>li]:not-first:border-border [&>li]:not-first:border-t"
-          onClick={handleClick}
-        >
+        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t">
           {commercesWithOwner.length ? (
             commercesWithOwner.map((commerce) => {
               return (

@@ -7,7 +7,6 @@ import {
   Group,
 } from "@mantine/core";
 import type { UseDisclosureHandlers } from "@mantine/hooks";
-
 import {
   CircleAlert,
   DollarSign,

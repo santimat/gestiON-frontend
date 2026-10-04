@@ -1,11 +1,11 @@
 import { LoginForm } from "@/components/auth/LoginForm";
 
-export function RightSection() {
-	return (
-		<section className="flex flex-col justify-center bg-background p-12 border-l border-border">
-			<div className="max-w-100 mx-auto">
-				<LoginForm />
-			</div>
-		</section>
-	);
-}
+export const RightSection = () => {
+  return (
+    <section className="bg-background border-border flex flex-col justify-center border-l p-12">
+      <div className="mx-auto max-w-100">
+        <LoginForm />
+      </div>
+    </section>
+  );
+};

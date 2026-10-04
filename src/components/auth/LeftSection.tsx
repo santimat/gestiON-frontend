@@ -5,16 +5,16 @@ import {
   Store,
 } from "lucide-react";
 
-export function LeftSection() {
+export const LeftSection = () => {
   return (
-    <section className="bg-card max-w-140 flex flex-col justify-between p-12">
-      <header className="flex gap-2 items-center">
-        <Store className="w-10 h-10 bg-primary text-card p-1 rounded-lg" />
+    <section className="bg-card flex max-w-140 flex-col justify-between p-12">
+      <header className="flex items-center gap-2">
+        <Store className="bg-primary text-card h-10 w-10 rounded-lg p-1" />
         <h1 className="text-foreground font-semibold">GestiON</h1>
       </header>
       <div>
         <div>
-          <h2 className="font-bold text-4xl">
+          <h2 className="text-4xl font-bold">
             Controlá tu stock y tus ventas en un solo lugar.
           </h2>
           <p className="text-secondary-foreground mt-4">
@@ -22,9 +22,9 @@ export function LeftSection() {
             rápido desde el mostrador o el celular.
           </p>
         </div>
-        <ul className="flex flex-col gap-6 mt-8">
-          <li className="flex gap-2 ">
-            <BanknoteArrowUp className="w-10 h-10 text-primary bg-primary-soft p-2 rounded-lg" />
+        <ul className="mt-8 flex flex-col gap-6">
+          <li className="flex gap-2">
+            <BanknoteArrowUp className="text-primary bg-primary-soft h-10 w-10 rounded-lg p-2" />
             <div>
               <h4 className="font-semibold">Registro de ventas</h4>
               <p className="text-secondary-foreground text-sm">
@@ -32,8 +32,8 @@ export function LeftSection() {
               </p>
             </div>
           </li>
-          <li className="flex gap-2 ">
-            <Package className="w-10 h-10 text-primary bg-primary-soft p-2 rounded-lg" />
+          <li className="flex gap-2">
+            <Package className="text-primary bg-primary-soft h-10 w-10 rounded-lg p-2" />
             <div>
               <h4 className="font-semibold">Control de stock</h4>
               <p className="text-secondary-foreground text-sm">
@@ -41,8 +41,8 @@ export function LeftSection() {
               </p>
             </div>
           </li>
-          <li className="flex gap-2 ">
-            <ChartNoAxesColumnIncreasing className="w-10 h-10 text-primary bg-primary-soft p-2 rounded-lg" />
+          <li className="flex gap-2">
+            <ChartNoAxesColumnIncreasing className="text-primary bg-primary-soft h-10 w-10 rounded-lg p-2" />
             <div>
               <h4 className="font-semibold">Visualización de reportes</h4>
               <p className="text-secondary-foreground text-sm">
@@ -59,4 +59,4 @@ export function LeftSection() {
       </footer>
     </section>
   );
-}
+};

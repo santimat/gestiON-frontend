@@ -3,7 +3,7 @@ import { Switch } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { NewCashierForm } from "../components/cashiers/NewCashierForm";
 
-export function Cashiers() {
+export const Cashiers = () => {
   const elements = [
     {
       name: "Martina Ríos",
@@ -92,4 +92,4 @@ export function Cashiers() {
       </aside>
     </>
   );
-}
+};

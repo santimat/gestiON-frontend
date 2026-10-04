@@ -28,7 +28,7 @@ type NewCommerceFormProps = {
   closeModal: UseDisclosureHandlers["close"];
 };
 
-export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
+export const NewCommerceForm = ({ closeModal }: NewCommerceFormProps) => {
   const { getEditingCommerce, isEditing, handleUpdateCommerceWithOwner } =
     useCommerce();
 
@@ -201,4 +201,4 @@ export function NewCommerceForm({ closeModal }: NewCommerceFormProps) {
       </form>
     </>
   );
-}
+};

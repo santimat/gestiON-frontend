@@ -12,6 +12,7 @@ type UseCommerceStore = {
   commerceStats: CommerceStats | null;
   editingCommerce: number | null;
   isEditing: boolean;
+  isPendingToggleActive: boolean;
   startEditing: (commerceId: number) => void;
   endEditing: () => void;
   createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
@@ -35,6 +36,7 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   commerceStats: null,
   editingCommerce: null,
   isEditing: false,
+  isPendingToggleActive: false,
   startEditing: (commerceId: number) => {
     set(() => ({ editingCommerce: commerceId, isEditing: true }));
   },
@@ -77,14 +79,15 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
     set(() => ({ commerceStats: stats }));
   },
   toggleCommerceActive: async (commerceId: number) => {
+    set(() => ({ isPendingToggleActive: true }));
     const newStatus = await commerceService.toggleCommerceActive(commerceId);
     set((prevState) => ({
       commercesWithOwner: prevState.commercesWithOwner.map((commerce) => {
-        if (commerce.commerceId != newStatus.id) return commerce;
-
-        return { ...commerce, active: newStatus.active };
+        if (commerce.commerceId !== newStatus.commerceId) return commerce;
+        return { ...commerce, businessActive: newStatus.active };
       }),
     }));
+    set(() => ({ isPendingToggleActive: false }));
   },
   updateCommerceWithOwner: async ({
     commerceId,

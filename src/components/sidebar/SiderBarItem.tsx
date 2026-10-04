@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import type { LucideIcon } from "lucide-react";
 
-export function SideBarItem({
+export const SideBarItem = ({
   text,
   icon: Icon,
   href,
@@ -9,7 +9,7 @@ export function SideBarItem({
   text: string;
   icon: LucideIcon;
   href: string;
-}) {
+}) => {
   return (
     <li>
       <NavLink
@@ -28,4 +28,4 @@ export function SideBarItem({
       </NavLink>
     </li>
   );
-}
+};

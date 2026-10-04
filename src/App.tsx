@@ -32,7 +32,7 @@ const ClientsPage = lazy(() =>
   import("@/pages/Clients").then((module) => ({ default: module.Clients })),
 );
 
-function App() {
+const App = () => {
   return (
     <>
       <Routes>
@@ -64,6 +64,6 @@ function App() {
       </Routes>
     </>
   );
-}
+};
 
 export default App;

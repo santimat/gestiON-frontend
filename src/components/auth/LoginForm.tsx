@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { redirect, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { AtSign, Lock } from "lucide-react";
 import { useState, type SubmitEvent } from "react";
 import { Button, PasswordInput, TextInput } from "@mantine/core";
@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import type { AppError, FieldErrors, LoginDTO } from "@/types";
 import { getRedirectByRole } from "@/utils/getRedirectByRole";
 
-export function LoginForm() {
+export const LoginForm = () => {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const { handleLogin } = useAuth();
@@ -78,4 +78,4 @@ export function LoginForm() {
       </form>
     </>
   );
-}
+};

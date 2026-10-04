@@ -5,7 +5,7 @@ interface NewClientFormProps {
   closeModal: () => void;
 }
 
-export function NewClientForm({ closeModal }: NewClientFormProps) {
+export const NewClientForm = ({ closeModal }: NewClientFormProps) => {
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
@@ -32,4 +32,4 @@ export function NewClientForm({ closeModal }: NewClientFormProps) {
       </Stack>
     </form>
   );
-}
+};

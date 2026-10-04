@@ -5,7 +5,11 @@ import type { UserRole } from "@/types";
 import { useAuth } from "@/hooks/useAuth";
 import { LoadingPage } from "@/components/Loading";
 
-export function ProtectedRoute({ allowedRoles }: { allowedRoles: UserRole[] }) {
+export const ProtectedRoute = ({
+  allowedRoles,
+}: {
+  allowedRoles: UserRole[];
+}) => {
   const { checkAuth, authenticatedUser, isCheckingAuth } = useAuth();
 
   useEffect(() => {
@@ -25,4 +29,4 @@ export function ProtectedRoute({ allowedRoles }: { allowedRoles: UserRole[] }) {
   // }
 
   return <Outlet />;
-}
+};

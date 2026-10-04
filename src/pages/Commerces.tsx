@@ -18,7 +18,7 @@ const NewCommerceForm = lazy(() =>
   })),
 );
 
-export function Commerces() {
+export const Commerces = () => {
   const [opened, { open: openModal, close }] = useDisclosure(false);
   const { commerceStats, getCommercesWithOwner, getCommerceStats, endEditing } =
     useCommerce();
@@ -92,4 +92,4 @@ export function Commerces() {
       </main>
     </>
   );
-}
+};
