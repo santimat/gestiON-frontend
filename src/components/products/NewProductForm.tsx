@@ -1,3 +1,4 @@
+import { useProduct } from "@/hooks/useProduct";
 import {
   TextInput,
   NumberInput,
@@ -5,11 +6,13 @@ import {
   Stack,
   Select,
   Group,
+  FileInput,
 } from "@mantine/core";
 import type { UseDisclosureHandlers } from "@mantine/hooks";
 import {
   CircleAlert,
   DollarSign,
+  FileImage,
   LayersArrowUp,
   ListSortAscending,
   PackageIcon,
@@ -22,6 +25,8 @@ type NewProductFormProps = {
 };
 
 export function NewProductForm({ closeModal }: NewProductFormProps) {
+  const { editingProduct } = useProduct();
+
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
     console.log("Producto guardado");
@@ -40,7 +45,7 @@ export function NewProductForm({ closeModal }: NewProductFormProps) {
         </div>
       </header>
       <form onSubmit={handleSubmit}>
-        <Stack gap="md">
+        <div className="grid grid-cols-3 gap-4">
           <TextInput
             leftSection={<PackageIcon size={20} />}
             name="name"
@@ -48,57 +53,61 @@ export function NewProductForm({ closeModal }: NewProductFormProps) {
             placeholder="Ej. Café Molido 500gr"
             required
           />
+          <Select
+            label="Categoría"
+            leftSection={<ListSortAscending size={20} />}
+            placeholder="Seleccioná una categoría"
+            data={["Almacén", "Bebidas", "Lácteos", "Limpieza", "Golosinas"]}
+            required
+          />
+          <FileInput
+            label="Imagen del prducto"
+            name="image"
+            placeholder="Máximo de imagen 10MB"
+            leftSection={<FileImage size={20} />}
+            leftSectionPointerEvents="none"
+          />
+
           <TextInput
             leftSection={<SquareText size={20} />}
             name="description"
             label="Descripcion"
             placeholder="Agregue una breve descripcion del producto"
+            className="col-span-3"
           />
 
-          <Group grow gap="md">
-            <TextInput
-              leftSection={<DollarSign size={20} />}
-              type="number"
-              label="Precio"
-              placeholder="0.00"
-              prefix="$"
-              min={0}
-              required
-            />
-            <Select
-              label="Categoría"
-              leftSection={<ListSortAscending size={20} />}
-              placeholder="Seleccioná una categoría"
-              data={["Almacén", "Bebidas", "Lácteos", "Limpieza", "Golosinas"]}
-              required
-            />
-          </Group>
+          <TextInput
+            leftSection={<DollarSign size={20} />}
+            type="number"
+            label="Precio"
+            placeholder="0.00"
+            prefix="$"
+            min={0}
+            required
+          />
 
-          <Group grow gap="md">
-            <NumberInput
-              leftSection={<LayersArrowUp size={20} />}
-              label="Stock Inicial"
-              placeholder="0"
-              min={0}
-              decimalScale={2}
-              required
-            />
-            <NumberInput
-              label="Stock Minimo"
-              placeholder="0"
-              min={0}
-              required
-              leftSection={<CircleAlert size={20} />}
-            />
-          </Group>
-
-          <div className="flex justify-end gap-4">
-            <Button className="bg-destructive!" onClick={handleClick}>
-              Cancelar
-            </Button>
-            <Button type="submit">Agregar</Button>
-          </div>
-        </Stack>
+          <NumberInput
+            leftSection={<LayersArrowUp size={20} />}
+            label="Stock Inicial"
+            placeholder="0"
+            min={0}
+            decimalScale={2}
+            required
+          />
+          <NumberInput
+            label="Stock Minimo"
+            placeholder="0"
+            min={0}
+            required
+            leftSection={<CircleAlert size={20} />}
+          />
+        </div>
+        <div className="flex justify-end gap-4 pt-6">
+          <Button className="bg-destructive!" onClick={handleClick}>
+            Cancelar
+          </Button>
+          <Button type="submit">Agregar</Button>
+        </div>
       </form>
     </>
   );

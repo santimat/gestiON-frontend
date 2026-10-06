@@ -53,7 +53,7 @@ export const AVAILABLE_AVATAR_COLORS = [
   "blue",
 ];
 
-export const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerForm = {
+export const DEFAULT_COMMERCE_WITH_OWNER = {
   userId: 0,
   commerceId: 0,
   username: "",
@@ -64,4 +64,14 @@ export const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerForm = {
   businessName: "",
   address: "",
   businessLogo: null,
+};
+
+export const DEFAULT_PRODUCT_FORM = {
+  name: "",
+  description: "",
+  price: 0,
+  category: "",
+  image: null,
+  minStock: 0,
+  maxStock: 0,
 };

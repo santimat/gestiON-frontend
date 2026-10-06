@@ -42,8 +42,8 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   },
   endEditing: () => set(() => ({ editingCommerce: null, isEditing: false })),
   getEditingCommerce: () => {
-    const commerceId = get().editingCommerce;
-    const commerceWithOwner = get().commercesWithOwner.find(
+    const { editingCommerce: commerceId, commercesWithOwner } = get();
+    const commerceWithOwner = commercesWithOwner.find(
       (commerce) => commerce.commerceId === commerceId,
     );
     return {

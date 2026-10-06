@@ -2,7 +2,7 @@ import z from "zod";
 import type { LucideIcon } from "lucide-react";
 
 import { LoginSchema } from "@/schemas/user/LoginSchema";
-import { ProductSchema } from "@/schemas/product/ProductSchema";
+import type { DEFAULT_COMMERCE_WITH_OWNER } from "@/utils/constants";
 
 // GENERAL TYPES
 export type NavItem = {
@@ -41,6 +41,7 @@ export type FieldErrors = Optional<Record<FormFields, string>>;
 
 // USER
 export type LoginDTO = z.infer<typeof LoginSchema>;
+
 type UserRole = "OWNER" | "CASHIER" | "SUDO";
 export type User = {
   id: number;
@@ -69,10 +70,7 @@ export type CommerceWithOwnerDTO = {
   updatedAt: Date;
 };
 
-export type CommerceWithOwnerForm = Omit<
-  CommerceWithOwnerDTO,
-  "createdAt" | "businessActive" | "businessLogoUrl" | "updatedAt"
-> & { businessLogo: File | null; password?: string };
+export type CommerceWithOwnerForm = typeof DEFAULT_COMMERCE_WITH_OWNER;
 
 export type CommerceStats = {
   total: number;
@@ -82,7 +80,15 @@ export type CommerceStats = {
 
 // PRODUCT
 
-export type ProductDTO = z.infer<typeof ProductSchema>;
+export type ProductDTO = {
+  name: string;
+  image: File | null;
+  description: string;
+  costPrice: number;
+  categoryId: number;
+  minStock: number;
+  currentStock: number;
+};
 
 export type Product = {
   id: number;
@@ -96,6 +102,8 @@ export type Product = {
   category: string;
   active: boolean;
 };
+
+export type ProductForm = typeof DEFAULT_PRODUCT_FORM;
 
 // CATEGORY
 export type CategoryDTO = {
