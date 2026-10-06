@@ -3,7 +3,7 @@ import type { Product } from "@/types";
 import { create } from "zustand";
 
 type UseProductStore = {
-  products: Product[] | [];
+  products: Product[];
   editingProduct: number | null;
   isEditing: boolean;
   startEditing: (productId: number) => void;

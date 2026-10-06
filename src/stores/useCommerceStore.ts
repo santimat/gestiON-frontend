@@ -8,7 +8,7 @@ import type {
 import { commerceService } from "@/services/commerce/commerceService";
 
 type UseCommerceStore = {
-  commercesWithOwner: CommerceWithOwnerDTO[] | [];
+  commercesWithOwner: CommerceWithOwnerDTO[];
   commerceStats: CommerceStats | null;
   editingCommerce: number | null;
   isEditing: boolean;
