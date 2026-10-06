@@ -48,7 +48,7 @@ export function CommerceList({ openModal }: CommerceListProps) {
               );
             })
           ) : (
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-4 p-2">
               <p>Todavía no hay comercios añadidos. Añade el primero.</p>
               <Button onClick={openModal} leftSection={<BuildingComplexIcon />}>
                 Agregar comercio
