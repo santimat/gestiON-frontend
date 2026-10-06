@@ -13,6 +13,7 @@ type UseCommerceStore = {
   editingCommerce: number | null;
   isEditing: boolean;
   isPendingToggleActive: boolean;
+  isLoading: boolean;
   startEditing: (commerceId: number) => void;
   endEditing: () => void;
   createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
@@ -37,6 +38,7 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   editingCommerce: null,
   isEditing: false,
   isPendingToggleActive: false,
+  isLoading: false,
   startEditing: (commerceId: number) => {
     set(() => ({ editingCommerce: commerceId, isEditing: true }));
   },
@@ -69,9 +71,11 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
     }));
   },
   getCommercesWithOwner: async () => {
+    set(() => ({ isLoading: true }));
     const commercesWOwner = await commerceService.getCommercesWithOwner();
     set(() => ({
       commercesWithOwner: commercesWOwner,
+      isLoading: false,
     }));
   },
   getCommerceStats: async () => {

@@ -1,5 +1,5 @@
 import { Button } from "@mantine/core";
-import { BuildingComplexIcon } from "lucide-react";
+import { BuildingComplexIcon, Loader } from "lucide-react";
 
 import { useCommerce } from "@/hooks/useCommerce";
 import { CommerceItem } from "@/components/commerces/CommerceItem";
@@ -9,10 +9,17 @@ type CommerceListProps = {
 };
 
 export function CommerceList({ openModal }: CommerceListProps) {
-  const { commercesWithOwner } = useCommerce();
+  const { commercesWithOwner, isLoading } = useCommerce();
 
   const columns =
     "grid grid-cols-[72px_1fr_1fr_1.4fr_120px_90px_90px] items-center gap-x-4";
+
+  if (isLoading)
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <Loader />
+      </div>
+    );
 
   return (
     <section className="bg-background border-border col-span-3 rounded-lg border">
