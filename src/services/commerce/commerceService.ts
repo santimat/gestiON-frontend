@@ -1,10 +1,21 @@
 import { isAxiosError } from "axios";
 
 import { backendAPI } from "@/services/axios/axiosConfig";
-import { handleAxiosErrors } from "@/utils/handleAxiosError";
+import { createAxiosErrorHandler } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
 import { CommerceWithOwnerRequestSchema } from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
 import { CommerceWithOwnerUpdateSchema } from "@/schemas/commerce/CommerceWithOwnerUpdateSchema";
+
+const handleAxiosErrors = createAxiosErrorHandler({
+  409: {
+    type: "DUPLICATE_RESOURCE",
+    message: "El comercio que intentas crear ya existe.",
+  },
+  404: {
+    type: "NOT_FOUND",
+    message: "El comercio no fue encontrado.",
+  },
+});
 
 export const commerceService = {
   createCommerceWithOwner: async (commerceWithOwner: FormData) => {
@@ -16,13 +27,7 @@ export const commerceService = {
       const { data } = await backendAPI.post("/commerces", commerceWithOwner);
       return data;
     } catch (error) {
-      if (isAxiosError(error))
-        throw handleAxiosErrors(error, {
-          401: {
-            type: "FORBIDDEN",
-            message: "No estás autorizado a crear comercios.",
-          },
-        });
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
     }
   },
   getCommercesWithOwner: async () => {
@@ -48,14 +53,7 @@ export const commerceService = {
       const { data } = await backendAPI.patch(`/commerces/${commerceId}`);
       return data;
     } catch (error) {
-      if (isAxiosError(error))
-        throw handleAxiosErrors(error, {
-          401: {
-            type: "FORBIDDEN",
-            message:
-              "No tienes permitido actualizara el estado de un comercio.",
-          },
-        });
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
     }
   },
   updateCommerceWithOwner: async ({
