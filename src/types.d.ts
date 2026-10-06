@@ -1,8 +1,8 @@
 import z from "zod";
 import type { LucideIcon } from "lucide-react";
 
-import { LoginSchema } from "@/schemas/users/LoginSchema";
-import { ProductSchema } from "@/schemas/products/ProductSchema";
+import { LoginSchema } from "@/schemas/user/LoginSchema";
+import { ProductSchema } from "@/schemas/product/ProductSchema";
 
 // GENERAL TYPES
 export type NavItem = {
@@ -95,4 +95,14 @@ export type Product = {
   currentStock: number;
   category: string;
   active: boolean;
+};
+
+// CATEGORY
+export type CategoryDTO = {
+  name: string;
+};
+
+export type Category = {
+  id: number;
+  name: string;
 };

@@ -3,8 +3,8 @@ import { isAxiosError } from "axios";
 import { backendAPI } from "@/services/axios/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
-import { CommerceWithOwnerRequestSchema } from "@/schemas/commerces/CommerceWithOwnerRequestSchema";
-import { CommerceWithOwnerUpdateSchema } from "@/schemas/commerces/CommerceWithOwnerUpdateSchema";
+import { CommerceWithOwnerRequestSchema } from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
+import { CommerceWithOwnerUpdateSchema } from "@/schemas/commerce/CommerceWithOwnerUpdateSchema";
 
 export const commerceService = {
   createCommerceWithOwner: async (commerceWithOwner: FormData) => {
