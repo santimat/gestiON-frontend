@@ -1,21 +1,10 @@
 import { isAxiosError } from "axios";
 
 import { backendAPI } from "@/services/axios/axiosConfig";
-import { createAxiosErrorHandler } from "@/utils/handleAxiosError";
+import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { ProductSchema } from "@/schemas/product/ProductSchema";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
 import type { PageableSpringBootResponse } from "@/types";
-
-const handleAxiosErrors = createAxiosErrorHandler({
-  409: {
-    type: "DUPLICATE_RESOURCE",
-    message: "El producto que intentas crear ya existe.",
-  },
-  404: {
-    type: "NOT_FOUND",
-    message: "El producto no fue encontrado.",
-  },
-});
 
 export const productService = {
   createProduct: async (product: FormData) => {

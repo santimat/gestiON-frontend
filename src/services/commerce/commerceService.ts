@@ -1,21 +1,10 @@
 import { isAxiosError } from "axios";
 
 import { backendAPI } from "@/services/axios/axiosConfig";
-import { createAxiosErrorHandler } from "@/utils/handleAxiosError";
+import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
 import { CommerceWithOwnerUpdateSchema } from "@/schemas/commerce/CommerceWithOwnerUpdateSchema";
 import { CommerceWithOwnerRequestSchema } from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
-
-const handleAxiosErrors = createAxiosErrorHandler({
-  409: {
-    type: "DUPLICATE_RESOURCE",
-    message: "El comercio que intentas crear ya existe.",
-  },
-  404: {
-    type: "NOT_FOUND",
-    message: "El comercio no fue encontrado.",
-  },
-});
 
 export const commerceService = {
   createCommerceWithOwner: async (commerceWithOwner: FormData) => {
