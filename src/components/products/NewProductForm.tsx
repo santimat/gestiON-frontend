@@ -15,17 +15,43 @@ import {
   PackageIcon,
   SquareText,
 } from "lucide-react";
-import type { SubmitEvent } from "react";
+import { useState, type ChangeEvent, type SubmitEvent } from "react";
 
-import type { Product } from "@/types";
+import { DEFAULT_PRODUCT_FORM } from "@/utils/constants";
+import type { CurrentCommerce, Product, ProductForm } from "@/types";
 
 type NewProductFormProps = {
   product: Product | null;
   closeModal: UseDisclosureHandlers["close"];
+  currentCommerce: CurrentCommerce | null;
 };
 
-export function NewProductForm({ product, closeModal }: NewProductFormProps) {
+const mapToForm = (product: Product): ProductForm => ({
+  name: product.name,
+  description: product.description,
+  category: product.category.name,
+  costPrice: product.costPrice,
+  salePrice: product.salePrice,
+  currentStock: product.currentStock,
+  minStock: product.minStock,
+  image: null,
+});
+
+export function NewProductForm({
+  product,
+  currentCommerce,
+  closeModal,
+}: NewProductFormProps) {
   const isEditing = product !== null;
+
+  const [productForm, setProductForm] = useState<ProductForm>(() =>
+    product ? mapToForm(product) : DEFAULT_PRODUCT_FORM,
+  );
+
+  const profitMultiplier =
+    product?.profitMultiplier ?? currentCommerce?.profitMultiplier ?? 1;
+  const suggestedPrice =
+    Math.round(productForm.salePrice * profitMultiplier * 100) / 100;
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
@@ -34,6 +60,19 @@ export function NewProductForm({ product, closeModal }: NewProductFormProps) {
   const handleClick = () => {
     closeModal();
   };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setProductForm((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleNumberChange =
+    (field: "costPrice" | "salePrice" | "currentStock" | "minStock") =>
+    (value: string | number) => {
+      const numericValue =
+        typeof value === "number" ? value : Number(value) || 0;
+      setProductForm((prevState) => ({ ...prevState, [field]: numericValue }));
+    };
 
   return (
     <>
@@ -52,7 +91,8 @@ export function NewProductForm({ product, closeModal }: NewProductFormProps) {
             name="name"
             label="Nombre del Producto"
             placeholder="Ej. Café Molido 500gr"
-            defaultValue={product?.name}
+            value={productForm.name}
+            onChange={handleChange}
             required
           />
           <Select
@@ -60,7 +100,13 @@ export function NewProductForm({ product, closeModal }: NewProductFormProps) {
             leftSection={<ListSortAscending size={20} />}
             placeholder="Seleccioná una categoría"
             data={["Almacén", "Bebidas", "Lácteos", "Limpieza", "Golosinas"]}
-            defaultValue={product?.category}
+            value={productForm.category}
+            onChange={(value) =>
+              setProductForm((prevState) => ({
+                ...prevState,
+                category: value ?? "",
+              }))
+            }
             required
           />
           <FileInput
@@ -68,6 +114,10 @@ export function NewProductForm({ product, closeModal }: NewProductFormProps) {
             name="image"
             placeholder="Máximo de imagen 10MB"
             leftSection={<FileImage size={20} />}
+            value={productForm.image}
+            onChange={(file) =>
+              setProductForm((prevState) => ({ ...prevState, image: file }))
+            }
             leftSectionPointerEvents="none"
           />
 
@@ -76,40 +126,43 @@ export function NewProductForm({ product, closeModal }: NewProductFormProps) {
             name="description"
             label="Descripcion"
             placeholder="Agregue una breve descripcion del producto"
-            defaultValue={product?.description}
+            value={productForm.description}
+            onChange={handleChange}
             className="col-span-3"
           />
 
-          <TextInput
+          <NumberInput
             leftSection={<DollarSign size={20} />}
-            type="number"
             label="Precio de Costo"
             placeholder="0.00"
             prefix="$"
             min={0}
-            defaultValue={product?.costPrice}
+            decimalScale={2}
+            value={productForm.costPrice}
+            onChange={handleNumberChange("costPrice")}
+            required
+          />
+
+          <NumberInput
+            leftSection={<DollarSign size={20} />}
+            label="Precio de Venta"
+            placeholder="0.00"
+            prefix="$"
+            min={0}
+            decimalScale={2}
+            value={productForm.salePrice}
+            onChange={handleNumberChange("salePrice")}
             required
           />
 
           <TextInput
             leftSection={<DollarSign size={20} />}
-            type="number"
-            label="Precio de Venta"
+            label="Precio Sugerido"
             placeholder="0.00"
             prefix="$"
-            min={0}
-            defaultValue={product?.salePrice}
-            required
-          />
-          <TextInput
-            leftSection={<DollarSign size={20} />}
-            type="number"
-            label="Precio de Venta"
-            placeholder="0.00"
-            prefix="$"
-            min={0}
-            defaultValue={product?.salePrice}
-            required
+            value={productForm.salePrice > 0 ? suggestedPrice.toFixed(2) : ""}
+            readOnly
+            leftSectionPointerEvents="none"
           />
 
           <NumberInput
@@ -118,14 +171,16 @@ export function NewProductForm({ product, closeModal }: NewProductFormProps) {
             placeholder="0"
             min={0}
             decimalScale={2}
-            defaultValue={product?.currentStock}
+            value={productForm.currentStock}
+            onChange={handleNumberChange("currentStock")}
             required
           />
           <NumberInput
             label="Stock Minimo"
             placeholder="0"
             min={0}
-            defaultValue={product?.minStock}
+            value={productForm.minStock}
+            onChange={handleNumberChange("minStock")}
             required
             leftSection={<CircleAlert size={20} />}
           />

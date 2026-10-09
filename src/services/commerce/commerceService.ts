@@ -48,6 +48,14 @@ export const commerceService = {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
     }
   },
+  getCurrentCommerce: async () => {
+    try {
+      const { data } = await backendAPI.get("/commerces/current");
+      return data;
+    } catch (error) {
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
+    }
+  },
   toggleCommerceActive: async (commerceId: number) => {
     try {
       const { data } = await backendAPI.patch(`/commerces/${commerceId}`);

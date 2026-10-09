@@ -6,11 +6,13 @@ export const useCommerce = () => {
   const {
     commercesWithOwner,
     commerceStats,
+    currentCommerce,
     isPendingToggleActive,
     isLoading,
     createCommerceWithOwner,
     getCommercesWithOwner,
     getCommerceStats,
+    getCurrentCommerce,
     toggleCommerceActive,
     updateCommerceWithOwner,
   } = useCommerceStore(
@@ -18,21 +20,25 @@ export const useCommerce = () => {
       ({
         commercesWithOwner,
         commerceStats,
+        currentCommerce,
         isPendingToggleActive,
         isLoading,
         createCommerceWithOwner,
         getCommercesWithOwner,
         getCommerceStats,
+        getCurrentCommerce,
         toggleCommerceActive,
         updateCommerceWithOwner,
       }) => ({
         commercesWithOwner,
         commerceStats,
+        currentCommerce,
         isPendingToggleActive,
         isLoading,
         createCommerceWithOwner,
         getCommercesWithOwner,
         getCommerceStats,
+        getCurrentCommerce,
         toggleCommerceActive,
         updateCommerceWithOwner,
       }),
@@ -65,6 +71,7 @@ export const useCommerce = () => {
   return {
     commercesWithOwner,
     commerceStats,
+    currentCommerce,
     isPendingToggleActive,
     isLoading,
     handleUpdateCommerceWithOwner,
@@ -72,5 +79,6 @@ export const useCommerce = () => {
     handleToggleCommerceActive,
     getCommercesWithOwner,
     getCommerceStats,
+    getCurrentCommerce,
   };
 };

@@ -34,9 +34,7 @@ type NewCommerceFormProps = {
   closeModal: UseDisclosureHandlers["close"];
 };
 
-const mapDtoToForm = (
-  commerce: CommerceWithOwner,
-): CommerceWithOwnerRequest => ({
+const mapToForm = (commerce: CommerceWithOwner): CommerceWithOwnerRequest => ({
   userId: commerce.userId,
   commerceId: commerce.commerceId,
   username: commerce.username,
@@ -59,7 +57,7 @@ export const NewCommerceForm = ({
   const isEditing = commerce !== null;
 
   const [commerceForm, setCommerceForm] = useState<CommerceWithOwnerRequest>(
-    () => (commerce ? mapDtoToForm(commerce) : DEFAULT_COMMERCE_WITH_OWNER),
+    () => (commerce ? mapToForm(commerce) : DEFAULT_COMMERCE_WITH_OWNER),
   );
 
   const [errors, setErrors] = useState<FieldErrors | null>(null);

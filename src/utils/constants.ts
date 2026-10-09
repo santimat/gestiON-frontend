@@ -7,7 +7,7 @@ import {
   Users,
 } from "lucide-react";
 
-import type { CommerceWithOwnerForm, NavItem } from "@/types";
+import type { CommerceWithOwnerRequest, NavItem, ProductForm } from "@/types";
 
 export const ALLOWEDS_ROUTES_BY_ROLE = {
   SUDO: [
@@ -53,7 +53,7 @@ export const AVAILABLE_AVATAR_COLORS = [
   "blue",
 ];
 
-export const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerForm = {
+export const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerRequest = {
   userId: 0,
   commerceId: 0,
   username: "",
@@ -66,12 +66,13 @@ export const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerForm = {
   businessLogo: null,
 };
 
-export const DEFAULT_PRODUCT_FORM = {
+export const DEFAULT_PRODUCT_FORM: ProductForm = {
   name: "",
   description: "",
-  price: 0,
   category: "",
-  image: null,
+  costPrice: 0,
+  salePrice: 0,
+  currentStock: 0,
   minStock: 0,
-  maxStock: 0,
+  image: null,
 };

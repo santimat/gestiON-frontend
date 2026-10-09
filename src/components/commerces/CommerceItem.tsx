@@ -4,11 +4,11 @@ import type { ChangeEvent } from "react";
 import { Avatar, Button, Modal, Switch } from "@mantine/core";
 
 import { useCommerce } from "@/hooks/useCommerce";
-import type { CommerceWithOwnerDTO } from "@/types";
+import type { CommerceWithOwner } from "@/types";
 
 type CommerceItemProps = {
-  commerce: CommerceWithOwnerDTO;
-  onEdit: (commerce: CommerceWithOwnerDTO) => void;
+  commerce: CommerceWithOwner;
+  onEdit: (commerce: CommerceWithOwner) => void;
   columns: string;
 };
 

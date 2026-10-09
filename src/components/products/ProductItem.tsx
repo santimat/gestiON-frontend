@@ -22,7 +22,7 @@ export const ProductItem = ({
     <li className={`p-2 ${columns}`}>
       <Avatar src={product.imageUrl} />
       <p>{product.name}</p>
-      <p>{product.category}</p>
+      <p>{product.category.name}</p>
       <NumberFormatter prefix="$" value={product.salePrice} thousandSeparator />
       <p>{product.currentStock}</p>
       <Switch

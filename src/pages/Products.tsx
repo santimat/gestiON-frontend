@@ -7,15 +7,20 @@ import type { Product } from "@/types";
 import { ProductList } from "@/components/products/ProductList";
 import { NewProductForm } from "@/components/products/NewProductForm";
 import { useProduct } from "@/hooks/useProduct";
+import { useCommerce } from "@/hooks/useCommerce";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Products = () => {
   const [opened, { open: openModal, close }] = useDisclosure(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const { getProducts, totalProducts } = useProduct();
+  const { authenticatedUser } = useAuth();
+  const { getCurrentCommerce, currentCommerce } = useCommerce();
 
   useEffect(() => {
     getProducts();
-  }, [getProducts]);
+    if (authenticatedUser?.commerceId) getCurrentCommerce();
+  }, [getProducts, getCurrentCommerce, authenticatedUser]);
 
   const closeModal = () => {
     close();
@@ -45,6 +50,7 @@ export const Products = () => {
         <NewProductForm
           key={editingProduct?.id ?? "create"}
           product={editingProduct}
+          currentCommerce={currentCommerce ?? null}
           closeModal={closeModal}
         />
       </Modal>

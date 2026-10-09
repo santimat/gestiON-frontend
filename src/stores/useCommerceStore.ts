@@ -1,16 +1,22 @@
 import { create } from "zustand";
 
-import type { CommerceStats, CommerceWithOwner } from "@/types";
+import type {
+  CommerceStats,
+  CommerceWithOwner,
+  CurrentCommerce,
+} from "@/types";
 import { commerceService } from "@/services/commerce/commerceService";
 
 type UseCommerceStore = {
   commercesWithOwner: CommerceWithOwner[];
   commerceStats?: CommerceStats | null;
+  currentCommerce?: CurrentCommerce | null;
   isPendingToggleActive: boolean;
   isLoading: boolean;
   createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
   getCommercesWithOwner: () => Promise<void>;
   getCommerceStats: () => Promise<void>;
+  getCurrentCommerce: () => Promise<void>;
   toggleCommerceActive: (commerceId: number) => Promise<void>;
   updateCommerceWithOwner: ({
     commerceId,
@@ -26,6 +32,7 @@ type UseCommerceStore = {
 export const useCommerceStore = create<UseCommerceStore>((set) => ({
   commercesWithOwner: [],
   commerceStats: null,
+  currentCommerce: null,
   isPendingToggleActive: false,
   isLoading: false,
   createCommerceWithOwner: async (commercesWithOwner: FormData) => {
@@ -49,6 +56,10 @@ export const useCommerceStore = create<UseCommerceStore>((set) => ({
   getCommerceStats: async () => {
     const stats = await commerceService.getCommerceStats();
     set(() => ({ commerceStats: stats }));
+  },
+  getCurrentCommerce: async () => {
+    const currentCommerce = await commerceService.getCurrentCommerce();
+    set(() => ({ currentCommerce }));
   },
   toggleCommerceActive: async (commerceId: number) => {
     set(() => ({ isPendingToggleActive: true }));

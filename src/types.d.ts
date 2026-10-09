@@ -64,7 +64,9 @@ export type User = {
   active: boolean;
 };
 
-export type AuthUser = Omit<User, "phoneNumber" | "createdAt">;
+export type AuthUser = Omit<User, "phoneNumber" | "createdAt"> & {
+  commerceId: number;
+};
 
 // COMMERCE
 export type CommerceWithOwner = {
@@ -92,6 +94,14 @@ export type CommerceStats = {
   inactive: number;
 };
 
+export type CurrentCommerce = {
+  commerceId: number;
+  businessName: string;
+  businessLogoUrl: string;
+  businessActive: boolean;
+  profitMultiplier: number;
+};
+
 // PRODUCT
 export type ProductRequest = z.infer<typeof ProductSchema>;
 
@@ -108,6 +118,17 @@ export type Product = {
   category: Category;
   active: boolean;
   updatedAt: Date;
+};
+
+export type ProductForm = {
+  name: string;
+  description: string;
+  category: string;
+  costPrice: number;
+  salePrice: number;
+  currentStock: number;
+  minStock: number;
+  image: File | null;
 };
 
 // CATEGORY
