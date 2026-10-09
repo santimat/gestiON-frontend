@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { LoginSchema } from "@/schemas/user/LoginSchema";
 import type { ProductSchema } from "@/schemas/product/ProductSchema";
 import { CommerceWithOwnerRequestSchema } from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
+import type { ErrorDictionary } from "@/utils/errorDictionary";
 
 // GENERAL TYPES
 export type NavItem = {
@@ -16,16 +17,7 @@ export type ZodIssue = z.core.$ZodIssue;
 export type ZodParseResult = z.ZodSafeParseResult<z.output<typeof schema>>;
 
 export type AppError = {
-  type:
-    | "VALIDATION_ERROR"
-    | "NETWORK_ERROR"
-    | "INVALID_CREDENTIALS"
-    | "FORBIDDEN"
-    | "ALREADY_EXISTS"
-    | "BAD_REQUEST"
-    | "NOT_FOUND"
-    | "DUPLICATE_RESOURCE"
-    | "UNKNOWN";
+  code: keyof typeof ErrorDictionary;
   message: string;
   fieldErrors?: FieldErrors;
 };
