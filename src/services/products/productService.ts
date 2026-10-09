@@ -4,6 +4,7 @@ import { backendAPI } from "@/services/axios/axiosConfig";
 import { createAxiosErrorHandler } from "@/utils/handleAxiosError";
 import { ProductSchema } from "@/schemas/product/ProductSchema";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
+import type { PageableSpringBootResponse } from "@/types";
 
 const handleAxiosErrors = createAxiosErrorHandler({
   409: {
@@ -31,7 +32,9 @@ export const productService = {
   },
   getProducts: async () => {
     try {
-      const { data } = await backendAPI.get("/products");
+      const { data } = (await backendAPI.get("/products")) as {
+        data: PageableSpringBootResponse;
+      };
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);

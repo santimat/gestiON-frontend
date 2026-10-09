@@ -1,6 +1,11 @@
 import z from "zod";
 
 export const UserRequestSchema = z.object({
+  userId: z
+    .number()
+    .int()
+    .positive("El ID de usuario debe ser un número positivo")
+    .optional(),
   username: z
     .string("Formato inválido")
     .min(3, "El nombre debe tener al menos 3 caracteres")

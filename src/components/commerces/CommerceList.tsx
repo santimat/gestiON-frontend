@@ -1,25 +1,33 @@
 import { Button } from "@mantine/core";
-import { BuildingComplexIcon, Loader } from "lucide-react";
+import { BuildingComplexIcon } from "lucide-react";
 
+import type { CommerceWithOwner } from "@/types";
 import { useCommerce } from "@/hooks/useCommerce";
+import { LoadingPage } from "@/components/Loading";
 import { CommerceItem } from "@/components/commerces/CommerceItem";
 
 type CommerceListProps = {
   openModal: () => void;
+  onEdit: (commerce: CommerceWithOwner) => void;
 };
 
-export function CommerceList({ openModal }: CommerceListProps) {
+export function CommerceList({ openModal, onEdit }: CommerceListProps) {
   const { commercesWithOwner, isLoading } = useCommerce();
 
   const columns =
     "grid grid-cols-[72px_1fr_1fr_1.4fr_120px_90px_90px] items-center gap-x-4";
 
-  if (isLoading)
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        <Loader />
-      </div>
-    );
+  const headers = [
+    "Logo",
+    "Comercio",
+    "Dueño",
+    "Email",
+    "Modificación",
+    "Estado",
+    "Acciones",
+  ];
+
+  if (isLoading) return <LoadingPage />;
 
   return (
     <section className="bg-background border-border col-span-3 rounded-lg border">
@@ -27,13 +35,9 @@ export function CommerceList({ openModal }: CommerceListProps) {
         <div
           className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
         >
-          <p>Logo</p>
-          <p>Comercio</p>
-          <p>Dueño</p>
-          <p>Email</p>
-          <p>Modificación</p>
-          <p>Estado</p>
-          <p>Acciones</p>
+          {headers.map((header) => (
+            <p key={header}>{header}</p>
+          ))}
         </div>
         <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t">
           {commercesWithOwner.length ? (
@@ -42,7 +46,7 @@ export function CommerceList({ openModal }: CommerceListProps) {
                 <CommerceItem
                   key={`commerce-owner-${commerce.commerceId}`}
                   commerce={commerce}
-                  openModal={openModal}
+                  onEdit={onEdit}
                   columns={columns}
                 />
               );

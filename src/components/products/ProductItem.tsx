@@ -9,12 +9,14 @@ type ProductItemsProps = {
     label: string;
   }[];
   columns: string;
+  onEdit: () => void;
 };
 
 export const ProductItem = ({
   product,
   actionsIcons,
   columns,
+  onEdit,
 }: ProductItemsProps) => {
   return (
     <li className={`p-2 ${columns}`}>
@@ -36,6 +38,7 @@ export const ProductItem = ({
               <button
                 aria-label={label}
                 title={label}
+                onClick={onEdit}
                 className="rounded-md p-2 transition-transform hover:scale-110 hover:cursor-pointer active:scale-95"
               >
                 <Icon pointerEvents="none" size={20} />

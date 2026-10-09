@@ -1,4 +1,3 @@
-import { useProduct } from "@/hooks/useProduct";
 import {
   TextInput,
   NumberInput,
@@ -18,16 +17,18 @@ import {
 } from "lucide-react";
 import type { SubmitEvent } from "react";
 
+import type { Product } from "@/types";
+
 type NewProductFormProps = {
+  product: Product | null;
   closeModal: UseDisclosureHandlers["close"];
 };
 
-export function NewProductForm({ closeModal }: NewProductFormProps) {
-  const { editingProduct } = useProduct();
+export function NewProductForm({ product, closeModal }: NewProductFormProps) {
+  const isEditing = product !== null;
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
-    console.log("Producto guardado");
   };
 
   const handleClick = () => {
@@ -39,7 +40,9 @@ export function NewProductForm({ closeModal }: NewProductFormProps) {
       <header className="mb-4">
         <div className="flex gap-2">
           <PackageIcon className="text-primary" />
-          <p className="font-semibold">Nuevo Producto</p>
+          <p className="font-semibold">
+            {isEditing ? "Editar Producto" : "Nuevo Producto"}
+          </p>
         </div>
       </header>
       <form onSubmit={handleSubmit}>
@@ -49,6 +52,7 @@ export function NewProductForm({ closeModal }: NewProductFormProps) {
             name="name"
             label="Nombre del Producto"
             placeholder="Ej. Café Molido 500gr"
+            defaultValue={product?.name}
             required
           />
           <Select
@@ -56,6 +60,7 @@ export function NewProductForm({ closeModal }: NewProductFormProps) {
             leftSection={<ListSortAscending size={20} />}
             placeholder="Seleccioná una categoría"
             data={["Almacén", "Bebidas", "Lácteos", "Limpieza", "Golosinas"]}
+            defaultValue={product?.category}
             required
           />
           <FileInput
@@ -71,16 +76,39 @@ export function NewProductForm({ closeModal }: NewProductFormProps) {
             name="description"
             label="Descripcion"
             placeholder="Agregue una breve descripcion del producto"
+            defaultValue={product?.description}
             className="col-span-3"
           />
 
           <TextInput
             leftSection={<DollarSign size={20} />}
             type="number"
-            label="Precio"
+            label="Precio de Costo"
             placeholder="0.00"
             prefix="$"
             min={0}
+            defaultValue={product?.costPrice}
+            required
+          />
+
+          <TextInput
+            leftSection={<DollarSign size={20} />}
+            type="number"
+            label="Precio de Venta"
+            placeholder="0.00"
+            prefix="$"
+            min={0}
+            defaultValue={product?.salePrice}
+            required
+          />
+          <TextInput
+            leftSection={<DollarSign size={20} />}
+            type="number"
+            label="Precio de Venta"
+            placeholder="0.00"
+            prefix="$"
+            min={0}
+            defaultValue={product?.salePrice}
             required
           />
 
@@ -90,12 +118,14 @@ export function NewProductForm({ closeModal }: NewProductFormProps) {
             placeholder="0"
             min={0}
             decimalScale={2}
+            defaultValue={product?.currentStock}
             required
           />
           <NumberInput
             label="Stock Minimo"
             placeholder="0"
             min={0}
+            defaultValue={product?.minStock}
             required
             leftSection={<CircleAlert size={20} />}
           />
@@ -104,7 +134,9 @@ export function NewProductForm({ closeModal }: NewProductFormProps) {
           <Button className="bg-destructive!" onClick={handleClick}>
             Cancelar
           </Button>
-          <Button type="submit">Agregar</Button>
+          <Button type="submit">
+            {isEditing ? "Guardar cambios" : "Agregar"}
+          </Button>
         </div>
       </form>
     </>

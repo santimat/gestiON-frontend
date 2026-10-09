@@ -4,10 +4,11 @@ import {
   StoreIcon,
   UsersIcon,
 } from "lucide-react";
-import { lazy, useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { lazy, useEffect, useState } from "react";
 
+import type { CommerceWithOwner } from "@/types";
 import { useCommerce } from "@/hooks/useCommerce";
 import { CommerceList } from "@/components/commerces/CommerceList";
 import { CommerceStatsCard } from "@/components/commerces/CommerceStatsCard";
@@ -20,7 +21,10 @@ const NewCommerceForm = lazy(() =>
 
 export const Commerces = () => {
   const [opened, { open: openModal, close }] = useDisclosure(false);
-  const { commerceStats, getCommercesWithOwner, getCommerceStats, endEditing } =
+
+  const [editingCommerce, setEditingCommerce] =
+    useState<CommerceWithOwner | null>(null);
+  const { commerceStats, getCommercesWithOwner, getCommerceStats } =
     useCommerce();
 
   useEffect(() => {
@@ -30,7 +34,17 @@ export const Commerces = () => {
 
   const closeModal = () => {
     close();
-    endEditing();
+    setEditingCommerce(null);
+  };
+
+  const openCreateModal = () => {
+    setEditingCommerce(null);
+    openModal();
+  };
+
+  const openEditModal = (commerce: CommerceWithOwner) => {
+    setEditingCommerce(commerce);
+    openModal();
   };
 
   return (
@@ -43,7 +57,11 @@ export const Commerces = () => {
         size="xl"
         transitionProps={{ transition: "fade-down", duration: 300 }}
       >
-        <NewCommerceForm closeModal={closeModal} />
+        <NewCommerceForm
+          key={editingCommerce?.commerceId ?? "create"}
+          commerce={editingCommerce}
+          closeModal={closeModal}
+        />
       </Modal>
 
       <header className="border-border flex items-center justify-between gap-2 border-b p-4">
@@ -53,7 +71,7 @@ export const Commerces = () => {
             Gestión de comercios y registro de comercios.
           </p>
         </div>
-        <Button onClick={openModal} leftSection={<BuildingComplexPlus />}>
+        <Button onClick={openCreateModal} leftSection={<BuildingComplexPlus />}>
           Agregar comercio
         </Button>
       </header>
@@ -88,7 +106,7 @@ export const Commerces = () => {
             }}
           />
         </div>
-        <CommerceList openModal={openModal} />
+        <CommerceList openModal={openCreateModal} onEdit={openEditModal} />
       </main>
     </>
   );

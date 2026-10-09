@@ -2,17 +2,24 @@ import { useProductStore } from "@/stores/useProductStore";
 import { useShallow } from "zustand/shallow";
 
 export const useProduct = () => {
-  const { products, editingProduct, createProduct, getProducts } =
+  const { products, totalProducts, isLoading, createProduct, getProducts } =
     useProductStore(
       useShallow(
-        ({ products, editingProduct, createProduct, getProducts }) => ({
+        ({
           products,
-          editingProduct,
+          totalProducts,
+          isLoading,
+          createProduct,
+          getProducts,
+        }) => ({
+          products,
+          totalProducts,
+          isLoading,
           createProduct,
           getProducts,
         }),
       ),
     );
 
-  return { products, editingProduct, createProduct, getProducts };
+  return { isLoading, products, totalProducts, createProduct, getProducts };
 };

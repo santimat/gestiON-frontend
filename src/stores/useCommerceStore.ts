@@ -1,26 +1,17 @@
 import { create } from "zustand";
 
-import type {
-  CommerceStats,
-  CommerceWithOwnerDTO,
-  CommerceWithOwnerForm,
-} from "@/types";
+import type { CommerceStats, CommerceWithOwner } from "@/types";
 import { commerceService } from "@/services/commerce/commerceService";
 
 type UseCommerceStore = {
-  commercesWithOwner: CommerceWithOwnerDTO[];
-  commerceStats: CommerceStats | null;
-  editingCommerce: number | null;
-  isEditing: boolean;
+  commercesWithOwner: CommerceWithOwner[];
+  commerceStats?: CommerceStats | null;
   isPendingToggleActive: boolean;
   isLoading: boolean;
-  startEditing: (commerceId: number) => void;
-  endEditing: () => void;
   createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
   getCommercesWithOwner: () => Promise<void>;
   getCommerceStats: () => Promise<void>;
   toggleCommerceActive: (commerceId: number) => Promise<void>;
-  getEditingCommerce: () => CommerceWithOwnerForm;
   updateCommerceWithOwner: ({
     commerceId,
     userId,
@@ -32,34 +23,11 @@ type UseCommerceStore = {
   }) => Promise<void>;
 };
 
-export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
+export const useCommerceStore = create<UseCommerceStore>((set) => ({
   commercesWithOwner: [],
   commerceStats: null,
-  editingCommerce: null,
-  isEditing: false,
   isPendingToggleActive: false,
   isLoading: false,
-  startEditing: (commerceId: number) => {
-    set(() => ({ editingCommerce: commerceId, isEditing: true }));
-  },
-  endEditing: () => set(() => ({ editingCommerce: null, isEditing: false })),
-  getEditingCommerce: () => {
-    const { editingCommerce: commerceId, commercesWithOwner } = get();
-    const commerceWithOwner = commercesWithOwner.find(
-      (commerce) => commerce.commerceId === commerceId,
-    );
-    return {
-      userId: commerceWithOwner?.userId,
-      commerceId: commerceWithOwner?.commerceId,
-      username: commerceWithOwner?.username,
-      email: commerceWithOwner?.email,
-      phoneNumber: commerceWithOwner?.phoneNumber,
-      businessName: commerceWithOwner?.businessName,
-      cuit: commerceWithOwner?.cuit,
-      address: commerceWithOwner?.address,
-      businessLogo: null,
-    } as CommerceWithOwnerForm;
-  },
   createCommerceWithOwner: async (commercesWithOwner: FormData) => {
     const newCommerceWithOwner =
       await commerceService.createCommerceWithOwner(commercesWithOwner);

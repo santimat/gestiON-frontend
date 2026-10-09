@@ -22,22 +22,47 @@ import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
 import { useCommerce } from "@/hooks/useCommerce";
 import { DEFAULT_COMMERCE_WITH_OWNER } from "@/utils/constants";
-import type { AppError, CommerceWithOwnerForm, FieldErrors } from "@/types";
+import type {
+  AppError,
+  CommerceWithOwner,
+  CommerceWithOwnerRequest,
+  FieldErrors,
+} from "@/types";
 
 type NewCommerceFormProps = {
+  commerce: CommerceWithOwner | null;
   closeModal: UseDisclosureHandlers["close"];
 };
 
-export const NewCommerceForm = ({ closeModal }: NewCommerceFormProps) => {
-  const { getEditingCommerce, isEditing, handleUpdateCommerceWithOwner } =
+const mapDtoToForm = (
+  commerce: CommerceWithOwner,
+): CommerceWithOwnerRequest => ({
+  userId: commerce.userId,
+  commerceId: commerce.commerceId,
+  username: commerce.username,
+  email: commerce.email,
+  phoneNumber: commerce.phoneNumber,
+  businessName: commerce.businessName,
+  cuit: commerce.cuit,
+  address: commerce.address,
+  password: "",
+  businessLogo: null,
+});
+
+export const NewCommerceForm = ({
+  commerce,
+  closeModal,
+}: NewCommerceFormProps) => {
+  const { handleUpdateCommerceWithOwner, handleCreateCommerceWithOwner } =
     useCommerce();
 
-  const [commerceForm, setCommerceForm] = useState<CommerceWithOwnerForm>(
-    getEditingCommerce() ?? DEFAULT_COMMERCE_WITH_OWNER,
+  const isEditing = commerce !== null;
+
+  const [commerceForm, setCommerceForm] = useState<CommerceWithOwnerRequest>(
+    () => (commerce ? mapDtoToForm(commerce) : DEFAULT_COMMERCE_WITH_OWNER),
   );
 
   const [errors, setErrors] = useState<FieldErrors | null>(null);
-  const { handleCreateCommerceWithOwner } = useCommerce();
 
   useEffect(() => {
     if (errors) {
@@ -61,10 +86,10 @@ export const NewCommerceForm = ({ closeModal }: NewCommerceFormProps) => {
     }
 
     try {
-      if (isEditing) {
+      if (commerce) {
         await handleUpdateCommerceWithOwner({
-          commerceId: commerceForm?.commerceId,
-          userId: commerceForm?.userId,
+          commerceId: commerce.commerceId,
+          userId: commerce.userId,
           formData,
         });
         toast.success("Comercio actualizado con éxito");
@@ -133,9 +158,10 @@ export const NewCommerceForm = ({ closeModal }: NewCommerceFormProps) => {
             name="businessLogo"
             placeholder="Máximo de imagen 10MB"
             leftSection={<FileImage size={20} />}
+            error={errors?.businessLogo}
             value={commerceForm?.businessLogo}
-            onChange={handleChangeFile}
             leftSectionPointerEvents="none"
+            onChange={handleChangeFile}
           />
         </Fieldset>
         <Fieldset className="grid gap-4" legend="Información del dueño">

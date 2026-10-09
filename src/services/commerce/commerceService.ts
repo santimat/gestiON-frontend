@@ -3,8 +3,8 @@ import { isAxiosError } from "axios";
 import { backendAPI } from "@/services/axios/axiosConfig";
 import { createAxiosErrorHandler } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
-import { CommerceWithOwnerRequestSchema } from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
 import { CommerceWithOwnerUpdateSchema } from "@/schemas/commerce/CommerceWithOwnerUpdateSchema";
+import { CommerceWithOwnerRequestSchema } from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
 
 const handleAxiosErrors = createAxiosErrorHandler({
   409: {
@@ -65,7 +65,7 @@ export const commerceService = {
     userId: number;
     formData: FormData;
   }) => {
-    const dataToparse = Object.fromEntries(formData);
+    const dataToparse = { ...Object.fromEntries(formData), commerceId, userId };
     const parsedData = CommerceWithOwnerUpdateSchema.safeParse(dataToparse);
     handleZodParsingError(parsedData);
 

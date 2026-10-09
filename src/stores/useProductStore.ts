@@ -4,22 +4,16 @@ import { create } from "zustand";
 
 type UseProductStore = {
   products: Product[];
-  editingProduct: number | null;
-  isEditing: boolean;
-  startEditing: (productId: number) => void;
-  endEditing: () => void;
+  totalProducts: number;
+  isLoading: boolean;
   createProduct: (product: FormData) => Promise<void>;
   getProducts: () => Promise<void>;
 };
 
 export const useProductStore = create<UseProductStore>((set) => ({
   products: [],
-  editingProduct: null,
-  isEditing: false,
-  startEditing: (productId: number) => {
-    set(() => ({ editingProduct: productId, isEditing: true }));
-  },
-  endEditing: () => set(() => ({ editingProduct: null, isEditing: false })),
+  totalProducts: 0,
+  isLoading: false,
   createProduct: async (product: FormData) => {
     const newProduct = await productService.createProduct(product);
     set((prevState) => ({
@@ -27,7 +21,16 @@ export const useProductStore = create<UseProductStore>((set) => ({
     }));
   },
   getProducts: async () => {
-    const products = await productService.getProducts();
-    set(() => ({ products }));
+    set({ isLoading: true });
+    try {
+      const data = await productService.getProducts();
+      set(() => ({
+        products: data?.content,
+        totalProducts: data?.page.totalElements,
+        isLoading: false,
+      }));
+    } catch {
+      set({ isLoading: false });
+    }
   },
 }));

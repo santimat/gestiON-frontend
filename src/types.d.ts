@@ -2,7 +2,8 @@ import z from "zod";
 import type { LucideIcon } from "lucide-react";
 
 import { LoginSchema } from "@/schemas/user/LoginSchema";
-import type { DEFAULT_COMMERCE_WITH_OWNER } from "@/utils/constants";
+import type { ProductSchema } from "@/schemas/product/ProductSchema";
+import { CommerceWithOwnerRequestSchema } from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
 
 // GENERAL TYPES
 export type NavItem = {
@@ -39,13 +40,23 @@ export type FormFields =
   | "cuit";
 export type FieldErrors = Optional<Record<FormFields, string>>;
 
+export type PageableSpringBootResponse = {
+  content: [];
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+  };
+};
+
 // USER
 export type LoginDTO = z.infer<typeof LoginSchema>;
 
 type UserRole = "OWNER" | "CASHIER" | "SUDO";
 export type User = {
   id: number;
-  name: username;
+  name: string;
   email: string;
   phoneNumber: string;
   createdAt: Date;
@@ -56,7 +67,7 @@ export type User = {
 export type AuthUser = Omit<User, "phoneNumber" | "createdAt">;
 
 // COMMERCE
-export type CommerceWithOwnerDTO = {
+export type CommerceWithOwner = {
   userId: number;
   commerceId: number;
   username: string;
@@ -67,10 +78,13 @@ export type CommerceWithOwnerDTO = {
   address: string;
   businessLogoUrl: string;
   businessActive: boolean;
+  profitMultiplier: number;
   updatedAt: Date;
 };
 
-export type CommerceWithOwnerForm = typeof DEFAULT_COMMERCE_WITH_OWNER;
+export type CommerceWithOwnerRequest = z.infer<
+  typeof CommerceWithOwnerRequestSchema
+>;
 
 export type CommerceStats = {
   total: number;
@@ -79,16 +93,7 @@ export type CommerceStats = {
 };
 
 // PRODUCT
-
-export type ProductDTO = {
-  name: string;
-  image: File | null;
-  description: string;
-  costPrice: number;
-  categoryId: number;
-  minStock: number;
-  currentStock: number;
-};
+export type ProductRequest = z.infer<typeof ProductSchema>;
 
 export type Product = {
   id: number;
@@ -99,11 +104,11 @@ export type Product = {
   salePrice: number;
   minStock: number;
   currentStock: number;
-  category: string;
+  profitMultiplier: number;
+  category: Category;
   active: boolean;
+  updatedAt: Date;
 };
-
-export type ProductForm = typeof DEFAULT_PRODUCT_FORM;
 
 // CATEGORY
 export type CategoryDTO = {
@@ -113,4 +118,5 @@ export type CategoryDTO = {
 export type Category = {
   id: number;
   name: string;
+  description: string;
 };

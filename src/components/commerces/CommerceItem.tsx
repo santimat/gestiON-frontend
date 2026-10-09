@@ -1,34 +1,31 @@
-import type { ChangeEvent, MouseEvent } from "react";
 import { PenBoxIcon } from "lucide-react";
-import { Avatar, Button, Switch } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import type { ChangeEvent } from "react";
+import { Avatar, Button, Modal, Switch } from "@mantine/core";
 
 import { useCommerce } from "@/hooks/useCommerce";
 import type { CommerceWithOwnerDTO } from "@/types";
 
 type CommerceItemProps = {
   commerce: CommerceWithOwnerDTO;
-  openModal: () => void;
+  onEdit: (commerce: CommerceWithOwnerDTO) => void;
   columns: string;
 };
 
 export const CommerceItem = ({
   commerce,
-  openModal,
+  onEdit,
   columns,
 }: CommerceItemProps) => {
-  const { startEditing, handleToggleCommerceActive, isPendingToggleActive } =
-    useCommerce();
+  const { handleToggleCommerceActive, isPendingToggleActive } = useCommerce();
+
+  const [opened, { open: openAvatarModal, close: closeAvatarModal }] =
+    useDisclosure(false);
+
   const createdAt = new Date(commerce.updatedAt);
   const day = createdAt.getDate();
   const month = createdAt.getMonth();
   const year = createdAt.getFullYear();
-
-  const handleEdit = (e: MouseEvent<HTMLButtonElement>) => {
-    const button = e.target as HTMLElement;
-    const commerceId = Number(button.closest("li")?.dataset.commerce);
-    startEditing(commerceId);
-    openModal();
-  };
 
   const handleChangeActive = async (e: ChangeEvent<HTMLInputElement>) => {
     const clicked = e.target as HTMLElement;
@@ -36,34 +33,57 @@ export const CommerceItem = ({
     return await handleToggleCommerceActive(commerceId);
   };
 
+  const openAvatar = () => {
+    openAvatarModal();
+  };
+
   return (
-    <li data-commerce={commerce.commerceId} className={`${columns} p-2`}>
-      <Avatar
-        src={commerce.businessLogoUrl}
-        alt={`${commerce.businessName} logo`}
-      />
-      <p className="first-letter:uppercase">{commerce.businessName}</p>
-      <p className="first-letter:uppercase">{commerce.username}</p>
-      <p>{commerce.email}</p>
-      <p>{`${day}/${month}/${year}`}</p>
-      <Switch
-        aria-label="Cambiar estado del comercio"
-        title="Cambiar estado del comercio"
-        color="green"
-        checked={commerce.businessActive}
-        onChange={handleChangeActive}
-        disabled={isPendingToggleActive}
-      />
-      <div className="justify-center">
-        <Button
-          size="compact-sm"
-          aria-label="Editar comercio"
-          title="Editar comercio"
-          onClick={handleEdit}
-        >
-          <PenBoxIcon pointerEvents={"none"} size={20} />
+    <>
+      <Modal opened={opened} onClose={closeAvatarModal} withCloseButton={false}>
+        <header className="mb-2">
+          <h3 className="text-xl font-normal">
+            Comercio: <span className="font-bold">{commerce.businessName}</span>
+          </h3>
+        </header>
+        <img
+          src={commerce.businessLogoUrl}
+          alt={`${commerce.businessName} logo`}
+        />
+        <Button className="mt-4 ml-auto block!" onClick={closeAvatarModal}>
+          Cerrar
         </Button>
-      </div>
-    </li>
+      </Modal>
+      <li data-commerce={commerce.commerceId} className={`${columns} p-2`}>
+        <Avatar
+          className="hover:cursor-pointer"
+          onClick={openAvatar}
+          src={commerce.businessLogoUrl}
+          alt={`${commerce.businessName} logo`}
+          component="button"
+        />
+        <p className="first-letter:uppercase">{commerce.businessName}</p>
+        <p className="first-letter:uppercase">{commerce.username}</p>
+        <p>{commerce.email}</p>
+        <p>{`${day}/${month}/${year}`}</p>
+        <Switch
+          aria-label="Cambiar estado del comercio"
+          title="Cambiar estado del comercio"
+          color="green"
+          checked={commerce.businessActive}
+          onChange={handleChangeActive}
+          disabled={isPendingToggleActive}
+        />
+        <div className="justify-center">
+          <Button
+            size="compact-sm"
+            aria-label="Editar comercio"
+            title="Editar comercio"
+            onClick={() => onEdit(commerce)}
+          >
+            <PenBoxIcon pointerEvents={"none"} size={20} />
+          </Button>
+        </div>
+      </li>
+    </>
   );
 };
