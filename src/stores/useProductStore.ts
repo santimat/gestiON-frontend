@@ -1,6 +1,7 @@
-import { productService } from "@/services/products/productService";
-import type { Product } from "@/types";
 import { create } from "zustand";
+
+import type { Product } from "@/types";
+import { productService } from "@/services/products/productService";
 
 type UseProductStore = {
   products: Product[];

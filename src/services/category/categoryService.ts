@@ -1,13 +1,13 @@
 import { isAxiosError } from "axios";
 
-import type { CategoryDTO } from "@/types";
+import type { CategoryRequest } from "@/types";
 import { backendAPI } from "@/services/axios/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
-import { CategorySchema } from "@/schemas/category/CategorySchema";
+import { CategorySchema } from "@/schemas";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
 
 export const categoryService = {
-  createCategory: async (category: CategoryDTO) => {
+  createCategory: async (category: CategoryRequest) => {
     const parsedData = CategorySchema.safeParse(category);
     handleZodParsingError(parsedData);
 

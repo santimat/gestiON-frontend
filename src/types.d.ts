@@ -1,9 +1,12 @@
 import z from "zod";
 import type { LucideIcon } from "lucide-react";
 
-import { LoginSchema } from "@/schemas/user/LoginSchema";
-import type { ProductSchema } from "@/schemas/product/ProductSchema";
-import { CommerceWithOwnerRequestSchema } from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
+import {
+  LoginSchema,
+  ProductSchema,
+  CategorySchema,
+  CommerceWithOwnerRequestSchema,
+} from "@/schemas";
 import type { ErrorDictionary } from "@/utils/errorDictionary";
 
 // GENERAL TYPES
@@ -115,7 +118,7 @@ export type Product = {
 export type ProductForm = {
   name: string;
   description: string;
-  category: string;
+  categoryId: string;
   costPrice: number;
   salePrice: number;
   currentStock: number;
@@ -124,12 +127,10 @@ export type ProductForm = {
 };
 
 // CATEGORY
-export type CategoryDTO = {
-  name: string;
-};
+export type CategoryRequest = z.infer<typeof CategorySchema>;
 
 export type Category = {
   id: number;
   name: string;
-  description: string;
+  description?: string;
 };

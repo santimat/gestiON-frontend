@@ -1,10 +1,12 @@
 import { isAxiosError } from "axios";
 
+import {
+  CommerceWithOwnerUpdateSchema,
+  CommerceWithOwnerRequestSchema,
+} from "@/schemas";
 import { backendAPI } from "@/services/axios/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
-import { CommerceWithOwnerUpdateSchema } from "@/schemas/commerce/CommerceWithOwnerUpdateSchema";
-import { CommerceWithOwnerRequestSchema } from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
 
 export const commerceService = {
   createCommerceWithOwner: async (commerceWithOwner: FormData) => {

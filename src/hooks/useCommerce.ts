@@ -16,33 +16,19 @@ export const useCommerce = () => {
     toggleCommerceActive,
     updateCommerceWithOwner,
   } = useCommerceStore(
-    useShallow(
-      ({
-        commercesWithOwner,
-        commerceStats,
-        currentCommerce,
-        isPendingToggleActive,
-        isLoading,
-        createCommerceWithOwner,
-        getCommercesWithOwner,
-        getCommerceStats,
-        getCurrentCommerce,
-        toggleCommerceActive,
-        updateCommerceWithOwner,
-      }) => ({
-        commercesWithOwner,
-        commerceStats,
-        currentCommerce,
-        isPendingToggleActive,
-        isLoading,
-        createCommerceWithOwner,
-        getCommercesWithOwner,
-        getCommerceStats,
-        getCurrentCommerce,
-        toggleCommerceActive,
-        updateCommerceWithOwner,
-      }),
-    ),
+    useShallow((s) => ({
+      commercesWithOwner: s.commercesWithOwner,
+      commerceStats: s.commerceStats,
+      currentCommerce: s.currentCommerce,
+      isPendingToggleActive: s.isPendingToggleActive,
+      isLoading: s.isLoading,
+      createCommerceWithOwner: s.createCommerceWithOwner,
+      getCommercesWithOwner: s.getCommercesWithOwner,
+      getCommerceStats: s.getCommerceStats,
+      getCurrentCommerce: s.getCurrentCommerce,
+      toggleCommerceActive: s.toggleCommerceActive,
+      updateCommerceWithOwner: s.updateCommerceWithOwner,
+    })),
   );
 
   const handleCreateCommerceWithOwner = async (commerceWithOwner: FormData) => {

@@ -1,10 +1,9 @@
 import { isAxiosError } from "axios";
 
+import { ProductSchema } from "@/schemas";
 import { backendAPI } from "@/services/axios/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
-import { ProductSchema } from "@/schemas/product/ProductSchema";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
-import type { PageableSpringBootResponse } from "@/types";
 
 export const productService = {
   createProduct: async (product: FormData) => {
@@ -21,9 +20,7 @@ export const productService = {
   },
   getProducts: async () => {
     try {
-      const { data } = (await backendAPI.get("/products")) as {
-        data: PageableSpringBootResponse;
-      };
+      const { data } = await backendAPI.get("/products");
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);

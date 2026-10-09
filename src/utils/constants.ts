@@ -69,7 +69,7 @@ export const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerRequest = {
 export const DEFAULT_PRODUCT_FORM: ProductForm = {
   name: "",
   description: "",
-  category: "",
+  categoryId: "",
   costPrice: 0,
   salePrice: 0,
   currentStock: 0,

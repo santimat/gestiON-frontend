@@ -1,24 +1,22 @@
-import {
-  TextInput,
-  NumberInput,
-  Button,
-  Select,
-  FileInput,
-} from "@mantine/core";
-import type { UseDisclosureHandlers } from "@mantine/hooks";
+import { type UseDisclosureHandlers } from "@mantine/hooks";
+import { TextInput, NumberInput, FileInput, Tooltip } from "@mantine/core";
 import {
   CircleAlert,
   DollarSign,
   FileImage,
+  InfoIcon,
   LayersArrowUp,
-  ListSortAscending,
   PackageIcon,
   SquareText,
 } from "lucide-react";
-import { useState, type ChangeEvent, type SubmitEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
+import { useCategory } from "@/hooks/useCategory";
+import { ModalHeader } from "@/components/ModalHeader";
 import { DEFAULT_PRODUCT_FORM } from "@/utils/constants";
+import { ModalActions } from "@/components/ModalActions";
 import type { CurrentCommerce, Product, ProductForm } from "@/types";
+import { SelectCategory } from "@/components/products/SelectCategory";
 
 type NewProductFormProps = {
   product: Product | null;
@@ -29,7 +27,7 @@ type NewProductFormProps = {
 const mapToForm = (product: Product): ProductForm => ({
   name: product.name,
   description: product.description,
-  category: product.category.name,
+  categoryId: String(product.category.id),
   costPrice: product.costPrice,
   salePrice: product.salePrice,
   currentStock: product.currentStock,
@@ -44,21 +42,22 @@ export function NewProductForm({
 }: NewProductFormProps) {
   const isEditing = product !== null;
 
+  const { getCategories } = useCategory();
+
   const [productForm, setProductForm] = useState<ProductForm>(() =>
     product ? mapToForm(product) : DEFAULT_PRODUCT_FORM,
   );
 
   const profitMultiplier =
     product?.profitMultiplier ?? currentCommerce?.profitMultiplier ?? 1;
-  const suggestedPrice =
-    Math.round(productForm.salePrice * profitMultiplier * 100) / 100;
+  const suggestedPrice = Math.round(productForm.costPrice * profitMultiplier);
+
+  useEffect(() => {
+    getCategories();
+  }, [getCategories]);
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
-  };
-
-  const handleClick = () => {
-    closeModal();
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,24 +65,19 @@ export function NewProductForm({
     setProductForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleNumberChange =
-    (field: "costPrice" | "salePrice" | "currentStock" | "minStock") =>
-    (value: string | number) => {
-      const numericValue =
-        typeof value === "number" ? value : Number(value) || 0;
-      setProductForm((prevState) => ({ ...prevState, [field]: numericValue }));
-    };
+  const handleNumberChange = (
+    field: "costPrice" | "salePrice" | "currentStock" | "minStock",
+    value: string | number,
+  ) => {
+    setProductForm((prevState) => ({ ...prevState, [field]: value }));
+  };
 
   return (
     <>
-      <header className="mb-4">
-        <div className="flex gap-2">
-          <PackageIcon className="text-primary" />
-          <p className="font-semibold">
-            {isEditing ? "Editar Producto" : "Nuevo Producto"}
-          </p>
-        </div>
-      </header>
+      <ModalHeader
+        title={isEditing ? "Editar Producto" : "Nuevo Producto"}
+        Icon={PackageIcon}
+      />
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-3 gap-4">
           <TextInput
@@ -95,20 +89,12 @@ export function NewProductForm({
             onChange={handleChange}
             required
           />
-          <Select
-            label="Categoría"
-            leftSection={<ListSortAscending size={20} />}
-            placeholder="Seleccioná una categoría"
-            data={["Almacén", "Bebidas", "Lácteos", "Limpieza", "Golosinas"]}
-            value={productForm.category}
-            onChange={(value) =>
-              setProductForm((prevState) => ({
-                ...prevState,
-                category: value ?? "",
-              }))
-            }
-            required
+
+          <SelectCategory
+            setProductForm={setProductForm}
+            formCategoryId={productForm.categoryId}
           />
+
           <FileInput
             label="Imagen del prducto"
             name="image"
@@ -139,7 +125,7 @@ export function NewProductForm({
             min={0}
             decimalScale={2}
             value={productForm.costPrice}
-            onChange={handleNumberChange("costPrice")}
+            onChange={(value) => handleNumberChange("costPrice", value)}
             required
           />
 
@@ -151,7 +137,7 @@ export function NewProductForm({
             min={0}
             decimalScale={2}
             value={productForm.salePrice}
-            onChange={handleNumberChange("salePrice")}
+            onChange={(value) => handleNumberChange("salePrice", value)}
             required
           />
 
@@ -160,7 +146,25 @@ export function NewProductForm({
             label="Precio Sugerido"
             placeholder="0.00"
             prefix="$"
-            value={productForm.salePrice > 0 ? suggestedPrice.toFixed(2) : ""}
+            rightSection={
+              <Tooltip
+                label={
+                  <>
+                    <p>
+                      El precio sugerido se calcula multiplicando el precio de
+                      costo por el multiplicador de ganancia del comercio.
+                    </p>
+                    <p>
+                      Si no se ha establecido un multiplicador de ganancia, se
+                      utilizará el valor por defecto de 1.
+                    </p>
+                  </>
+                }
+              >
+                <InfoIcon size={20} />
+              </Tooltip>
+            }
+            value={productForm.costPrice > 0 ? suggestedPrice.toFixed(2) : ""}
             readOnly
             leftSectionPointerEvents="none"
           />
@@ -172,7 +176,7 @@ export function NewProductForm({
             min={0}
             decimalScale={2}
             value={productForm.currentStock}
-            onChange={handleNumberChange("currentStock")}
+            onChange={(value) => handleNumberChange("currentStock", value)}
             required
           />
           <NumberInput
@@ -180,19 +184,15 @@ export function NewProductForm({
             placeholder="0"
             min={0}
             value={productForm.minStock}
-            onChange={handleNumberChange("minStock")}
+            onChange={(value) => handleNumberChange("minStock", value)}
             required
             leftSection={<CircleAlert size={20} />}
           />
         </div>
-        <div className="flex justify-end gap-4 pt-6">
-          <Button className="bg-destructive!" onClick={handleClick}>
-            Cancelar
-          </Button>
-          <Button type="submit">
-            {isEditing ? "Guardar cambios" : "Agregar"}
-          </Button>
-        </div>
+        <ModalActions
+          sumbmitText={isEditing ? "Guardar cambios" : "Agregar"}
+          closeModal={closeModal}
+        />
       </form>
     </>
   );

@@ -9,25 +9,21 @@ import {
   UserIcon,
   UserKey,
 } from "lucide-react";
-import {
-  Button,
-  Fieldset,
-  TextInput,
-  FileInput,
-  PasswordInput,
-} from "@mantine/core";
 import { toast } from "sonner";
 import type { UseDisclosureHandlers } from "@mantine/hooks";
+import { Fieldset, TextInput, FileInput, PasswordInput } from "@mantine/core";
 import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
-import { useCommerce } from "@/hooks/useCommerce";
-import { DEFAULT_COMMERCE_WITH_OWNER } from "@/utils/constants";
 import type {
   AppError,
   CommerceWithOwner,
   CommerceWithOwnerRequest,
   FieldErrors,
 } from "@/types";
+import { useCommerce } from "@/hooks/useCommerce";
+import { ModalHeader } from "@/components/ModalHeader";
+import { ModalActions } from "@/components/ModalActions";
+import { DEFAULT_COMMERCE_WITH_OWNER } from "@/utils/constants";
 
 type NewCommerceFormProps = {
   commerce: CommerceWithOwner | null;
@@ -103,10 +99,6 @@ export const NewCommerceForm = ({
     }
   };
 
-  const handleClick = () => {
-    closeModal();
-  };
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const field = e.target.name;
     const value = e.target.value;
@@ -119,14 +111,10 @@ export const NewCommerceForm = ({
 
   return (
     <>
-      <header className="mb-4">
-        <div className="flex gap-2">
-          <BuildingComplexIcon className="text-primary" />
-          <p className="font-semibold">
-            {isEditing ? "Editar comercio" : "Nuevo comercio"}
-          </p>
-        </div>
-      </header>
+      <ModalHeader
+        title={isEditing ? "Editar comercio" : "Nuevo comercio"}
+        Icon={BuildingComplexIcon}
+      />
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <Fieldset
           className="grid grid-cols-3 gap-4"
@@ -216,12 +204,10 @@ export const NewCommerceForm = ({
             )}
           </div>
         </Fieldset>
-        <div className="flex justify-end gap-4">
-          <Button className="bg-destructive!" onClick={handleClick}>
-            Cancelar
-          </Button>
-          <Button type="submit">Agregar</Button>
-        </div>
+        <ModalActions
+          sumbmitText={isEditing ? "Guardar Cambios" : "Agregar Comercio"}
+          closeModal={closeModal}
+        />
       </form>
     </>
   );

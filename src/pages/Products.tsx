@@ -11,11 +11,12 @@ import { useCommerce } from "@/hooks/useCommerce";
 import { useAuth } from "@/hooks/useAuth";
 
 export const Products = () => {
+  const { authenticatedUser } = useAuth();
+  const { getProducts, totalProducts } = useProduct();
+  const { getCurrentCommerce, currentCommerce } = useCommerce();
+
   const [opened, { open: openModal, close }] = useDisclosure(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const { getProducts, totalProducts } = useProduct();
-  const { authenticatedUser } = useAuth();
-  const { getCurrentCommerce, currentCommerce } = useCommerce();
 
   useEffect(() => {
     getProducts();
@@ -55,7 +56,7 @@ export const Products = () => {
         />
       </Modal>
 
-      <header className="flex w-full items-center justify-between border-b p-4">
+      <header className="border-border flex w-full items-center justify-between border-b p-4">
         <div>
           <h1 className="text-xl font-semibold">Productos</h1>
           <p>{totalProducts} productos cargados</p>
