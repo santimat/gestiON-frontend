@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { Button } from "@mantine/core";
-import { ArrowRight } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 
 export const CTASection = () => {
   return (
@@ -17,7 +17,7 @@ export const CTASection = () => {
         <Button size="lg" className="gap-2">
           <Link to="/login" className="flex items-center gap-2">
             Ingresar al sistema
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRightIcon className="h-4 w-4" />
           </Link>
         </Button>
       </div>

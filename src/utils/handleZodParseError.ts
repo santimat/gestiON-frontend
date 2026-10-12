@@ -17,7 +17,7 @@ export function handleZodParsingError(parsedData: ZodParseResult) {
       );
 
     throw {
-      type: "VALIDATION_ERROR",
+      code: "VALIDATION_ERROR",
       message: "Error de validación.",
       fieldErrors: parsedErrors,
     } satisfies AppError;

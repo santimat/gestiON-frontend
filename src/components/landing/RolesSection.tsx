@@ -1,4 +1,4 @@
-import { Building2, ScanBarcode, Smartphone } from "lucide-react";
+import { Building2Icon, ScanBarcodeIcon, SmartphoneIcon } from "lucide-react";
 
 import { RoleCard } from "@/components/landing/RoleCard";
 
@@ -31,13 +31,13 @@ export const RolesSection = () => {
 
         <div className="mt-10 grid gap-4 lg:grid-cols-2">
           <RoleCard
-            icon={Building2}
+            icon={Building2Icon}
             title="Administrador"
             subtitle="El dueño del comercio"
             items={ROLE_ADMIN_ITEMS}
           />
           <RoleCard
-            icon={ScanBarcode}
+            icon={ScanBarcodeIcon}
             title="Cajero"
             subtitle="Quien está en el mostrador"
             items={ROLE_CASHIER_ITEMS}
@@ -45,7 +45,7 @@ export const RolesSection = () => {
         </div>
 
         <div className="bg-card text-secondary-foreground border-border mt-6 flex items-center gap-2.5 rounded-xl border p-4 text-sm">
-          <Smartphone className="text-primary h-4 w-4" strokeWidth={2} />
+          <SmartphoneIcon className="text-primary h-4 w-4" strokeWidth={2} />
           Los mismos módulos funcionan en la PC del mostrador y en el celular:
           no hay que aprender dos formas de trabajar.
         </div>

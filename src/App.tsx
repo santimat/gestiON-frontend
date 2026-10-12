@@ -36,6 +36,12 @@ const ClientsPage = lazy(() =>
   import("@/pages/Clients").then((module) => ({ default: module.Clients })),
 );
 
+const NotFoundPage = lazy(() =>
+  import("@/components/NotFoundPage").then((module) => ({
+    default: module.NotFoundPage,
+  })),
+);
+
 const App = () => {
   return (
     <>
@@ -64,6 +70,7 @@ const App = () => {
             <Route path="/clients" element={<ClientsPage />} />
           </Route>
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

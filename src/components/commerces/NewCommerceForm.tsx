@@ -47,7 +47,7 @@ export const NewCommerceForm = ({
         : DEFAULT_COMMERCE_WITH_OWNER,
   );
 
-  const [errors, setErrors] = useState<FieldErrors | null>(null);
+  const [errors, setErrors] = useState<FieldErrors>({});
 
   useEffect(() => {
     if (errors) {
@@ -196,7 +196,7 @@ export const NewCommerceForm = ({
           </div>
         </Fieldset>
         <ModalFormActions
-          sumbmitText={isEditing ? "Guardar Cambios" : "Agregar Comercio"}
+          submitText={isEditing ? "Guardar Cambios" : "Agregar Comercio"}
           closeModal={closeModal}
         />
       </form>

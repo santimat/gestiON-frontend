@@ -1,39 +1,31 @@
 import Fuse from "fuse.js";
-import { ListSortAscending } from "lucide-react";
-import {
-  Modal,
-  Select,
-  type ComboboxItem,
-  type OptionsFilter,
-} from "@mantine/core";
+import { useState } from "react";
+import { ListSortAscending, PlusIcon, XIcon } from "lucide-react";
+import { Select, type ComboboxItem, type OptionsFilter } from "@mantine/core";
 
 import type { ProductForm } from "@/types";
-import { useDisclosure } from "@mantine/hooks";
 import { useCategory } from "@/hooks/useCategory";
-import { NewCategoryForm } from "./NewCategoryForm";
+import { NewCategoryInline } from "@/components/category/NewCategoryInline";
 
 type SelectCategoryProps = {
   setProductForm: React.Dispatch<React.SetStateAction<ProductForm>>;
-  formCategoryId: string | null;
+  productForm: ProductForm;
+  error?: string;
 };
 
 export const SelectCategory = ({
   setProductForm,
-  formCategoryId,
+  productForm,
+  error,
 }: SelectCategoryProps) => {
   const { categories } = useCategory();
-
-  const [opened, { open: openModal, close: closeModal }] = useDisclosure(true);
+  const [isNewCategory, setIsNewCategory] = useState(false);
 
   const selectCategories: ComboboxItem[] = [
     {
       value: "",
-      label: "Seleccionar categoría",
+      label: "Seleccioná una categoría",
       disabled: true,
-    },
-    {
-      value: "ADD_NEW_CATEGORY",
-      label: "Agregar nueva categoría",
     },
     ...categories.map((category) => ({
       value: String(category.id),
@@ -53,33 +45,55 @@ export const SelectCategory = ({
   };
 
   const handleSelectChange = (value: string | null) => {
+    if (!value?.length) return;
     setProductForm((prevState) => ({
       ...prevState,
-      categoryId: value ?? "",
+      categoryId: Number(value),
     }));
   };
+
   return (
     <>
-      <Modal
-        opened={opened}
-        onClose={closeModal}
-        centered
-        withCloseButton={false}
-      >
-        <NewCategoryForm closeModal={closeModal} />
-      </Modal>
-      <Select
-        label="Categoría"
-        leftSection={<ListSortAscending size={20} />}
-        placeholder="Seleccioná una categoría"
-        data={selectCategories}
-        searchable
-        nothingFoundMessage="No se encontraron categorías"
-        value={formCategoryId}
-        filter={optionsFilter}
-        onChange={handleSelectChange}
-        required
-      />
+      <div className="relative">
+        <button
+          type="button"
+          className="text-primary absolute top-1 right-2 flex items-center gap-1 text-[14px]! hover:cursor-pointer hover:underline"
+          onClick={() => setIsNewCategory(!isNewCategory)}
+        >
+          {isNewCategory ? (
+            <>
+              <XIcon size={10} />
+              Cancelar
+            </>
+          ) : (
+            <>
+              <PlusIcon size={10} />
+              Nueva
+            </>
+          )}
+        </button>
+        {isNewCategory ? (
+          <NewCategoryInline
+            setProductForm={setProductForm}
+            setIsNewCategory={setIsNewCategory}
+          />
+        ) : (
+          <Select
+            label="Categoría"
+            leftSection={<ListSortAscending size={20} />}
+            placeholder="Seleccioná una categoría"
+            data={selectCategories}
+            searchable
+            name="categoryId"
+            nothingFoundMessage="No se encontraron categorías"
+            value={productForm.categoryId ? String(productForm.categoryId) : ""}
+            filter={optionsFilter}
+            onChange={handleSelectChange}
+            error={error}
+            required
+          />
+        )}
+      </div>
     </>
   );
 };

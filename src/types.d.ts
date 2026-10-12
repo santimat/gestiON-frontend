@@ -115,16 +115,7 @@ export type Product = {
   updatedAt: Date;
 };
 
-export type ProductForm = {
-  name: string;
-  description: string;
-  categoryId: string;
-  costPrice: number;
-  salePrice: number;
-  currentStock: number;
-  minStock: number;
-  image: File | null;
-};
+export type ProductForm = ProductRequest;
 
 // CATEGORY
 export type CategoryRequest = z.infer<typeof CategorySchema>;

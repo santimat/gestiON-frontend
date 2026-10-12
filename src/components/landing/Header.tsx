@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { Button } from "@mantine/core";
-import { ArrowRight, Store } from "lucide-react";
+import { ArrowRight, StoreIcon } from "lucide-react";
 
 export const Header = () => {
   return (
@@ -12,7 +12,7 @@ export const Header = () => {
           aria-label="GestiON - Inicio"
         >
           <span className="bg-primary text-primary-foreground grid h-8 w-8 shrink-0 place-items-center rounded-lg">
-            <Store className="h-auto w-6" strokeWidth={2} color="white" />
+            <StoreIcon className="h-auto w-6" color="white" />
           </span>
           <span className="font-display text-base font-semibold">GestiON</span>
         </Link>

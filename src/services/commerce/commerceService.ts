@@ -49,7 +49,9 @@ export const commerceService = {
   },
   toggleCommerceActive: async (commerceId: number) => {
     try {
-      const { data } = await backendAPI.patch(`/commerces/${commerceId}`);
+      const { data } = await backendAPI.patch(
+        `/commerces/${commerceId}/toggle-active`,
+      );
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);

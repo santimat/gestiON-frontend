@@ -12,7 +12,29 @@ export const productService = {
     handleZodParsingError(parsedData);
 
     try {
-      const { data } = await backendAPI.post("/products", parsedData.data);
+      const { data } = await backendAPI.post("/products", product);
+      return data;
+    } catch (error) {
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
+    }
+  },
+  updateProduct: async (productId: number, product: FormData) => {
+    const productToParse = Object.fromEntries(product.entries());
+    const parsedData = ProductSchema.safeParse(productToParse);
+    handleZodParsingError(parsedData);
+
+    try {
+      const { data } = await backendAPI.put(`/products/${productId}`, product);
+      return data;
+    } catch (error) {
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
+    }
+  },
+  toggleActive: async (productId: number) => {
+    try {
+      const { data } = await backendAPI.patch(
+        `/products/${productId}/toggle-active`,
+      );
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);

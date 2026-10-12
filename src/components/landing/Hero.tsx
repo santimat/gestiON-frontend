@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Button } from "@mantine/core";
 import { PreviewPanel } from "@/components/landing/PreviewPanel";
-import { ArrowRight } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 
 export const Hero = () => {
   return (
@@ -21,7 +21,7 @@ export const Hero = () => {
             <Button size="lg" className="gap-2">
               <Link to="/login" className="flex items-center gap-2">
                 Empezar a usar el sistema
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRightIcon className="h-4 w-4" />
               </Link>
             </Button>
             <Button variant="outline" size="lg" className="gap-2">

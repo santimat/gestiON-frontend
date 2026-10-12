@@ -9,6 +9,7 @@ export const useCommerce = () => {
     currentCommerce,
     isPendingToggleActive,
     isLoading,
+    error,
     createCommerceWithOwner,
     getCommercesWithOwner,
     getCommerceStats,
@@ -28,6 +29,7 @@ export const useCommerce = () => {
       getCurrentCommerce: s.getCurrentCommerce,
       toggleCommerceActive: s.toggleCommerceActive,
       updateCommerceWithOwner: s.updateCommerceWithOwner,
+      error: s.error,
     })),
   );
 
@@ -60,6 +62,7 @@ export const useCommerce = () => {
     currentCommerce,
     isPendingToggleActive,
     isLoading,
+    error,
     handleUpdateCommerceWithOwner,
     handleCreateCommerceWithOwner,
     handleToggleCommerceActive,

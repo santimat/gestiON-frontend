@@ -16,8 +16,10 @@ export const ProductList = ({ onEdit }: ProductListProps) => {
     "Foto",
     "Producto",
     "Categoría",
+    "Descripción",
     "Precio",
-    "Stock",
+    "Stock Actual",
+    "Stock Mínimo",
     "Estado",
     "Acciones",
   ];
@@ -25,7 +27,7 @@ export const ProductList = ({ onEdit }: ProductListProps) => {
   const actionsIcons = [{ Icon: Pencil, label: "Editar" }];
 
   const columns =
-    "grid grid-cols-[0.2fr_1fr_0.8fr_0.4fr_0.4fr_0.4fr_0.2fr] items-center gap-x-4";
+    "grid grid-cols-[0.2fr_0.7fr_1fr_0.8fr_0.4fr_0.4fr_0.4fr_0.4fr_0.2fr] items-center gap-x-4";
 
   if (isLoading) {
     return <LoadingPage />;

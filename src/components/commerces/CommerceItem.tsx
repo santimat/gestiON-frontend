@@ -1,10 +1,10 @@
 import { PenBoxIcon } from "lucide-react";
-import { useDisclosure } from "@mantine/hooks";
-import type { ChangeEvent } from "react";
-import { Avatar, Button, Modal, Switch } from "@mantine/core";
+import { Avatar, Button, Switch } from "@mantine/core";
 
-import { useCommerce } from "@/hooks/useCommerce";
+import { useDisclosure } from "@mantine/hooks";
 import type { CommerceWithOwner } from "@/types";
+import { useCommerce } from "@/hooks/useCommerce";
+import { ImageViewer } from "@/components/ImageViewer";
 
 type CommerceItemProps = {
   commerce: CommerceWithOwner;
@@ -18,49 +18,34 @@ export const CommerceItem = ({
   columns,
 }: CommerceItemProps) => {
   const { handleToggleCommerceActive, isPendingToggleActive } = useCommerce();
-
-  const [opened, { open: openAvatarModal, close: closeAvatarModal }] =
+  const [opened, { open: openAvatar, close: closeAvatar }] =
     useDisclosure(false);
-
   const createdAt = new Date(commerce.updatedAt);
   const day = createdAt.getDate();
   const month = createdAt.getMonth();
   const year = createdAt.getFullYear();
 
-  const handleChangeActive = async (e: ChangeEvent<HTMLInputElement>) => {
-    const clicked = e.target as HTMLElement;
-    const commerceId = Number(clicked.closest("li")?.dataset.commerce);
-    return await handleToggleCommerceActive(commerceId);
-  };
-
-  const openAvatar = () => {
-    openAvatarModal();
+  const handleChangeActive = async () => {
+    return await handleToggleCommerceActive(commerce.commerceId);
   };
 
   return (
     <>
-      <Modal opened={opened} onClose={closeAvatarModal} withCloseButton={false}>
-        <header className="mb-2">
-          <h3 className="text-xl font-normal">
-            Comercio: <span className="font-bold">{commerce.businessName}</span>
-          </h3>
-        </header>
-        <img
-          src={commerce.businessLogoUrl}
-          alt={`${commerce.businessName} logo`}
-        />
-        <Button className="mt-4 ml-auto block!" onClick={closeAvatarModal}>
-          Cerrar
-        </Button>
-      </Modal>
+      <ImageViewer
+        opened={opened}
+        closeImageViewer={closeAvatar}
+        title={`Comercio: ${commerce.businessName}`}
+        imageUrl={commerce.businessLogoUrl}
+        key={commerce?.businessName}
+      />
       <li data-commerce={commerce.commerceId} className={`${columns} p-2`}>
         <Avatar
-          className="hover:cursor-pointer"
+          className={`hover:${commerce.businessLogoUrl ? "cursor-pointer" : ""}`}
           onClick={openAvatar}
           src={commerce.businessLogoUrl}
           alt={`${commerce.businessName} logo`}
           component="button"
-        />
+        ></Avatar>
         <p className="first-letter:uppercase">{commerce.businessName}</p>
         <p className="first-letter:uppercase">{commerce.username}</p>
         <p>{commerce.email}</p>

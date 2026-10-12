@@ -16,7 +16,7 @@ export const SideBar = () => {
   );
 
   return (
-    <aside className="bg-background border-border flex h-screen max-w-70 flex-col items-start justify-items-start gap-4 border-r">
+    <aside className="bg-background border-border flex h-screen max-w-80 flex-col items-start justify-items-start gap-4 border-r lg:w-70">
       <header className="border-border flex w-full items-center gap-4 border-b p-4">
         <Link to="/">
           <Store className="bg-primary h-10 w-10 rounded-md p-1 text-white" />

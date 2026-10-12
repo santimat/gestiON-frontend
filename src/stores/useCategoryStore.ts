@@ -6,7 +6,7 @@ import { categoryService } from "@/services/category/categoryService";
 type CategoryStore = {
   categories: Category[];
   getCategories: () => Promise<void>;
-  createCategory: (category: Category) => Promise<void>;
+  createCategory: (category: CategoryRequest) => Promise<Category>;
 };
 
 export const useCategoryStore = create<CategoryStore>((set) => ({
@@ -20,5 +20,6 @@ export const useCategoryStore = create<CategoryStore>((set) => ({
     set((prevState) => ({
       categories: [...prevState.categories, newCategory],
     }));
+    return newCategory;
   },
 }));

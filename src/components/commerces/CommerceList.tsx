@@ -12,7 +12,7 @@ type CommerceListProps = {
 };
 
 export function CommerceList({ openModal, onEdit }: CommerceListProps) {
-  const { commercesWithOwner, isLoading } = useCommerce();
+  const { commercesWithOwner, isLoading, error } = useCommerce();
 
   const columns =
     "grid grid-cols-[72px_1fr_1fr_1.4fr_120px_90px_90px] items-center gap-x-4";
@@ -26,6 +26,8 @@ export function CommerceList({ openModal, onEdit }: CommerceListProps) {
     "Estado",
     "Acciones",
   ];
+
+  if (error) return <div className="text-center text-red-500">{error}</div>;
 
   if (isLoading) return <LoadingPage />;
 

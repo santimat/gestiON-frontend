@@ -1,9 +1,9 @@
 import { isAxiosError } from "axios";
 
+import { CategorySchema } from "@/schemas";
 import type { CategoryRequest } from "@/types";
 import { backendAPI } from "@/services/axios/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
-import { CategorySchema } from "@/schemas";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
 
 export const categoryService = {

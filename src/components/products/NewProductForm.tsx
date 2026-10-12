@@ -1,5 +1,11 @@
 import { type UseDisclosureHandlers } from "@mantine/hooks";
-import { TextInput, NumberInput, FileInput, Tooltip } from "@mantine/core";
+import {
+  TextInput,
+  NumberInput,
+  FileInput,
+  Tooltip,
+  Textarea,
+} from "@mantine/core";
 import {
   CircleAlert,
   DollarSign,
@@ -12,12 +18,20 @@ import {
 import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
 import { productMapper } from "@/mappers";
+import { useProduct } from "@/hooks/useProduct";
 import { useCategory } from "@/hooks/useCategory";
 import { ModalHeader } from "@/components/ModalHeader";
 import { DEFAULT_PRODUCT_FORM } from "@/utils/constants";
 import { ModalFormActions } from "@/components/ModalFormActions";
-import type { CurrentCommerce, Product, ProductForm } from "@/types";
+import type {
+  AppError,
+  CurrentCommerce,
+  FieldErrors,
+  Product,
+  ProductForm,
+} from "@/types";
 import { SelectCategory } from "@/components/category/SelectCategory";
+import { toast } from "sonner";
 
 type NewProductFormProps = {
   product: Product | null;
@@ -33,10 +47,12 @@ export function NewProductForm({
   const isEditing = product !== null;
 
   const { getCategories } = useCategory();
+  const { createProduct, updateProduct } = useProduct();
 
   const [productForm, setProductForm] = useState<ProductForm>(() =>
     product ? productMapper.mapToForm(product) : DEFAULT_PRODUCT_FORM,
   );
+  const [errors, setErrors] = useState<FieldErrors>({});
 
   const profitMultiplier =
     product?.profitMultiplier ?? currentCommerce?.profitMultiplier ?? 1;
@@ -46,11 +62,38 @@ export function NewProductForm({
     getCategories();
   }, [getCategories]);
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    if (!productForm.image) {
+      formData.delete("image");
+    }
+
+    try {
+      if (isEditing) {
+        await updateProduct(product.id, formData);
+      } else {
+        await createProduct(formData);
+      }
+      setErrors({});
+      closeModal();
+      toast.success("Producto creado correctamente");
+    } catch (error) {
+      const appError = error as AppError;
+      if (appError?.fieldErrors) return setErrors(appError.fieldErrors);
+      console.log(appError);
+      toast.error(appError?.message);
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setProductForm((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setProductForm((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -59,7 +102,8 @@ export function NewProductForm({
     field: "costPrice" | "salePrice" | "currentStock" | "minStock",
     value: string | number,
   ) => {
-    setProductForm((prevState) => ({ ...prevState, [field]: value }));
+    const numericValue = Number(value);
+    setProductForm((prevState) => ({ ...prevState, [field]: numericValue }));
   };
 
   return (
@@ -76,13 +120,15 @@ export function NewProductForm({
             label="Nombre del Producto"
             placeholder="Ej. Café Molido 500gr"
             value={productForm.name}
+            error={errors.name}
             onChange={handleChange}
             required
           />
 
           <SelectCategory
             setProductForm={setProductForm}
-            formCategoryId={productForm.categoryId}
+            productForm={productForm}
+            error={errors.categoryId}
           />
 
           <FileInput
@@ -91,28 +137,32 @@ export function NewProductForm({
             placeholder="Máximo de imagen 10MB"
             leftSection={<FileImage size={20} />}
             value={productForm.image}
+            error={errors.image}
+            className="image"
             onChange={(file) =>
               setProductForm((prevState) => ({ ...prevState, image: file }))
             }
             leftSectionPointerEvents="none"
           />
 
-          <TextInput
+          <Textarea
             leftSection={<SquareText size={20} />}
             name="description"
             label="Descripcion"
             placeholder="Agregue una breve descripcion del producto"
             value={productForm.description}
-            onChange={handleChange}
+            onChange={handleTextAreaChange}
+            error={errors.description}
             className="col-span-3"
           />
 
           <NumberInput
             leftSection={<DollarSign size={20} />}
             label="Precio de Costo"
+            name="costPrice"
             placeholder="0.00"
-            prefix="$"
             min={0}
+            error={errors.costPrice}
             decimalScale={2}
             value={productForm.costPrice}
             onChange={(value) => handleNumberChange("costPrice", value)}
@@ -122,8 +172,9 @@ export function NewProductForm({
           <NumberInput
             leftSection={<DollarSign size={20} />}
             label="Precio de Venta"
+            name="salePrice"
             placeholder="0.00"
-            prefix="$"
+            error={errors.salePrice}
             min={0}
             decimalScale={2}
             value={productForm.salePrice}
@@ -162,8 +213,10 @@ export function NewProductForm({
           <NumberInput
             leftSection={<LayersArrowUp size={20} />}
             label="Stock Inicial"
+            name="currentStock"
             placeholder="0"
             min={0}
+            error={errors.currentStock}
             decimalScale={2}
             value={productForm.currentStock}
             onChange={(value) => handleNumberChange("currentStock", value)}
@@ -171,8 +224,10 @@ export function NewProductForm({
           />
           <NumberInput
             label="Stock Minimo"
+            name="minStock"
             placeholder="0"
             min={0}
+            error={errors.minStock}
             value={productForm.minStock}
             onChange={(value) => handleNumberChange("minStock", value)}
             required
@@ -180,7 +235,7 @@ export function NewProductForm({
           />
         </div>
         <ModalFormActions
-          sumbmitText={isEditing ? "Guardar cambios" : "Agregar"}
+          submitText={isEditing ? "Guardar cambios" : "Agregar"}
           closeModal={closeModal}
         />
       </form>

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import type {
+  AppError,
   CommerceStats,
   CommerceWithOwner,
   CurrentCommerce,
@@ -13,6 +14,7 @@ type UseCommerceStore = {
   currentCommerce?: CurrentCommerce | null;
   isPendingToggleActive: boolean;
   isLoading: boolean;
+  error: string | null;
   createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
   getCommercesWithOwner: () => Promise<void>;
   getCommerceStats: () => Promise<void>;
@@ -35,6 +37,7 @@ export const useCommerceStore = create<UseCommerceStore>((set) => ({
   currentCommerce: null,
   isPendingToggleActive: false,
   isLoading: false,
+  error: null,
   createCommerceWithOwner: async (commercesWithOwner: FormData) => {
     const newCommerceWithOwner =
       await commerceService.createCommerceWithOwner(commercesWithOwner);
@@ -47,11 +50,16 @@ export const useCommerceStore = create<UseCommerceStore>((set) => ({
   },
   getCommercesWithOwner: async () => {
     set(() => ({ isLoading: true }));
-    const commercesWOwner = await commerceService.getCommercesWithOwner();
-    set(() => ({
-      commercesWithOwner: commercesWOwner,
-      isLoading: false,
-    }));
+    try {
+      const commercesWOwner = await commerceService.getCommercesWithOwner();
+      set(() => ({
+        commercesWithOwner: commercesWOwner,
+        isLoading: false,
+      }));
+    } catch (error) {
+      const appError = error as AppError;
+      set(() => ({ isLoading: false, error: appError.message }));
+    }
   },
   getCommerceStats: async () => {
     const stats = await commerceService.getCommerceStats();
@@ -63,14 +71,19 @@ export const useCommerceStore = create<UseCommerceStore>((set) => ({
   },
   toggleCommerceActive: async (commerceId: number) => {
     set(() => ({ isPendingToggleActive: true }));
-    const newStatus = await commerceService.toggleCommerceActive(commerceId);
-    set((prevState) => ({
-      commercesWithOwner: prevState.commercesWithOwner.map((commerce) => {
-        if (commerce.commerceId !== newStatus.commerceId) return commerce;
-        return { ...commerce, businessActive: newStatus.active };
-      }),
-    }));
-    set(() => ({ isPendingToggleActive: false }));
+    try {
+      const newStatus = await commerceService.toggleCommerceActive(commerceId);
+      set((prevState) => ({
+        commercesWithOwner: prevState.commercesWithOwner.map((commerce) => {
+          if (commerce.commerceId !== newStatus.commerceId) return commerce;
+          return { ...commerce, businessActive: newStatus.active };
+        }),
+        isPendingToggleActive: false,
+      }));
+    } catch (error) {
+      set(() => ({ isPendingToggleActive: false }));
+      throw error;
+    }
   },
   updateCommerceWithOwner: async ({
     commerceId,
