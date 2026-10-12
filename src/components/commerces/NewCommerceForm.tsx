@@ -20,28 +20,16 @@ import type {
   CommerceWithOwnerRequest,
   FieldErrors,
 } from "@/types";
+import { commerceMapper } from "@/mappers";
 import { useCommerce } from "@/hooks/useCommerce";
 import { ModalHeader } from "@/components/ModalHeader";
-import { ModalActions } from "@/components/ModalActions";
+import { ModalFormActions } from "@/components/ModalFormActions";
 import { DEFAULT_COMMERCE_WITH_OWNER } from "@/utils/constants";
 
 type NewCommerceFormProps = {
   commerce: CommerceWithOwner | null;
   closeModal: UseDisclosureHandlers["close"];
 };
-
-const mapToForm = (commerce: CommerceWithOwner): CommerceWithOwnerRequest => ({
-  userId: commerce.userId,
-  commerceId: commerce.commerceId,
-  username: commerce.username,
-  email: commerce.email,
-  phoneNumber: commerce.phoneNumber,
-  businessName: commerce.businessName,
-  cuit: commerce.cuit,
-  address: commerce.address,
-  password: "",
-  businessLogo: null,
-});
 
 export const NewCommerceForm = ({
   commerce,
@@ -53,7 +41,10 @@ export const NewCommerceForm = ({
   const isEditing = commerce !== null;
 
   const [commerceForm, setCommerceForm] = useState<CommerceWithOwnerRequest>(
-    () => (commerce ? mapToForm(commerce) : DEFAULT_COMMERCE_WITH_OWNER),
+    () =>
+      commerce
+        ? commerceMapper.mapToForm(commerce)
+        : DEFAULT_COMMERCE_WITH_OWNER,
   );
 
   const [errors, setErrors] = useState<FieldErrors | null>(null);
@@ -204,7 +195,7 @@ export const NewCommerceForm = ({
             )}
           </div>
         </Fieldset>
-        <ModalActions
+        <ModalFormActions
           sumbmitText={isEditing ? "Guardar Cambios" : "Agregar Comercio"}
           closeModal={closeModal}
         />

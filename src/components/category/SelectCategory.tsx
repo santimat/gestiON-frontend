@@ -10,6 +10,7 @@ import {
 import type { ProductForm } from "@/types";
 import { useDisclosure } from "@mantine/hooks";
 import { useCategory } from "@/hooks/useCategory";
+import { NewCategoryForm } from "./NewCategoryForm";
 
 type SelectCategoryProps = {
   setProductForm: React.Dispatch<React.SetStateAction<ProductForm>>;
@@ -56,12 +57,6 @@ export const SelectCategory = ({
       ...prevState,
       categoryId: value ?? "",
     }));
-
-    if (value === "ADD_NEW_CATEGORY") {
-      openModal();
-      // Abrir modal para crear nueva categoría
-      // Una vez creada, actualizar productForm.categoryId con el id de la nueva categoría
-    }
   };
   return (
     <>
@@ -71,7 +66,6 @@ export const SelectCategory = ({
         centered
         withCloseButton={false}
       >
-        <header>Nueva categoría</header>
         <NewCategoryForm closeModal={closeModal} />
       </Modal>
       <Select

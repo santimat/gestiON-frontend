@@ -11,29 +11,19 @@ import {
 } from "lucide-react";
 import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
+import { productMapper } from "@/mappers";
 import { useCategory } from "@/hooks/useCategory";
 import { ModalHeader } from "@/components/ModalHeader";
 import { DEFAULT_PRODUCT_FORM } from "@/utils/constants";
-import { ModalActions } from "@/components/ModalActions";
+import { ModalFormActions } from "@/components/ModalFormActions";
 import type { CurrentCommerce, Product, ProductForm } from "@/types";
-import { SelectCategory } from "@/components/products/SelectCategory";
+import { SelectCategory } from "@/components/category/SelectCategory";
 
 type NewProductFormProps = {
   product: Product | null;
   closeModal: UseDisclosureHandlers["close"];
   currentCommerce: CurrentCommerce | null;
 };
-
-const mapToForm = (product: Product): ProductForm => ({
-  name: product.name,
-  description: product.description,
-  categoryId: String(product.category.id),
-  costPrice: product.costPrice,
-  salePrice: product.salePrice,
-  currentStock: product.currentStock,
-  minStock: product.minStock,
-  image: null,
-});
 
 export function NewProductForm({
   product,
@@ -45,7 +35,7 @@ export function NewProductForm({
   const { getCategories } = useCategory();
 
   const [productForm, setProductForm] = useState<ProductForm>(() =>
-    product ? mapToForm(product) : DEFAULT_PRODUCT_FORM,
+    product ? productMapper.mapToForm(product) : DEFAULT_PRODUCT_FORM,
   );
 
   const profitMultiplier =
@@ -189,7 +179,7 @@ export function NewProductForm({
             leftSection={<CircleAlert size={20} />}
           />
         </div>
-        <ModalActions
+        <ModalFormActions
           sumbmitText={isEditing ? "Guardar cambios" : "Agregar"}
           closeModal={closeModal}
         />

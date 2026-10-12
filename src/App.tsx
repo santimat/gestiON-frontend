@@ -6,6 +6,10 @@ import { GuestRoute } from "@/routes/GuestRoute";
 import { MainLayout } from "@/layouts/MainLayout";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
 
+const LandingPage = lazy(() =>
+  import("@/pages/Landing").then((module) => ({ default: module.LandingPage })),
+);
+
 const AuthPage = lazy(() =>
   import("@/pages/Auth").then((module) => ({ default: module.AuthPage })),
 );
@@ -37,11 +41,10 @@ const App = () => {
     <>
       <Routes>
         <Route element={<GuestRoute />}>
-          <Route index element={<AuthPage />} />
+          <Route index element={<LandingPage />} />
+          <Route path="/login" element={<AuthPage />} />
         </Route>
-        {/* protected route funcionará como un middleware para interceptar el jwt y verificar que sea un usuario logeado */}
         <Route
-          // se renderiza el mismo layout para todas las rutas dentro
           element={
             <MainLayout>
               <Outlet />

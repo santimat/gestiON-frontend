@@ -1,14 +1,14 @@
 import { Button } from "@mantine/core";
 
-type ModalActionsProps = {
+type ModalFormActionsProps = {
   closeModal: () => void;
   sumbmitText: string;
 };
 
-export const ModalActions = ({
+export const ModalFormActions = ({
   closeModal,
   sumbmitText,
-}: ModalActionsProps) => {
+}: ModalFormActionsProps) => {
   return (
     <div className="flex justify-end gap-4 pt-6">
       <Button className="bg-destructive!" onClick={closeModal}>
