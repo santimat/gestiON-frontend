@@ -17,7 +17,7 @@ export function CommerceList({ openModal, onEdit }: CommerceListProps) {
   const columns =
     "grid grid-cols-[72px_1fr_1fr_1.4fr_120px_90px_90px] items-center gap-x-4";
 
-  const headers = [
+  const HEADERS = [
     "Logo",
     "Comercio",
     "Dueño",
@@ -37,7 +37,7 @@ export function CommerceList({ openModal, onEdit }: CommerceListProps) {
         <div
           className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
         >
-          {headers.map((header) => (
+          {HEADERS.map((header) => (
             <p key={header}>{header}</p>
           ))}
         </div>

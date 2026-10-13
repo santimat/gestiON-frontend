@@ -57,11 +57,10 @@ export type User = {
   createdAt: Date;
   role: UserRole;
   active: boolean;
+  commerceId?: number;
 };
 
-export type AuthUser = Omit<User, "phoneNumber" | "createdAt"> & {
-  commerceId: number;
-};
+export type AuthUser = Omit<User, "phoneNumber" | "createdAt">;
 
 // COMMERCE
 export type CommerceWithOwner = {
