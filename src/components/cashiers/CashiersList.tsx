@@ -1,78 +1,53 @@
-import type { User } from "@/types";
-import { Button, Switch } from "@mantine/core";
 import { BuildingComplexIcon } from "lucide-react";
 
-type CashiersListProps = {
-  openModal: () => void;
-  onEdit: (cashier: User) => void;
-};
+import { CashierItem } from "@/components/cashiers/CashierItem";
+import { useUser } from "@/hooks/useUser";
+import { LoadingPage } from "../Loading";
 
-export const CashiersList = ({ openModal, onEdit }: CashiersListProps) => {
-  const CASHIERS = [
-    {
-      name: "Martina Ríos",
-      email: "martina@donpepe.com",
-      createdAt: "12/03/2026",
-      status: "Activo",
-      access: true,
-    },
-    {
-      name: "Julián Ferreyra",
-      email: "julian@donpepe.com",
-      createdAt: "02/04/2026",
-      status: "Activo",
-      access: true,
-    },
-    {
-      name: "Camila Ledesma",
-      email: "camila@donpepe.com",
-      createdAt: "18/01/2026",
-      status: "Inactivo",
-      access: false,
-    },
-  ];
+export const CashiersList = () => {
+  const { cashiers, isLoading } = useUser();
 
-  const HEADERS = ["Nombre", "Email", "Teléfono", "Alta", "Acceso"];
+  const headers = ["Cajero", "Email", "Alta", "Estado", "Acceso"];
 
   const columns =
-    "grid grid-cols-[72px_1fr_1fr_1.4fr_120px_90px_90px] items-center gap-x-4";
+    "grid grid-cols-[1fr_1fr_0.6fr_0.5fr_0.3fr] items-center gap-x-4";
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (cashiers.length === 0) {
+    return (
+      <div className="border-border text-secondary-foreground flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border p-10">
+        <BuildingComplexIcon size={40} strokeWidth={1.5} />
+        <p className="text-foreground font-medium">
+          No hay cajeros para mostrar
+        </p>
+        <p className="text-sm">Agregá uno nuevo para empezar.</p>
+      </div>
+    );
+  }
 
   return (
     <section className="bg-background border-border col-span-3 rounded-lg border">
-      <div>
-        <div
-          className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
-        >
-          {HEADERS.map((header) => (
-            <p key={header}>{header}</p>
-          ))}
-        </div>
-        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t">
-          {CASHIERS.length ? (
-            CASHIERS.map((cashier) => {
-              return (
-                <li key={`cashier-${cashier.email}`}>
-                  <div className={columns}>
-                    <p>{cashier.name}</p>
-                    <p>{cashier.email}</p>
-                    <p>{cashier.createdAt}</p>
-                    <p>{cashier.status}</p>
-                    <Switch />
-                    <Button onClick={() => onEdit(cashier)}>Editar</Button>
-                  </div>
-                </li>
-              );
-            })
-          ) : (
-            <div className="flex flex-col items-center gap-4 p-2">
-              <p>Todavía no hay cajeros añadidos. Añade el primero.</p>
-              <Button onClick={openModal} leftSection={<BuildingComplexIcon />}>
-                Agregar cajero
-              </Button>
-            </div>
-          )}
-        </ul>
-      </div>
+      <ul
+        className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
+      >
+        {headers.map((header) => (
+          <li key={header}>{header}</li>
+        ))}
+      </ul>
+      <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t">
+        {cashiers.map((cashier) => {
+          return (
+            <CashierItem
+              key={`cashier-${cashier.id}`}
+              cashier={cashier}
+              columns={columns}
+            />
+          );
+        })}
+      </ul>
     </section>
   );
 };

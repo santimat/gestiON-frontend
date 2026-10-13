@@ -5,6 +5,8 @@ import {
   LoginSchema,
   ProductSchema,
   CategorySchema,
+  ClientSchema,
+  CashierSchema,
   CommerceWithOwnerRequestSchema,
 } from "@/schemas";
 import type { ErrorDictionary } from "@/utils/errorDictionary";
@@ -29,10 +31,12 @@ export type FormFields =
   | "email"
   | "password"
   | "name"
+  | "lastName"
   | "address"
   | "businessName"
   | "phoneNumber"
-  | "cuit";
+  | "cuit"
+  | "dni";
 export type FieldErrors = Optional<Record<FormFields, string>>;
 
 export type PageableSpringBootResponse = {
@@ -124,3 +128,23 @@ export type Category = {
   name: string;
   description?: string;
 };
+
+// CLIENT
+export type ClientRequest = z.infer<typeof ClientSchema>;
+
+export type Client = {
+  id: number;
+  name: string;
+  lastName: string;
+  address: string;
+  phoneNumber: string;
+  dni: string;
+};
+
+// CASHIER
+export type CashierRequest = z.infer<typeof CashierSchema>;
+
+// SALE
+export type PaymentMethod = "CASH" | "CARD" | "TRANSFER";
+
+export type DiscountType = "monto" | "porcentaje";

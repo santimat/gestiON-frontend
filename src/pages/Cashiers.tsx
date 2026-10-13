@@ -1,50 +1,54 @@
+import { useEffect } from "react";
+import { UserPlus } from "lucide-react";
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
 
 import { CashiersList } from "@/components/cashiers/CashiersList";
-import { NewCashierForm } from "@/components/cashiers/NewCashierForm";
-import type { User } from "@/types";
+import { CashierForm } from "@/components/cashiers/CashierForm";
+import { useUser } from "@/hooks/useUser";
 
 export const Cashiers = () => {
-  const [opened, { open, close }] = useDisclosure(false);
+  const { cashiers, totalCashiers, getCashiers } = useUser();
 
-  const [editingCashier, setEditingCashier] = useState<User>({});
+  const [opened, { open: openModal, close }] = useDisclosure(false);
 
-  const openEditModal = (cashier: User) => {
-    setEditingCashier(cashier);
-    open();
-  };
+  useEffect(() => {
+    getCashiers();
+  }, [getCashiers]);
+
+  const activeCashiers = cashiers.filter((cashier) => cashier.active).length;
 
   return (
     <>
       <Modal
         opened={opened}
         onClose={close}
-        title={
-          <div>
-            <h3 className="text-lg font-semibold">Ingresar Nuevo Cajero</h3>
-            <p className="text-sm">
-              El cajero sólo va a poder acceder al punto de venta del comercio.
-            </p>
-          </div>
-        }
         centered
+        size="xl"
+        transitionProps={{ transition: "fade-down", duration: 300 }}
+        withCloseButton={false}
       >
-        <NewCashierForm onSuccess={close} onCancel={close} />
+        <CashierForm closeModal={close} />
       </Modal>
-      <header className="border-background-soft flex w-full items-center justify-between border-b p-4">
+
+      <header className="border-border flex w-full items-center justify-between border-b p-4">
         <div>
-          <h2 className="text-xl font-semibold">Cajeros</h2>
-          <p>() activos de () usuarios</p>
+          <h1 className="text-xl font-semibold">Cajeros</h1>
+          <p>
+            {activeCashiers} activos de {totalCashiers} usuarios
+          </p>
         </div>
-        <Button onClick={open} className="bg-primary rounded-md p-2 text-white">
-          + Nuevo Cajero
+        <Button
+          leftSection={<UserPlus />}
+          onClick={openModal}
+          className="bg-primary rounded-md p-2 text-white"
+        >
+          Nuevo Cajero
         </Button>
       </header>
 
-      <main>
-        <CashiersList openModal={open} onEdit={openEditModal} />
+      <main className="flex flex-col gap-8 p-6">
+        <CashiersList />
       </main>
     </>
   );

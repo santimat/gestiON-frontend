@@ -106,7 +106,7 @@ export const Commerces = () => {
             }}
           />
         </div>
-        <CommerceList openModal={openCreateModal} onEdit={openEditModal} />
+        <CommerceList onEdit={openEditModal} />
       </main>
     </>
   );

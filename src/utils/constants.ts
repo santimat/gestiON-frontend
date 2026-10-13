@@ -7,7 +7,12 @@ import {
   Users,
 } from "lucide-react";
 
-import type { CommerceWithOwnerRequest, NavItem, ProductForm } from "@/types";
+import type {
+  ClientRequest,
+  CommerceWithOwnerRequest,
+  NavItem,
+  ProductForm,
+} from "@/types";
 
 export const ALLOWEDS_ROUTES_BY_ROLE = {
   SUDO: [
@@ -69,10 +74,18 @@ export const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerRequest = {
 export const DEFAULT_PRODUCT_FORM: ProductForm = {
   name: "",
   description: "",
-  categoryId: "",
+  categoryId: 0,
   costPrice: 0,
   salePrice: 0,
   currentStock: 0,
   minStock: 0,
   image: null,
+};
+
+export const EMPTY_CLIENT_FORM: ClientRequest = {
+  name: "",
+  lastName: "",
+  address: "",
+  phoneNumber: "",
+  dni: "",
 };

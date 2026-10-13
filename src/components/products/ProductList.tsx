@@ -1,4 +1,4 @@
-import { Pencil } from "lucide-react";
+import { Package, Pencil } from "lucide-react";
 
 import { ProductItem } from "@/components/products/ProductItem";
 import type { Product } from "@/types";
@@ -35,8 +35,12 @@ export const ProductList = ({ onEdit }: ProductListProps) => {
 
   if (products.length === 0) {
     return (
-      <div className="flex h-full w-full items-center justify-center">
-        <p className="text-secondary-foreground">No hay productos cargados</p>
+      <div className="border-border text-secondary-foreground flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border p-10">
+        <Package size={40} strokeWidth={1.5} />
+        <p className="text-foreground font-medium">
+          No hay productos para mostrar
+        </p>
+        <p className="text-sm">Creá uno nuevo para empezar a vender.</p>
       </div>
     );
   }

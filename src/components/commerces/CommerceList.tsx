@@ -1,4 +1,3 @@
-import { Button } from "@mantine/core";
 import { BuildingComplexIcon } from "lucide-react";
 
 import type { CommerceWithOwner } from "@/types";
@@ -7,11 +6,10 @@ import { LoadingPage } from "@/components/Loading";
 import { CommerceItem } from "@/components/commerces/CommerceItem";
 
 type CommerceListProps = {
-  openModal: () => void;
   onEdit: (commerce: CommerceWithOwner) => void;
 };
 
-export function CommerceList({ openModal, onEdit }: CommerceListProps) {
+export function CommerceList({ onEdit }: CommerceListProps) {
   const { commercesWithOwner, isLoading, error } = useCommerce();
 
   const columns =
@@ -31,6 +29,18 @@ export function CommerceList({ openModal, onEdit }: CommerceListProps) {
 
   if (isLoading) return <LoadingPage />;
 
+  if (commercesWithOwner.length === 0) {
+    return (
+      <div className="border-border text-secondary-foreground flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border p-10">
+        <BuildingComplexIcon size={40} strokeWidth={1.5} />
+        <p className="text-foreground font-medium">
+          No hay comercios para mostrar
+        </p>
+        <p className="text-sm">Agregá uno nuevo para empezar.</p>
+      </div>
+    );
+  }
+
   return (
     <section className="bg-background border-border col-span-3 rounded-lg border">
       <div>
@@ -42,25 +52,16 @@ export function CommerceList({ openModal, onEdit }: CommerceListProps) {
           ))}
         </div>
         <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t">
-          {commercesWithOwner.length ? (
-            commercesWithOwner.map((commerce) => {
-              return (
-                <CommerceItem
-                  key={`commerce-owner-${commerce.commerceId}`}
-                  commerce={commerce}
-                  onEdit={onEdit}
-                  columns={columns}
-                />
-              );
-            })
-          ) : (
-            <div className="flex flex-col items-center gap-4 p-2">
-              <p>Todavía no hay comercios añadidos. Añade el primero.</p>
-              <Button onClick={openModal} leftSection={<BuildingComplexIcon />}>
-                Agregar comercio
-              </Button>
-            </div>
-          )}
+          {commercesWithOwner.map((commerce) => {
+            return (
+              <CommerceItem
+                key={`commerce-owner-${commerce.commerceId}`}
+                commerce={commerce}
+                onEdit={onEdit}
+                columns={columns}
+              />
+            );
+          })}
         </ul>
       </div>
     </section>
