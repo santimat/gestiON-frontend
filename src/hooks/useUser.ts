@@ -8,7 +8,6 @@ export const useUser = () => {
     totalCashiers,
     isLoading,
     isPendingToggleActive,
-    createCashier,
     getCashiers,
     toggleActive,
   } = useUserStore(
@@ -17,7 +16,6 @@ export const useUser = () => {
       totalCashiers: s.totalCashiers,
       isLoading: s.isLoading,
       isPendingToggleActive: s.isPendingToggleActive,
-      createCashier: s.createCashier,
       getCashiers: s.getCashiers,
       toggleActive: s.toggleActive,
     })),
@@ -28,7 +26,6 @@ export const useUser = () => {
     totalCashiers,
     isLoading,
     isPendingToggleActive,
-    createCashier,
     getCashiers,
     toggleActive,
   };

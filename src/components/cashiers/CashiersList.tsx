@@ -1,16 +1,18 @@
 import { BuildingComplexIcon } from "lucide-react";
 
+import { useCashier } from "@/hooks/useCashiers";
+import { LoadingPage } from "@/components/Loading";
 import { CashierItem } from "@/components/cashiers/CashierItem";
-import { useUser } from "@/hooks/useUser";
-import { LoadingPage } from "../Loading";
 
 export const CashiersList = () => {
-  const { cashiers, isLoading } = useUser();
+  const { cashiers, isLoading, error } = useCashier();
 
   const headers = ["Cajero", "Email", "Alta", "Estado", "Acceso"];
 
   const columns =
     "grid grid-cols-[1fr_1fr_0.6fr_0.5fr_0.3fr] items-center gap-x-4";
+
+  if (error) return <div className="text-center text-red-500">{error}</div>;
 
   if (isLoading) {
     return <LoadingPage />;

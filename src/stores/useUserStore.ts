@@ -8,7 +8,6 @@ type UseUserStore = {
   totalCashiers: number;
   isLoading: boolean;
   isPendingToggleActive: boolean;
-  createCashier: (cashier: CashierRequest) => Promise<void>;
   getCashiers: () => Promise<void>;
   toggleActive: (userId: number) => Promise<void>;
 };
@@ -18,13 +17,6 @@ export const useUserStore = create<UseUserStore>((set) => ({
   totalCashiers: 0,
   isLoading: false,
   isPendingToggleActive: false,
-  createCashier: async (cashier: CashierRequest) => {
-    const newCashier = await userService.createCashier(cashier);
-    set((prevState) => ({
-      cashiers: [...prevState.cashiers, newCashier],
-      totalCashiers: prevState.totalCashiers + 1,
-    }));
-  },
   toggleActive: async (userId: number) => {
     set({ isPendingToggleActive: true });
     try {
