@@ -4,9 +4,9 @@ import { SideBar } from "@/components/sidebar/SideBar";
 
 export const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="grid grid-cols-2">
+    <div className="flex">
       <SideBar />
-      <section>{children}</section>
+      <section className="flex-1">{children}</section>
     </div>
   );
 };
