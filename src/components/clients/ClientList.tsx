@@ -1,9 +1,9 @@
 import { Contact, Pencil } from "lucide-react";
 
-import { ClientItem } from "@/components/clients/ClientItem";
 import type { Client } from "@/types";
 import { useClient } from "@/hooks/useClient";
-import { LoadingPage } from "../Loading";
+import { LoadingPage } from "@/components/Loading";
+import { ClientItem } from "@/components/clients/ClientItem";
 
 type ClientListProps = {
   onEdit: (client: Client) => void;
