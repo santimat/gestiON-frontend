@@ -3,20 +3,18 @@ import { UserPlus } from "lucide-react";
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
-import { CashiersList } from "@/components/cashiers/CashiersList";
+import { useCashier } from "@/hooks/useCashiers";
 import { CashierForm } from "@/components/cashiers/CashierForm";
-import { useUser } from "@/hooks/useUser";
+import { CashiersList } from "@/components/cashiers/CashiersList";
 
 export const Cashiers = () => {
-  const { cashiers, totalCashiers, getCashiers } = useUser();
+  const { totalCashiers, getCashiers } = useCashier();
 
   const [opened, { open: openModal, close }] = useDisclosure(false);
 
   useEffect(() => {
     getCashiers();
   }, [getCashiers]);
-
-  const activeCashiers = cashiers.filter((cashier) => cashier.active).length;
 
   return (
     <>
@@ -35,7 +33,7 @@ export const Cashiers = () => {
         <div>
           <h1 className="text-xl font-semibold">Cajeros</h1>
           <p>
-            {activeCashiers} activos de {totalCashiers} usuarios
+            {totalCashiers} cajero{totalCashiers !== 1 && "s"} registrados
           </p>
         </div>
         <Button
