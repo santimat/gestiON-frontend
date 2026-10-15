@@ -8,7 +8,7 @@ import { LogOut } from "lucide-react";
 
 type SidebarFooterProps = {
   authenticatedUser: AuthUser | null;
-  handleLogout: () => void;
+  handleLogout: () => Promise<void>;
 };
 
 export const SidebarFooter = ({
@@ -16,8 +16,8 @@ export const SidebarFooter = ({
   handleLogout,
 }: SidebarFooterProps) => {
   const navigate = useNavigate();
-  const handleClick = () => {
-    handleLogout();
+  const handleClick = async () => {
+    await handleLogout();
     navigate("/");
   };
 

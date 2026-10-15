@@ -16,6 +16,7 @@ export const clientService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   updateClient: async (clientId: number, client: ClientRequest) => {
@@ -27,6 +28,7 @@ export const clientService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   getClients: async () => {
@@ -35,6 +37,7 @@ export const clientService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
 };

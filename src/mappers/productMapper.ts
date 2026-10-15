@@ -4,7 +4,7 @@ export const productMapper = {
   mapToForm: (product: Product): ProductForm => ({
     name: product.name,
     description: product.description,
-    categoryId: String(product.category.id),
+    categoryId: product.category.id,
     costPrice: product.costPrice,
     salePrice: product.salePrice,
     currentStock: product.currentStock,

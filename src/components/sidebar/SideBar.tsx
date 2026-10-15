@@ -1,10 +1,11 @@
 import { Link } from "react-router";
 import { Store } from "lucide-react";
 
-import { ALLOWEDS_ROUTES_BY_ROLE, SIDEBAR_ITEMS } from "@/utils/constants";
-import { SideBarItem } from "@/components/sidebar/SiderBarItem";
 import { useAuth } from "@/hooks/useAuth";
-import { SidebarFooter } from "./SideBarFooter";
+import { SIDEBAR_ITEMS } from "@/utils/constants";
+import { getRolesForRoute } from "@/utils/getRolesForRoute";
+import { SideBarItem } from "@/components/sidebar/SiderBarItem";
+import { SidebarFooter } from "@/components/sidebar/SideBarFooter";
 
 export const SideBar = () => {
   const { authenticatedUser, handleLogout } = useAuth();
@@ -12,7 +13,7 @@ export const SideBar = () => {
   if (!authenticatedUser?.email) return;
 
   const sidebarItemsToShow = SIDEBAR_ITEMS.filter(({ href }) =>
-    ALLOWEDS_ROUTES_BY_ROLE[authenticatedUser?.role].includes(href),
+    getRolesForRoute(href).includes(authenticatedUser.role),
   );
 
   return (

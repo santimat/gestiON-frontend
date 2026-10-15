@@ -32,7 +32,9 @@ export const useProductStore = create<UseProductStore>((set) => ({
     );
     set((prevState) => ({
       products: prevState.products.map((product) =>
-        product.id === updatedProduct.id ? updatedProduct : product,
+        product.id === updatedProduct.id
+          ? { ...product, ...updatedProduct }
+          : product,
       ),
     }));
   },

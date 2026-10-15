@@ -1,17 +1,19 @@
+import { useEffect } from "react";
+
 import { useAuth } from "@/hooks/useAuth";
 import { LeftSection } from "@/components/auth/LeftSection";
 import { RightSection } from "@/components/auth/RightSection";
-import { Navigate } from "react-router";
-import { useEffect } from "react";
+import { LoadingPage } from "@/components/Loading";
+
 export const AuthPage = () => {
-  const { authenticatedUser, checkAuth } = useAuth();
+  const { checkAuth, isCheckingAuth, hasHydrated } = useAuth();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
-  const navigateTo =
-    authenticatedUser?.role === "SUDO" ? "/commerces" : "/dashboard";
-  if (authenticatedUser?.email) return <Navigate to={navigateTo} />;
+
+  // esperamos a saber si hay sesión para no mostrar el formulario y redirigir después
+  if (isCheckingAuth || !hasHydrated) return <LoadingPage />;
 
   return (
     <div className="grid min-h-screen grid-cols-2">

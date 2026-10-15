@@ -10,13 +10,13 @@ export const ProtectedRoute = ({
 }: {
   allowedRoles: UserRole[];
 }) => {
-  const { checkAuth, authenticatedUser, isCheckingAuth } = useAuth();
+  const { checkAuth, authenticatedUser, hasHydrated } = useAuth();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  if (isCheckingAuth) {
+  if (!hasHydrated) {
     return <LoadingPage />;
   }
 
@@ -24,9 +24,9 @@ export const ProtectedRoute = ({
     return <Navigate to="/" replace />;
   }
 
-  // if (!allowedRoles.includes(authenticatedUser?.role)) {
-  // 	return <Navigate to={"/unauthorized"} replace />;
-  // }
+  if (!allowedRoles.includes(authenticatedUser.role)) {
+    return <Navigate to="/unauthorized" replace />;
+  }
 
   return <Outlet />;
 };

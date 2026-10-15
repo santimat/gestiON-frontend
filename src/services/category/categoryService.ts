@@ -16,6 +16,7 @@ export const categoryService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   getCategories: async () => {
@@ -24,6 +25,7 @@ export const categoryService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
 };

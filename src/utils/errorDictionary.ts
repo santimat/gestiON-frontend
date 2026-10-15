@@ -1,4 +1,5 @@
 export const ErrorDictionary = {
+  NETWORK_ERROR: "Error de conexión, intentá de nuevo.",
   INVALID_CREDENTIALS: "Email o contraseña incorrectos.",
   ACCOUNT_DISABLED: "La cuenta está deshabilitada.",
   UNAUTHORIZED: "Se requiere estar autenticado para realizar esta acción.",

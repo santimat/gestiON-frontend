@@ -1,10 +1,11 @@
+import { toast } from "sonner";
 import { PenBoxIcon } from "lucide-react";
 import { Avatar, Button, Switch } from "@mantine/core";
 
 import { useDisclosure } from "@mantine/hooks";
-import type { CommerceWithOwner } from "@/types";
 import { useCommerce } from "@/hooks/useCommerce";
 import { ImageViewer } from "@/components/ImageViewer";
+import type { AppError, CommerceWithOwner } from "@/types";
 
 type CommerceItemProps = {
   commerce: CommerceWithOwner;
@@ -18,15 +19,19 @@ export const CommerceItem = ({
   columns,
 }: CommerceItemProps) => {
   const { handleToggleCommerceActive, isPendingToggleActive } = useCommerce();
+
   const [opened, { open: openAvatar, close: closeAvatar }] =
     useDisclosure(false);
-  const createdAt = new Date(commerce.updatedAt);
-  const day = createdAt.getDate();
-  const month = createdAt.getMonth();
-  const year = createdAt.getFullYear();
+
+  const updatedAt = new Date(commerce.updatedAt).toLocaleDateString("es-AR");
 
   const handleChangeActive = async () => {
-    return await handleToggleCommerceActive(commerce.commerceId);
+    try {
+      await handleToggleCommerceActive(commerce.commerceId);
+    } catch (error) {
+      const appError = error as AppError;
+      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
+    }
   };
 
   return (
@@ -49,7 +54,7 @@ export const CommerceItem = ({
         <p className="first-letter:uppercase">{commerce.businessName}</p>
         <p className="first-letter:uppercase">{commerce.username}</p>
         <p>{commerce.email}</p>
-        <p>{`${day}/${month}/${year}`}</p>
+        <p>{updatedAt}</p>
         <Switch
           aria-label="Cambiar estado del comercio"
           title="Cambiar estado del comercio"

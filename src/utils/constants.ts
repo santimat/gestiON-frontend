@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import type {
+  CashierRequest,
   ClientRequest,
   CommerceWithOwnerRequest,
   NavItem,
@@ -39,7 +40,7 @@ export const SIDEBAR_ITEMS: NavItem[] = [
 export const ROLE_DICTIONARY = {
   OWNER: "Dueño",
   CASHIER: "Cajero",
-  SUDO: "Maestro supremo de las artes oscuras",
+  SUDO: "Administrador general",
 };
 
 export const AVAILABLE_AVATAR_COLORS = [
@@ -55,7 +56,6 @@ export const AVAILABLE_AVATAR_COLORS = [
   "teal",
   "yellow",
   "green",
-  "blue",
 ];
 
 export const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerRequest = {
@@ -82,10 +82,17 @@ export const DEFAULT_PRODUCT_FORM: ProductForm = {
   image: null,
 };
 
-export const EMPTY_CLIENT_FORM: ClientRequest = {
+export const DEFAULT_CLIENT_FORM: ClientRequest = {
   name: "",
   lastName: "",
   address: "",
   phoneNumber: "",
   dni: "",
+};
+
+export const DEFAULT_CASHIER_FORM: CashierRequest = {
+  name: "",
+  email: "",
+  password: "",
+  phoneNumber: "",
 };

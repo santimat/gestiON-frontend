@@ -26,7 +26,9 @@ export const useClientStore = create<UseClientStore>((set) => ({
     const updatedClient = await clientService.updateClient(clientId, client);
     set((prevState) => ({
       clients: prevState.clients.map((client) =>
-        client.id === updatedClient.id ? updatedClient : client,
+        client.id === updatedClient.id
+          ? { ...client, ...updatedClient }
+          : client,
       ),
     }));
   },

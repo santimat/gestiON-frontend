@@ -16,6 +16,7 @@ export const productService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   updateProduct: async (productId: number, product: FormData) => {
@@ -28,6 +29,7 @@ export const productService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   toggleActive: async (productId: number) => {
@@ -38,6 +40,7 @@ export const productService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   getProducts: async () => {
@@ -46,6 +49,7 @@ export const productService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
 };

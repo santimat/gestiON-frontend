@@ -15,20 +15,16 @@ export const authService = {
       const { data } = await backendAPI.post("/auth/login", parsedLogin.data);
       return data;
     } catch (error) {
-      console.log("Error en authService.login:", error);
-      if (isAxiosError(error)) {
-        throw handleAxiosErrors(error);
-      }
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   logout: async () => {
     try {
-      const { data } = await backendAPI.post("/auth/logout");
-      console.log(data);
+      await backendAPI.post("/auth/logout");
     } catch (error) {
-      if (isAxiosError(error)) {
-        throw handleAxiosErrors(error);
-      }
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   checkAuth: async () => {
@@ -36,9 +32,8 @@ export const authService = {
       const { data } = await backendAPI.get("/auth/me");
       return data;
     } catch (error) {
-      if (isAxiosError(error)) {
-        throw handleAxiosErrors(error);
-      }
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
 };

@@ -26,8 +26,8 @@ import { ModalFormActions } from "@/components/ModalFormActions";
 import type {
   AppError,
   CurrentCommerce,
-  FieldErrors,
   Product,
+  ProductFieldErrors,
   ProductForm,
 } from "@/types";
 import { SelectCategory } from "@/components/category/SelectCategory";
@@ -52,7 +52,9 @@ export function NewProductForm({
   const [productForm, setProductForm] = useState<ProductForm>(() =>
     product ? productMapper.mapToForm(product) : DEFAULT_PRODUCT_FORM,
   );
-  const [errors, setErrors] = useState<FieldErrors>({});
+  const [errors, setErrors] = useState<ProductFieldErrors>({});
+  // para evitar que el usuario haga doble click en el boton de guardar y se envie dos veces el formulario
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const profitMultiplier =
     product?.profitMultiplier ?? currentCommerce?.profitMultiplier ?? 1;
@@ -71,6 +73,7 @@ export function NewProductForm({
       formData.delete("image");
     }
 
+    setIsSubmitting(true);
     try {
       if (isEditing) {
         await updateProduct(product.id, formData);
@@ -79,12 +82,17 @@ export function NewProductForm({
       }
       setErrors({});
       closeModal();
-      toast.success("Producto creado correctamente");
+      toast.success(
+        isEditing
+          ? "Producto actualizado correctamente"
+          : "Producto creado correctamente",
+      );
     } catch (error) {
       const appError = error as AppError;
       if (appError?.fieldErrors) return setErrors(appError.fieldErrors);
-      console.log(appError);
-      toast.error(appError?.message);
+      toast.error(appError?.message ?? "No se pudo guardar el producto.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -217,7 +225,7 @@ export function NewProductForm({
             placeholder="0"
             min={0}
             error={errors.currentStock}
-            decimalScale={2}
+            decimalScale={0}
             value={productForm.currentStock}
             onChange={(value) => handleNumberChange("currentStock", value)}
             required
@@ -230,6 +238,7 @@ export function NewProductForm({
             error={errors.minStock}
             value={productForm.minStock}
             onChange={(value) => handleNumberChange("minStock", value)}
+            decimalScale={0}
             required
             leftSection={<CircleAlert size={20} />}
           />
@@ -237,6 +246,7 @@ export function NewProductForm({
         <ModalFormActions
           submitText={isEditing ? "Guardar cambios" : "Agregar"}
           closeModal={closeModal}
+          isSubmitting={isSubmitting}
         />
       </form>
     </>

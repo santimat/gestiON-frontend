@@ -16,6 +16,7 @@ export const userService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   toggleActive: async (userId: number) => {
@@ -24,6 +25,7 @@ export const userService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   getCashiers: async () => {
@@ -32,6 +34,7 @@ export const userService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
 };

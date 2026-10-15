@@ -19,6 +19,7 @@ export const commerceService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   getCommercesWithOwner: async () => {
@@ -29,6 +30,7 @@ export const commerceService = {
       return content;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   getCommerceStats: async () => {
@@ -37,6 +39,7 @@ export const commerceService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   getCurrentCommerce: async () => {
@@ -45,6 +48,7 @@ export const commerceService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   toggleCommerceActive: async (commerceId: number) => {
@@ -55,6 +59,7 @@ export const commerceService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   updateCommerceWithOwner: async ({
@@ -78,6 +83,7 @@ export const commerceService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
 };

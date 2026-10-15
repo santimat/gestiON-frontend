@@ -18,8 +18,7 @@ export type NavItem = {
   icon: LucideIcon;
 };
 
-export type ZodIssue = z.core.$ZodIssue;
-export type ZodParseResult = z.ZodSafeParseResult<z.output<typeof schema>>;
+export type ZodParseResult<T = unknown> = z.ZodSafeParseResult<T>;
 
 export type AppError = {
   code: keyof typeof ErrorDictionary;
@@ -27,32 +26,13 @@ export type AppError = {
   fieldErrors?: FieldErrors;
 };
 
-export type FormFields =
-  | "email"
-  | "password"
-  | "name"
-  | "lastName"
-  | "address"
-  | "businessName"
-  | "phoneNumber"
-  | "cuit"
-  | "dni";
-export type FieldErrors = Optional<Record<FormFields, string>>;
-
-export type PageableSpringBootResponse = {
-  content: [];
-  page: {
-    size: number;
-    totalElements: number;
-    totalPages: number;
-    number: number;
-  };
-};
+export type FieldErrors = Record<string, string | undefined>;
 
 // USER
 export type LoginDTO = z.infer<typeof LoginSchema>;
 
-type UserRole = "OWNER" | "CASHIER" | "SUDO";
+export type UserRole = "OWNER" | "CASHIER" | "SUDO";
+
 export type User = {
   id: number;
   name: string;
@@ -119,6 +99,20 @@ export type Product = {
 };
 
 export type ProductForm = ProductRequest;
+
+export type ProductFieldErrors = Partial<
+  Record<
+    | "name"
+    | "description"
+    | "categoryId"
+    | "image"
+    | "costPrice"
+    | "salePrice"
+    | "currentStock"
+    | "minStock",
+    string
+  >
+>;
 
 // CATEGORY
 export type CategoryRequest = z.infer<typeof CategorySchema>;

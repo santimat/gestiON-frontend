@@ -1,6 +1,7 @@
 import { Switch } from "@mantine/core";
+import { toast } from "sonner";
 
-import type { User } from "@/types";
+import type { AppError, User } from "@/types";
 import { useUser } from "@/hooks/useUser";
 
 type CashierItemProps = {
@@ -12,7 +13,12 @@ export const CashierItem = ({ cashier, columns }: CashierItemProps) => {
   const { isPendingToggleActive, toggleActive } = useUser();
 
   const handleOnChangeSwitch = async () => {
-    await toggleActive(cashier.id);
+    try {
+      await toggleActive(cashier.id);
+    } catch (error) {
+      const appError = error as AppError;
+      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
+    }
   };
 
   const createdAt = new Date(cashier.createdAt).toLocaleDateString("es-AR");

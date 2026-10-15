@@ -11,8 +11,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import type { UseDisclosureHandlers } from "@mantine/hooks";
+import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import { Fieldset, TextInput, FileInput, PasswordInput } from "@mantine/core";
-import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
 import type {
   AppError,
@@ -23,8 +23,8 @@ import type {
 import { commerceMapper } from "@/mappers";
 import { useCommerce } from "@/hooks/useCommerce";
 import { ModalHeader } from "@/components/ModalHeader";
-import { ModalFormActions } from "@/components/ModalFormActions";
 import { DEFAULT_COMMERCE_WITH_OWNER } from "@/utils/constants";
+import { ModalFormActions } from "@/components/ModalFormActions";
 
 type NewCommerceFormProps = {
   commerce: CommerceWithOwner | null;
@@ -48,28 +48,18 @@ export const NewCommerceForm = ({
   );
 
   const [errors, setErrors] = useState<FieldErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (errors) {
-      const clearErrorsTimeout = setTimeout(() => {
-        setErrors({});
-      }, 3000);
-
-      return () => {
-        clearTimeout(clearErrorsTimeout);
-      };
-    }
-  }, [errors]);
-
-  const handleSubmit = async (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.target;
+    const form = e.currentTarget;
     const formData = new FormData(form);
 
     if (commerceForm?.businessLogo == null) {
       formData.delete("businessLogo");
     }
 
+    setIsSubmitting(true);
     try {
       if (commerce) {
         await handleUpdateCommerceWithOwner({
@@ -86,14 +76,15 @@ export const NewCommerceForm = ({
     } catch (error) {
       const appError = error as AppError;
       if (appError.fieldErrors) return setErrors(appError.fieldErrors);
-      toast.error(appError.message);
+      toast.error(appError?.message ?? "No se pudo guardar el comercio.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const field = e.target.name;
-    const value = e.target.value;
-    setCommerceForm((prevState) => ({ ...prevState, [field]: value }));
+    const { name, value } = e.target;
+    setCommerceForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const handleChangeFile = (payload: File | null) => {
@@ -198,6 +189,7 @@ export const NewCommerceForm = ({
         <ModalFormActions
           submitText={isEditing ? "Guardar Cambios" : "Agregar Comercio"}
           closeModal={closeModal}
+          isSubmitting={isSubmitting}
         />
       </form>
     </>

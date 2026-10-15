@@ -34,8 +34,7 @@ export const NewCategoryInline = ({
       if (appError.fieldErrors) {
         return setErrors(appError.fieldErrors);
       }
-      console.log(appError);
-      toast.error(appError.message);
+      toast.error(appError?.message ?? "No se pudo crear la categoría.");
     }
   };
 

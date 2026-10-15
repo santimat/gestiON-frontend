@@ -1,15 +1,15 @@
-import type { ChangeEvent, SubmitEvent } from "react";
+import { toast } from "sonner";
 import { useState } from "react";
 import { TextInput } from "@mantine/core";
+import type { ChangeEvent, SubmitEvent } from "react";
 import { IdCard, MapPinHouse, Phone, UserPen, UserRound } from "lucide-react";
-import { toast } from "sonner";
 
-import { useClient } from "@/hooks/useClient";
 import { clientMapper } from "@/mappers";
+import { useClient } from "@/hooks/useClient";
 import { ModalHeader } from "@/components/ModalHeader";
+import { DEFAULT_CLIENT_FORM } from "@/utils/constants";
 import { ModalFormActions } from "@/components/ModalFormActions";
 import type { AppError, Client, ClientRequest, FieldErrors } from "@/types";
-import { EMPTY_CLIENT_FORM } from "@/utils/constants";
 
 type ClientFormProps = {
   client: Client | null;
@@ -22,13 +22,15 @@ export const ClientForm = ({ client, closeModal }: ClientFormProps) => {
   const { createClient, updateClient } = useClient();
 
   const [clientForm, setClientForm] = useState<ClientRequest>(() =>
-    client ? clientMapper.mapToForm(client) : EMPTY_CLIENT_FORM,
+    client ? clientMapper.mapToForm(client) : DEFAULT_CLIENT_FORM,
   );
   const [errors, setErrors] = useState<FieldErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setIsSubmitting(true);
     try {
       if (isEditing) {
         await updateClient(client.id, clientForm);
@@ -45,7 +47,9 @@ export const ClientForm = ({ client, closeModal }: ClientFormProps) => {
     } catch (error) {
       const appError = error as AppError;
       if (appError?.fieldErrors) return setErrors(appError.fieldErrors);
-      toast.error(appError?.message);
+      toast.error(appError?.message ?? "No se pudo guardar el cliente.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -129,6 +133,7 @@ export const ClientForm = ({ client, closeModal }: ClientFormProps) => {
         <ModalFormActions
           submitText={isEditing ? "Guardar cambios" : "Agregar"}
           closeModal={closeModal}
+          isSubmitting={isSubmitting}
         />
       </form>
     </>

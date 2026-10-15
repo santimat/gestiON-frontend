@@ -28,8 +28,9 @@ export const Commerces = () => {
     useCommerce();
 
   useEffect(() => {
-    getCommerceStats();
-    getCommercesWithOwner();
+    // caturamos el error y no devolvemos nada, cuando algo falla se asigna el error en el store y se muestra en CommerceList
+    getCommerceStats().catch(() => null);
+    getCommercesWithOwner().catch(() => null);
   }, [getCommercesWithOwner, getCommerceStats]);
 
   const closeModal = () => {

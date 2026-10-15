@@ -1,10 +1,17 @@
 import { SearchIcon } from "lucide-react";
 import { NumberFormatter, TextInput } from "@mantine/core";
 
-import type { PosProduct } from "@/mocks/posMocks";
+type SellMockProducts = {
+  id: number;
+  name: string;
+  category: string;
+  stock: number;
+  minStock: number;
+  price: number;
+};
 
 export const ProductSearch = () => {
-  const PRODUCTS = [
+  const PRODUCTS: SellMockProducts[] = [
     {
       id: 1,
       name: "Café Molido 500gr",
@@ -55,8 +62,9 @@ export const ProductSearch = () => {
     },
   ];
 
-  const handleSelectProduct = (product: PosProduct) => {
-    console.log("Agregar al carrito:", product.name);
+  const handleSelectProduct = (product: SellMockProducts) => {
+    // TODO: agregar el producto al carrito cuando el POS tenga estado real.
+    void product;
   };
 
   return (

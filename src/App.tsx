@@ -5,6 +5,7 @@ import "@/global.css";
 import { GuestRoute } from "@/routes/GuestRoute";
 import { MainLayout } from "@/layouts/MainLayout";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
+import { getRolesForRoute } from "@/utils/constants";
 
 const LandingPage = lazy(() =>
   import("@/pages/Landing").then((module) => ({ default: module.LandingPage })),
@@ -36,6 +37,18 @@ const ClientsPage = lazy(() =>
   import("@/pages/Clients").then((module) => ({ default: module.Clients })),
 );
 
+const UnauthorizedPage = lazy(() =>
+  import("@/components/UnauthorizedPage").then((module) => ({
+    default: module.UnauthorizedPage,
+  })),
+);
+
+const InProgressPage = lazy(() =>
+  import("@/components/InProgressPage").then((module) => ({
+    default: module.InProgressPage,
+  })),
+);
+
 const NotFoundPage = lazy(() =>
   import("@/components/NotFoundPage").then((module) => ({
     default: module.NotFoundPage,
@@ -57,19 +70,40 @@ const App = () => {
             </MainLayout>
           }
         >
-          <Route element={<ProtectedRoute allowedRoles={["SUDO"]} />}>
+          <Route
+            element={
+              <ProtectedRoute allowedRoles={getRolesForRoute("/commerces")} />
+            }
+          >
             <Route path="/commerces" element={<CommercesPage />} />
           </Route>
           <Route
-            element={<ProtectedRoute allowedRoles={["CASHIER", "OWNER"]} />}
+            element={
+              <ProtectedRoute allowedRoles={getRolesForRoute("/sell")} />
+            }
           >
             <Route path="/sell" element={<SellPage />} />
-            <Route path="/dashboard" element={<p>hola</p>} />
             <Route path="/products" element={<ProductsPage />} />
-            <Route path="/cashiers" element={<CashiersPage />} />
             <Route path="/clients" element={<ClientsPage />} />
           </Route>
+          <Route
+            element={
+              <ProtectedRoute allowedRoles={getRolesForRoute("/cashiers")} />
+            }
+          >
+            <Route path="/cashiers" element={<CashiersPage />} />
+          </Route>
         </Route>
+        {/* vistas full-screen, fuera de MainLayout */}
+        <Route
+          element={
+            <ProtectedRoute allowedRoles={getRolesForRoute("/dashboard")} />
+          }
+        >
+          <Route path="/dashboard" element={<InProgressPage />} />
+        </Route>
+        <Route path="/unauthorized" element={<UnauthorizedPage />} />
+        <Route path="/in-progress" element={<InProgressPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

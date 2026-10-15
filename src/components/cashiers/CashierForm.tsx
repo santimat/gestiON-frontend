@@ -6,6 +6,7 @@ import { toast } from "sonner";
 
 import { useUser } from "@/hooks/useUser";
 import { ModalHeader } from "@/components/ModalHeader";
+import { DEFAULT_CASHIER_FORM } from "@/utils/constants";
 import { ModalFormActions } from "@/components/ModalFormActions";
 import type { AppError, CashierRequest, FieldErrors } from "@/types";
 
@@ -13,23 +14,18 @@ type CashierFormProps = {
   closeModal: () => void;
 };
 
-const EMPTY_CASHIER_FORM: CashierRequest = {
-  name: "",
-  email: "",
-  password: "",
-  phoneNumber: "",
-};
-
 export const CashierForm = ({ closeModal }: CashierFormProps) => {
   const { createCashier } = useUser();
 
   const [cashierForm, setCashierForm] =
-    useState<CashierRequest>(EMPTY_CASHIER_FORM);
+    useState<CashierRequest>(DEFAULT_CASHIER_FORM);
   const [errors, setErrors] = useState<FieldErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setIsSubmitting(true);
     try {
       await createCashier(cashierForm);
       setErrors({});
@@ -38,7 +34,9 @@ export const CashierForm = ({ closeModal }: CashierFormProps) => {
     } catch (error) {
       const appError = error as AppError;
       if (appError?.fieldErrors) return setErrors(appError.fieldErrors);
-      toast.error(appError?.message);
+      toast.error(appError?.message ?? "No se pudo crear el cajero.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -97,7 +95,11 @@ export const CashierForm = ({ closeModal }: CashierFormProps) => {
             required
           />
         </div>
-        <ModalFormActions submitText="Agregar" closeModal={closeModal} />
+        <ModalFormActions
+          submitText="Agregar"
+          closeModal={closeModal}
+          isSubmitting={isSubmitting}
+        />
       </form>
     </>
   );

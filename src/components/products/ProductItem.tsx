@@ -1,9 +1,10 @@
+import { toast } from "sonner";
 import type { LucideIcon } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
 import { Avatar, NumberFormatter, Switch, Tooltip } from "@mantine/core";
 
-import type { Product } from "@/types";
 import { useProduct } from "@/hooks/useProduct";
+import type { AppError, Product } from "@/types";
 import { ImageViewer } from "@/components/ImageViewer";
 import { ProductItemActions } from "@/components/products/ProductItemActions";
 
@@ -29,7 +30,12 @@ export const ProductItem = ({
   const { isPendingToggleActive, toggleActive } = useProduct();
 
   const handleOnChangeSwitch = async () => {
-    await toggleActive(product.id);
+    try {
+      await toggleActive(product.id);
+    } catch (error) {
+      const appError = error as AppError;
+      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
+    }
   };
 
   return (
