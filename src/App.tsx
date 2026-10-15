@@ -5,7 +5,7 @@ import "@/global.css";
 import { GuestRoute } from "@/routes/GuestRoute";
 import { MainLayout } from "@/layouts/MainLayout";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
-import { getRolesForRoute } from "@/utils/constants";
+import { getRolesForRoute } from "@/utils/getRolesForRoute";
 
 const LandingPage = lazy(() =>
   import("@/pages/Landing").then((module) => ({ default: module.LandingPage })),

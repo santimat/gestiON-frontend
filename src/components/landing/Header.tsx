@@ -42,13 +42,13 @@ export const Header = () => {
         </nav>
 
         <div className="flex items-center gap-1 sm:gap-2">
-          <Button size="sm" className="gap-1">
-            <Link to="/login" className="flex items-center gap-1">
+          <Link to="/login" className="flex items-center gap-1">
+            <Button size="sm" className="gap-1">
               <span className="sm:hidden">Ingresar</span>
               <span className="hidden sm:inline">Empezar a usar</span>
               <ArrowRight className="h-4 w-4" strokeWidth={2} />
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </div>
       </div>
     </header>
