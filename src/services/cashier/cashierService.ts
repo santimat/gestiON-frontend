@@ -16,6 +16,7 @@ export const cashierService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   getCashiers: async () => {
@@ -26,6 +27,7 @@ export const cashierService = {
       return { cashiers: content };
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
 };

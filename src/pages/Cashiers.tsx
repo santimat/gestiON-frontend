@@ -3,7 +3,7 @@ import { UserPlus } from "lucide-react";
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
-import { useCashier } from "@/hooks/useCashiers";
+import { useCashier } from "@/hooks/useCashier";
 import { CashierForm } from "@/components/cashiers/CashierForm";
 import { CashiersList } from "@/components/cashiers/CashiersList";
 

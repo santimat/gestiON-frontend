@@ -22,43 +22,6 @@ export const Sell = () => {
           <SaleCart />
         </div>
         <SaleSummary onConfirm={() => setTicketOpened(true)} />
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
-        <p>hola</p>
       </main>
 
       <SaleTicketModal

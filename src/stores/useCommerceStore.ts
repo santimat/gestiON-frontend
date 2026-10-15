@@ -60,7 +60,6 @@ export const useCommerceStore = create<UseCommerceStore>((set) => ({
     } catch (error) {
       const appError = error as AppError;
       set(() => ({ isLoading: false, error: appError.message }));
-      throw error;
     }
   },
   getCommerceStats: async () => {

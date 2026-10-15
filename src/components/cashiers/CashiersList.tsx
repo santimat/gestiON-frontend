@@ -1,6 +1,6 @@
 import { BuildingComplexIcon } from "lucide-react";
 
-import { useCashier } from "@/hooks/useCashiers";
+import { useCashier } from "@/hooks/useCashier";
 import { LoadingPage } from "@/components/Loading";
 import { CashierItem } from "@/components/cashiers/CashierItem";
 

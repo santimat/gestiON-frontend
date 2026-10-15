@@ -20,6 +20,7 @@ export const useCashierStore = create<UseCashierStore>((set) => ({
   createCashier: async (cashier: CashierRequest) => {
     const newCashier = await cashierService.createCashier(cashier);
     set((prevState) => ({
+      error: null,
       cashiers: [...prevState.cashiers, newCashier],
     }));
   },
@@ -30,6 +31,7 @@ export const useCashierStore = create<UseCashierStore>((set) => ({
       set(() => ({
         cashiers: data?.cashiers,
         isLoading: false,
+        error: null,
       }));
     } catch (error) {
       const appError = error as AppError;
