@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
 import { UserPlus } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 import type { Client } from "@/types";
+import { useClient } from "@/hooks/useClient";
 import { ClientList } from "@/components/clients/ClientList";
 import { ClientForm } from "@/components/clients/ClientForm";
-import { useClient } from "@/hooks/useClient";
 
 export const Clients = () => {
   const { getClients, totalClients } = useClient();
@@ -15,7 +15,7 @@ export const Clients = () => {
   const [editingClient, setEditingClient] = useState<Client | null>(null);
 
   useEffect(() => {
-    getClients();
+    getClients().catch(() => {});
   }, [getClients]);
 
   const closeModal = () => {

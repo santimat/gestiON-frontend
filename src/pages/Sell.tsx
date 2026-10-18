@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { ProductSearch } from "@/components/sell/ProductSearch";
 import { SaleCart } from "@/components/sell/SaleCart";
 import { SaleSummary } from "@/components/sell/SaleSummary";
+import { ProductSearch } from "@/components/sell/ProductSearch";
 import { SaleTicketModal } from "@/components/sell/SaleTicketModal";
 
 export const Sell = () => {
@@ -16,7 +16,7 @@ export const Sell = () => {
         </div>
       </header>
 
-      <main className="grid gap-4 p-6 lg:grid-cols-[minmax(0,1.15fr)_22rem] lg:items-start">
+      <main className="grid flex-1 gap-4 overflow-auto p-6 lg:grid-cols-[minmax(0,1.15fr)_22rem] lg:items-start">
         <div className="flex flex-col gap-4">
           <ProductSearch />
           <SaleCart />
