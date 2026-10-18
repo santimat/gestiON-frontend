@@ -1,7 +1,7 @@
 import { isAxiosError } from "axios";
 
 import { CashierSchema } from "@/schemas";
-import type { CashierRequest } from "@/types";
+import type { CashierRequest, User } from "@/types";
 import { backendAPI } from "@/services/axios/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
@@ -16,16 +16,30 @@ export const cashierService = {
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
   getCashiers: async () => {
     try {
-      const {
-        data: { content },
-      } = await backendAPI.get("/cashiers");
-      return { cashiers: content };
+      const { data } = await backendAPI.get("/cashiers");
+      const cashiers: User[] = data?.content ?? [];
+      // el backend puede mandar el total en la raíz de la página o dentro de page
+      const totalCashiers: number =
+        data?.totalElements ?? data?.page?.totalElements ?? cashiers.length;
+
+      return { cashiers, totalCashiers };
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
+    }
+  },
+  toggleActive: async (userId: number) => {
+    try {
+      const { data } = await backendAPI.patch(`/users/${userId}/toggle-active`);
+      return data;
+    } catch (error) {
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
     }
   },
 };

@@ -2,7 +2,7 @@ import { Switch } from "@mantine/core";
 import { toast } from "sonner";
 
 import type { AppError, User } from "@/types";
-import { useUser } from "@/hooks/useUser";
+import { useCashier } from "@/hooks/useCashier";
 
 type CashierItemProps = {
   cashier: User;
@@ -10,7 +10,7 @@ type CashierItemProps = {
 };
 
 export const CashierItem = ({ cashier, columns }: CashierItemProps) => {
-  const { isPendingToggleActive, toggleActive } = useUser();
+  const { isPendingToggleActive, toggleActive } = useCashier();
 
   const handleOnChangeSwitch = async () => {
     try {

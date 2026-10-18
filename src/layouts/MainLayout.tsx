@@ -6,7 +6,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="grid grid-cols-2">
       <SideBar />
-      <section>{children}</section>
+      <section className="overflow-y-auto">{children}</section>
     </div>
   );
 };

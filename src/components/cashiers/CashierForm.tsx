@@ -4,7 +4,7 @@ import { PasswordInput, TextInput } from "@mantine/core";
 import { KeyRound, Mail, Phone, UserRound } from "lucide-react";
 import { toast } from "sonner";
 
-import { useUser } from "@/hooks/useUser";
+import { useCashier } from "@/hooks/useCashier";
 import { ModalHeader } from "@/components/ModalHeader";
 import { DEFAULT_CASHIER_FORM } from "@/utils/constants";
 import { ModalFormActions } from "@/components/ModalFormActions";
@@ -15,7 +15,7 @@ type CashierFormProps = {
 };
 
 export const CashierForm = ({ closeModal }: CashierFormProps) => {
-  const { createCashier } = useUser();
+  const { createCashier } = useCashier();
 
   const [cashierForm, setCashierForm] =
     useState<CashierRequest>(DEFAULT_CASHIER_FORM);

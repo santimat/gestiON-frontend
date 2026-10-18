@@ -7,17 +7,21 @@ export const useCashier = () => {
     cashiers,
     totalCashiers,
     isLoading,
+    isPendingToggleActive,
     error,
     createCashier,
     getCashiers,
+    toggleActive,
   } = useCashierStore(
     useShallow((s) => ({
       cashiers: s.cashiers,
       totalCashiers: s.totalCashiers,
       isLoading: s.isLoading,
+      isPendingToggleActive: s.isPendingToggleActive,
       error: s.error,
       createCashier: s.createCashier,
       getCashiers: s.getCashiers,
+      toggleActive: s.toggleActive,
     })),
   );
 
@@ -25,8 +29,10 @@ export const useCashier = () => {
     cashiers,
     totalCashiers,
     isLoading,
+    isPendingToggleActive,
     error,
     createCashier,
     getCashiers,
+    toggleActive,
   };
 };
