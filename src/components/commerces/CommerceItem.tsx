@@ -9,16 +9,12 @@ import type { AppError, CommerceWithOwner } from "@/types";
 
 type CommerceItemProps = {
   commerce: CommerceWithOwner;
-  onEdit: (commerce: CommerceWithOwner) => void;
   columns: string;
 };
 
-export const CommerceItem = ({
-  commerce,
-  onEdit,
-  columns,
-}: CommerceItemProps) => {
-  const { handleToggleCommerceActive, isPendingToggleActive } = useCommerce();
+export const CommerceItem = ({ commerce, columns }: CommerceItemProps) => {
+  const { handleToggleCommerceActive, isPendingToggleActive, openEdit } =
+    useCommerce();
 
   const [opened, { open: openAvatar, close: closeAvatar }] =
     useDisclosure(false);
@@ -68,7 +64,7 @@ export const CommerceItem = ({
             size="compact-sm"
             aria-label="Editar comercio"
             title="Editar comercio"
-            onClick={() => onEdit(commerce)}
+            onClick={() => openEdit(commerce)}
           >
             <PenBoxIcon pointerEvents={"none"} size={20} />
           </Button>

@@ -1,20 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { UserPlus } from "lucide-react";
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
+import type { User } from "@/types";
 import { useCashier } from "@/hooks/useCashier";
-import { CashierForm } from "@/components/cashiers/CashierForm";
 import { CashiersList } from "@/components/cashiers/CashiersList";
+import { NewCashierForm } from "@/components/cashiers/NewCashierForm";
 
 export const Cashiers = () => {
   const { totalCashiers, getCashiers } = useCashier();
 
   const [opened, { open: openModal, close }] = useDisclosure(false);
 
+  const [editingCashier, setEditingCashier] = useState<User | null>(null);
+
   useEffect(() => {
     getCashiers();
   }, [getCashiers]);
+
+  const openEditModal = (cashier: User) => {
+    setEditingCashier(cashier);
+  };
 
   return (
     <>
@@ -26,7 +33,7 @@ export const Cashiers = () => {
         transitionProps={{ transition: "fade-down", duration: 300 }}
         withCloseButton={false}
       >
-        <CashierForm closeModal={close} />
+        <NewCashierForm closeModal={close} />
       </Modal>
 
       <header className="border-border flex w-full items-center justify-between border-b p-4">

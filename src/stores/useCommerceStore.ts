@@ -9,6 +9,13 @@ import type {
 import { commerceService } from "@/services/commerce/commerceService";
 
 type UseCommerceStore = {
+  // Estado de UI: modal de alta/edición de comercio
+  formCommerce: CommerceWithOwner | null;
+  isFormModalOpen: boolean;
+  openEdit: (commerce: CommerceWithOwner) => void;
+  openCreate: () => void;
+  closeFormModal: () => void;
+
   commercesWithOwner: CommerceWithOwner[];
   commerceStats?: CommerceStats | null;
   currentCommerce?: CurrentCommerce | null;
@@ -32,6 +39,14 @@ type UseCommerceStore = {
 };
 
 export const useCommerceStore = create<UseCommerceStore>((set) => ({
+  formCommerce: null,
+  isFormModalOpen: false,
+  openEdit: (commerce) =>
+    set(() => ({ formCommerce: commerce, isFormModalOpen: true })),
+  openCreate: () => set(() => ({ formCommerce: null, isFormModalOpen: true })),
+  closeFormModal: () =>
+    set(() => ({ formCommerce: null, isFormModalOpen: false })),
+
   commercesWithOwner: [],
   commerceStats: null,
   currentCommerce: null,

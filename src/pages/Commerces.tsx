@@ -5,10 +5,8 @@ import {
   UsersIcon,
 } from "lucide-react";
 import { Button, Modal } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { lazy, useEffect, useState } from "react";
+import { lazy, useEffect } from "react";
 
-import type { CommerceWithOwner } from "@/types";
 import { useCommerce } from "@/hooks/useCommerce";
 import { CommerceList } from "@/components/commerces/CommerceList";
 import { CommerceStatsCard } from "@/components/commerces/CommerceStatsCard";
@@ -20,47 +18,37 @@ const NewCommerceForm = lazy(() =>
 );
 
 export const Commerces = () => {
-  const [opened, { open: openModal, close }] = useDisclosure(false);
-
-  const [editingCommerce, setEditingCommerce] =
-    useState<CommerceWithOwner | null>(null);
-  const { commerceStats, getCommercesWithOwner, getCommerceStats } =
-    useCommerce();
+  const {
+    commerceStats,
+    getCommercesWithOwner,
+    getCommerceStats,
+    formCommerce,
+    isFormModalOpen,
+    openCreate,
+    closeFormModal,
+  } = useCommerce();
 
   useEffect(() => {
     getCommerceStats();
     getCommercesWithOwner();
-  }, [getCommercesWithOwner, getCommerceStats]);
-
-  const closeModal = () => {
-    close();
-    setEditingCommerce(null);
-  };
-
-  const openCreateModal = () => {
-    setEditingCommerce(null);
-    openModal();
-  };
-
-  const openEditModal = (commerce: CommerceWithOwner) => {
-    setEditingCommerce(commerce);
-    openModal();
-  };
+    // Al desmontar la sección dejamos el modal del form cerrado y sin comercio cargado.
+    return () => closeFormModal();
+  }, [getCommercesWithOwner, getCommerceStats, closeFormModal]);
 
   return (
     <>
       <Modal
-        opened={opened}
-        onClose={closeModal}
+        opened={isFormModalOpen}
+        onClose={closeFormModal}
         withCloseButton={false}
         centered
         size="xl"
         transitionProps={{ transition: "fade-down", duration: 300 }}
       >
         <NewCommerceForm
-          key={editingCommerce?.commerceId ?? "create"}
-          commerce={editingCommerce}
-          closeModal={closeModal}
+          key={formCommerce?.commerceId ?? "create"}
+          commerce={formCommerce}
+          closeModal={closeFormModal}
         />
       </Modal>
 
@@ -71,7 +59,7 @@ export const Commerces = () => {
             Gestión de comercios y registro de comercios.
           </p>
         </div>
-        <Button onClick={openCreateModal} leftSection={<BuildingComplexPlus />}>
+        <Button onClick={openCreate} leftSection={<BuildingComplexPlus />}>
           Agregar comercio
         </Button>
       </header>
@@ -106,7 +94,7 @@ export const Commerces = () => {
             }}
           />
         </div>
-        <CommerceList onEdit={openEditModal} />
+        <CommerceList />
       </main>
     </>
   );

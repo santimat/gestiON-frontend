@@ -1,15 +1,10 @@
 import { BuildingComplexIcon } from "lucide-react";
 
-import type { CommerceWithOwner } from "@/types";
 import { useCommerce } from "@/hooks/useCommerce";
 import { LoadingPage } from "@/components/Loading";
 import { CommerceItem } from "@/components/commerces/CommerceItem";
 
-type CommerceListProps = {
-  onEdit: (commerce: CommerceWithOwner) => void;
-};
-
-export function CommerceList({ onEdit }: CommerceListProps) {
+export function CommerceList() {
   const { commercesWithOwner, isLoading, error } = useCommerce();
 
   const columns =
@@ -57,7 +52,6 @@ export function CommerceList({ onEdit }: CommerceListProps) {
               <CommerceItem
                 key={`commerce-owner-${commerce.commerceId}`}
                 commerce={commerce}
-                onEdit={onEdit}
                 columns={columns}
               />
             );

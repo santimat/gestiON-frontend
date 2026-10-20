@@ -26,7 +26,6 @@ export const useCashierStore = create<UseCashierStore>((set) => ({
       error: null,
       cashiers: [...prevState.cashiers, newCashier],
       totalCashiers: prevState.totalCashiers + 1,
-      error: null,
     }));
   },
   getCashiers: async () => {

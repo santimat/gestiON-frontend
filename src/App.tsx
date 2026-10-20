@@ -43,12 +43,6 @@ const UnauthorizedPage = lazy(() =>
   })),
 );
 
-const InProgressPage = lazy(() =>
-  import("@/components/InProgressPage").then((module) => ({
-    default: module.InProgressPage,
-  })),
-);
-
 const NotFoundPage = lazy(() =>
   import("@/components/NotFoundPage").then((module) => ({
     default: module.NotFoundPage,
@@ -93,17 +87,17 @@ const App = () => {
           >
             <Route path="/cashiers" element={<CashiersPage />} />
           </Route>
+          <Route
+            element={
+              <ProtectedRoute allowedRoles={getRolesForRoute("/dashboard")} />
+            }
+          >
+            <Route path="/dashboard" element={<p> Dashboard </p>} />
+          </Route>
         </Route>
         {/* vistas full-screen, fuera de MainLayout */}
-        <Route
-          element={
-            <ProtectedRoute allowedRoles={getRolesForRoute("/dashboard")} />
-          }
-        >
-          <Route path="/dashboard" element={<InProgressPage />} />
-        </Route>
+
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
-        <Route path="/in-progress" element={<InProgressPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

@@ -12,7 +12,7 @@ export const cashierService = {
     handleZodParsingError(parsedData);
 
     try {
-      const { data } = await backendAPI.post("/users/cashiers", cashier);
+      const { data } = await backendAPI.post("/cashiers", cashier);
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
@@ -23,7 +23,6 @@ export const cashierService = {
     try {
       const { data } = await backendAPI.get("/cashiers");
       const cashiers: User[] = data?.content ?? [];
-      // el backend puede mandar el total en la raíz de la página o dentro de page
       const totalCashiers: number =
         data?.totalElements ?? data?.page?.totalElements ?? cashiers.length;
 
@@ -35,7 +34,9 @@ export const cashierService = {
   },
   toggleActive: async (userId: number) => {
     try {
-      const { data } = await backendAPI.patch(`/users/${userId}/toggle-active`);
+      const { data } = await backendAPI.patch(
+        `/cashiers/${userId}/toggle-active`,
+      );
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);

@@ -1,8 +1,9 @@
-import { Switch } from "@mantine/core";
+import { Button, Switch } from "@mantine/core";
 import { toast } from "sonner";
 
 import type { AppError, User } from "@/types";
 import { useCashier } from "@/hooks/useCashier";
+import { PenBoxIcon } from "lucide-react";
 
 type CashierItemProps = {
   cashier: User;
@@ -28,9 +29,6 @@ export const CashierItem = ({ cashier, columns }: CashierItemProps) => {
       <p>{cashier.name}</p>
       <p>{cashier.email}</p>
       <p>{createdAt}</p>
-      <p className={cashier.active ? "text-success" : "text-warning"}>
-        {cashier.active ? "Activo" : "Inactivo"}
-      </p>
       <Switch
         aria-label="Cambiar acceso del cajero"
         title="Cambiar acceso del cajero"
@@ -39,6 +37,16 @@ export const CashierItem = ({ cashier, columns }: CashierItemProps) => {
         disabled={isPendingToggleActive}
         onChange={handleOnChangeSwitch}
       />
+      <div className="justify-center">
+        <Button
+          size="compact-sm"
+          aria-label="Editar cajero"
+          title="Editar cajero"
+          onClick={() => onEdit(cashier)}
+        >
+          <PenBoxIcon pointerEvents={"none"} size={20} />
+        </Button>
+      </div>
     </li>
   );
 };
