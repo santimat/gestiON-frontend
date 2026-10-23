@@ -1,15 +1,10 @@
 import { Package, Pencil } from "lucide-react";
 
 import { ProductItem } from "@/components/products/ProductItem";
-import type { Product } from "@/types";
 import { useProduct } from "@/hooks/useProduct";
 import { LoadingPage } from "../Loading";
 
-type ProductListProps = {
-  onEdit: (product: Product) => void;
-};
-
-export const ProductList = ({ onEdit }: ProductListProps) => {
+export const ProductList = () => {
   const { products, isLoading } = useProduct();
 
   const headers = [
@@ -62,7 +57,6 @@ export const ProductList = ({ onEdit }: ProductListProps) => {
               product={product}
               columns={columns}
               actionsIcons={actionsIcons}
-              onEdit={() => onEdit(product)}
             />
           );
         })}

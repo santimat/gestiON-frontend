@@ -1,39 +1,42 @@
-import { useEffect, useState } from "react";
 import { UserPlus } from "lucide-react";
+import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 
-import type { User } from "@/types";
 import { useCashier } from "@/hooks/useCashier";
 import { CashiersList } from "@/components/cashiers/CashiersList";
 import { NewCashierForm } from "@/components/cashiers/NewCashierForm";
 
 export const Cashiers = () => {
-  const { totalCashiers, getCashiers } = useCashier();
-
-  const [opened, { open: openModal, close }] = useDisclosure(false);
-
-  const [editingCashier, setEditingCashier] = useState<User | null>(null);
+  const {
+    totalCashiers,
+    getCashiers,
+    formCashier,
+    isFormModalOpen,
+    openCreate,
+    closeFormModal,
+  } = useCashier();
 
   useEffect(() => {
     getCashiers();
-  }, [getCashiers]);
-
-  const openEditModal = (cashier: User) => {
-    setEditingCashier(cashier);
-  };
+    // usamos el close para limpiar el estado
+    return () => closeFormModal();
+  }, [getCashiers, closeFormModal]);
 
   return (
     <>
       <Modal
-        opened={opened}
-        onClose={close}
+        opened={isFormModalOpen}
+        onClose={closeFormModal}
         centered
         size="xl"
         transitionProps={{ transition: "fade-down", duration: 300 }}
         withCloseButton={false}
       >
-        <NewCashierForm closeModal={close} />
+        <NewCashierForm
+          key={formCashier?.id ?? "create"}
+          cashier={formCashier}
+          closeModal={closeFormModal}
+        />
       </Modal>
 
       <header className="border-border flex w-full items-center justify-between border-b p-4">
@@ -45,7 +48,7 @@ export const Cashiers = () => {
         </div>
         <Button
           leftSection={<UserPlus />}
-          onClick={openModal}
+          onClick={openCreate}
           className="bg-primary rounded-md p-2 text-white"
         >
           Nuevo Cajero

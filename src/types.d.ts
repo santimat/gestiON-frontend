@@ -137,6 +137,7 @@ export type Client = {
 
 // CASHIER
 export type CashierRequest = z.infer<typeof CashierSchema>;
+export type CashierUpdate = z.infer<typeof CashierUpdateSchema>;
 
 // SALE
 export type PaymentMethod = "CASH" | "CARD" | "TRANSFER";

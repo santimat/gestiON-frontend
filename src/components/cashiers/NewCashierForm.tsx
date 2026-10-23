@@ -1,24 +1,29 @@
 import type { ChangeEvent, SubmitEvent } from "react";
 import { useState } from "react";
 import { PasswordInput, TextInput } from "@mantine/core";
-import { KeyRound, Mail, Phone, UserRound } from "lucide-react";
+import { KeyRound, Mail, Phone, UserPen, UserRound } from "lucide-react";
 import { toast } from "sonner";
 
+import { cashierMapper } from "@/mappers";
 import { useCashier } from "@/hooks/useCashier";
 import { ModalHeader } from "@/components/ModalHeader";
 import { DEFAULT_CASHIER_FORM } from "@/utils/constants";
 import { ModalFormActions } from "@/components/ModalFormActions";
-import type { AppError, CashierRequest, FieldErrors } from "@/types";
+import type { AppError, CashierRequest, FieldErrors, User } from "@/types";
 
 type NewCashierProps = {
+  cashier: User | null;
   closeModal: () => void;
 };
 
-export const NewCashierForm = ({ closeModal }: NewCashierProps) => {
-  const { createCashier } = useCashier();
+export const NewCashierForm = ({ cashier, closeModal }: NewCashierProps) => {
+  const isEditing = cashier !== null;
 
-  const [cashierForm, setCashierForm] =
-    useState<CashierRequest>(DEFAULT_CASHIER_FORM);
+  const { createCashier, updateCashier } = useCashier();
+
+  const [cashierForm, setCashierForm] = useState<CashierRequest>(() =>
+    cashier ? cashierMapper.mapToForm(cashier) : DEFAULT_CASHIER_FORM,
+  );
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,14 +32,27 @@ export const NewCashierForm = ({ closeModal }: NewCashierProps) => {
 
     setIsSubmitting(true);
     try {
-      await createCashier(cashierForm);
+      if (isEditing) {
+        await updateCashier({ cashierId: cashier.id, cashier: cashierForm });
+      } else {
+        await createCashier(cashierForm);
+      }
       setErrors({});
       closeModal();
-      toast.success("Cajero creado correctamente");
+      toast.success(
+        isEditing
+          ? "Cajero actualizado correctamente"
+          : "Cajero creado correctamente",
+      );
     } catch (error) {
       const appError = error as AppError;
       if (appError?.fieldErrors) return setErrors(appError.fieldErrors);
-      toast.error(appError?.message ?? "No se pudo crear el cajero.");
+      toast.error(
+        appError?.message ??
+          (isEditing
+            ? "No se pudo actualizar el cajero."
+            : "No se pudo crear el cajero."),
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -47,7 +65,10 @@ export const NewCashierForm = ({ closeModal }: NewCashierProps) => {
 
   return (
     <>
-      <ModalHeader title="Nuevo Cajero" Icon={UserRound} />
+      <ModalHeader
+        title={isEditing ? "Editar Cajero" : "Nuevo Cajero"}
+        Icon={UserPen}
+      />
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4">
           <TextInput
@@ -60,6 +81,7 @@ export const NewCashierForm = ({ closeModal }: NewCashierProps) => {
             onChange={handleChange}
             required
           />
+
           <TextInput
             leftSection={<Mail size={20} />}
             name="email"
@@ -74,27 +96,29 @@ export const NewCashierForm = ({ closeModal }: NewCashierProps) => {
           <PasswordInput
             leftSection={<KeyRound size={20} />}
             name="password"
-            label="Contraseña"
-            placeholder="******"
+            label={isEditing ? "Nueva Contraseña (opcional)" : "Contraseña"}
+            placeholder={
+              isEditing ? "Dejar vacío para conservar la actual" : "••••••"
+            }
             value={cashierForm.password}
             error={errors.password}
             onChange={handleChange}
-            required
+            required={!isEditing}
           />
 
           <TextInput
             leftSection={<Phone size={20} />}
             name="phoneNumber"
             label="Telefono"
-            required
             placeholder="2346589631"
             value={cashierForm.phoneNumber}
             error={errors.phoneNumber}
             onChange={handleChange}
+            required
           />
         </div>
         <ModalFormActions
-          submitText="Agregar"
+          submitText={isEditing ? "Guardar cambios" : "Agregar"}
           closeModal={closeModal}
           isSubmitting={isSubmitting}
         />

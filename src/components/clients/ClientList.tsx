@@ -1,15 +1,10 @@
 import { Contact, Pencil } from "lucide-react";
 
-import type { Client } from "@/types";
 import { useClient } from "@/hooks/useClient";
 import { LoadingPage } from "@/components/Loading";
 import { ClientItem } from "@/components/clients/ClientItem";
 
-type ClientListProps = {
-  onEdit: (client: Client) => void;
-};
-
-export const ClientList = ({ onEdit }: ClientListProps) => {
+export const ClientList = () => {
   const { clients, isLoading } = useClient();
 
   const headers = ["Cliente", "DNI", "Telefono", "Direccion", "Acciones"];
@@ -52,7 +47,6 @@ export const ClientList = ({ onEdit }: ClientListProps) => {
               client={client}
               columns={columns}
               actionsIcons={actionsIcons}
-              onEdit={() => onEdit(client)}
             />
           );
         })}

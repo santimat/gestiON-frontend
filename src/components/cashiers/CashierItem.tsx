@@ -11,7 +11,7 @@ type CashierItemProps = {
 };
 
 export const CashierItem = ({ cashier, columns }: CashierItemProps) => {
-  const { isPendingToggleActive, toggleActive } = useCashier();
+  const { isPendingToggleActive, toggleActive, openEdit } = useCashier();
 
   const handleOnChangeSwitch = async () => {
     try {
@@ -42,7 +42,7 @@ export const CashierItem = ({ cashier, columns }: CashierItemProps) => {
           size="compact-sm"
           aria-label="Editar cajero"
           title="Editar cajero"
-          onClick={() => onEdit(cashier)}
+          onClick={() => openEdit(cashier)}
         >
           <PenBoxIcon pointerEvents={"none"} size={20} />
         </Button>

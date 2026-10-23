@@ -37,6 +37,12 @@ const ClientsPage = lazy(() =>
   import("@/pages/Clients").then((module) => ({ default: module.Clients })),
 );
 
+const CategoriesPage = lazy(() =>
+  import("@/pages/Categories").then((module) => ({
+    default: module.Categories,
+  })),
+);
+
 const UnauthorizedPage = lazy(() =>
   import("@/components/UnauthorizedPage").then((module) => ({
     default: module.UnauthorizedPage,
@@ -86,6 +92,13 @@ const App = () => {
             }
           >
             <Route path="/cashiers" element={<CashiersPage />} />
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute allowedRoles={getRolesForRoute("/categories")} />
+            }
+          >
+            <Route path="/categories" element={<CategoriesPage />} />
           </Route>
           <Route
             element={

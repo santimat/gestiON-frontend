@@ -4,6 +4,13 @@ import type { AppError, Client, ClientRequest } from "@/types";
 import { clientService } from "@/services/clients/clientService";
 
 type UseClientStore = {
+  // Estado de UI: modal de alta/edición de cliente
+  formClient: Client | null;
+  isFormModalOpen: boolean;
+  openEdit: (client: Client) => void;
+  openCreate: () => void;
+  closeFormModal: () => void;
+
   clients: Client[];
   totalClients: number;
   isLoading: boolean;
@@ -14,6 +21,14 @@ type UseClientStore = {
 };
 
 export const useClientStore = create<UseClientStore>((set) => ({
+  formClient: null,
+  isFormModalOpen: false,
+  openEdit: (client) =>
+    set(() => ({ formClient: client, isFormModalOpen: true })),
+  openCreate: () => set(() => ({ formClient: null, isFormModalOpen: true })),
+  closeFormModal: () =>
+    set(() => ({ formClient: null, isFormModalOpen: false })),
+
   clients: [],
   totalClients: 0,
   isLoading: false,

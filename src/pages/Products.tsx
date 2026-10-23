@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
 import { PackagePlus } from "lucide-react";
+import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 
-import type { Product } from "@/types";
 import { ProductList } from "@/components/products/ProductList";
 import { NewProductForm } from "@/components/products/NewProductForm";
 import { useProduct } from "@/hooks/useProduct";
@@ -12,47 +10,38 @@ import { useAuth } from "@/hooks/useAuth";
 
 export const Products = () => {
   const { authenticatedUser } = useAuth();
-  const { getProducts, totalProducts } = useProduct();
+  const {
+    getProducts,
+    totalProducts,
+    formProduct,
+    isFormModalOpen,
+    openCreate,
+    closeFormModal,
+  } = useProduct();
   const { getCurrentCommerce, currentCommerce } = useCommerce();
-
-  const [opened, { open: openModal, close }] = useDisclosure(false);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     getProducts();
     if (authenticatedUser?.commerceId) getCurrentCommerce();
-  }, [getProducts, getCurrentCommerce, authenticatedUser]);
-
-  const closeModal = () => {
-    close();
-    setEditingProduct(null);
-  };
-
-  const openCreateModal = () => {
-    setEditingProduct(null);
-    openModal();
-  };
-
-  const openEditModal = (product: Product) => {
-    setEditingProduct(product);
-    openModal();
-  };
+    // usamos el close para limpiar el estado
+    return () => closeFormModal();
+  }, [getProducts, getCurrentCommerce, authenticatedUser, closeFormModal]);
 
   return (
     <>
       <Modal
-        opened={opened}
-        onClose={closeModal}
+        opened={isFormModalOpen}
+        onClose={closeFormModal}
         centered
         size="xl"
         transitionProps={{ transition: "fade-down", duration: 300 }}
         withCloseButton={false}
       >
         <NewProductForm
-          key={editingProduct?.id ?? "create"}
-          product={editingProduct}
+          key={formProduct?.id ?? "create"}
+          product={formProduct}
           currentCommerce={currentCommerce ?? null}
-          closeModal={closeModal}
+          closeModal={closeFormModal}
         />
       </Modal>
 
@@ -63,7 +52,7 @@ export const Products = () => {
         </div>
         <Button
           leftSection={<PackagePlus />}
-          onClick={openCreateModal}
+          onClick={openCreate}
           className="bg-primary rounded-md p-2 text-white"
         >
           Nuevo Producto
@@ -71,7 +60,7 @@ export const Products = () => {
       </header>
 
       <main className="flex flex-col gap-8 p-6">
-        <ProductList onEdit={openEditModal} />
+        <ProductList />
       </main>
     </>
   );

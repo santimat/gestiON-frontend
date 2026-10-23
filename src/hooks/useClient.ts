@@ -7,17 +7,27 @@ export const useClient = () => {
     clients,
     totalClients,
     isLoading,
+    formClient,
+    isFormModalOpen,
     createClient,
     getClients,
     updateClient,
+    openEdit,
+    openCreate,
+    closeFormModal,
   } = useClientStore(
     useShallow((s) => ({
       clients: s.clients,
       totalClients: s.totalClients,
       isLoading: s.isLoading,
+      formClient: s.formClient,
+      isFormModalOpen: s.isFormModalOpen,
       createClient: s.createClient,
       getClients: s.getClients,
       updateClient: s.updateClient,
+      openEdit: s.openEdit,
+      openCreate: s.openCreate,
+      closeFormModal: s.closeFormModal,
     })),
   );
 
@@ -25,8 +35,13 @@ export const useClient = () => {
     isLoading,
     clients,
     totalClients,
+    formClient,
+    isFormModalOpen,
     createClient,
     getClients,
     updateClient,
+    openEdit,
+    openCreate,
+    closeFormModal,
   };
 };

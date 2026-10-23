@@ -1,4 +1,3 @@
-import { type UseDisclosureHandlers } from "@mantine/hooks";
 import {
   TextInput,
   NumberInput,
@@ -35,7 +34,7 @@ import { toast } from "sonner";
 
 type NewProductFormProps = {
   product: Product | null;
-  closeModal: UseDisclosureHandlers["close"];
+  closeModal: () => void;
   currentCommerce: CurrentCommerce | null;
 };
 

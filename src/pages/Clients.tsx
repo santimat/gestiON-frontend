@@ -1,52 +1,41 @@
 import { UserPlus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 
-import type { Client } from "@/types";
 import { useClient } from "@/hooks/useClient";
 import { ClientList } from "@/components/clients/ClientList";
 import { ClientForm } from "@/components/clients/ClientForm";
 
 export const Clients = () => {
-  const { getClients, totalClients } = useClient();
-
-  const [opened, { open: openModal, close }] = useDisclosure(false);
-  const [editingClient, setEditingClient] = useState<Client | null>(null);
+  const {
+    getClients,
+    totalClients,
+    formClient,
+    isFormModalOpen,
+    openCreate,
+    closeFormModal,
+  } = useClient();
 
   useEffect(() => {
     getClients().catch(() => {});
-  }, [getClients]);
-
-  const closeModal = () => {
-    close();
-    setEditingClient(null);
-  };
-
-  const openCreateModal = () => {
-    setEditingClient(null);
-    openModal();
-  };
-
-  const openEditModal = (client: Client) => {
-    setEditingClient(client);
-    openModal();
-  };
+    // usamos el close para limpiar el estado
+    return () => closeFormModal();
+  }, [getClients, closeFormModal]);
 
   return (
     <>
       <Modal
-        opened={opened}
-        onClose={closeModal}
+        opened={isFormModalOpen}
+        onClose={closeFormModal}
         centered
         size="xl"
         transitionProps={{ transition: "fade-down", duration: 300 }}
         withCloseButton={false}
       >
         <ClientForm
-          key={editingClient?.id ?? "create"}
-          client={editingClient}
-          closeModal={closeModal}
+          key={formClient?.id ?? "create"}
+          client={formClient}
+          closeModal={closeFormModal}
         />
       </Modal>
 
@@ -57,7 +46,7 @@ export const Clients = () => {
         </div>
         <Button
           leftSection={<UserPlus />}
-          onClick={openCreateModal}
+          onClick={openCreate}
           className="bg-primary rounded-md p-2 text-white"
         >
           Nuevo Cliente
@@ -65,7 +54,7 @@ export const Clients = () => {
       </header>
 
       <main className="flex flex-col gap-8 p-6">
-        <ClientList onEdit={openEditModal} />
+        <ClientList />
       </main>
     </>
   );

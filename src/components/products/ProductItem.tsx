@@ -15,19 +15,17 @@ type ProductItemsProps = {
     label: string;
   }[];
   columns: string;
-  onEdit: () => void;
 };
 
 export const ProductItem = ({
   product,
   actionsIcons,
   columns,
-  onEdit,
 }: ProductItemsProps) => {
   const [opened, { open: openImageViewer, close: closeImageViewer }] =
     useDisclosure(false);
 
-  const { isPendingToggleActive, toggleActive } = useProduct();
+  const { isPendingToggleActive, toggleActive, openEdit } = useProduct();
 
   const handleOnChangeSwitch = async () => {
     try {
@@ -77,7 +75,10 @@ export const ProductItem = ({
           disabled={isPendingToggleActive}
           onChange={handleOnChangeSwitch}
         />
-        <ProductItemActions actionsIcons={actionsIcons} onEdit={onEdit} />
+        <ProductItemActions
+          actionsIcons={actionsIcons}
+          onEdit={() => openEdit(product)}
+        />
       </li>
     </>
   );

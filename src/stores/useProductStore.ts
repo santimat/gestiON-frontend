@@ -4,6 +4,13 @@ import type { Product } from "@/types";
 import { productService } from "@/services/products/productService";
 
 type UseProductStore = {
+  // Estado de UI: modal de alta/edición de producto
+  formProduct: Product | null;
+  isFormModalOpen: boolean;
+  openEdit: (product: Product) => void;
+  openCreate: () => void;
+  closeFormModal: () => void;
+
   products: Product[];
   totalProducts: number;
   isLoading: boolean;
@@ -15,6 +22,14 @@ type UseProductStore = {
 };
 
 export const useProductStore = create<UseProductStore>((set) => ({
+  formProduct: null,
+  isFormModalOpen: false,
+  openEdit: (product) =>
+    set(() => ({ formProduct: product, isFormModalOpen: true })),
+  openCreate: () => set(() => ({ formProduct: null, isFormModalOpen: true })),
+  closeFormModal: () =>
+    set(() => ({ formProduct: null, isFormModalOpen: false })),
+
   products: [],
   totalProducts: 0,
   isLoading: false,
