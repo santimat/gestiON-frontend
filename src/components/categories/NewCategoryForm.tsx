@@ -16,7 +16,7 @@ type NewCategoryFormProps = {
 };
 
 export const NewCategoryForm = ({ category }: NewCategoryFormProps) => {
-  const { closeFormModal, createCategory } = useCategory();
+  const { closeFormModal, createCategory, updateCategory } = useCategory();
   const isEditing = category !== null;
 
   const [categoryForm, setCategoryForm] = useState<CategoryRequest>(() =>
@@ -41,8 +41,10 @@ export const NewCategoryForm = ({ category }: NewCategoryFormProps) => {
       formData.entries(),
     ) as CategoryRequest;
     setIsSubmitting(true);
+
     try {
       if (isEditing) {
+        await updateCategory(category.id, categoryRequest);
         toast.success(`Categoría actualizada con éxito`);
       } else {
         await createCategory(categoryRequest);

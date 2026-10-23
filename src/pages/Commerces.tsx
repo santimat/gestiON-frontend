@@ -22,12 +22,12 @@ export const Commerces = () => {
   const {
     commerceStats,
     commercesWithOwner,
-    getCommercesWithOwner,
-    getCommerceStats,
     isLoading,
     error,
     formCommerce,
     isFormModalOpen,
+    getCommercesWithOwner,
+    getCommerceStats,
     openCreate,
     closeFormModal,
   } = useCommerce();
@@ -105,7 +105,7 @@ export const Commerces = () => {
           icon={StoreIcon}
           emptyMessage="No hay comercios para mostrar"
         >
-          <CommerceList />
+          <CommerceList commercesWithOwner={commercesWithOwner} />
         </ListContainer>
       </main>
     </>

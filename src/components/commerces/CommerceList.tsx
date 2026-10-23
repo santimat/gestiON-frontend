@@ -1,9 +1,11 @@
 import { CommerceItem } from "@/components/commerces/CommerceItem";
-import { useCommerce } from "@/hooks/useCommerce";
+import type { CommerceWithOwner } from "@/types";
 
-export function CommerceList() {
-  const { commercesWithOwner } = useCommerce();
+type CommerceListProps = {
+  commercesWithOwner: CommerceWithOwner[];
+};
 
+export const CommerceList = ({ commercesWithOwner }: CommerceListProps) => {
   // en mobile sólo se ven logo, comercio (con dueño debajo), estado y acciones;
   // a partir de lg aparecen el resto de las columnas
   const columns =
@@ -45,4 +47,4 @@ export function CommerceList() {
       </div>
     </section>
   );
-}
+};

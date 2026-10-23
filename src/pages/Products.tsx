@@ -12,12 +12,13 @@ import { useAuth } from "@/hooks/useAuth";
 export const Products = () => {
   const { authenticatedUser } = useAuth();
   const {
-    getProducts,
+    products,
     totalProducts,
     isLoading,
     error,
     formProduct,
     isFormModalOpen,
+    getProducts,
     openCreate,
     closeFormModal,
   } = useProduct();
@@ -70,7 +71,7 @@ export const Products = () => {
           icon={Package}
           emptyMessage="No hay productos para mostrar"
         >
-          <ProductList />
+          <ProductList products={products} />
         </ListContainer>
       </main>
     </>

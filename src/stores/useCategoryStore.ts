@@ -14,6 +14,11 @@ type CategoryStore = {
   closeFormModal: () => void;
   getCategories: () => Promise<void>;
   createCategory: (category: CategoryRequest) => Promise<Category>;
+  updateCategory: (
+    categoryId: number,
+    category: CategoryRequest,
+  ) => Promise<Category>;
+  toggleCategoryActive: (categoryId: number) => Promise<void>;
 };
 
 export const useCategoryStore = create<CategoryStore>((set) => ({
@@ -44,5 +49,28 @@ export const useCategoryStore = create<CategoryStore>((set) => ({
       categories: [...prevState.categories, newCategory],
     }));
     return newCategory;
+  },
+  updateCategory: async (categoryId: number, category: CategoryRequest) => {
+    const updatedCategory = await categoryService.updateCategory(
+      categoryId,
+      category,
+    );
+    set((prevState) => ({
+      categories: prevState.categories.map((cat) =>
+        cat.id === updatedCategory.id ? { ...cat, ...updatedCategory } : cat,
+      ),
+    }));
+    return updatedCategory;
+  },
+  toggleCategoryActive: async (categoryId: number) => {
+    const updatedCategory =
+      await categoryService.toggleCategoryActive(categoryId);
+    set((prevState) => ({
+      categories: prevState.categories.map((category) =>
+        category.id === updatedCategory?.id
+          ? { active: updatedCategory?.active, ...category }
+          : category,
+      ),
+    }));
   },
 }));

@@ -38,11 +38,11 @@ type NewProductFormProps = {
   currentCommerce: CurrentCommerce | null;
 };
 
-export function NewProductForm({
+export const NewProductForm = ({
   product,
   currentCommerce,
   closeModal,
-}: NewProductFormProps) {
+}: NewProductFormProps) => {
   const isEditing = product !== null;
 
   const { getCategories } = useCategory();
@@ -250,4 +250,4 @@ export function NewProductForm({
       </form>
     </>
   );
-}
+};

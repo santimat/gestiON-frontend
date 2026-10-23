@@ -9,9 +9,8 @@ type CategoryItemProps = {
 };
 
 export const CategoryItem = ({ category, columns }: CategoryItemProps) => {
-  const { openEdit } = useCategory();
-
   const createdAt = new Date(category.createdAt).toLocaleDateString("es-AR");
+  const { openEdit } = useCategory();
   return (
     <li className={`p-2 ${columns}`}>
       <p className="font-medium">{category.name}</p>

@@ -10,9 +10,11 @@ export const useCategory = () => {
     isLoading,
     getCategories,
     createCategory,
+    updateCategory,
     openCreate,
     openEdit,
     closeFormModal,
+    toggleCategoryActive,
   } = useCategoryStore(
     useShallow((s) => ({
       categories: s.categories,
@@ -22,9 +24,11 @@ export const useCategory = () => {
       error: s.error,
       getCategories: s.getCategories,
       createCategory: s.createCategory,
+      updateCategory: s.updateCategory,
       openCreate: s.openCreate,
       openEdit: s.openEdit,
       closeFormModal: s.closeFormModal,
+      toggleCategoryActive: s.toggleCategoryActive,
     })),
   );
 
@@ -36,8 +40,10 @@ export const useCategory = () => {
     error,
     getCategories,
     createCategory,
+    updateCategory,
     openCreate,
     openEdit,
     closeFormModal,
+    toggleCategoryActive,
   };
 };

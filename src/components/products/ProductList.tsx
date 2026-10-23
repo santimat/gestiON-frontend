@@ -2,11 +2,11 @@ import { Pencil } from "lucide-react";
 
 import { ProductItem } from "@/components/products/ProductItem";
 import { ProductItemMobile } from "@/components/products/ProductItemMobile";
-import { useProduct } from "@/hooks/useProduct";
-
-export const ProductList = () => {
-  const { products } = useProduct();
-
+import type { Product } from "@/types";
+type ProductListProps = {
+  products: Product[];
+};
+export const ProductList = ({ products }: ProductListProps) => {
   const headers = [
     "Foto",
     "Producto",
