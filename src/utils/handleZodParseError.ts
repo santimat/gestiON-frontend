@@ -1,6 +1,6 @@
 import type { AppError, FieldErrors, ZodParseResult } from "@/types";
 
-export function handleZodParsingError<T>(parsedData: ZodParseResult<T>) {
+export const handleZodParsingError = <T>(parsedData: ZodParseResult<T>) => {
   if (!parsedData.success) {
     const { issues } = parsedData.error;
 
@@ -22,4 +22,4 @@ export function handleZodParsingError<T>(parsedData: ZodParseResult<T>) {
       fieldErrors: parsedErrors,
     } satisfies AppError;
   }
-}
+};
