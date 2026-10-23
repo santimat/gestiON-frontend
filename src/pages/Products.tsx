@@ -1,7 +1,8 @@
-import { PackagePlus } from "lucide-react";
+import { Package, PackagePlus } from "lucide-react";
 import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
+import { ListContainer } from "@/components/ListContainer";
 import { ProductList } from "@/components/products/ProductList";
 import { NewProductForm } from "@/components/products/NewProductForm";
 import { useProduct } from "@/hooks/useProduct";
@@ -13,6 +14,8 @@ export const Products = () => {
   const {
     getProducts,
     totalProducts,
+    isLoading,
+    error,
     formProduct,
     isFormModalOpen,
     openCreate,
@@ -55,12 +58,20 @@ export const Products = () => {
           onClick={openCreate}
           className="bg-primary rounded-md p-2 text-white"
         >
-          Nuevo Producto
+          <span className="hidden sm:inline">Nuevo Producto</span>
         </Button>
       </header>
 
-      <main className="flex flex-col gap-8 p-6">
-        <ProductList />
+      <main className="flex flex-col gap-6 p-6">
+        <ListContainer
+          isLoading={isLoading}
+          error={error}
+          isEmpty={totalProducts === 0}
+          icon={Package}
+          emptyMessage="No hay productos para mostrar"
+        >
+          <ProductList />
+        </ListContainer>
       </main>
     </>
   );

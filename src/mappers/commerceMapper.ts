@@ -1,7 +1,7 @@
 import type { CommerceWithOwner, CommerceWithOwnerRequest } from "@/types";
 
 export const commerceMapper = {
-  mapToForm: (commerce: CommerceWithOwner): CommerceWithOwnerRequest => ({
+  toForm: (commerce: CommerceWithOwner): CommerceWithOwnerRequest => ({
     userId: commerce.userId,
     commerceId: commerce.commerceId,
     username: commerce.username,

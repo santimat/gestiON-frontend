@@ -7,6 +7,7 @@ export const useClient = () => {
     clients,
     totalClients,
     isLoading,
+    error,
     formClient,
     isFormModalOpen,
     createClient,
@@ -20,6 +21,7 @@ export const useClient = () => {
       clients: s.clients,
       totalClients: s.totalClients,
       isLoading: s.isLoading,
+      error: s.error,
       formClient: s.formClient,
       isFormModalOpen: s.isFormModalOpen,
       createClient: s.createClient,
@@ -33,6 +35,7 @@ export const useClient = () => {
 
   return {
     isLoading,
+    error,
     clients,
     totalClients,
     formClient,

@@ -8,12 +8,15 @@ import {
   ClientSchema,
   CashierSchema,
   CommerceWithOwnerRequestSchema,
+  CashierUpdateSchema,
 } from "@/schemas";
 import type { ErrorDictionary } from "@/utils/errorDictionary";
 
 // GENERAL TYPES
 export type NavItem = {
   text: string;
+  // etiqueta corta para la barra de navegación inferior en mobile
+  short: string;
   href: string;
   icon: LucideIcon;
 };
@@ -121,6 +124,8 @@ export type Category = {
   id: number;
   name: string;
   description?: string;
+  createdAt: Date;
+  productCount: number;
 };
 
 // CLIENT

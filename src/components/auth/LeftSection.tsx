@@ -7,7 +7,7 @@ import {
 
 export const LeftSection = () => {
   return (
-    <section className="bg-card flex max-w-140 flex-col justify-between p-12">
+    <section className="bg-card hidden max-w-140 flex-col justify-between p-12 lg:flex">
       <header className="flex items-center gap-2">
         <Store className="bg-primary text-card h-10 w-10 rounded-lg p-1" />
         <h1 className="text-foreground font-semibold">GestiON</h1>

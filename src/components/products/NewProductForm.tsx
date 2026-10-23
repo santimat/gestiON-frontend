@@ -49,7 +49,7 @@ export function NewProductForm({
   const { createProduct, updateProduct } = useProduct();
 
   const [productForm, setProductForm] = useState<ProductForm>(() =>
-    product ? productMapper.mapToForm(product) : DEFAULT_PRODUCT_FORM,
+    product ? productMapper.toForm(product) : DEFAULT_PRODUCT_FORM,
   );
   const [errors, setErrors] = useState<ProductFieldErrors>({});
   // para evitar que el usuario haga doble click en el boton de guardar y se envie dos veces el formulario
@@ -120,7 +120,7 @@ export function NewProductForm({
         Icon={PackageIcon}
       />
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <TextInput
             leftSection={<PackageIcon size={20} />}
             name="name"
@@ -160,7 +160,7 @@ export function NewProductForm({
             value={productForm.description}
             onChange={handleTextAreaChange}
             error={errors.description}
-            className="col-span-3"
+            className="col-span-1 sm:col-span-3"
           />
 
           <NumberInput

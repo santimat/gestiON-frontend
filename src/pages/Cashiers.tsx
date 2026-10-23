@@ -1,14 +1,17 @@
-import { UserPlus } from "lucide-react";
+import { BuildingComplexIcon, UserPlus } from "lucide-react";
 import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
 import { useCashier } from "@/hooks/useCashier";
+import { ListContainer } from "@/components/ListContainer";
 import { CashiersList } from "@/components/cashiers/CashiersList";
 import { NewCashierForm } from "@/components/cashiers/NewCashierForm";
 
 export const Cashiers = () => {
   const {
     totalCashiers,
+    isLoading,
+    error,
     getCashiers,
     formCashier,
     isFormModalOpen,
@@ -51,12 +54,20 @@ export const Cashiers = () => {
           onClick={openCreate}
           className="bg-primary rounded-md p-2 text-white"
         >
-          Nuevo Cajero
+          <span className="hidden sm:inline">Nuevo Cajero</span>
         </Button>
       </header>
 
-      <main className="flex flex-col gap-8 p-6">
-        <CashiersList />
+      <main className="flex flex-col gap-6 p-6">
+        <ListContainer
+          isLoading={isLoading}
+          error={error}
+          isEmpty={totalCashiers === 0}
+          icon={BuildingComplexIcon}
+          emptyMessage="No hay cajeros para mostrar"
+        >
+          <CashiersList />
+        </ListContainer>
       </main>
     </>
   );

@@ -1,7 +1,7 @@
 import type { Product, ProductForm } from "@/types";
 
 export const productMapper = {
-  mapToForm: (product: Product): ProductForm => ({
+  toForm: (product: Product): ProductForm => ({
     name: product.name,
     description: product.description,
     categoryId: product.category.id,

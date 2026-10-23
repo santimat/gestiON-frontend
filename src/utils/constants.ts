@@ -10,6 +10,7 @@ import {
 
 import type {
   CashierRequest,
+  CategoryRequest,
   ClientRequest,
   CommerceWithOwnerRequest,
   NavItem,
@@ -38,13 +39,33 @@ export const ALLOWEDS_ROUTES_BY_ROLE = {
 };
 
 export const SIDEBAR_ITEMS: NavItem[] = [
-  { icon: LayoutDashboard, text: "Dashboard", href: "/dashboard" },
-  { icon: StoreIcon, text: "Comercios", href: "/commerces" },
-  { icon: ScanBarcode, text: "Puntos de venta", href: "/sell" },
-  { icon: Package, text: "Productos", href: "/products" },
-  { icon: Tags, text: "Categorías", href: "/categories" },
-  { icon: Users, text: "Cajeros", href: "/cashiers" },
-  { icon: UserGroupIcon, text: "Clientes", href: "/clients" },
+  {
+    icon: LayoutDashboard,
+    text: "Dashboard",
+    short: "Panel",
+    href: "/dashboard",
+  },
+  {
+    icon: StoreIcon,
+    text: "Comercios",
+    short: "Comercios",
+    href: "/commerces",
+  },
+  {
+    icon: ScanBarcode,
+    text: "Puntos de venta",
+    short: "Vender",
+    href: "/sell",
+  },
+  { icon: Package, text: "Productos", short: "Productos", href: "/products" },
+  { icon: Tags, text: "Categorías", short: "Categorías", href: "/categories" },
+  { icon: Users, text: "Cajeros", short: "Cajeros", href: "/cashiers" },
+  {
+    icon: UserGroupIcon,
+    text: "Clientes",
+    short: "Clientes",
+    href: "/clients",
+  },
 ];
 
 export const ROLE_DICTIONARY = {
@@ -105,4 +126,9 @@ export const DEFAULT_CASHIER_FORM: CashierRequest = {
   email: "",
   password: "",
   phoneNumber: "",
+};
+
+export const DEFAULT_CATEGORY_FORM: CategoryRequest = {
+  name: "",
+  description: "",
 };

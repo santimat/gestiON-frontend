@@ -22,7 +22,7 @@ export const ClientForm = ({ client, closeModal }: ClientFormProps) => {
   const { createClient, updateClient } = useClient();
 
   const [clientForm, setClientForm] = useState<ClientRequest>(() =>
-    client ? clientMapper.mapToForm(client) : DEFAULT_CLIENT_FORM,
+    client ? clientMapper.toForm(client) : DEFAULT_CLIENT_FORM,
   );
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,7 +73,7 @@ export const ClientForm = ({ client, closeModal }: ClientFormProps) => {
         Icon={UserPen}
       />
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TextInput
             leftSection={<UserRound size={20} />}
             name="name"
@@ -127,7 +127,7 @@ export const ClientForm = ({ client, closeModal }: ClientFormProps) => {
             error={errors.address}
             onChange={handleChange}
             required
-            className="col-span-2"
+            className="col-span-1 sm:col-span-2"
           />
         </div>
         <ModalFormActions

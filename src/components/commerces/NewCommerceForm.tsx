@@ -10,7 +10,6 @@ import {
   UserKey,
 } from "lucide-react";
 import { toast } from "sonner";
-import type { UseDisclosureHandlers } from "@mantine/hooks";
 import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import { Fieldset, TextInput, FileInput, PasswordInput } from "@mantine/core";
 
@@ -28,7 +27,7 @@ import { ModalFormActions } from "@/components/ModalFormActions";
 
 type NewCommerceFormProps = {
   commerce: CommerceWithOwner | null;
-  closeModal: UseDisclosureHandlers["close"];
+  closeModal: () => void;
 };
 
 export const NewCommerceForm = ({
@@ -42,9 +41,7 @@ export const NewCommerceForm = ({
 
   const [commerceForm, setCommerceForm] = useState<CommerceWithOwnerRequest>(
     () =>
-      commerce
-        ? commerceMapper.mapToForm(commerce)
-        : DEFAULT_COMMERCE_WITH_OWNER,
+      commerce ? commerceMapper.toForm(commerce) : DEFAULT_COMMERCE_WITH_OWNER,
   );
 
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -61,7 +58,7 @@ export const NewCommerceForm = ({
 
     setIsSubmitting(true);
     try {
-      if (commerce) {
+      if (isEditing) {
         await handleUpdateCommerceWithOwner({
           commerceId: commerce.commerceId,
           userId: commerce.userId,
@@ -99,7 +96,7 @@ export const NewCommerceForm = ({
       />
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <Fieldset
-          className="grid grid-cols-3 gap-4"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
           legend="Información del comercio"
         >
           <TextInput
@@ -133,7 +130,7 @@ export const NewCommerceForm = ({
           />
         </Fieldset>
         <Fieldset className="grid gap-4" legend="Información del dueño">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <TextInput
               label="Nombre del dueño"
               placeholder="Juan Román Riquelme"
@@ -163,7 +160,7 @@ export const NewCommerceForm = ({
               onChange={handleChange}
             />
           </div>
-          <div className={`grid ${isEditing ? "" : "grid-cols-2"} gap-4`}>
+          <div className={`grid ${isEditing ? "" : "sm:grid-cols-2"} gap-4`}>
             <TextInput
               label="Email"
               placeholder="juanroman@gmail.com"

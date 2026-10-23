@@ -6,6 +6,7 @@ export const useProduct = () => {
     products,
     totalProducts,
     isLoading,
+    error,
     isPendingToggleActive,
     formProduct,
     isFormModalOpen,
@@ -21,6 +22,7 @@ export const useProduct = () => {
       products: s.products,
       totalProducts: s.totalProducts,
       isLoading: s.isLoading,
+      error: s.error,
       isPendingToggleActive: s.isPendingToggleActive,
       formProduct: s.formProduct,
       isFormModalOpen: s.isFormModalOpen,
@@ -36,6 +38,7 @@ export const useProduct = () => {
 
   return {
     isLoading,
+    error,
     products,
     isPendingToggleActive,
     totalProducts,

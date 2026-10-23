@@ -16,7 +16,7 @@ export const AuthPage = () => {
   if (isCheckingAuth || !hasHydrated) return <LoadingPage />;
 
   return (
-    <div className="grid min-h-screen grid-cols-2">
+    <div className="grid min-h-screen lg:grid-cols-2">
       <LeftSection />
       <RightSection />
     </div>

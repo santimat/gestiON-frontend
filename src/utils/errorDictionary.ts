@@ -10,7 +10,7 @@ export const ErrorDictionary = {
   PRODUCT_NOT_FOUND: "Producto no encontrado.",
   COMMERCE_NOT_FOUND: "Comercio no encontrado.",
   SALE_NOT_FOUND: "Venta no encontrada.",
-  ENDPOINT_NOT_FOUND: "Endpoint no encontrado.",
+  ENDPOINT_NOT_FOUND: "No se pudo realizar la acción.",
   EMAIL_ALREADY_EXISTS: "El email ya está registrado.",
   CLIENT_DNI_ALREADY_EXISTS: "El DNI del cliente ya está registrado.",
   COMMERCE_ADDRESS_ALREADY_EXISTS:

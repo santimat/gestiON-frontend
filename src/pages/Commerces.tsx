@@ -8,6 +8,7 @@ import { Button, Modal } from "@mantine/core";
 import { lazy, useEffect } from "react";
 
 import { useCommerce } from "@/hooks/useCommerce";
+import { ListContainer } from "@/components/ListContainer";
 import { CommerceList } from "@/components/commerces/CommerceList";
 import { CommerceStatsCard } from "@/components/commerces/CommerceStatsCard";
 
@@ -20,8 +21,11 @@ const NewCommerceForm = lazy(() =>
 export const Commerces = () => {
   const {
     commerceStats,
+    commercesWithOwner,
     getCommercesWithOwner,
     getCommerceStats,
+    isLoading,
+    error,
     formCommerce,
     isFormModalOpen,
     openCreate,
@@ -54,18 +58,18 @@ export const Commerces = () => {
 
       <header className="border-border flex items-center justify-between gap-2 border-b p-4">
         <div>
-          <h1 className="text-3xl font-bold">Comercios</h1>
+          <h1 className="text-xl font-semibold">Comercios</h1>
           <p className="text-secondary-foreground">
             Gestión de comercios y registro de comercios.
           </p>
         </div>
         <Button onClick={openCreate} leftSection={<BuildingComplexPlus />}>
-          Agregar comercio
+          <span className="hidden sm:inline">Agregar comercio</span>
         </Button>
       </header>
 
-      <main className="flex flex-col gap-8 p-6">
-        <div className="grid grid-cols-3 gap-4">
+      <main className="flex flex-col gap-6 p-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <CommerceStatsCard
             section="Comercios registrados"
             quantity={commerceStats?.total || 0}
@@ -94,7 +98,15 @@ export const Commerces = () => {
             }}
           />
         </div>
-        <CommerceList />
+        <ListContainer
+          isLoading={isLoading}
+          error={error}
+          isEmpty={commercesWithOwner.length === 0}
+          icon={StoreIcon}
+          emptyMessage="No hay comercios para mostrar"
+        >
+          <CommerceList />
+        </ListContainer>
       </main>
     </>
   );

@@ -69,12 +69,13 @@ export const useCommerceStore = create<UseCommerceStore>((set) => ({
       const commercesWOwner = await commerceService.getCommercesWithOwner();
       set(() => ({
         commercesWithOwner: commercesWOwner,
-        isLoading: false,
         error: null,
       }));
     } catch (error) {
       const appError = error as AppError;
-      set(() => ({ isLoading: false, error: appError.message }));
+      set(() => ({ error: appError.message }));
+    } finally {
+      set(() => ({ isLoading: false }));
     }
   },
   getCommerceStats: async () => {

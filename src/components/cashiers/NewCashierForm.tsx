@@ -22,7 +22,7 @@ export const NewCashierForm = ({ cashier, closeModal }: NewCashierProps) => {
   const { createCashier, updateCashier } = useCashier();
 
   const [cashierForm, setCashierForm] = useState<CashierRequest>(() =>
-    cashier ? cashierMapper.mapToForm(cashier) : DEFAULT_CASHIER_FORM,
+    cashier ? cashierMapper.toForm(cashier) : DEFAULT_CASHIER_FORM,
   );
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -70,7 +70,7 @@ export const NewCashierForm = ({ cashier, closeModal }: NewCashierProps) => {
         Icon={UserPen}
       />
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TextInput
             leftSection={<UserRound size={20} />}
             name="name"

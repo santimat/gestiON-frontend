@@ -30,6 +30,7 @@ export const ProductItem = ({
   const handleOnChangeSwitch = async () => {
     try {
       await toggleActive(product.id);
+      toast.success("Estado del producto actualizado con éxito");
     } catch (error) {
       const appError = error as AppError;
       toast.error(appError?.message ?? "No se pudo cambiar el estado.");

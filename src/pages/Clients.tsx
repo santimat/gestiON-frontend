@@ -1,8 +1,9 @@
-import { UserPlus } from "lucide-react";
+import { Contact, UserPlus } from "lucide-react";
 import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
 import { useClient } from "@/hooks/useClient";
+import { ListContainer } from "@/components/ListContainer";
 import { ClientList } from "@/components/clients/ClientList";
 import { ClientForm } from "@/components/clients/ClientForm";
 
@@ -10,6 +11,8 @@ export const Clients = () => {
   const {
     getClients,
     totalClients,
+    isLoading,
+    error,
     formClient,
     isFormModalOpen,
     openCreate,
@@ -49,12 +52,20 @@ export const Clients = () => {
           onClick={openCreate}
           className="bg-primary rounded-md p-2 text-white"
         >
-          Nuevo Cliente
+          <span className="hidden sm:inline">Nuevo Cliente</span>
         </Button>
       </header>
 
-      <main className="flex flex-col gap-8 p-6">
-        <ClientList />
+      <main className="flex flex-col gap-6 p-6">
+        <ListContainer
+          isLoading={isLoading}
+          error={error}
+          isEmpty={totalClients === 0}
+          icon={Contact}
+          emptyMessage="No hay clientes para mostrar"
+        >
+          <ClientList />
+        </ListContainer>
       </main>
     </>
   );

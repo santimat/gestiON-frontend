@@ -1,84 +1,68 @@
-import { useState } from "react";
+import { Tags } from "lucide-react";
+import { useState, type SubmitEvent } from "react";
 import { TextInput, Textarea } from "@mantine/core";
-import { Tags, UserPen } from "lucide-react";
-import type { ChangeEvent, SubmitEvent } from "react";
 
+import { categoryMapper } from "@/mappers";
+import { useCategory } from "@/hooks/useCategory";
 import { ModalHeader } from "@/components/ModalHeader";
+import { DEFAULT_CATEGORY_FORM } from "@/utils/constants";
 import { ModalFormActions } from "@/components/ModalFormActions";
-import type { Category } from "@/types";
-
-type CategoryDraft = Pick<Category, "id" | "name" | "description">;
+import type { AppError, Category, CategoryRequest, FieldErrors } from "@/types";
+import { toast } from "sonner";
 
 type NewCategoryFormProps = {
-  category: CategoryDraft | null;
-  categories: Category[];
-  onSave: ({
-    name,
-    description,
-  }: {
-    name: string;
-    description: string;
-  }) => void;
+  category: Category | null;
   closeModal: () => void;
 };
 
-const DEFAULT_CATEGORY_DRAFT = { name: "", description: "" };
-
-export const NewCategoryForm = ({
-  category,
-  categories,
-  onSave,
-  closeModal,
-}: NewCategoryFormProps) => {
+export const NewCategoryForm = ({ category }: NewCategoryFormProps) => {
+  const { closeFormModal, createCategory } = useCategory();
   const isEditing = category !== null;
 
-  const [categoryForm, setCategoryForm] = useState(() =>
-    category
-      ? { name: category.name, description: category.description ?? "" }
-      : DEFAULT_CATEGORY_DRAFT,
+  const [categoryForm, setCategoryForm] = useState<CategoryRequest>(() =>
+    category ? categoryMapper.toForm(category) : DEFAULT_CATEGORY_FORM,
   );
-  const [errors, setErrors] = useState<{ name?: string }>({});
+  const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setCategoryForm((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-    const duplicated = categories.some(
-      (c) =>
-        c.id !== category?.id &&
-        c.name.trim().toLowerCase() === categoryForm.name.trim().toLowerCase(),
-    );
-
-    if (duplicated) {
-      setErrors({ name: "Ya existe una categoría con ese nombre" });
-      return;
-    }
-
+    const categoryRequest = Object.fromEntries(
+      formData.entries(),
+    ) as CategoryRequest;
     setIsSubmitting(true);
     try {
-      onSave(categoryForm);
-      setErrors({});
-      closeModal();
+      if (isEditing) {
+        toast.success(`Categoría actualizada con éxito`);
+      } else {
+        await createCategory(categoryRequest);
+        toast.success(`Categoría creada con éxito`);
+      }
+      closeFormModal();
+    } catch (error) {
+      const appError = error as AppError;
+      if (appError.fieldErrors) return setErrors(appError.fieldErrors);
+      toast.error(appError.message);
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCategoryForm((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setCategoryForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
   return (
     <>
       <ModalHeader
         title={isEditing ? "Editar Categoría" : "Nueva Categoría"}
-        Icon={UserPen}
+        Icon={Tags}
       />
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
@@ -98,7 +82,7 @@ export const NewCategoryForm = ({
             label="Descripción (opcional)"
             placeholder="Descripción de la categoría"
             value={categoryForm.description}
-            onChange={handleTextAreaChange}
+            onChange={handleChange}
             rows={2}
           />
 
@@ -108,7 +92,7 @@ export const NewCategoryForm = ({
         </div>
         <ModalFormActions
           submitText={isEditing ? "Guardar cambios" : "Agregar"}
-          closeModal={closeModal}
+          closeModal={closeFormModal}
           isSubmitting={isSubmitting}
         />
       </form>

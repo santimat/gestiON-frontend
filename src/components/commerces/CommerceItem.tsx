@@ -41,16 +41,24 @@ export const CommerceItem = ({ commerce, columns }: CommerceItemProps) => {
       />
       <li data-commerce={commerce.commerceId} className={`${columns} p-2`}>
         <Avatar
-          className={`hover:${commerce.businessLogoUrl ? "cursor-pointer" : ""}`}
-          onClick={openAvatar}
+          className="hover:cursor-pointer"
+          onClick={commerce.businessLogoUrl ? openAvatar : undefined}
           src={commerce.businessLogoUrl}
           alt={`${commerce.businessName} logo`}
           component="button"
-        ></Avatar>
-        <p className="first-letter:uppercase">{commerce.businessName}</p>
-        <p className="first-letter:uppercase">{commerce.username}</p>
-        <p>{commerce.email}</p>
-        <p>{updatedAt}</p>
+        />
+        <div className="min-w-0">
+          <p className="first-letter:uppercase">{commerce.businessName}</p>
+          {/* en mobile el dueño se muestra debajo del nombre del comercio */}
+          <p className="text-secondary-foreground truncate text-xs lg:hidden">
+            {commerce.username}
+          </p>
+        </div>
+        <p className="hidden first-letter:uppercase lg:block">
+          {commerce.username}
+        </p>
+        <p className="hidden lg:block">{commerce.email}</p>
+        <p className="hidden lg:block">{updatedAt}</p>
         <Switch
           aria-label="Cambiar estado del comercio"
           title="Cambiar estado del comercio"
