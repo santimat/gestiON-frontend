@@ -21,17 +21,12 @@ export const cashierService = {
   },
   updateCashier: async (userId: number, cashier: CashierUpdate) => {
     // si la contraseña quedó vacía no se envía: el backend conserva la actual
-    const cashierToUpdate = Object.fromEntries(
-      Object.entries(cashier).filter(([, value]) => value !== ""),
-    );
-    const parsedData = CashierUpdateSchema.safeParse(cashierToUpdate);
+
+    const parsedData = CashierUpdateSchema.safeParse(cashier);
     handleZodParsingError(parsedData);
 
     try {
-      const { data } = await backendAPI.put(
-        `/cashiers/${userId}`,
-        cashierToUpdate,
-      );
+      const { data } = await backendAPI.put(`/cashiers/${userId}`, cashier);
       return data as User;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);

@@ -1,25 +1,21 @@
 import { Switch } from "@mantine/core";
-import { toast } from "sonner";
+import { PenBoxIcon } from "lucide-react";
 
 import type { User } from "@/types";
 import { useCashier } from "@/hooks/useCashier";
-import type { AppError } from "@/types";
 
 type CashierItemMobileProps = {
   cashier: User;
+  onChangeSwitch?: (cashierId: number) => Promise<void>;
+  isPendingToggleActive?: boolean;
 };
 
-export const CashierItemMobile = ({ cashier }: CashierItemMobileProps) => {
-  const { isPendingToggleActive, toggleActive } = useCashier();
-
-  const handleOnChangeSwitch = async () => {
-    try {
-      await toggleActive(cashier.id);
-    } catch (error) {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
-    }
-  };
+export const CashierItemMobile = ({
+  cashier,
+  isPendingToggleActive,
+  onChangeSwitch,
+}: CashierItemMobileProps) => {
+  const { openEdit } = useCashier();
 
   const createdAt = new Date(cashier.createdAt).toLocaleDateString("es-AR");
   const initials = cashier.name
@@ -42,14 +38,24 @@ export const CashierItemMobile = ({ cashier }: CashierItemMobileProps) => {
             </p>
           </div>
         </div>
-        <Switch
-          aria-label="Cambiar acceso del cajero"
-          title="Cambiar acceso del cajero"
-          color="green"
-          checked={cashier.active}
-          disabled={isPendingToggleActive}
-          onChange={handleOnChangeSwitch}
-        />
+        <div className="flex items-center gap-3">
+          <button
+            aria-label="Editar cajero"
+            title="Editar cajero"
+            onClick={() => openEdit(cashier)}
+            className="text-secondary-foreground hover:bg-background-soft hover:text-foreground rounded-md p-1.5 transition-colors"
+          >
+            <PenBoxIcon pointerEvents="none" size={18} />
+          </button>
+          <Switch
+            aria-label="Cambiar acceso del cajero"
+            title="Cambiar acceso del cajero"
+            color="green"
+            checked={cashier.active}
+            disabled={isPendingToggleActive}
+            onChange={() => onChangeSwitch && onChangeSwitch(cashier.id)}
+          />
+        </div>
       </div>
       <div className="border-background-soft mt-3 flex items-center justify-between border-t pt-3">
         <p className="text-secondary-foreground text-xs">Alta {createdAt}</p>
