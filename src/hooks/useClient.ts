@@ -1,5 +1,6 @@
 import { useShallow } from "zustand/shallow";
 
+import type { ClientRequest } from "@/types";
 import { useClientStore } from "@/stores/useClientStore";
 
 export const useClient = () => {
@@ -33,6 +34,12 @@ export const useClient = () => {
     })),
   );
 
+  // al crear refrescamos la lista para respetar el orden y el total que devuelve el backend
+  const handleCreateClient = async (client: ClientRequest) => {
+    await createClient(client);
+    await getClients();
+  };
+
   return {
     isLoading,
     error,
@@ -40,7 +47,7 @@ export const useClient = () => {
     totalClients,
     formClient,
     isFormModalOpen,
-    createClient,
+    handleCreateClient,
     getClients,
     updateClient,
     openEdit,

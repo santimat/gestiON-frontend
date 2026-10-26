@@ -7,6 +7,7 @@ export const ErrorDictionary = {
   USER_NOT_FOUND: "Usuario no encontrado.",
   CLIENT_NOT_FOUND: "Cliente no encontrado.",
   CATEGORY_NOT_FOUND: "Categoría no encontrada.",
+  CATEGORY_NAME_ALREADY_EXISTS: "Esa categoría ya existe.",
   PRODUCT_NOT_FOUND: "Producto no encontrado.",
   COMMERCE_NOT_FOUND: "Comercio no encontrado.",
   SALE_NOT_FOUND: "Venta no encontrada.",

@@ -34,10 +34,7 @@ export const useClientStore = create<UseClientStore>((set) => ({
   isLoading: false,
   error: null,
   createClient: async (client: ClientRequest) => {
-    const newClient = await clientService.createClient(client);
-    set((prevState) => ({
-      clients: [...prevState.clients, newClient],
-    }));
+    await clientService.createClient(client);
   },
   updateClient: async (clientId: number, client: ClientRequest) => {
     const updatedClient = await clientService.updateClient(clientId, client);

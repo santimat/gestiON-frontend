@@ -36,6 +36,12 @@ export const useProduct = () => {
     })),
   );
 
+  // al crear refrescamos la lista para respetar el orden y el total que devuelve el backend
+  const handleCreateProduct = async (product: FormData) => {
+    await createProduct(product);
+    await getProducts();
+  };
+
   return {
     isLoading,
     error,
@@ -44,7 +50,7 @@ export const useProduct = () => {
     totalProducts,
     formProduct,
     isFormModalOpen,
-    createProduct,
+    handleCreateProduct,
     updateProduct,
     getProducts,
     toggleActive,

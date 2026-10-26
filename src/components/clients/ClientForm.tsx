@@ -19,7 +19,7 @@ type ClientFormProps = {
 export const ClientForm = ({ client, closeModal }: ClientFormProps) => {
   const isEditing = client !== null;
 
-  const { createClient, updateClient } = useClient();
+  const { handleCreateClient, updateClient } = useClient();
 
   const [clientForm, setClientForm] = useState<ClientRequest>(() =>
     client ? clientMapper.toForm(client) : DEFAULT_CLIENT_FORM,
@@ -35,7 +35,7 @@ export const ClientForm = ({ client, closeModal }: ClientFormProps) => {
       if (isEditing) {
         await updateClient(client.id, clientForm);
       } else {
-        await createClient(clientForm);
+        await handleCreateClient(clientForm);
       }
       setErrors({});
       closeModal();

@@ -45,6 +45,8 @@ export const useCommerce = () => {
 
   const handleCreateCommerceWithOwner = async (commerceWithOwner: FormData) => {
     await createCommerceWithOwner(commerceWithOwner);
+    // al crear refrescamos la lista y las estadísticas con lo que devuelve el backend
+    await getCommercesWithOwner();
     await getCommerceStats();
   };
 

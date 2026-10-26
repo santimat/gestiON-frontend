@@ -15,8 +15,11 @@ type NewCategoryFormProps = {
   closeModal: () => void;
 };
 
-export const NewCategoryForm = ({ category }: NewCategoryFormProps) => {
-  const { closeFormModal, createCategory, updateCategory } = useCategory();
+export const NewCategoryForm = ({
+  category,
+  closeModal,
+}: NewCategoryFormProps) => {
+  const { handleCreateCategory, updateCategory } = useCategory();
   const isEditing = category !== null;
 
   const [categoryForm, setCategoryForm] = useState<CategoryRequest>(() =>
@@ -45,12 +48,13 @@ export const NewCategoryForm = ({ category }: NewCategoryFormProps) => {
     try {
       if (isEditing) {
         await updateCategory(category.id, categoryRequest);
-        toast.success(`Categoría actualizada con éxito`);
       } else {
-        await createCategory(categoryRequest);
-        toast.success(`Categoría creada con éxito`);
+        await handleCreateCategory(categoryRequest);
       }
-      closeFormModal();
+      toast.success(
+        `Categoría ${isEditing ? "actualizada" : "creada"} con éxito`,
+      );
+      closeModal();
     } catch (error) {
       const appError = error as AppError;
       if (appError.fieldErrors) return setErrors(appError.fieldErrors);
@@ -94,7 +98,7 @@ export const NewCategoryForm = ({ category }: NewCategoryFormProps) => {
         </div>
         <ModalFormActions
           submitText={isEditing ? "Guardar cambios" : "Agregar"}
-          closeModal={closeFormModal}
+          closeModal={closeModal}
           isSubmitting={isSubmitting}
         />
       </form>

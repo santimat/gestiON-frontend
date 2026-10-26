@@ -44,11 +44,7 @@ export const useCategoryStore = create<CategoryStore>((set) => ({
     }
   },
   createCategory: async (category: CategoryRequest) => {
-    const newCategory = await categoryService.createCategory(category);
-    set((prevState) => ({
-      categories: [...prevState.categories, newCategory],
-    }));
-    return newCategory;
+    return categoryService.createCategory(category);
   },
   updateCategory: async (categoryId: number, category: CategoryRequest) => {
     const updatedCategory = await categoryService.updateCategory(

@@ -16,11 +16,13 @@ export const NewCategoryInline = ({
 }: NewCategoryInlineProps) => {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [newCategoryName, setNewCategoryName] = useState("");
-  const { createCategory } = useCategory();
+  const { handleCreateCategory } = useCategory();
 
   const handleClick = async () => {
     try {
-      const newCategory = await createCategory({ name: newCategoryName });
+      const newCategory = await handleCreateCategory({
+        name: newCategoryName,
+      });
 
       setProductForm((prevState) => ({
         ...prevState,

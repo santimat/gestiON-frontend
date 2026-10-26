@@ -4,13 +4,11 @@ import type { AppError, Product } from "@/types";
 import { productService } from "@/services/products/productService";
 
 type UseProductStore = {
-  // Estado de UI: modal de alta/edición de producto
   formProduct: Product | null;
   isFormModalOpen: boolean;
   openEdit: (product: Product) => void;
   openCreate: () => void;
   closeFormModal: () => void;
-
   products: Product[];
   totalProducts: number;
   isLoading: boolean;
@@ -37,10 +35,7 @@ export const useProductStore = create<UseProductStore>((set) => ({
   error: null,
   isPendingToggleActive: false,
   createProduct: async (product: FormData) => {
-    const newProduct = await productService.createProduct(product);
-    set((prevState) => ({
-      products: [...prevState.products, newProduct],
-    }));
+    await productService.createProduct(product);
   },
   updateProduct: async (productId: number, product: FormData) => {
     const updatedProduct = await productService.updateProduct(
@@ -77,13 +72,14 @@ export const useProductStore = create<UseProductStore>((set) => ({
       set(() => ({
         products: data?.content,
         totalProducts: data?.page.totalElements,
-        isLoading: false,
         error: null,
       }));
     } catch (error) {
       const appError = error as AppError;
-      set({ isLoading: false, error: appError.message });
+      set({ error: appError.message });
       throw error;
+    } finally {
+      set({ isLoading: false });
     }
   },
 }));

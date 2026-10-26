@@ -43,12 +43,7 @@ export const useCashierStore = create<UseCashierStore>((set) => ({
   isPendingToggleActive: false,
   error: null,
   createCashier: async (cashier: CashierRequest) => {
-    const newCashier = await cashierService.createCashier(cashier);
-    set((prevState) => ({
-      error: null,
-      cashiers: [...prevState.cashiers, newCashier],
-      totalCashiers: prevState.totalCashiers + 1,
-    }));
+    await cashierService.createCashier(cashier);
   },
   getCashiers: async () => {
     set({ isLoading: true });

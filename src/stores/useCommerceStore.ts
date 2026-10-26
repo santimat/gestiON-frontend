@@ -54,14 +54,7 @@ export const useCommerceStore = create<UseCommerceStore>((set) => ({
   isLoading: false,
   error: null,
   createCommerceWithOwner: async (commercesWithOwner: FormData) => {
-    const newCommerceWithOwner =
-      await commerceService.createCommerceWithOwner(commercesWithOwner);
-    set((prevState) => ({
-      commercesWithOwner: [
-        ...prevState.commercesWithOwner,
-        newCommerceWithOwner,
-      ],
-    }));
+    await commerceService.createCommerceWithOwner(commercesWithOwner);
   },
   getCommercesWithOwner: async () => {
     set(() => ({ isLoading: true }));

@@ -1,3 +1,4 @@
+import type { CategoryRequest } from "@/types";
 import { useCategoryStore } from "@/stores/useCategoryStore";
 import { useShallow } from "zustand/shallow";
 
@@ -32,6 +33,13 @@ export const useCategory = () => {
     })),
   );
 
+  // al crear refrescamos la lista para respetar el orden que devuelve el backend
+  const handleCreateCategory = async (category: CategoryRequest) => {
+    const newCategory = await createCategory(category);
+    await getCategories();
+    return newCategory;
+  };
+
   return {
     categories,
     formCategory,
@@ -39,7 +47,7 @@ export const useCategory = () => {
     isLoading,
     error,
     getCategories,
-    createCategory,
+    handleCreateCategory,
     updateCategory,
     openCreate,
     openEdit,

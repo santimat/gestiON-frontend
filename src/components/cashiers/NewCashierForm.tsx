@@ -19,7 +19,7 @@ type NewCashierProps = {
 export const NewCashierForm = ({ cashier, closeModal }: NewCashierProps) => {
   const isEditing = cashier !== null;
 
-  const { createCashier, updateCashier } = useCashier();
+  const { handleCreateCashier, updateCashier } = useCashier();
 
   const [cashierForm, setCashierForm] = useState<CashierRequest>(() =>
     cashier ? cashierMapper.toForm(cashier) : DEFAULT_CASHIER_FORM,
@@ -35,7 +35,7 @@ export const NewCashierForm = ({ cashier, closeModal }: NewCashierProps) => {
       if (isEditing) {
         await updateCashier({ cashierId: cashier.id, cashier: cashierForm });
       } else {
-        await createCashier(cashierForm);
+        await handleCreateCashier(cashierForm);
       }
       setErrors({});
       closeModal();

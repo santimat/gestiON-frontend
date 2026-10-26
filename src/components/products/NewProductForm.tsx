@@ -14,14 +14,9 @@ import {
   PackageIcon,
   SquareText,
 } from "lucide-react";
+import { toast } from "sonner";
 import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
-import { productMapper } from "@/mappers";
-import { useProduct } from "@/hooks/useProduct";
-import { useCategory } from "@/hooks/useCategory";
-import { ModalHeader } from "@/components/ModalHeader";
-import { DEFAULT_PRODUCT_FORM } from "@/utils/constants";
-import { ModalFormActions } from "@/components/ModalFormActions";
 import type {
   AppError,
   CurrentCommerce,
@@ -29,8 +24,13 @@ import type {
   ProductFieldErrors,
   ProductForm,
 } from "@/types";
+import { productMapper } from "@/mappers";
+import { useProduct } from "@/hooks/useProduct";
+import { useCategory } from "@/hooks/useCategory";
+import { ModalHeader } from "@/components/ModalHeader";
+import { DEFAULT_PRODUCT_FORM } from "@/utils/constants";
+import { ModalFormActions } from "@/components/ModalFormActions";
 import { SelectCategory } from "@/components/category/SelectCategory";
-import { toast } from "sonner";
 
 type NewProductFormProps = {
   product: Product | null;
@@ -46,7 +46,7 @@ export const NewProductForm = ({
   const isEditing = product !== null;
 
   const { getCategories } = useCategory();
-  const { createProduct, updateProduct } = useProduct();
+  const { handleCreateProduct, updateProduct } = useProduct();
 
   const [productForm, setProductForm] = useState<ProductForm>(() =>
     product ? productMapper.toForm(product) : DEFAULT_PRODUCT_FORM,
@@ -77,7 +77,7 @@ export const NewProductForm = ({
       if (isEditing) {
         await updateProduct(product.id, formData);
       } else {
-        await createProduct(formData);
+        await handleCreateProduct(formData);
       }
       setErrors({});
       closeModal();

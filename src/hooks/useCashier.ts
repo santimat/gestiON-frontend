@@ -1,5 +1,6 @@
 import { useShallow } from "zustand/shallow";
 
+import type { CashierRequest } from "@/types";
 import { useCashierStore } from "@/stores/useCashierStore";
 
 export const useCashier = () => {
@@ -37,6 +38,12 @@ export const useCashier = () => {
     })),
   );
 
+  // al crear refrescamos la lista para respetar el orden y el total que devuelve el backend
+  const handleCreateCashier = async (cashier: CashierRequest) => {
+    await createCashier(cashier);
+    await getCashiers();
+  };
+
   return {
     cashiers,
     totalCashiers,
@@ -45,7 +52,7 @@ export const useCashier = () => {
     error,
     formCashier,
     isFormModalOpen,
-    createCashier,
+    handleCreateCashier,
     getCashiers,
     updateCashier,
     toggleActive,
