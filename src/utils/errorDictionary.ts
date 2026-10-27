@@ -20,6 +20,7 @@ export const ErrorDictionary = {
   COMMERCE_CUIT_ALREADY_EXISTS: "El CUIT del comercio ya está registrado.",
   SELL_POINT_NAME_ALREADY_EXISTS: "Ya existe un punto de venta con ese nombre.",
   INSUFFICIENT_STOCK: "No hay stock suficiente para la cantidad solicitada.",
+  INVALID_DISCOUNT_PREFIX_ZERO: "El descuento no puede ser cero.",
   PRODUCT_INACTIVE: "El producto no está disponible para la venta.",
   INVALID_FILE_TYPE: "Tipo de archivo no permitido.",
   FILE_TOO_LARGE: "El tamaño del archivo excede el límite máximo.",
