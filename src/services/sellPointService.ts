@@ -3,7 +3,7 @@ import { isAxiosError } from "axios";
 import { SellPointRequestSchema } from "@/schemas";
 import { backendAPI } from "@/services/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
-import type { SellPoint, SellPointRequest } from "@/types";
+import type { SellPoint, SellPointRequest, User } from "@/types";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
 
 export const sellPointService = {
@@ -19,6 +19,23 @@ export const sellPointService = {
       throw error;
     }
   },
+
+  updateSellPoint: async (sellPointId: number, sellPoint: SellPointRequest) => {
+    const parsedData = SellPointRequestSchema.safeParse(sellPoint);
+    handleZodParsingError(parsedData);
+
+    try {
+      const { data } = await backendAPI.put(
+        `/sell-points/${sellPointId}`,
+        parsedData.data,
+      );
+      return data as SellPoint;
+    } catch (error) {
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
+    }
+  },
+
   getSellPoints: async () => {
     try {
       const { data } = await backendAPI.get("/sell-points");
@@ -31,6 +48,21 @@ export const sellPointService = {
       throw error;
     }
   },
+
+  getSellPointCashiers: async (sellPointId: number) => {
+    try {
+      const { data } = await backendAPI.get(
+        `/sell-points/${sellPointId}/cashiers`,
+      );
+      // el endpoint devuelve un array directo de cajeros (con fallback por si lo envuelven en paginación)
+      const cashiers: User[] = data?.content;
+      return cashiers;
+    } catch (error) {
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
+    }
+  },
+
   toggleActive: async (sellPointId: number) => {
     try {
       const { data } = await backendAPI.patch(

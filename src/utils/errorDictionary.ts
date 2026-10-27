@@ -10,6 +10,7 @@ export const ErrorDictionary = {
   CATEGORY_NAME_ALREADY_EXISTS: "Esa categoría ya existe.",
   PRODUCT_NOT_FOUND: "Producto no encontrado.",
   COMMERCE_NOT_FOUND: "Comercio no encontrado.",
+  SELL_POINT_NOT_FOUND: "Punto de venta no encontrado.",
   SALE_NOT_FOUND: "Venta no encontrada.",
   ENDPOINT_NOT_FOUND: "No se pudo realizar la acción.",
   EMAIL_ALREADY_EXISTS: "El email ya está registrado.",
@@ -17,6 +18,7 @@ export const ErrorDictionary = {
   COMMERCE_ADDRESS_ALREADY_EXISTS:
     "La dirección del comercio ya está registrada.",
   COMMERCE_CUIT_ALREADY_EXISTS: "El CUIT del comercio ya está registrado.",
+  SELL_POINT_NAME_ALREADY_EXISTS: "Ya existe un punto de venta con ese nombre.",
   INVALID_FILE_TYPE: "Tipo de archivo no permitido.",
   FILE_TOO_LARGE: "El tamaño del archivo excede el límite máximo.",
   FILE_UPLOAD_FAILED: "No se pudo subir el archivo.",

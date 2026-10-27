@@ -19,6 +19,7 @@ export const categoryService = {
       throw error;
     }
   },
+
   updateCategory: async (categoryId: number, category: CategoryRequest) => {
     const parsedData = CategorySchema.safeParse(category);
     handleZodParsingError(parsedData);
@@ -34,6 +35,7 @@ export const categoryService = {
       throw error;
     }
   },
+
   toggleCategoryActive: async (categoryId: number) => {
     try {
       const { data } = await backendAPI.patch(
@@ -45,6 +47,7 @@ export const categoryService = {
       throw error;
     }
   },
+
   getCategories: async () => {
     try {
       const { data } = await backendAPI.get("/categories");

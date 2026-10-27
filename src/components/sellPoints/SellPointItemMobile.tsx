@@ -13,7 +13,7 @@ export const SellPointItemMobile = ({
   sellPoint,
   onChangeSwitch,
 }: SellPointItemMobileProps) => {
-  const { openEdit } = useSellPoint();
+  const { openEdit, openCashiersModal } = useSellPoint();
 
   const updatedAt = new Date(sellPoint.updatedAt).toLocaleDateString("es-AR");
 
@@ -42,11 +42,11 @@ export const SellPointItemMobile = ({
         </div>
       </div>
       <div className="mt-3">
-        {/* TODO: va a disparar el fetch de cajeros del punto de venta cuando exista el endpoint */}
         <Button
           size="compact-sm"
-          disabled
           aria-label="Ver cajeros del punto de venta"
+          title="Ver cajeros del punto de venta"
+          onClick={() => openCashiersModal(sellPoint)}
         >
           Ver cajeros
         </Button>

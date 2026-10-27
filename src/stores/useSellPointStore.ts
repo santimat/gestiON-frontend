@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import { sellPointService } from "@/services/sellPointService";
-import type { AppError, SellPoint, SellPointRequest } from "@/types";
+import type { AppError, SellPoint, SellPointRequest, User } from "@/types";
 
 type UseSellPointStore = {
   sellPoints: SellPoint[];
@@ -10,11 +10,22 @@ type UseSellPointStore = {
   isFormModalOpen: boolean;
   isLoading: boolean;
   error: string | null;
+  isPendingToggleActive: boolean;
   openEdit: (sellPoint: SellPoint) => void;
   openCreate: () => void;
   closeFormModal: () => void;
-  createSellPoint: (sellPoint: SellPointRequest) => Promise<SellPoint>;
+  // Estado de UI: modal de cajeros asignados a un punto de venta
+  cashiersModalSellPoint: SellPoint | null;
+  isCashiersModalOpen: boolean;
+  openCashiersModal: (sellPoint: SellPoint) => void;
+  closeCashiersModal: () => void;
+  createSellPoint: (sellPoint: SellPointRequest) => Promise<void>;
+  updateSellPoint: (
+    sellPointId: number,
+    sellPoint: SellPointRequest,
+  ) => Promise<void>;
   getSellPoints: () => Promise<void>;
+  getSellPointCashiers: (sellPointId: number) => Promise<User[]>;
   toggleActive: (sellPointId: number) => Promise<void>;
 };
 
@@ -25,26 +36,30 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
   isFormModalOpen: false,
   isLoading: false,
   error: null,
+  isPendingToggleActive: false,
 
   openEdit: (sellPoint) =>
     set(() => ({ formSellPoint: sellPoint, isFormModalOpen: true })),
   openCreate: () => set(() => ({ formSellPoint: null, isFormModalOpen: true })),
   closeFormModal: () =>
     set(() => ({ formSellPoint: null, isFormModalOpen: false })),
+  cashiersModalSellPoint: null,
+  isCashiersModalOpen: false,
+  openCashiersModal: (sellPoint) =>
+    set(() => ({
+      cashiersModalSellPoint: sellPoint,
+      isCashiersModalOpen: true,
+    })),
+  closeCashiersModal: () =>
+    set(() => ({ cashiersModalSellPoint: null, isCashiersModalOpen: false })),
 
   createSellPoint: async (sellPoint: SellPointRequest) => {
     set({ isLoading: true });
     try {
-      const created = await sellPointService.createSellPoint(sellPoint);
-      const newSellPoint: SellPoint = {
-        ...created,
-        updatedAt: new Date(created.updatedAt),
-      };
+      await sellPointService.createSellPoint(sellPoint);
       set({ isLoading: false, error: null });
-      return newSellPoint;
     } catch (error) {
       const appError = error as AppError;
-
       set(() => ({
         error: appError?.message ?? "No se pudo crear el punto de venta.",
         isLoading: false,
@@ -75,8 +90,29 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
     }
   },
 
+  updateSellPoint: async (sellPointId: number, sellPoint: SellPointRequest) => {
+    const updatedSellPoint = await sellPointService.updateSellPoint(
+      sellPointId,
+      sellPoint,
+    );
+
+    const normalizedSellPoint: SellPoint = {
+      ...updatedSellPoint,
+      updatedAt: new Date(updatedSellPoint.updatedAt),
+    };
+    set((prevState) => ({
+      sellPoints: prevState.sellPoints.map((prev) =>
+        prev.id === normalizedSellPoint.id ? normalizedSellPoint : prev,
+      ),
+    }));
+  },
+
+  getSellPointCashiers: async (sellPointId) => {
+    return sellPointService.getSellPointCashiers(sellPointId);
+  },
+
   toggleActive: async (sellPointId) => {
-    // mismo patrón que categories: el backend devuelve el punto actualizado
+    set({ isPendingToggleActive: true });
     const updatedSellPoint = await sellPointService.toggleActive(sellPointId);
     set((prevState) => ({
       sellPoints: prevState.sellPoints.map((sellPoint) =>
@@ -85,5 +121,6 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
           : sellPoint,
       ),
     }));
+    set({ isPendingToggleActive: false });
   },
 }));

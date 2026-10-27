@@ -1,5 +1,5 @@
 import type { ChangeEvent, SubmitEvent } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Checkbox, TextInput } from "@mantine/core";
 import { MonitorIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -29,7 +29,8 @@ export const NewSellPointForm = ({
 }: NewSellPointFormProps) => {
   const isEditing = sellPoint !== null;
 
-  const { handleCreateSellPoint } = useSellPoint();
+  const { handleCreateSellPoint, handleUpdateSellPoint, getSellPointCashiers } =
+    useSellPoint();
 
   const [sellPointForm, setSellPointForm] = useState<SellPointRequest>(() =>
     sellPoint
@@ -38,6 +39,29 @@ export const NewSellPointForm = ({
   );
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // arranca en true solo cuando se edita: los checkboxes quedan esperando el prefill
+  const [isLoadingAssigned, setIsLoadingAssigned] = useState(
+    () => sellPoint !== null,
+  );
+
+  // al editar precargamos los cajeros ya asociados al punto de venta
+  useEffect(() => {
+    if (!sellPoint) return;
+    getSellPointCashiers(sellPoint.id)
+      .then((assigned) => {
+        setSellPointForm((prevState) => ({
+          ...prevState,
+          cashierIds: assigned.map((cashier) => cashier.id),
+        }));
+      })
+      .catch((error) => {
+        const appError = error as AppError;
+        toast.error(
+          appError?.message ?? "No se pudieron cargar los cajeros asignados.",
+        );
+      })
+      .finally(() => setIsLoadingAssigned(false));
+  }, [sellPoint, getSellPointCashiers]);
 
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,7 +69,10 @@ export const NewSellPointForm = ({
     setIsSubmitting(true);
     try {
       if (isEditing) {
-        // TODO: reemplazar por el servicio de actualización cuando exista (fase PUT /sell-points)
+        await handleUpdateSellPoint(sellPoint.id, {
+          name: sellPointForm.name.trim(),
+          cashierIds: sellPointForm.cashierIds,
+        });
       } else {
         await handleCreateSellPoint({
           name: sellPointForm.name.trim(),
@@ -109,38 +136,46 @@ export const NewSellPointForm = ({
           <div className="space-y-1">
             <p className="text-sm font-medium">Cajeros asignados</p>
             <div className="border-border max-h-48 overflow-y-auto rounded-lg border p-2">
-              {cashiers.length === 0 && (
+              {isLoadingAssigned ? (
                 <p className="text-secondary-foreground p-2 text-xs">
-                  No hay cajeros cargados.
+                  Cargando cajeros asignados...
                 </p>
-              )}
-              {cashiers.map((cashier) => (
-                <div
-                  key={`sell-point-cashier-${cashier.id}`}
-                  className="hover:bg-background-soft rounded-md px-2 py-1.5 transition-colors"
-                >
-                  <Checkbox
-                    aria-label={`Asignar a ${cashier.name}`}
-                    label={
-                      <span className="flex items-center gap-2 text-sm">
-                        {cashier.name}
-                        {!cashier.active && (
-                          <span className="text-secondary-foreground text-xs">
-                            Inactivo
+              ) : (
+                <>
+                  {cashiers.length === 0 && (
+                    <p className="text-secondary-foreground p-2 text-xs">
+                      No hay cajeros cargados.
+                    </p>
+                  )}
+                  {cashiers.map((cashier) => (
+                    <div
+                      key={`sell-point-cashier-${cashier.id}`}
+                      className="hover:bg-background-soft rounded-md px-2 py-1.5 transition-colors"
+                    >
+                      <Checkbox
+                        aria-label={`Asignar a ${cashier.name}`}
+                        label={
+                          <span className="flex items-center gap-2 text-sm">
+                            {cashier.name}
+                            {!cashier.active && (
+                              <span className="text-secondary-foreground text-xs">
+                                Inactivo
+                              </span>
+                            )}
                           </span>
-                        )}
-                      </span>
-                    }
-                    checked={sellPointForm.cashierIds.includes(cashier.id)}
-                    onChange={(event) =>
-                      handleToggleCashier(
-                        cashier.id,
-                        event.currentTarget.checked,
-                      )
-                    }
-                  />
-                </div>
-              ))}
+                        }
+                        checked={sellPointForm.cashierIds.includes(cashier.id)}
+                        onChange={(event) =>
+                          handleToggleCashier(
+                            cashier.id,
+                            event.currentTarget.checked,
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           </div>
         </div>

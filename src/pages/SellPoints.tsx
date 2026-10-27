@@ -4,6 +4,7 @@ import { MonitorIcon, Plus, StoreIcon } from "lucide-react";
 
 import { ListContainer } from "@/components/ListContainer";
 import { NewSellPointForm } from "@/components/sellPoints/NewSellPointForm";
+import { SellPointCashiers } from "@/components/sellPoints/SellPointCashiers";
 import { SellPointsList } from "@/components/sellPoints/SellPointsList";
 import { useAuth } from "@/hooks/useAuth";
 import { useCashier } from "@/hooks/useCashier";
@@ -21,6 +22,9 @@ export const SellPoints = () => {
     isFormModalOpen,
     openCreate,
     closeFormModal,
+    cashiersModalSellPoint,
+    isCashiersModalOpen,
+    closeCashiersModal,
     isLoading,
     error,
     getSellPoints,
@@ -30,13 +34,17 @@ export const SellPoints = () => {
     getSellPoints();
     getCashiers();
     if (authenticatedUser?.commerceId) getCurrentCommerce();
-    return () => closeFormModal();
+    return () => {
+      closeFormModal();
+      closeCashiersModal();
+    };
   }, [
     getSellPoints,
     getCashiers,
     getCurrentCommerce,
     authenticatedUser,
     closeFormModal,
+    closeCashiersModal,
   ]);
 
   const hasCommerce = Boolean(currentCommerce);
@@ -56,6 +64,21 @@ export const SellPoints = () => {
           sellPoint={formSellPoint}
           cashiers={cashiers}
           closeModal={closeFormModal}
+        />
+      </Modal>
+
+      <Modal
+        opened={isCashiersModalOpen}
+        onClose={closeCashiersModal}
+        centered
+        size="md"
+        transitionProps={{ transition: "fade-down", duration: 300 }}
+        withCloseButton={false}
+      >
+        <SellPointCashiers
+          key={cashiersModalSellPoint?.id ?? "cashiers"}
+          sellPoint={cashiersModalSellPoint}
+          closeModal={closeCashiersModal}
         />
       </Modal>
 
