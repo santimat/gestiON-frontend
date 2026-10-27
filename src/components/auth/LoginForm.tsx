@@ -52,7 +52,7 @@ export const LoginForm = () => {
           leftSection={<AtSign size={20} />}
           leftSectionPointerEvents="none"
           label="Email"
-          placeholder="pepe@example.com"
+          placeholder="minegocio@example.com"
           mb={"sm"}
           error={errors?.email}
         />

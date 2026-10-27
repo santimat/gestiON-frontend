@@ -14,7 +14,6 @@ type UseSellPointStore = {
   openEdit: (sellPoint: SellPoint) => void;
   openCreate: () => void;
   closeFormModal: () => void;
-  // Estado de UI: modal de cajeros asignados a un punto de venta
   cashiersModalSellPoint: SellPoint | null;
   isCashiersModalOpen: boolean;
   openCashiersModal: (sellPoint: SellPoint) => void;

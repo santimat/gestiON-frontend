@@ -50,6 +50,7 @@ export const useSellPoint = () => {
     await createSellPoint(sellPoint);
     await getSellPoints();
   };
+
   const handleUpdateSellPoint = async (
     cashierId: number,
     sellPoint: SellPointRequest,
