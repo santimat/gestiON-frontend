@@ -1,14 +1,20 @@
 import { Button, NumberFormatter } from "@mantine/core";
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 
-export const SaleCart = () => {
-  const CART = [
-    { productId: 1, name: "Café Molido 500gr", price: 4500, qty: 2 },
-    { productId: 5, name: "Agua Mineral 2L", price: 1500, qty: 3 },
-    { productId: 3, name: "Azúcar 1kg", price: 1800, qty: 1 },
-  ];
+import { useSale } from "@/hooks/useSale";
+import type { CartLine } from "@/types";
 
-  const totalItems = CART.reduce((acc, product) => acc + product.qty, 0);
+export const SaleCart = () => {
+  const { cart, setQty, removeLine } = useSale();
+
+  const totalItems = cart.reduce((acc, line) => acc + line.qty, 0);
+
+  const handleQtyInput = (rawValue: string, line: CartLine) => {
+    const parsed = Number(rawValue);
+    // vacío o inválido: volvemos a 1 para no perder la línea mientras se tipea
+    const qty = Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : 1;
+    setQty(line.productId, qty);
+  };
 
   return (
     <div className="border-border bg-card shadow-card overflow-hidden rounded-xl border">
@@ -19,7 +25,7 @@ export const SaleCart = () => {
         </span>
       </div>
 
-      {CART.length === 0 ? (
+      {cart.length === 0 ? (
         <div className="flex flex-col items-center gap-2 px-4 py-12 text-center">
           <ShoppingCart className="text-secondary-foreground" size={24} />
           <p className="text-secondary-foreground text-sm">
@@ -28,14 +34,14 @@ export const SaleCart = () => {
         </div>
       ) : (
         <ul className="divide-background-soft divide-y">
-          {CART.map((item) => (
-            <li key={`cart-item-${item.productId}`} className="px-4 py-3">
+          {cart.map((line) => (
+            <li key={`cart-line-${line.productId}`} className="px-4 py-3">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium">{item.name}</p>
+                  <p className="truncate text-sm font-medium">{line.name}</p>
                   <NumberFormatter
                     prefix="$"
-                    value={item.price}
+                    value={line.salePrice}
                     thousandSeparator
                     suffix=" c/u"
                     className="text-secondary-foreground text-xs tabular-nums"
@@ -43,7 +49,7 @@ export const SaleCart = () => {
                 </div>
                 <NumberFormatter
                   prefix="$"
-                  value={item.price * item.qty}
+                  value={line.salePrice * line.qty}
                   thousandSeparator
                   className="shrink-0 text-sm font-semibold tabular-nums"
                 />
@@ -54,18 +60,23 @@ export const SaleCart = () => {
                     variant="subtle"
                     size="compact-sm"
                     aria-label="Quitar una unidad"
+                    onClick={() => setQty(line.productId, line.qty - 1)}
                   >
                     <Minus size={16} strokeWidth={1.75} />
                   </Button>
                   <input
-                    value={item.qty}
-                    aria-label={`Cantidad de ${item.name}`}
+                    value={line.qty}
+                    onChange={(event) =>
+                      handleQtyInput(event.currentTarget.value, line)
+                    }
+                    aria-label={`Cantidad de ${line.name}`}
                     className="w-10 border-0 bg-transparent text-center text-sm font-medium tabular-nums outline-none"
                   />
                   <Button
                     variant="subtle"
                     size="compact-sm"
                     aria-label="Agregar una unidad"
+                    onClick={() => setQty(line.productId, line.qty + 1)}
                   >
                     <Plus size={16} strokeWidth={1.75} />
                   </Button>
@@ -74,7 +85,8 @@ export const SaleCart = () => {
                   variant="subtle"
                   color="red"
                   size="compact-sm"
-                  aria-label={`Eliminar ${item.name}`}
+                  aria-label={`Eliminar ${line.name}`}
+                  onClick={() => removeLine(line.productId)}
                 >
                   <Trash2 size={16} strokeWidth={1.75} />
                 </Button>

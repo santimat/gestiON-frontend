@@ -11,7 +11,7 @@ createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <MantineProvider>
       <App />
-      <Toaster visibleToasts={1} richColors position="top-right" />
+      <Toaster visibleToasts={1} richColors position="bottom-right" />
     </MantineProvider>
   </BrowserRouter>,
 );

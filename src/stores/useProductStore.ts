@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { AppError, Product } from "@/types";
+import type { AppError, Product, ProductFilters } from "@/types";
 import { productService } from "@/services/productService";
 
 type UseProductStore = {
@@ -15,7 +15,7 @@ type UseProductStore = {
   error: string | null;
   isPendingToggleActive: boolean;
   createProduct: (product: FormData) => Promise<void>;
-  getProducts: () => Promise<void>;
+  getProducts: (filters?: ProductFilters) => Promise<void>;
   updateProduct: (productId: number, product: FormData) => Promise<void>;
   toggleActive: (productId: number) => Promise<void>;
 };
@@ -65,10 +65,10 @@ export const useProductStore = create<UseProductStore>((set) => ({
       throw error;
     }
   },
-  getProducts: async () => {
+  getProducts: async (filters) => {
     set({ isLoading: true, error: null });
     try {
-      const data = await productService.getProducts();
+      const data = await productService.getProducts(filters);
       set(() => ({
         products: data?.content,
         totalProducts: data?.page.totalElements,

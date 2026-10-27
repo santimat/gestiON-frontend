@@ -4,6 +4,7 @@ import { ProductSchema } from "@/schemas";
 import { backendAPI } from "@/services/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
+import type { ProductFilters } from "@/types";
 
 export const productService = {
   createProduct: async (product: FormData) => {
@@ -19,6 +20,7 @@ export const productService = {
       throw error;
     }
   },
+
   updateProduct: async (productId: number, product: FormData) => {
     const productToParse = Object.fromEntries(product.entries());
     const parsedData = ProductSchema.safeParse(productToParse);
@@ -32,6 +34,7 @@ export const productService = {
       throw error;
     }
   },
+
   toggleActive: async (productId: number) => {
     try {
       const { data } = await backendAPI.patch(
@@ -43,9 +46,10 @@ export const productService = {
       throw error;
     }
   },
-  getProducts: async () => {
+
+  getProducts: async (filters?: ProductFilters) => {
     try {
-      const { data } = await backendAPI.get("/products");
+      const { data } = await backendAPI.get("/products", { params: filters });
       return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);

@@ -2,6 +2,7 @@ import {
   LayoutDashboard,
   Package,
   ScanBarcode,
+  ShoppingCart,
   StoreIcon,
   Tags,
   UserGroupIcon,
@@ -19,15 +20,7 @@ import type {
 } from "@/types";
 
 export const ALLOWEDS_ROUTES_BY_ROLE = {
-  SUDO: [
-    "/commerces",
-    "/dashboard",
-    "/cashiers",
-    "/products",
-    "/categories",
-    "/sell",
-    "/clients",
-  ],
+  SUDO: ["/commerces"],
   OWNER: [
     "/dashboard",
     "/cashiers",
@@ -46,6 +39,12 @@ export const SIDEBAR_ITEMS: NavItem[] = [
     text: "Dashboard",
     short: "Panel",
     href: "/dashboard",
+  },
+  {
+    icon: ShoppingCart,
+    text: "Vender",
+    short: "Vender",
+    href: "/sell",
   },
   {
     icon: StoreIcon,

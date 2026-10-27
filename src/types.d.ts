@@ -4,12 +4,14 @@ import type { LucideIcon } from "lucide-react";
 import {
   LoginSchema,
   ProductSchema,
+  ProductFiltersSchema,
   CategorySchema,
   ClientSchema,
   CashierSchema,
   CommerceWithOwnerRequestSchema,
   CashierUpdateSchema,
   SellPointRequestSchema,
+  SaleRequestSchema,
 } from "@/schemas";
 import type { ErrorDictionary } from "@/utils/errorDictionary";
 
@@ -118,6 +120,8 @@ export type ProductFieldErrors = Partial<
   >
 >;
 
+export type ProductFilters = z.infer<typeof ProductFiltersSchema>;
+
 // CATEGORY
 export type CategoryRequest = z.infer<typeof CategorySchema>;
 
@@ -159,6 +163,50 @@ export type SellPoint = {
 export type SellPointRequest = z.infer<typeof SellPointRequestSchema>;
 
 // SALE
-export type PaymentMethod = "CASH" | "CARD" | "TRANSFER";
+export type CartLine = {
+  productId: number;
+  name: string;
+  salePrice: number;
+  // snapshot del stock al agregar: el refetch del buscador no muta el carrito
+  currentStock: number;
+  qty: number;
+};
+
+export type SaleDraft = {
+  discount: number;
+  discountType: DiscountType;
+  paymentMethod: PaymentMethod;
+  // null = consumidor final
+  clientId: number | null;
+};
+
+export type SaleRequest = z.infer<typeof SaleRequestSchema>;
+
+export type SaleStatus = "PAY" | "PENDING";
+
+export type SaleDetail = {
+  id: number;
+  productId: number;
+  productName: string;
+  price: number;
+  quantity: number;
+};
+
+export type Sale = {
+  id: number;
+  clientId: number | null;
+  sellPointId: number;
+  userName: string;
+  paymentMethod: PaymentMethod;
+  subtotal: number;
+  discount: number;
+  total: number;
+  createdAt: Date;
+  observations: string | null;
+  status: SaleStatus;
+  details: SaleDetail[];
+};
+
+export type PaymentMethod = "CASH" | "CARD" | "TRANSFER" | "CREDIT_ACCOUNT";
 
 export type DiscountType = "monto" | "porcentaje";

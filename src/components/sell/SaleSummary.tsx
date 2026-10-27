@@ -1,12 +1,14 @@
-import { useState } from "react";
 import { Button, NumberFormatter, NumberInput, Select } from "@mantine/core";
 import {
   ArrowLeftRight,
   Banknote,
+  BookUserIcon,
   CreditCard,
   type LucideIcon,
 } from "lucide-react";
 
+import { useClient } from "@/hooks/useClient";
+import { useSale } from "@/hooks/useSale";
 import type { DiscountType, PaymentMethod } from "@/types";
 
 type PaymentOption = {
@@ -19,33 +21,29 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
   { value: "CASH", label: "Efectivo", Icon: Banknote },
   { value: "CARD", label: "Tarjeta", Icon: CreditCard },
   { value: "TRANSFER", label: "Transferencia", Icon: ArrowLeftRight },
+  { value: "CREDIT_ACCOUNT", label: "Cuenta corriente", Icon: BookUserIcon },
 ];
 
 type SaleSummaryProps = {
   onConfirm: () => void;
+  isSubmitting?: boolean;
 };
 
-export const SaleSummary = ({ onConfirm }: SaleSummaryProps) => {
-  const CART = [
-    { productId: 1, name: "Café Molido 500gr", price: 4500, qty: 2 },
-    { productId: 5, name: "Agua Mineral 2L", price: 1500, qty: 3 },
-    { productId: 3, name: "Azúcar 1kg", price: 1800, qty: 1 },
-  ];
+export const SaleSummary = ({
+  onConfirm,
+  isSubmitting = false,
+}: SaleSummaryProps) => {
+  const { cart, saleDraft, setSaleDraft } = useSale();
+  const { clients } = useClient();
 
-  const CLIENTS = [
-    { id: 1, fullName: "Torres, Ernesto", dni: "25369870" },
-    { id: 2, fullName: "Fanelli, Analia", dni: "37802564" },
-    { id: 3, fullName: "Bustos, Carlos", dni: "28562314" },
-  ];
+  const { discount, discountType, paymentMethod, clientId } = saleDraft;
 
-  const [discount, setDiscount] = useState(0);
-
-  const [discountType, setDiscountType] = useState<DiscountType>("monto");
   const discountTypes: DiscountType[] = ["monto", "porcentaje"];
 
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("CASH");
-
-  const subtotal = CART.reduce((acc, item) => acc + item.price * item.qty, 0);
+  const subtotal = cart.reduce(
+    (acc, line) => acc + line.salePrice * line.qty,
+    0,
+  );
 
   const discountValue =
     discountType === "porcentaje"
@@ -58,6 +56,7 @@ export const SaleSummary = ({ onConfirm }: SaleSummaryProps) => {
       : // se asegura que el descuento no supere el subtotal
         Math.min(discount, subtotal);
 
+  // estimado informativo: el descuento y el total reales los calcula el backend
   const total = Math.max(0, subtotal - discountValue);
 
   return (
@@ -91,7 +90,7 @@ export const SaleSummary = ({ onConfirm }: SaleSummaryProps) => {
           <NumberInput
             min={0}
             value={discount}
-            onChange={(value) => setDiscount(Number(value) || 0)}
+            onChange={(value) => setSaleDraft({ discount: Number(value) || 0 })}
             aria-label="Importe del descuento"
           />
           <div className="border-border flex rounded-lg border p-1">
@@ -99,7 +98,7 @@ export const SaleSummary = ({ onConfirm }: SaleSummaryProps) => {
               <button
                 key={type}
                 type="button"
-                onClick={() => setDiscountType(type)}
+                onClick={() => setSaleDraft({ discountType: type })}
                 className={`rounded-md px-2.5 text-sm font-medium transition-colors ${
                   discountType === type
                     ? "bg-primary-soft text-primary"
@@ -117,10 +116,14 @@ export const SaleSummary = ({ onConfirm }: SaleSummaryProps) => {
         <Select
           label="Cliente (opcional)"
           placeholder="Consumidor final"
-          data={CLIENTS.map((client) => ({
+          data={clients.map((client) => ({
             value: String(client.id),
-            label: `${client.fullName} — DNI ${client.dni}`,
+            label: `${client.lastName}, ${client.name} — DNI ${client.dni}`,
           }))}
+          value={clientId !== null ? String(clientId) : null}
+          onChange={(value) =>
+            setSaleDraft({ clientId: value ? Number(value) : null })
+          }
           allowDeselect
         />
         <p className="text-secondary-foreground text-xs">
@@ -135,7 +138,7 @@ export const SaleSummary = ({ onConfirm }: SaleSummaryProps) => {
             <button
               key={value}
               type="button"
-              onClick={() => setPaymentMethod(value)}
+              onClick={() => setSaleDraft({ paymentMethod: value })}
               className={`flex items-center gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium transition-colors hover:cursor-pointer ${
                 paymentMethod === value
                   ? "border-primary bg-primary-soft text-primary"
@@ -167,7 +170,7 @@ export const SaleSummary = ({ onConfirm }: SaleSummaryProps) => {
 
       <Button
         onClick={onConfirm}
-        disabled={CART.length === 0}
+        disabled={cart.length === 0 || isSubmitting}
         className="bg-primary mt-4 h-11 w-full rounded-md text-base"
       >
         Confirmar venta
