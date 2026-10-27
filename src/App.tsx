@@ -43,6 +43,12 @@ const CategoriesPage = lazy(() =>
   })),
 );
 
+const SellPointsPage = lazy(() =>
+  import("@/pages/SellPoints").then((module) => ({
+    default: module.SellPoints,
+  })),
+);
+
 const UnauthorizedPage = lazy(() =>
   import("@/components/UnauthorizedPage").then((module) => ({
     default: module.UnauthorizedPage,
@@ -99,6 +105,13 @@ const App = () => {
             }
           >
             <Route path="/categories" element={<CategoriesPage />} />
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute allowedRoles={getRolesForRoute("/sell-point")} />
+            }
+          >
+            <Route path="/sell-point" element={<SellPointsPage />} />
           </Route>
           <Route
             element={

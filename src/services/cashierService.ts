@@ -2,7 +2,7 @@ import { isAxiosError } from "axios";
 
 import { CashierSchema, CashierUpdateSchema } from "@/schemas";
 import type { CashierRequest, CashierUpdate, User } from "@/types";
-import { backendAPI } from "@/services/axios/axiosConfig";
+import { backendAPI } from "@/services/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
 

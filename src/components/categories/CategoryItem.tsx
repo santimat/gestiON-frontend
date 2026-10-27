@@ -9,7 +9,7 @@ type CategoryItemProps = {
 };
 
 export const CategoryItem = ({ category, columns }: CategoryItemProps) => {
-  const createdAt = new Date(category.createdAt).toLocaleDateString("es-AR");
+  const updatedAt = new Date(category.updatedAt).toLocaleDateString("es-AR");
   const { openEdit } = useCategory();
   return (
     <li className={`p-2 ${columns}`}>
@@ -18,7 +18,7 @@ export const CategoryItem = ({ category, columns }: CategoryItemProps) => {
         {category.description || "----"}
       </p>
       <p className="text-gray-500">{category.productCount} productos</p>
-      <p className="text-gray-500">{createdAt}</p>
+      <p className="text-gray-500">{updatedAt}</p>
       <div className="justify-center">
         <button
           aria-label={`Editar ${category.name}`}

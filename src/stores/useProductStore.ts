@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import type { AppError, Product } from "@/types";
-import { productService } from "@/services/products/productService";
+import { productService } from "@/services/productService";
 
 type UseProductStore = {
   formProduct: Product | null;

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import type { AuthUser, LoginDTO, UserRole } from "@/types";
-import { authService } from "@/services/auth/authService";
+import { authService } from "@/services/authService";
 
 interface UseAuthStore {
   authenticatedUser: AuthUser | null;

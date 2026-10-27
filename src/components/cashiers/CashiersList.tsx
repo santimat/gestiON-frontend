@@ -7,7 +7,7 @@ import { toast } from "sonner";
 export const CashiersList = () => {
   const { cashiers, toggleActive, isPendingToggleActive } = useCashier();
 
-  const headers = ["Cajero", "Email", "Alta", "Estado", "Acceso"];
+  const headers = ["Cajero", "Email", "Actualizado", "Estado", "Acceso"];
 
   const columns =
     "grid grid-cols-[1fr_1fr_0.6fr_0.5fr_0.3fr] items-center gap-x-4";

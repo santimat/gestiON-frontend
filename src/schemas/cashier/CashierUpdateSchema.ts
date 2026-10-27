@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { CashierSchema } from "@/schemas/cashiers/CashierSchema";
+import { CashierSchema } from "@/schemas/cashier/CashierSchema";
 
 export const CashierUpdateSchema = CashierSchema.extend({
   // en edición la contraseña es opcional: si queda vacía no se envía y el

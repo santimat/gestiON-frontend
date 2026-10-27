@@ -9,6 +9,7 @@ import {
   CashierSchema,
   CommerceWithOwnerRequestSchema,
   CashierUpdateSchema,
+  SellPointRequestSchema,
 } from "@/schemas";
 import type { ErrorDictionary } from "@/utils/errorDictionary";
 
@@ -41,13 +42,13 @@ export type User = {
   name: string;
   email: string;
   phoneNumber: string;
-  createdAt: Date;
+  updatedAt: Date;
   role: UserRole;
   active: boolean;
   commerceId?: number;
 };
 
-export type AuthUser = Omit<User, "phoneNumber" | "createdAt">;
+export type AuthUser = Omit<User, "phoneNumber" | "updatedAt">;
 
 // COMMERCE
 export type CommerceWithOwner = {
@@ -124,7 +125,7 @@ export type Category = {
   id: number;
   name: string;
   description?: string;
-  createdAt: Date;
+  updatedAt: Date;
   productCount: number;
 };
 
@@ -138,11 +139,24 @@ export type Client = {
   address: string;
   phoneNumber: string;
   dni: string;
+  updatedAt: Date;
 };
 
 // CASHIER
 export type CashierRequest = z.infer<typeof CashierSchema>;
 export type CashierUpdate = z.infer<typeof CashierUpdateSchema>;
+
+// SELL POINT
+export type SellPoint = {
+  id: number;
+  name: string;
+  commerceId: number;
+  active: boolean;
+  cashierIds?: number[];
+  updatedAt: Date;
+};
+
+export type SellPointRequest = z.infer<typeof SellPointRequestSchema>;
 
 // SALE
 export type PaymentMethod = "CASH" | "CARD" | "TRANSFER";

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import type { AppError, CashierRequest, CashierUpdate, User } from "@/types";
-import { cashierService } from "@/services/cashier/cashierService";
+import { cashierService } from "@/services/cashierService";
 
 type UseCashierStore = {
   // Estado de UI: modal de alta/edición de cajero

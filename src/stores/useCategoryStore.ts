@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import type { AppError, Category, CategoryRequest } from "@/types";
-import { categoryService } from "@/services/category/categoryService";
+import { categoryService } from "@/services/categoryService";
 
 type CategoryStore = {
   formCategory: Category | null;
@@ -31,6 +31,7 @@ export const useCategoryStore = create<CategoryStore>((set) => ({
   openEdit: (category: Category) =>
     set({ formCategory: category, isFormModalOpen: true }),
   closeFormModal: () => set({ formCategory: null, isFormModalOpen: false }),
+
   getCategories: async () => {
     set({ isLoading: true, error: null });
     try {
@@ -43,9 +44,11 @@ export const useCategoryStore = create<CategoryStore>((set) => ({
       set({ isLoading: false });
     }
   },
+
   createCategory: async (category: CategoryRequest) => {
     return categoryService.createCategory(category);
   },
+
   updateCategory: async (categoryId: number, category: CategoryRequest) => {
     const updatedCategory = await categoryService.updateCategory(
       categoryId,
@@ -58,6 +61,7 @@ export const useCategoryStore = create<CategoryStore>((set) => ({
     }));
     return updatedCategory;
   },
+
   toggleCategoryActive: async (categoryId: number) => {
     const updatedCategory =
       await categoryService.toggleCategoryActive(categoryId);

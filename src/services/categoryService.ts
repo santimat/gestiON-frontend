@@ -2,7 +2,7 @@ import { isAxiosError } from "axios";
 
 import { CategorySchema } from "@/schemas";
 import type { CategoryRequest } from "@/types";
-import { backendAPI } from "@/services/axios/axiosConfig";
+import { backendAPI } from "@/services/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
 
@@ -37,7 +37,7 @@ export const categoryService = {
   toggleCategoryActive: async (categoryId: number) => {
     try {
       const { data } = await backendAPI.patch(
-        `/categories/${categoryId}/toggle`,
+        `/categories/${categoryId}/toggle-active`,
       );
       return data;
     } catch (error) {

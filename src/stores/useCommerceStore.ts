@@ -6,7 +6,7 @@ import type {
   CommerceWithOwner,
   CurrentCommerce,
 } from "@/types";
-import { commerceService } from "@/services/commerce/commerceService";
+import { commerceService } from "@/services/commerceService";
 
 type UseCommerceStore = {
   // Estado de UI: modal de alta/edición de comercio

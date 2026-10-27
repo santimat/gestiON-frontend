@@ -15,6 +15,7 @@ import type {
   CommerceWithOwnerRequest,
   NavItem,
   ProductForm,
+  SellPointRequest,
 } from "@/types";
 
 export const ALLOWEDS_ROUTES_BY_ROLE = {
@@ -30,6 +31,7 @@ export const ALLOWEDS_ROUTES_BY_ROLE = {
   OWNER: [
     "/dashboard",
     "/cashiers",
+    "/sell-point",
     "/products",
     "/categories",
     "/sell",
@@ -54,8 +56,8 @@ export const SIDEBAR_ITEMS: NavItem[] = [
   {
     icon: ScanBarcode,
     text: "Puntos de venta",
-    short: "Vender",
-    href: "/sell",
+    short: "Puntos",
+    href: "/sell-point",
   },
   { icon: Package, text: "Productos", short: "Productos", href: "/products" },
   { icon: Tags, text: "Categorías", short: "Categorías", href: "/categories" },
@@ -131,4 +133,9 @@ export const DEFAULT_CASHIER_FORM: CashierRequest = {
 export const DEFAULT_CATEGORY_FORM: CategoryRequest = {
   name: "",
   description: "",
+};
+
+export const DEFAULT_SELL_POINT_FORM: SellPointRequest = {
+  name: "",
+  cashierIds: [],
 };

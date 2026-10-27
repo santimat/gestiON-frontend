@@ -17,7 +17,7 @@ export const CashierItemMobile = ({
 }: CashierItemMobileProps) => {
   const { openEdit } = useCashier();
 
-  const createdAt = new Date(cashier.createdAt).toLocaleDateString("es-AR");
+  const updatedAt = new Date(cashier.updatedAt).toLocaleDateString("es-AR");
   const initials = cashier.name
     .split(" ")
     .map((word) => word[0])
@@ -58,7 +58,9 @@ export const CashierItemMobile = ({
         </div>
       </div>
       <div className="border-background-soft mt-3 flex items-center justify-between border-t pt-3">
-        <p className="text-secondary-foreground text-xs">Alta {createdAt}</p>
+        <p className="text-secondary-foreground text-xs">
+          Actualizado {updatedAt}
+        </p>
         <p
           className={
             cashier.active

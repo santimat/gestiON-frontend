@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import type { AppError, Client, ClientRequest } from "@/types";
-import { clientService } from "@/services/clients/clientService";
+import { clientService } from "@/services/clientService";
 
 type UseClientStore = {
   // Estado de UI: modal de alta/edición de cliente

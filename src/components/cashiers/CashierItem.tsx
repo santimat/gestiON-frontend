@@ -19,13 +19,13 @@ export const CashierItem = ({
 }: CashierItemProps) => {
   const { openEdit } = useCashier();
 
-  const createdAt = new Date(cashier.createdAt).toLocaleDateString("es-AR");
+  const updatedAt = new Date(cashier.updatedAt).toLocaleDateString("es-AR");
 
   return (
     <li className={`p-2 ${columns}`}>
       <p>{cashier.name}</p>
       <p>{cashier.email}</p>
-      <p>{createdAt}</p>
+      <p>{updatedAt}</p>
       <Switch
         aria-label="Cambiar acceso del cajero"
         title="Cambiar acceso del cajero"
