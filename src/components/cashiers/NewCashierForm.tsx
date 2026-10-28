@@ -7,13 +7,19 @@ import { toast } from "sonner";
 import { cashierMapper } from "@/mappers";
 import { useCashier } from "@/hooks/useCashier";
 import { ModalHeader } from "@/components/ModalHeader";
-import { DEFAULT_CASHIER_FORM } from "@/utils/constants";
 import { ModalFormActions } from "@/components/ModalFormActions";
 import type { AppError, CashierRequest, FieldErrors, User } from "@/types";
 
 type NewCashierProps = {
   cashier: User | null;
   closeModal: () => void;
+};
+
+const DEFAULT_CASHIER_FORM: CashierRequest = {
+  name: "",
+  email: "",
+  password: "",
+  phoneNumber: "",
 };
 
 export const NewCashierForm = ({ cashier, closeModal }: NewCashierProps) => {

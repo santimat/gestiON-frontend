@@ -28,9 +28,19 @@ import { productMapper } from "@/mappers";
 import { useProduct } from "@/hooks/useProduct";
 import { useCategory } from "@/hooks/useCategory";
 import { ModalHeader } from "@/components/ModalHeader";
-import { DEFAULT_PRODUCT_FORM } from "@/utils/constants";
 import { ModalFormActions } from "@/components/ModalFormActions";
 import { SelectCategory } from "@/components/category/SelectCategory";
+
+const DEFAULT_PRODUCT_FORM: ProductForm = {
+  name: "",
+  description: "",
+  categoryId: 0,
+  costPrice: 0,
+  salePrice: 0,
+  currentStock: 0,
+  minStock: 0,
+  image: null,
+};
 
 type NewProductFormProps = {
   product: Product | null;

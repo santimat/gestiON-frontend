@@ -40,8 +40,7 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
   openEdit: (sellPoint) =>
     set(() => ({ formSellPoint: sellPoint, isFormModalOpen: true })),
   openCreate: () => set(() => ({ formSellPoint: null, isFormModalOpen: true })),
-  closeFormModal: () =>
-    set(() => ({ formSellPoint: null, isFormModalOpen: false })),
+  closeFormModal: () => set(() => ({ isFormModalOpen: false })),
   cashiersModalSellPoint: null,
   isCashiersModalOpen: false,
   openCashiersModal: (sellPoint) =>
@@ -49,8 +48,7 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
       cashiersModalSellPoint: sellPoint,
       isCashiersModalOpen: true,
     })),
-  closeCashiersModal: () =>
-    set(() => ({ cashiersModalSellPoint: null, isCashiersModalOpen: false })),
+  closeCashiersModal: () => set(() => ({ isCashiersModalOpen: false })),
 
   createSellPoint: async (sellPoint: SellPointRequest) => {
     set({ isLoading: true });
@@ -107,7 +105,16 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
   },
 
   getSellPointCashiers: async (sellPointId) => {
-    return sellPointService.getSellPointCashiers(sellPointId);
+    try {
+      return await sellPointService.getSellPointCashiers(sellPointId);
+    } catch (error) {
+      const appError = error as AppError;
+      set(() => ({
+        error:
+          appError?.message ?? "No se pudieron cargar los cajeros asignados.",
+      }));
+      throw error;
+    }
   },
 
   toggleActive: async (sellPointId) => {

@@ -1,34 +1,37 @@
-import type { ChangeEvent, SubmitEvent } from "react";
-import { useEffect, useState } from "react";
-import { Checkbox, TextInput } from "@mantine/core";
-import { MonitorIcon } from "lucide-react";
 import { toast } from "sonner";
+import { MonitorIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import type { ChangeEvent, SubmitEvent } from "react";
+import { Checkbox, TextInput } from "@mantine/core";
 
-import { ModalHeader } from "@/components/ModalHeader";
-import { ModalFormActions } from "@/components/ModalFormActions";
-import { useSellPoint } from "@/hooks/useSellPoint";
-import { DEFAULT_SELL_POINT_FORM } from "@/utils/constants";
 import type {
   AppError,
   FieldErrors,
   SellPoint,
   SellPointRequest,
-  User,
 } from "@/types";
+import { useCashier } from "@/hooks/useCashier";
+import { useSellPoint } from "@/hooks/useSellPoint";
+import { ModalHeader } from "@/components/ModalHeader";
+import { ModalFormActions } from "@/components/ModalFormActions";
+
+const DEFAULT_SELL_POINT_FORM: SellPointRequest = {
+  name: "",
+  cashierIds: [],
+};
 
 type NewSellPointFormProps = {
   sellPoint: SellPoint | null;
-  cashiers: User[];
   closeModal: () => void;
 };
 
 export const NewSellPointForm = ({
   sellPoint,
-  cashiers,
   closeModal,
 }: NewSellPointFormProps) => {
   const isEditing = sellPoint !== null;
 
+  const { cashiers, getCashiers, isLoading: isLoadingCashiers } = useCashier();
   const { handleCreateSellPoint, handleUpdateSellPoint, getSellPointCashiers } =
     useSellPoint();
 
@@ -39,29 +42,33 @@ export const NewSellPointForm = ({
   );
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // arranca en true solo cuando se edita: los checkboxes quedan esperando el prefill
-  const [isLoadingAssigned, setIsLoadingAssigned] = useState(
-    () => sellPoint !== null,
-  );
+  // arranca en true al editar: espera el fetch de los cajeros ya asignados
+  const [isLoadingAssigned, setIsLoadingAssigned] = useState(isEditing);
 
-  // al editar precargamos los cajeros ya asociados al punto de venta
+  // al abrir el modal cargamos la lista de cajeros;
+  // si estamos editando, además precargamos los asignados al punto de venta
   useEffect(() => {
+    getCashiers();
+
     if (!sellPoint) return;
+
     getSellPointCashiers(sellPoint.id)
-      .then((assigned) => {
+      .then((assigned) =>
         setSellPointForm((prevState) => ({
           ...prevState,
           cashierIds: assigned.map((cashier) => cashier.id),
-        }));
-      })
+        })),
+      )
       .catch((error) => {
         const appError = error as AppError;
         toast.error(
-          appError?.message ?? "No se pudieron cargar los cajeros asignados.",
+          appError?.message ??
+            "No se pudieron cargar los cajeros del punto de venta.",
         );
+        closeModal();
       })
       .finally(() => setIsLoadingAssigned(false));
-  }, [sellPoint, getSellPointCashiers]);
+  }, [sellPoint, getCashiers, getSellPointCashiers, closeModal]);
 
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -136,9 +143,9 @@ export const NewSellPointForm = ({
           <div className="space-y-1">
             <p className="text-sm font-medium">Cajeros asignados</p>
             <div className="border-border max-h-48 overflow-y-auto rounded-lg border p-2">
-              {isLoadingAssigned ? (
+              {isLoadingCashiers || isLoadingAssigned ? (
                 <p className="text-secondary-foreground p-2 text-xs">
-                  Cargando cajeros asignados...
+                  Cargando cajeros...
                 </p>
               ) : (
                 <>

@@ -7,13 +7,11 @@ import { ListContainer } from "@/components/ListContainer";
 import { NewSellPointForm } from "@/components/sellPoints/NewSellPointForm";
 import { SellPointCashiers } from "@/components/sellPoints/SellPointCashiers";
 import { SellPointsList } from "@/components/sellPoints/SellPointsList";
-import { useCashier } from "@/hooks/useCashier";
 import { useCommerce } from "@/hooks/useCommerce";
 import { useSellPoint } from "@/hooks/useSellPoint";
 
 export const SellPoints = () => {
   const { authenticatedUser } = useAuth();
-  const { cashiers, getCashiers } = useCashier();
   const { currentCommerce, getCurrentCommerce } = useCommerce();
   const {
     sellPoints,
@@ -32,7 +30,6 @@ export const SellPoints = () => {
 
   useEffect(() => {
     getSellPoints();
-    getCashiers();
     if (authenticatedUser?.commerceId) getCurrentCommerce();
     return () => {
       closeFormModal();
@@ -40,7 +37,6 @@ export const SellPoints = () => {
     };
   }, [
     getSellPoints,
-    getCashiers,
     getCurrentCommerce,
     authenticatedUser,
     closeFormModal,
@@ -62,7 +58,6 @@ export const SellPoints = () => {
         <NewSellPointForm
           key={formSellPoint?.id ?? "create"}
           sellPoint={formSellPoint}
-          cashiers={cashiers}
           closeModal={closeFormModal}
         />
       </Modal>

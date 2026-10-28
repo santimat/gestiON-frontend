@@ -22,8 +22,20 @@ import type {
 import { commerceMapper } from "@/mappers";
 import { useCommerce } from "@/hooks/useCommerce";
 import { ModalHeader } from "@/components/ModalHeader";
-import { DEFAULT_COMMERCE_WITH_OWNER } from "@/utils/constants";
 import { ModalFormActions } from "@/components/ModalFormActions";
+
+const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerRequest = {
+  userId: 0,
+  commerceId: 0,
+  username: "",
+  email: "",
+  cuit: "",
+  password: "",
+  phoneNumber: "",
+  businessName: "",
+  address: "",
+  businessLogo: null,
+};
 
 type NewCommerceFormProps = {
   commerce: CommerceWithOwner | null;

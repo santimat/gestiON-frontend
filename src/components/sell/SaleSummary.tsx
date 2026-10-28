@@ -56,7 +56,7 @@ export const SaleSummary = ({
       : // se asegura que el descuento no supere el subtotal
         Math.min(discount, subtotal);
 
-  // estimado informativo: el descuento y el total reales los calcula el backend
+  // informativo, el descuento real lo calcula el backend
   const total = Math.max(0, subtotal - discountValue);
 
   return (

@@ -5,7 +5,6 @@ import { TextInput, Textarea } from "@mantine/core";
 import { categoryMapper } from "@/mappers";
 import { useCategory } from "@/hooks/useCategory";
 import { ModalHeader } from "@/components/ModalHeader";
-import { DEFAULT_CATEGORY_FORM } from "@/utils/constants";
 import { ModalFormActions } from "@/components/ModalFormActions";
 import type { AppError, Category, CategoryRequest, FieldErrors } from "@/types";
 import { toast } from "sonner";
@@ -13,6 +12,11 @@ import { toast } from "sonner";
 type NewCategoryFormProps = {
   category: Category | null;
   closeModal: () => void;
+};
+
+const DEFAULT_CATEGORY_FORM: CategoryRequest = {
+  name: "",
+  description: "",
 };
 
 export const NewCategoryForm = ({
