@@ -6,6 +6,7 @@ import { useCashier } from "@/hooks/useCashier";
 import { ListContainer } from "@/components/ListContainer";
 import { CashiersList } from "@/components/cashiers/CashiersList";
 import { NewCashierForm } from "@/components/cashiers/NewCashierForm";
+import { usePageHeader } from "@/hooks/usePageHeader";
 
 export const Cashiers = () => {
   const {
@@ -25,6 +26,20 @@ export const Cashiers = () => {
     return () => closeFormModal();
   }, [getCashiers, closeFormModal]);
 
+  usePageHeader({
+    title: "Cajeros",
+    subtitle: `${totalCashiers} cajero${totalCashiers !== 1 ? "s" : ""} registrados`,
+    actions: (
+      <Button
+        leftSection={<UserPlus />}
+        onClick={openCreate}
+        className="bg-primary rounded-md p-2 text-white"
+      >
+        <span className="hidden sm:inline">Nuevo Cajero</span>
+      </Button>
+    ),
+  });
+
   return (
     <>
       <Modal
@@ -41,22 +56,6 @@ export const Cashiers = () => {
           closeModal={closeFormModal}
         />
       </Modal>
-
-      <header className="border-border flex w-full items-center justify-between border-b p-4">
-        <div>
-          <h1 className="text-xl font-semibold">Cajeros</h1>
-          <p>
-            {totalCashiers} cajero{totalCashiers !== 1 && "s"} registrados
-          </p>
-        </div>
-        <Button
-          leftSection={<UserPlus />}
-          onClick={openCreate}
-          className="bg-primary rounded-md p-2 text-white"
-        >
-          <span className="hidden sm:inline">Nuevo Cajero</span>
-        </Button>
-      </header>
 
       <main className="flex flex-col gap-6 p-6">
         <ListContainer

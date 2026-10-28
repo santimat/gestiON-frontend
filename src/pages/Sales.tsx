@@ -7,6 +7,7 @@ import { ProductSearch } from "@/components/sell/ProductSearch";
 import { SaleTicketModal } from "@/components/sell/SaleTicketModal";
 import { useClient } from "@/hooks/useClient";
 import { useSale } from "@/hooks/useSale";
+import { usePageHeader } from "@/hooks/usePageHeader";
 import type { AppError, Sale } from "@/types";
 
 export const Sell = () => {
@@ -16,10 +17,11 @@ export const Sell = () => {
   const { cart, saleDraft, createSale, resetSale, clearCart } = useSale();
   const { getClients } = useClient();
 
-  // los clientes alimentan el select "Cliente (opcional)" del resumen
   useEffect(() => {
     getClients();
   }, [getClients]);
+
+  usePageHeader({ title: "Punto de venta" });
 
   const handleConfirmSale = async () => {
     setIsSubmitting(true);
@@ -69,13 +71,7 @@ export const Sell = () => {
 
   return (
     <>
-      <header className="border-border flex w-full items-center justify-between border-b p-4">
-        <div>
-          <h1 className="text-xl font-semibold">Punto de venta</h1>
-        </div>
-      </header>
-
-      <main className="grid flex-1 gap-4 overflow-auto p-6 lg:grid-cols-[minmax(0,1.15fr)_22rem] lg:items-start">
+      <main className="grid flex-1 gap-4 overflow-auto p-6 lg:items-start xl:grid-cols-[minmax(0,1.15fr)_22rem]">
         <div className="flex flex-col gap-4">
           <ProductSearch />
           <SaleCart />

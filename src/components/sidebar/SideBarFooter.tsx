@@ -19,21 +19,22 @@ export const SidebarFooter = ({
   authenticatedUser,
   handleLogout,
 }: SidebarFooterProps) => {
-  if (!authenticatedUser?.email) return;
-
+  // los hooks van antes de cualquier return condicional
   const navigate = useNavigate();
   const [opened, { open: openAvatar, close: closeAvatar }] =
     useDisclosure(false);
   const { currentCommerce, getCurrentCommerce } = useCommerce();
 
+  useEffect(() => {
+    if (authenticatedUser?.email) getCurrentCommerce();
+  }, [authenticatedUser, getCurrentCommerce]);
+
+  if (!authenticatedUser?.email) return;
+
   const handleClick = async () => {
     await handleLogout();
     navigate("/");
   };
-
-  useEffect(() => {
-    getCurrentCommerce();
-  }, [getCurrentCommerce]);
 
   const roleToShow = ROLE_DICTIONARY[authenticatedUser?.role];
   const avatarColor = getAvatarColor(authenticatedUser?.id);

@@ -8,6 +8,7 @@ import { NewProductForm } from "@/components/products/NewProductForm";
 import { useProduct } from "@/hooks/useProduct";
 import { useCommerce } from "@/hooks/useCommerce";
 import { useAuth } from "@/hooks/useAuth";
+import { usePageHeader } from "@/hooks/usePageHeader";
 
 export const Products = () => {
   const { authenticatedUser } = useAuth();
@@ -31,6 +32,20 @@ export const Products = () => {
     return () => closeFormModal();
   }, [getProducts, getCurrentCommerce, authenticatedUser, closeFormModal]);
 
+  usePageHeader({
+    title: "Productos",
+    subtitle: `${totalProducts} productos cargados`,
+    actions: (
+      <Button
+        leftSection={<PackagePlus />}
+        onClick={openCreate}
+        className="bg-primary rounded-md p-2 text-white"
+      >
+        <span className="hidden sm:inline">Nuevo Producto</span>
+      </Button>
+    ),
+  });
+
   return (
     <>
       <Modal
@@ -48,20 +63,6 @@ export const Products = () => {
           closeModal={closeFormModal}
         />
       </Modal>
-
-      <header className="border-border flex w-full items-center justify-between border-b p-4">
-        <div>
-          <h1 className="text-xl font-semibold">Productos</h1>
-          <p>{totalProducts} productos cargados</p>
-        </div>
-        <Button
-          leftSection={<PackagePlus />}
-          onClick={openCreate}
-          className="bg-primary rounded-md p-2 text-white"
-        >
-          <span className="hidden sm:inline">Nuevo Producto</span>
-        </Button>
-      </header>
 
       <main className="flex flex-col gap-6 p-6">
         <ListContainer

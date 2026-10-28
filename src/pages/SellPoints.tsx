@@ -9,6 +9,7 @@ import { SellPointCashiers } from "@/components/sellPoints/SellPointCashiers";
 import { SellPointsList } from "@/components/sellPoints/SellPointsList";
 import { useCommerce } from "@/hooks/useCommerce";
 import { useSellPoint } from "@/hooks/useSellPoint";
+import { usePageHeader } from "@/hooks/usePageHeader";
 
 export const SellPoints = () => {
   const { authenticatedUser } = useAuth();
@@ -45,6 +46,21 @@ export const SellPoints = () => {
 
   const hasCommerce = Boolean(currentCommerce);
 
+  usePageHeader({
+    title: "Puntos de venta",
+    subtitle: `${totalSellPoints} punto${totalSellPoints !== 1 ? "s" : ""} de venta`,
+    actions: (
+      <Button
+        leftSection={<Plus />}
+        onClick={openCreate}
+        disabled={!hasCommerce}
+        className="bg-primary rounded-md p-2 text-white"
+      >
+        <span className="hidden sm:inline">Nuevo punto de venta</span>
+      </Button>
+    ),
+  });
+
   return (
     <>
       <Modal
@@ -76,23 +92,6 @@ export const SellPoints = () => {
           closeModal={closeCashiersModal}
         />
       </Modal>
-
-      <header className="border-border flex w-full items-center justify-between border-b p-4">
-        <div>
-          <h1 className="text-xl font-semibold">Puntos de venta</h1>
-          <p>
-            {totalSellPoints} punto{totalSellPoints !== 1 && "s"} de venta
-          </p>
-        </div>
-        <Button
-          leftSection={<Plus />}
-          onClick={openCreate}
-          disabled={!hasCommerce}
-          className="bg-primary rounded-md p-2 text-white"
-        >
-          <span className="hidden sm:inline">Nuevo punto de venta</span>
-        </Button>
-      </header>
 
       <main className="flex flex-col gap-6 p-6">
         {!hasCommerce && (

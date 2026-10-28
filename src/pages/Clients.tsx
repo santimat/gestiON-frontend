@@ -6,6 +6,7 @@ import { useClient } from "@/hooks/useClient";
 import { ListContainer } from "@/components/ListContainer";
 import { ClientList } from "@/components/clients/ClientList";
 import { ClientForm } from "@/components/clients/ClientForm";
+import { usePageHeader } from "@/hooks/usePageHeader";
 
 export const Clients = () => {
   const {
@@ -25,6 +26,20 @@ export const Clients = () => {
     return () => closeFormModal();
   }, [getClients, closeFormModal]);
 
+  usePageHeader({
+    title: "Clientes",
+    subtitle: `${totalClients} clientes cargados`,
+    actions: (
+      <Button
+        leftSection={<UserPlus />}
+        onClick={openCreate}
+        className="bg-primary rounded-md p-2 text-white"
+      >
+        <span className="hidden sm:inline">Nuevo Cliente</span>
+      </Button>
+    ),
+  });
+
   return (
     <>
       <Modal
@@ -41,20 +56,6 @@ export const Clients = () => {
           closeModal={closeFormModal}
         />
       </Modal>
-
-      <header className="border-border flex w-full items-center justify-between border-b p-4">
-        <div>
-          <h1 className="text-xl font-semibold">Clientes</h1>
-          <p>{totalClients} clientes cargados</p>
-        </div>
-        <Button
-          leftSection={<UserPlus />}
-          onClick={openCreate}
-          className="bg-primary rounded-md p-2 text-white"
-        >
-          <span className="hidden sm:inline">Nuevo Cliente</span>
-        </Button>
-      </header>
 
       <main className="flex flex-col gap-6 p-6">
         <ListContainer

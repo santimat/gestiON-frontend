@@ -8,6 +8,7 @@ import { Button, Modal } from "@mantine/core";
 import { lazy, useEffect } from "react";
 
 import { useCommerce } from "@/hooks/useCommerce";
+import { usePageHeader } from "@/hooks/usePageHeader";
 import { ListContainer } from "@/components/ListContainer";
 import { CommerceList } from "@/components/commerces/CommerceList";
 import { CommerceStatsCard } from "@/components/commerces/CommerceStatsCard";
@@ -39,6 +40,16 @@ export const Commerces = () => {
     return () => closeFormModal();
   }, [getCommercesWithOwner, getCommerceStats, closeFormModal]);
 
+  usePageHeader({
+    title: "Comercios",
+    subtitle: "Gestión de comercios y registro de comercios.",
+    actions: (
+      <Button onClick={openCreate} leftSection={<BuildingComplexPlus />}>
+        <span className="hidden sm:inline">Agregar comercio</span>
+      </Button>
+    ),
+  });
+
   return (
     <>
       <Modal
@@ -55,18 +66,6 @@ export const Commerces = () => {
           closeModal={closeFormModal}
         />
       </Modal>
-
-      <header className="border-border flex items-center justify-between gap-2 border-b p-4">
-        <div>
-          <h1 className="text-xl font-semibold">Comercios</h1>
-          <p className="text-secondary-foreground">
-            Gestión de comercios y registro de comercios.
-          </p>
-        </div>
-        <Button onClick={openCreate} leftSection={<BuildingComplexPlus />}>
-          <span className="hidden sm:inline">Agregar comercio</span>
-        </Button>
-      </header>
 
       <main className="flex flex-col gap-6 p-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
