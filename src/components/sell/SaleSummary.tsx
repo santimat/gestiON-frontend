@@ -76,7 +76,7 @@ export const SaleSummary = ({
         <div className="flex justify-between">
           <span className="text-secondary-foreground">Descuento</span>
           <NumberFormatter
-            prefix="-$"
+            prefix="$"
             value={discountValue}
             thousandSeparator
             className="text-destructive font-medium tabular-nums"

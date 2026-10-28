@@ -24,14 +24,12 @@ export const SellPointCashiers = ({
   // al abrir el modal cargamos los cajeros asignados al punto de venta
   useEffect(() => {
     if (!sellPoint) return;
+
     getSellPointCashiers(sellPoint.id)
       .then((assigned) => setCashiers(assigned))
       .catch((error) => {
         const appError = error as AppError;
-        toast.error(
-          appError?.message ??
-            "No se pudieron cargar los cajeros del punto de venta.",
-        );
+        toast.error(appError?.message);
         closeModal();
       })
       .finally(() => setIsLoading(false));
