@@ -29,7 +29,7 @@ export const StepsSection = () => {
           {STEPS.map(({ step, title, description }) => (
             <li key={`${step}-${title}`} className="relative">
               {step < STEPS.length && (
-                <span className="bg-primary absolute top-4 left-8 hidden h-0.5 w-full md:block"></span>
+                <span className="border-primary absolute top-4 left-8 hidden w-full border-t-2 border-dashed md:block"></span>
               )}
               <span className="bg-card text-primary border-border grid h-8 w-8 place-items-center rounded-full border text-sm font-semibold">
                 {step}
