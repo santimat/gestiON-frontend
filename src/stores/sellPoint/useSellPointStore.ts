@@ -1,32 +1,8 @@
 import { create } from "zustand";
 
+import type { AppError, SellPoint, SellPointRequest } from "@/types";
 import { sellPointService } from "@/services/sellPointService";
-import type { AppError, SellPoint, SellPointRequest, User } from "@/types";
-
-type UseSellPointStore = {
-  sellPoints: SellPoint[];
-  totalSellPoints: number;
-  formSellPoint: SellPoint | null;
-  isFormModalOpen: boolean;
-  isLoading: boolean;
-  error: string | null;
-  isPendingToggleActive: boolean;
-  openEdit: (sellPoint: SellPoint) => void;
-  openCreate: () => void;
-  closeFormModal: () => void;
-  cashiersModalSellPoint: SellPoint | null;
-  isCashiersModalOpen: boolean;
-  openCashiersModal: (sellPoint: SellPoint) => void;
-  closeCashiersModal: () => void;
-  createSellPoint: (sellPoint: SellPointRequest) => Promise<void>;
-  updateSellPoint: (
-    sellPointId: number,
-    sellPoint: SellPointRequest,
-  ) => Promise<void>;
-  getSellPoints: () => Promise<void>;
-  getSellPointCashiers: (sellPointId: number) => Promise<User[]>;
-  toggleActive: (sellPointId: number) => Promise<void>;
-};
+import type { UseSellPointStore } from "@/stores/sellPoint/types";
 
 export const useSellPointStore = create<UseSellPointStore>((set) => ({
   sellPoints: [],
@@ -40,6 +16,9 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
   openEdit: (sellPoint) =>
     set(() => ({ formSellPoint: sellPoint, isFormModalOpen: true })),
   openCreate: () => set(() => ({ formSellPoint: null, isFormModalOpen: true })),
+  // no limpiamos formSellPoint al cerrar: Mantine mantiene el contenido montado
+  // durante la transición de salida y limpiarlo a mitad del fade resetea el form.
+  // openCreate / openEdit sobreescriben el valor al volver a abrir.
   closeFormModal: () => set(() => ({ isFormModalOpen: false })),
   cashiersModalSellPoint: null,
   isCashiersModalOpen: false,
@@ -48,6 +27,9 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
       cashiersModalSellPoint: sellPoint,
       isCashiersModalOpen: true,
     })),
+  // no limpiamos cashiersModalSellPoint al cerrar: Mantine mantiene el contenido
+  // montado durante la transición de salida y limpiarlo a mitad del fade resetea
+  // el contenido del modal. openCashiersModal sobreescribe el valor al abrir.
   closeCashiersModal: () => set(() => ({ isCashiersModalOpen: false })),
 
   createSellPoint: async (sellPoint: SellPointRequest) => {
@@ -64,7 +46,6 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
       throw error;
     }
   },
-
   getSellPoints: async () => {
     set({ isLoading: true });
     try {
@@ -86,7 +67,6 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
       }));
     }
   },
-
   updateSellPoint: async (sellPointId: number, sellPoint: SellPointRequest) => {
     const updatedSellPoint = await sellPointService.updateSellPoint(
       sellPointId,
@@ -103,7 +83,6 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
       ),
     }));
   },
-
   getSellPointCashiers: async (sellPointId) => {
     try {
       return await sellPointService.getSellPointCashiers(sellPointId);
@@ -116,8 +95,7 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
       throw error;
     }
   },
-
-  toggleActive: async (sellPointId) => {
+  toggleActive: async (sellPointId: number) => {
     set({ isPendingToggleActive: true });
     const updatedSellPoint = await sellPointService.toggleActive(sellPointId);
     set((prevState) => ({

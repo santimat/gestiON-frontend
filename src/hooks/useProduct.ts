@@ -1,4 +1,4 @@
-import { useProductStore } from "@/stores/useProductStore";
+import { useProductStore } from "@/stores/product/useProductStore";
 import { useShallow } from "zustand/shallow";
 
 export const useProduct = () => {

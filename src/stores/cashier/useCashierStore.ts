@@ -1,32 +1,8 @@
 import { create } from "zustand";
 
-import type { AppError, CashierRequest, CashierUpdate, User } from "@/types";
+import type { AppError, CashierRequest } from "@/types";
 import { cashierService } from "@/services/cashierService";
-
-type UseCashierStore = {
-  // Estado de UI: modal de alta/edición de cajero
-  formCashier: User | null;
-  isFormModalOpen: boolean;
-  openEdit: (cashier: User) => void;
-  openCreate: () => void;
-  closeFormModal: () => void;
-
-  totalCashiers: number;
-  cashiers: User[];
-  isLoading: boolean;
-  isPendingToggleActive: boolean;
-  error: string | null;
-  createCashier: (cashier: CashierRequest) => Promise<void>;
-  getCashiers: () => Promise<void>;
-  updateCashier: ({
-    cashierId,
-    cashier,
-  }: {
-    cashierId: number;
-    cashier: CashierUpdate;
-  }) => Promise<void>;
-  toggleActive: (userId: number) => Promise<void>;
-};
+import type { UseCashierStore } from "@/stores/cashier/types";
 
 export const useCashierStore = create<UseCashierStore>((set) => ({
   formCashier: null,

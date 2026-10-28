@@ -2,26 +2,9 @@ import { create } from "zustand";
 
 import type { AppError, Category, CategoryRequest } from "@/types";
 import { categoryService } from "@/services/categoryService";
+import type { UseCategoryStore } from "@/stores/category/types";
 
-type CategoryStore = {
-  formCategory: Category | null;
-  isFormModalOpen: boolean;
-  categories: Category[];
-  isLoading: boolean;
-  error: string | null;
-  openCreate: () => void;
-  openEdit: (category: Category) => void;
-  closeFormModal: () => void;
-  getCategories: () => Promise<void>;
-  createCategory: (category: CategoryRequest) => Promise<Category>;
-  updateCategory: (
-    categoryId: number,
-    category: CategoryRequest,
-  ) => Promise<Category>;
-  toggleCategoryActive: (categoryId: number) => Promise<void>;
-};
-
-export const useCategoryStore = create<CategoryStore>((set) => ({
+export const useCategoryStore = create<UseCategoryStore>((set) => ({
   formCategory: null,
   isFormModalOpen: false,
   categories: [],

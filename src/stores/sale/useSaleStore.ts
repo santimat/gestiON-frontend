@@ -1,7 +1,8 @@
 import { create } from "zustand";
 
 import { saleService } from "@/services/saleService";
-import type { CartLine, Product, Sale, SaleDraft, SaleRequest } from "@/types";
+import type { SaleDraft, SaleRequest } from "@/types";
+import type { UseSaleStore } from "@/stores/sale/types";
 
 const DEFAULT_SALE_DRAFT: SaleDraft = {
   discount: 0,
@@ -9,19 +10,6 @@ const DEFAULT_SALE_DRAFT: SaleDraft = {
   paymentMethod: "CASH",
   // consumidor final
   clientId: null,
-};
-
-type UseSaleStore = {
-  cart: CartLine[];
-  addToCart: (product: Product) => void;
-  setQty: (productId: number, qty: number) => void;
-  removeLine: (productId: number) => void;
-  clearCart: () => void;
-  // datos del resumen que acompañan la venta a confirmar
-  saleDraft: SaleDraft;
-  setSaleDraft: (draft: Partial<SaleDraft>) => void;
-  createSale: (sale: SaleRequest) => Promise<Sale>;
-  resetSale: () => void;
 };
 
 export const useSaleStore = create<UseSaleStore>((set) => ({
@@ -91,8 +79,8 @@ export const useSaleStore = create<UseSaleStore>((set) => ({
       saleDraft: { ...prevState.saleDraft, ...draft },
     })),
 
-  createSale: async (sale) => {
-    return await saleService.createSale(sale);
+  createSale: async (sale: SaleRequest) => {
+    return saleService.createSale(sale);
   },
 
   resetSale: () =>

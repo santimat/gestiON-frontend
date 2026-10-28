@@ -1,16 +1,8 @@
 import { create } from "zustand";
 
-import type { AuthUser, LoginDTO, UserRole } from "@/types";
+import type { LoginDTO } from "@/types";
 import { authService } from "@/services/authService";
-
-interface UseAuthStore {
-  authenticatedUser: AuthUser | null;
-  isCheckingAuth: boolean;
-  hasHydrated: boolean;
-  login: (loginRequest: LoginDTO) => Promise<UserRole | undefined>;
-  logout: () => Promise<void>;
-  hydrateUser: () => Promise<void>;
-}
+import type { UseAuthStore } from "@/stores/auth/types";
 
 export const useAuthStore = create<UseAuthStore>((set, get) => ({
   authenticatedUser: null,

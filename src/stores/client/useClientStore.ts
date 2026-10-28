@@ -1,24 +1,8 @@
 import { create } from "zustand";
 
-import type { AppError, Client, ClientRequest } from "@/types";
+import type { AppError, ClientRequest } from "@/types";
 import { clientService } from "@/services/clientService";
-
-type UseClientStore = {
-  // Estado de UI: modal de alta/edición de cliente
-  formClient: Client | null;
-  isFormModalOpen: boolean;
-  openEdit: (client: Client) => void;
-  openCreate: () => void;
-  closeFormModal: () => void;
-
-  clients: Client[];
-  totalClients: number;
-  isLoading: boolean;
-  error: string | null;
-  createClient: (client: ClientRequest) => Promise<void>;
-  getClients: () => Promise<void>;
-  updateClient: (clientId: number, client: ClientRequest) => Promise<void>;
-};
+import type { UseClientStore } from "@/stores/client/types";
 
 export const useClientStore = create<UseClientStore>((set) => ({
   formClient: null,

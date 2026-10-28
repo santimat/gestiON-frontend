@@ -17,7 +17,7 @@ Note: `npx tsc -b` (and `pnpm build`) also type-checks `tsconfig.node.json`. Run
 
 ## Architecture
 
-Data flow: `pages/`/`components/` → `hooks/useX.ts` → `stores/useXStore.ts` (zustand) → `services/<domain>/<x>Service.ts` → `backendAPI` (axios).
+Data flow: `pages/`/`components/` → `hooks/useX.ts` → `stores/<domain>/useXStore.ts` (zustand) → `services/<domain>/<x>Service.ts` → `backendAPI` (axios). Each store folder `src/stores/<domain>/` holds `useXStore.ts` plus a `types.d.ts` with the store's `UseXStore` interface (imported as `@/stores/<domain>/types`).
 
 - Path alias `@/` → `src/` (wired in both `vite.config.ts` and `tsconfig.app.json`).
 - Shared types live in `src/types.d.ts`; zod schemas in `src/schemas/<domain>/`.
