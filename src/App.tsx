@@ -30,7 +30,7 @@ const CommercesPage = lazy(() =>
 );
 
 const SellPage = lazy(() =>
-  import("@/pages/Sell").then((module) => ({ default: module.Sell })),
+  import("@/pages/Sales").then((module) => ({ default: module.Sell })),
 );
 
 const ClientsPage = lazy(() =>

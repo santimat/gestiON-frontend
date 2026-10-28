@@ -13,7 +13,7 @@ export const Sell = () => {
   const [ticket, setTicket] = useState<Sale | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { cart, saleDraft, createSale, resetSale } = useSale();
+  const { cart, saleDraft, createSale, resetSale, clearCart } = useSale();
   const { getClients } = useClient();
 
   // los clientes alimentan el select "Cliente (opcional)" del resumen
@@ -57,6 +57,7 @@ export const Sell = () => {
       const appError = error as AppError;
       toast.error(appError?.message ?? "No se pudo registrar la venta.");
     } finally {
+      clearCart();
       setIsSubmitting(false);
     }
   };
