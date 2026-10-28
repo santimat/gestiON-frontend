@@ -33,7 +33,7 @@ export const CategoryList = ({ categories }: CategoryListProps) => {
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t">
+        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
           {categories.map((category) => (
             <CategoryItem
               key={`category-${category.id}`}

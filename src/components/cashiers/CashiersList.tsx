@@ -33,7 +33,7 @@ export const CashiersList = () => {
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t">
+        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
           {cashiers.map((cashier) => {
             return (
               <CashierItem

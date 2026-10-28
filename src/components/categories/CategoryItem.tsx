@@ -2,6 +2,7 @@ import { Pencil } from "lucide-react";
 
 import type { Category } from "@/types";
 import { useCategory } from "@/hooks/useCategory";
+import { Tooltip } from "@mantine/core";
 
 type CategoryItemProps = {
   category: Category;
@@ -14,9 +15,11 @@ export const CategoryItem = ({ category, columns }: CategoryItemProps) => {
   return (
     <li className={`p-2 ${columns}`}>
       <p className="font-medium">{category.name}</p>
-      <p className="line-clamp-1 text-gray-500">
-        {category.description || "----"}
-      </p>
+      <Tooltip label={category.description} position="bottom" withArrow>
+        <p className="line-clamp-1 text-gray-500">
+          {category.description || "----"}
+        </p>
+      </Tooltip>
       <p className="text-gray-500">{category.productCount} productos</p>
       <p className="text-gray-500">{updatedAt}</p>
       <div className="justify-center">

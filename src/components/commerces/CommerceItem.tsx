@@ -35,20 +35,20 @@ export const CommerceItem = ({ commerce, columns }: CommerceItemProps) => {
       <ImageViewer
         opened={opened}
         closeImageViewer={closeAvatar}
-        title={`Comercio: ${commerce.businessName}`}
+        title={`Comercio: ${commerce.name}`}
         imageUrl={commerce.businessLogoUrl}
-        key={commerce?.businessName}
+        key={commerce?.name}
       />
       <li data-commerce={commerce.commerceId} className={`${columns} p-2`}>
         <Avatar
           className="hover:cursor-pointer"
           onClick={commerce.businessLogoUrl ? openAvatar : undefined}
           src={commerce.businessLogoUrl}
-          alt={`${commerce.businessName} logo`}
+          alt={`${commerce.name} logo`}
           component="button"
         />
         <div className="min-w-0">
-          <p className="first-letter:uppercase">{commerce.businessName}</p>
+          <p className="first-letter:uppercase">{commerce.name}</p>
           {/* en mobile el dueño se muestra debajo del nombre del comercio */}
           <p className="text-secondary-foreground truncate text-xs lg:hidden">
             {commerce.username}

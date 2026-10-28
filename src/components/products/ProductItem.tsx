@@ -55,7 +55,7 @@ export const ProductItem = ({
         />
         <div>
           <p>{product.name}</p>
-          <p className="text-sm text-gray-500">{product.id}</p>
+          <p className="text-sm text-gray-500">ID:{product.id}</p>
         </div>
         <p>{product.category.name}</p>
         <Tooltip label={product.description || "----"}>

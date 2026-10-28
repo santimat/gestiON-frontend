@@ -59,7 +59,7 @@ export type CommerceWithOwner = {
   username: string;
   email: string;
   phoneNumber: string;
-  businessName: string;
+  name: string;
   cuit: string;
   address: string;
   businessLogoUrl: string;
@@ -80,7 +80,7 @@ export type CommerceStats = {
 
 export type CurrentCommerce = {
   commerceId: number;
-  businessName: string;
+  name: string;
   businessLogoUrl: string;
   businessActive: boolean;
   profitMultiplier: number;
@@ -199,8 +199,11 @@ export type Sale = {
   userName: string;
   paymentMethod: PaymentMethod;
   subtotal: number;
+  discountType: DiscountType | null;
   discount: number;
   total: number;
+  // total con el descuento ya aplicado (igual que total, dato del backend)
+  totalAfterDiscount: number;
   createdAt: Date;
   observations: string | null;
   status: SaleStatus;
@@ -209,4 +212,4 @@ export type Sale = {
 
 export type PaymentMethod = "CASH" | "CARD" | "TRANSFER" | "CREDIT_ACCOUNT";
 
-export type DiscountType = "monto" | "porcentaje";
+export type DiscountType = "FIXED_AMOUNT" | "PERCENTAGE";

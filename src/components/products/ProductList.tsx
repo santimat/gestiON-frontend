@@ -35,7 +35,7 @@ export const ProductList = ({ products }: ProductListProps) => {
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul>
+        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
           {products.map((product) => {
             return (
               <ProductItem

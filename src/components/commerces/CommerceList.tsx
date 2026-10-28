@@ -33,7 +33,7 @@ export const CommerceList = ({ commercesWithOwner }: CommerceListProps) => {
             </p>
           ))}
         </div>
-        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t">
+        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
           {commercesWithOwner.map((commerce) => {
             return (
               <CommerceItem

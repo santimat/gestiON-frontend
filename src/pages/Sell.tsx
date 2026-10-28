@@ -24,6 +24,20 @@ export const Sell = () => {
   const handleConfirmSale = async () => {
     setIsSubmitting(true);
     try {
+      // caps de descuento idénticos a los del preview del resumen:
+      // así el total que se registra siempre es el que se mostró al cajero
+      const subtotal = cart.reduce(
+        (acc, line) => acc + line.salePrice * line.qty,
+        0,
+      );
+      const hasDiscount = saleDraft.discount > 0;
+      const discount = hasDiscount
+        ? saleDraft.discountType === "PERCENTAGE"
+          ? // el backend admite 100% (venta gratis); el cap evita negativos por error de tipeo
+            Math.min(saleDraft.discount, 100)
+          : Math.min(saleDraft.discount, subtotal)
+        : undefined;
+
       // consumidor final: clientId null; el backend infiere el punto de venta
       const sale = await createSale({
         paymentMethod: saleDraft.paymentMethod,
@@ -32,6 +46,11 @@ export const Sell = () => {
           productId: line.productId,
           quantity: line.qty,
         })),
+        discountType: hasDiscount
+          ? saleDraft.discountType
+          : // sin descuento: el tipo y el monto van de la mano, no se envían
+            undefined,
+        discount,
       });
       setTicket(sale);
     } catch (error) {

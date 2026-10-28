@@ -31,7 +31,7 @@ export const ProductItemMobile = ({ product }: ProductItemMobileProps) => {
           <PackageIcon size={16} strokeWidth={1.75} />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="truncate font-medium">{product.name}</p>
+          <p className="truncate text-sm font-semibold">{product.name}</p>
           <p className="text-secondary-foreground truncate text-xs">
             {product.category.name} · {product.currentStock} u.
           </p>

@@ -6,10 +6,10 @@ export const CommerceRequestSchema = z.object({
     .int("El ID del comercio debe ser un número entero.")
     .positive("El ID del comercio debe ser un número positivo.")
     .optional(),
-  businessName: z
+  name: z
     .string("Formato inválido.")
-    .min(3, "La razón social debe tener un minimo de 3 caracteres.")
-    .max(100, "La razón social debe tener menos de 100 caracteres."),
+    .min(3, "El nombre del comercio debe tener un mínimo de 3 caracteres.")
+    .max(100, "El nombre del comercio debe tener menos de 100 caracteres."),
   address: z
     .string("La dirección debe ser un string.")
     .min(3, "La dirección debe contener al menos 3 caracteres.")

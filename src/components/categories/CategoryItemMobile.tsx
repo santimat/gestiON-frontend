@@ -17,7 +17,7 @@ export const CategoryItemMobile = ({ category }: CategoryItemMobileProps) => {
     >
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
-          <p className="font-medium">{category.name}</p>
+          <p className="text-sm font-semibold">{category.name}</p>
           <p className="text-secondary-foreground text-xs">
             {category.productCount} productos
             {category.description ? ` · ${category.description}` : ""}

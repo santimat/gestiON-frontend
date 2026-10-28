@@ -32,7 +32,7 @@ const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerRequest = {
   cuit: "",
   password: "",
   phoneNumber: "",
-  businessName: "",
+  name: "",
   address: "",
   businessLogo: null,
 };
@@ -113,11 +113,11 @@ export const NewCommerceForm = ({
         >
           <TextInput
             label="Nombre del comercio"
-            name="businessName"
+            name="name"
             placeholder="Comercio lo de tota"
             leftSection={<StoreIcon size={20} />}
-            error={errors?.businessName}
-            value={commerceForm?.businessName}
+            error={errors?.name}
+            value={commerceForm?.name}
             onChange={handleChange}
           />
           <TextInput

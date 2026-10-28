@@ -5,7 +5,7 @@ import type { CartLine, Product, Sale, SaleDraft, SaleRequest } from "@/types";
 
 const DEFAULT_SALE_DRAFT: SaleDraft = {
   discount: 0,
-  discountType: "monto",
+  discountType: "FIXED_AMOUNT",
   paymentMethod: "CASH",
   // consumidor final
   clientId: null,
@@ -92,7 +92,7 @@ export const useSaleStore = create<UseSaleStore>((set) => ({
     })),
 
   createSale: async (sale) => {
-    return saleService.createSale(sale);
+    return await saleService.createSale(sale);
   },
 
   resetSale: () =>

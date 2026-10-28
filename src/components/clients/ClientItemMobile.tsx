@@ -21,7 +21,7 @@ export const ClientItemMobile = ({
     <div className="border-border bg-card shadow-card rounded-xl border p-4">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="truncate font-medium">
+          <p className="truncate text-sm font-semibold">
             {client.name} {client.lastName}
           </p>
           <p className="text-secondary-foreground text-xs tabular-nums">

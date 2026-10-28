@@ -38,7 +38,7 @@ export const SaleSummary = ({
 
   const { discount, discountType, paymentMethod, clientId } = saleDraft;
 
-  const discountTypes: DiscountType[] = ["monto", "porcentaje"];
+  const discountTypes: DiscountType[] = ["FIXED_AMOUNT", "PERCENTAGE"];
 
   const subtotal = cart.reduce(
     (acc, line) => acc + line.salePrice * line.qty,
@@ -46,7 +46,7 @@ export const SaleSummary = ({
   );
 
   const discountValue =
-    discountType === "porcentaje"
+    discountType === "PERCENTAGE"
       ? Math.round(
           (subtotal *
             // se asegura que el descuento no supere el 100%
@@ -105,7 +105,7 @@ export const SaleSummary = ({
                     : "text-secondary-foreground hover:bg-background-soft"
                 }`}
               >
-                {type === "monto" ? "$" : "%"}
+                {type === "FIXED_AMOUNT" ? "$" : "%"}
               </button>
             ))}
           </div>

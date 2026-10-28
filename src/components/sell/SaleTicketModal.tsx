@@ -76,6 +76,14 @@ export const SaleTicketModal = ({
               {PAYMENT_LABELS[sale.paymentMethod]}
             </span>
           </div>
+          {sale.discount > 0 && (
+            <div className="mt-2 flex justify-between gap-3">
+              <span className="text-secondary-foreground">Descuento</span>
+              <span className="text-destructive font-medium tabular-nums">
+                -${sale.discount.toLocaleString("es-AR")}
+              </span>
+            </div>
+          )}
           <div className="border-border mt-3 flex items-end justify-between border-t pt-3">
             <span className="text-secondary-foreground">Total</span>
             <span className="text-xl font-semibold tabular-nums">

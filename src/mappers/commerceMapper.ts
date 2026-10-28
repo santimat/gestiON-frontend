@@ -7,7 +7,7 @@ export const commerceMapper = {
     username: commerce.username,
     email: commerce.email,
     phoneNumber: commerce.phoneNumber,
-    businessName: commerce.businessName,
+    name: commerce.name,
     cuit: commerce.cuit,
     address: commerce.address,
     password: "",

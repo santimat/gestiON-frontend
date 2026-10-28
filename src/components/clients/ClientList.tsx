@@ -25,7 +25,7 @@ export const ClientList = () => {
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul>
+        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
           {clients.map((client) => {
             return (
               <ClientItem

@@ -21,6 +21,13 @@ export const ErrorDictionary = {
   SELL_POINT_NAME_ALREADY_EXISTS: "Ya existe un punto de venta con ese nombre.",
   INSUFFICIENT_STOCK: "No hay stock suficiente para la cantidad solicitada.",
   INVALID_DISCOUNT_PREFIX_ZERO: "El descuento no puede ser cero.",
+  INVALID_DISCOUNT: "El descuento es inválido.",
+  DISCOUNT_WITHOUT_TYPE:
+    "El descuento requiere especificar el tipo de descuento.",
+  TYPE_WITHOUT_DISCOUNT:
+    "El tipo de descuento requiere especificar el monto del descuento.",
+  DISCOUNT_EXCEEDS_SUBTOTAL:
+    "El descuento no puede superar el subtotal de la venta.",
   PRODUCT_INACTIVE: "El producto no está disponible para la venta.",
   INVALID_FILE_TYPE: "Tipo de archivo no permitido.",
   FILE_TOO_LARGE: "El tamaño del archivo excede el límite máximo.",
