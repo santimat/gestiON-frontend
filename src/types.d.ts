@@ -202,8 +202,6 @@ export type Sale = {
   discountType: DiscountType | null;
   discount: number;
   total: number;
-  // total con el descuento ya aplicado (igual que total, dato del backend)
-  totalAfterDiscount: number;
   createdAt: Date;
   observations: string | null;
   status: SaleStatus;
