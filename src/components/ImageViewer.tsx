@@ -1,7 +1,7 @@
 import { Button, Modal } from "@mantine/core";
 
 type ImageViewerProps = {
-  imageUrl: string;
+  imageUrl: string | undefined;
   title: string;
   opened: boolean;
   closeImageViewer: () => void;

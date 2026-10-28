@@ -5,6 +5,10 @@ import type { AuthUser } from "@/types";
 import { ROLE_DICTIONARY } from "@/utils/constants";
 import { getAvatarColor } from "@/utils/getAvatarColor";
 import { LogOut } from "lucide-react";
+import { useDisclosure } from "@mantine/hooks";
+import { useEffect } from "react";
+import { useCommerce } from "@/hooks/useCommerce";
+import { ImageViewer } from "../ImageViewer";
 
 type SidebarFooterProps = {
   authenticatedUser: AuthUser | null;
@@ -15,34 +19,59 @@ export const SidebarFooter = ({
   authenticatedUser,
   handleLogout,
 }: SidebarFooterProps) => {
+  if (!authenticatedUser?.email) return;
+
   const navigate = useNavigate();
+  const [opened, { open: openAvatar, close: closeAvatar }] =
+    useDisclosure(false);
+  const { currentCommerce, getCurrentCommerce } = useCommerce();
+
   const handleClick = async () => {
     await handleLogout();
     navigate("/");
   };
 
-  if (!authenticatedUser?.email) return;
+  useEffect(() => {
+    getCurrentCommerce();
+  }, [getCurrentCommerce]);
 
   const roleToShow = ROLE_DICTIONARY[authenticatedUser?.role];
   const avatarColor = getAvatarColor(authenticatedUser?.id);
 
   return (
-    <footer className="border-background-soft mt-auto flex w-full items-center gap-3 border-t p-4">
-      <Avatar alt="Me" color={avatarColor} />
-      <div className="flex flex-1 flex-col text-sm">
-        <p className="font-bold text-black capitalize">
-          {authenticatedUser?.name}
-        </p>
-        <p className="line-clamp-1 text-gray-500" title={roleToShow}>
-          {roleToShow}
-        </p>
-      </div>
-      <button
-        onClick={handleClick}
-        className="hover:bg-background-soft cursor-pointer rounded-lg p-1 text-gray-400 transition-transform active:scale-95"
-      >
-        <LogOut />
-      </button>
-    </footer>
+    <>
+      <ImageViewer
+        opened={opened}
+        closeImageViewer={closeAvatar}
+        title={`Comercio: ${currentCommerce?.name}`}
+        imageUrl={currentCommerce?.businessLogoUrl}
+        key={currentCommerce?.name}
+      />
+      <footer className="border-background-soft mt-auto flex w-full items-center gap-3 border-t p-4">
+        <Avatar
+          alt="Me"
+          color={avatarColor}
+          src={currentCommerce?.businessLogoUrl}
+          onClick={openAvatar}
+          className={
+            currentCommerce?.businessLogoUrl ? "hover:cursor-pointer" : ""
+          }
+        />
+        <div className="flex flex-1 flex-col text-sm">
+          <p className="font-bold text-black capitalize">
+            {authenticatedUser?.name}
+          </p>
+          <p className="line-clamp-1 text-gray-500" title={roleToShow}>
+            {roleToShow}
+          </p>
+        </div>
+        <button
+          onClick={handleClick}
+          className="hover:bg-background-soft cursor-pointer rounded-lg p-1 text-gray-400 transition-transform active:scale-95"
+        >
+          <LogOut />
+        </button>
+      </footer>
+    </>
   );
 };

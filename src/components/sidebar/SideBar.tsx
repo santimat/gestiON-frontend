@@ -9,7 +9,6 @@ import { SidebarFooter } from "@/components/sidebar/SideBarFooter";
 
 export const SideBar = () => {
   const { authenticatedUser, handleLogout } = useAuth();
-
   if (!authenticatedUser?.email) return;
 
   const sidebarItemsToShow = SIDEBAR_ITEMS.filter(({ href }) =>

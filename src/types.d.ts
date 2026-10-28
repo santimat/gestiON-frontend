@@ -79,7 +79,7 @@ export type CommerceStats = {
 };
 
 export type CurrentCommerce = {
-  commerceId: number;
+  id: number;
   name: string;
   businessLogoUrl: string;
   businessActive: boolean;

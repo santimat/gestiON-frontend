@@ -4,7 +4,7 @@ import type { AppError } from "@/types";
 import { commerceService } from "@/services/commerceService";
 import type { UseCommerceStore } from "@/stores/commerce/types";
 
-export const useCommerceStore = create<UseCommerceStore>((set) => ({
+export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   formCommerce: null,
   isFormModalOpen: false,
   openEdit: (commerce) =>
@@ -42,6 +42,8 @@ export const useCommerceStore = create<UseCommerceStore>((set) => ({
     set(() => ({ commerceStats: stats }));
   },
   getCurrentCommerce: async () => {
+    if (get().currentCommerce?.id) return;
+
     const currentCommerce = await commerceService.getCurrentCommerce();
     set(() => ({ currentCommerce }));
   },

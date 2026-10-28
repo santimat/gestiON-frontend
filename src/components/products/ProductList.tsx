@@ -22,7 +22,7 @@ export const ProductList = ({ products }: ProductListProps) => {
   const actionsIcons = [{ Icon: Pencil, label: "Editar" }];
 
   const columns =
-    "grid grid-cols-[0.2fr_0.7fr_1fr_0.8fr_0.4fr_0.4fr_0.4fr_0.4fr_0.2fr] items-center gap-x-4";
+    "grid grid-cols-[0.2fr_1fr_0.5fr_1fr_0.4fr_0.4fr_0.4fr_0.4fr_0.2fr] items-center gap-x-4";
 
   return (
     <>
@@ -35,7 +35,7 @@ export const ProductList = ({ products }: ProductListProps) => {
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
+        <ul className="[&>li]:not-first:border-border text-sm [&>li]:not-first:border-t">
           {products.map((product) => {
             return (
               <ProductItem
