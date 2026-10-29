@@ -4,6 +4,7 @@ import { LoadingPage } from "@/components/Loading";
 
 type ListContainerProps = {
   isLoading: boolean;
+  isLoadingMessage?: string;
   error: string | null;
   isEmpty: boolean;
   icon: LucideIcon;
@@ -12,6 +13,7 @@ type ListContainerProps = {
 };
 export const ListContainer = ({
   isLoading,
+  isLoadingMessage,
   error,
   children,
   isEmpty,
@@ -19,6 +21,13 @@ export const ListContainer = ({
   emptyMessage = "No hay elementos para mostrar",
 }: ListContainerProps) => {
   if (error) return <div className="text-destructive text-center">{error}</div>;
+
+  if (isLoading && isLoadingMessage)
+    return (
+      <p className="text-secondary-foreground col-span-full py-6 text-center text-sm">
+        {isLoadingMessage}
+      </p>
+    );
 
   if (isLoading) return <LoadingPage />;
 
