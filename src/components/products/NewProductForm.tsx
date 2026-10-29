@@ -25,7 +25,7 @@ import type {
   ProductForm,
 } from "@/types";
 import { productMapper } from "@/mappers";
-import { useProduct } from "@/hooks/useProduct";
+import { useProduct } from "@/hooks/product/useProduct";
 import { useCategory } from "@/hooks/useCategory";
 import { ModalHeader } from "@/components/ModalHeader";
 import { ModalFormActions } from "@/components/ModalFormActions";

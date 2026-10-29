@@ -36,11 +36,11 @@ export const ErrorDictionary = {
   FILE_PROCESSING_FAILED: "No se pudo procesar el archivo.",
   VALIDATION_ERROR: "La validación de la solicitud falló.",
   INVALID_REQUEST_BODY: "El cuerpo de la solicitud está malformado.",
-  INVALID_PARAMETER: "Un parámetro de la solicitud es inválido.",
-  MISSING_PARAMETER: "Falta un parámetro requerido en la solicitud.",
-  METHOD_NOT_ALLOWED: "El método HTTP no es compatible con este endpoint.",
+  INVALID_PARAMETER: "Un campo de la solicitud es inválido.",
+  MISSING_PARAMETER: "Falta un campo requerido en la solicitud.",
+  METHOD_NOT_ALLOWED: "Acción invalida para este recurso.",
   UNSUPPORTED_MEDIA_TYPE: "El tipo de contenido no es compatible.",
   DATA_INTEGRITY_VIOLATION:
     "La operación viola las restricciones de integridad de datos.",
-  INTERNAL_ERROR: "Ocurrió un error interno inesperado.",
+  INTERNAL_ERROR: "No se pudieron cargar los datos.",
 } as const;

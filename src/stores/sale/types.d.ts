@@ -24,7 +24,5 @@ export type UseSalesStore = {
   totalSales: number;
   isLoading: boolean;
   error: string | null;
-  salesFilter: SalesFilter;
-  setSalesFilter: (filter: Partial<SalesFilter>) => Promise<void>;
-  getSales: () => Promise<void>;
+  getSales: (filters: SalesFilter) => Promise<void>;
 };

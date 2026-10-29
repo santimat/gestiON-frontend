@@ -21,10 +21,10 @@ export const ALLOWEDS_ROUTES_BY_ROLE = {
     "/products",
     "/categories",
     "/sell",
-    "/sells",
+    "/sales",
     "/clients",
   ],
-  CASHIER: ["/sell", "/sells", "/products", "/clients"],
+  CASHIER: ["/sell", "/sales", "/products", "/clients"],
 };
 
 export const SIDEBAR_ITEMS: NavItem[] = [
@@ -44,7 +44,7 @@ export const SIDEBAR_ITEMS: NavItem[] = [
     icon: ReceiptText,
     text: "Ventas",
     short: "Ventas",
-    href: "/sells",
+    href: "/sales",
   },
   { icon: Package, text: "Productos", short: "Productos", href: "/products" },
   { icon: Tags, text: "Categorías", short: "Categorías", href: "/categories" },

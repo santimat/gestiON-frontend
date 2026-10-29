@@ -49,6 +49,7 @@ export const useProductStore = create<UseProductStore>((set) => ({
       throw error;
     }
   },
+
   getProducts: async (filters) => {
     set({ isLoading: true, error: null });
     try {

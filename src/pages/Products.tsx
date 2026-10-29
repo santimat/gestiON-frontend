@@ -5,7 +5,7 @@ import { Button, Modal } from "@mantine/core";
 import { ListContainer } from "@/components/ListContainer";
 import { ProductList } from "@/components/products/ProductList";
 import { NewProductForm } from "@/components/products/NewProductForm";
-import { useProduct } from "@/hooks/useProduct";
+import { useProduct } from "@/hooks/product/useProduct";
 import { useCommerce } from "@/hooks/useCommerce";
 import { useAuth } from "@/hooks/useAuth";
 import { usePageHeader } from "@/hooks/usePageHeader";

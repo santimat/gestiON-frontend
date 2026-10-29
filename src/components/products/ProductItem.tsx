@@ -3,7 +3,7 @@ import type { LucideIcon } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
 import { Avatar, NumberFormatter, Switch, Tooltip } from "@mantine/core";
 
-import { useProduct } from "@/hooks/useProduct";
+import { useProduct } from "@/hooks/product/useProduct";
 import type { AppError, Product } from "@/types";
 import { ImageViewer } from "@/components/ImageViewer";
 import { ProductItemActions } from "@/components/products/ProductItemActions";
