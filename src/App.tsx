@@ -33,6 +33,10 @@ const SellPage = lazy(() =>
   import("@/pages/Sales").then((module) => ({ default: module.Sell })),
 );
 
+const SellsPage = lazy(() =>
+  import("@/pages/Sells").then((module) => ({ default: module.Sells })),
+);
+
 const ClientsPage = lazy(() =>
   import("@/pages/Clients").then((module) => ({ default: module.Clients })),
 );
@@ -89,6 +93,7 @@ const App = () => {
             }
           >
             <Route path="/sell" element={<SellPage />} />
+            <Route path="/sells" element={<SellsPage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/clients" element={<ClientsPage />} />
           </Route>

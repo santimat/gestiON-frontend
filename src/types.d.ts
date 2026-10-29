@@ -12,6 +12,7 @@ import {
   CashierUpdateSchema,
   SellPointRequestSchema,
   SaleRequestSchema,
+  SalesFilterSchema,
 } from "@/schemas";
 import type { ErrorDictionary } from "@/utils/errorDictionary";
 
@@ -207,6 +208,16 @@ export type Sale = {
   status: SaleStatus;
   details: SaleDetail[];
 };
+
+export type SaleSummary = {
+  id: number;
+  itemCount: number;
+  status: SaleStatus;
+  clientName: string | null;
+  total: number;
+};
+
+export type SalesFilter = z.infer<typeof SalesFilterSchema>;
 
 export type PaymentMethod = "CASH" | "CARD" | "TRANSFER" | "CREDIT_ACCOUNT";
 

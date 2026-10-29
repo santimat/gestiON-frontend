@@ -3,8 +3,8 @@ import { isAxiosError } from "axios";
 import { SaleRequestSchema } from "@/schemas";
 import { backendAPI } from "@/services/axiosConfig";
 import { handleAxiosErrors } from "@/utils/handleAxiosError";
+import type { Sale, SaleRequest, SalesFilter } from "@/types";
 import { handleZodParsingError } from "@/utils/handleZodParseError";
-import type { Sale, SaleRequest } from "@/types";
 
 export const saleService = {
   createSale: async (sale: SaleRequest) => {
@@ -14,6 +14,23 @@ export const saleService = {
     try {
       const { data } = await backendAPI.post("/sales", parsedData.data);
       return data as Sale;
+    } catch (error) {
+      if (isAxiosError(error)) throw handleAxiosErrors(error);
+      throw error;
+    }
+  },
+
+  getSales: async ({ status, searchText, paymentMethod }: SalesFilter) => {
+    try {
+      const { data } = await backendAPI.get("/sales", {
+        params: {
+          status: status ?? undefined,
+          searchText: searchText?.trim(),
+          paymentMethod: paymentMethod,
+          size: 20,
+        },
+      });
+      return data;
     } catch (error) {
       if (isAxiosError(error)) throw handleAxiosErrors(error);
       throw error;

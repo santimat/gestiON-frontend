@@ -9,3 +9,4 @@ export * from "@/schemas/cashier/CashierSchema";
 export * from "@/schemas/cashier/CashierUpdateSchema";
 export * from "@/schemas/sellPoint/SellPointSchema";
 export * from "@/schemas/sale/SaleRequestSchema";
+export * from "@/schemas/sale/SalesFilterSchema";

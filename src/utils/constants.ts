@@ -1,6 +1,7 @@
 import {
   LayoutDashboard,
   Package,
+  ReceiptText,
   ScanBarcode,
   ShoppingCart,
   StoreIcon,
@@ -20,9 +21,10 @@ export const ALLOWEDS_ROUTES_BY_ROLE = {
     "/products",
     "/categories",
     "/sell",
+    "/sells",
     "/clients",
   ],
-  CASHIER: ["/sell", "/products", "/clients"],
+  CASHIER: ["/sell", "/sells", "/products", "/clients"],
 };
 
 export const SIDEBAR_ITEMS: NavItem[] = [
@@ -37,6 +39,12 @@ export const SIDEBAR_ITEMS: NavItem[] = [
     text: "Vender",
     short: "Vender",
     href: "/sell",
+  },
+  {
+    icon: ReceiptText,
+    text: "Ventas",
+    short: "Ventas",
+    href: "/sells",
   },
   { icon: Package, text: "Productos", short: "Productos", href: "/products" },
   { icon: Tags, text: "Categorías", short: "Categorías", href: "/categories" },
