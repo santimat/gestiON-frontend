@@ -22,7 +22,7 @@ export const ProductSearch = () => {
     if (searchText === (filters.searchText ?? "")) return;
 
     const timeoutId = setTimeout(() => {
-      setFilters({ searchText: searchText || undefined });
+      setFilters({ searchText: searchText });
     }, SEARCH_DEBOUNCE_MS);
 
     return () => clearTimeout(timeoutId);
@@ -48,7 +48,6 @@ export const ProductSearch = () => {
           isEmpty={products.length === 0}
           icon={SearchIcon}
           error={error}
-          emptyMessage=""
         >
           {products.map((product) => {
             return <ProductSellCard product={product} addToCart={addToCart} />;

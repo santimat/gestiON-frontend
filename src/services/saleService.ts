@@ -20,15 +20,10 @@ export const saleService = {
     }
   },
 
-  getSales: async ({ status, searchText, paymentMethod }: SalesFilter) => {
+  getSales: async (filters: SalesFilter) => {
     try {
       const { data } = await backendAPI.get("/sales", {
-        params: {
-          status: status ?? undefined,
-          searchText: searchText?.trim(),
-          paymentMethod: paymentMethod,
-          size: 20,
-        },
+        params: filters,
       });
       return data;
     } catch (error) {

@@ -1,31 +1,19 @@
 import { create } from "zustand";
 
-import type { AppError } from "@/types";
+import type { AppError, SalesFilter } from "@/types";
 import { saleService } from "@/services/saleService";
 import type { UseSalesStore } from "@/stores/sale/types";
 
-export const useSalesStore = create<UseSalesStore>((set, get) => ({
+export const useSalesStore = create<UseSalesStore>((set) => ({
   sales: [],
   totalSales: 0,
   isLoading: false,
   error: null,
-  salesFilter: { searchText: "", status: undefined, paymentMethod: undefined },
 
-  setSalesFilter: async (filter) => {
-    set((prevState) => ({
-      salesFilter: { ...prevState.salesFilter, ...filter },
-    }));
-    await get().getSales();
-  },
-  getSales: async () => {
+  getSales: async (filters: SalesFilter) => {
     set({ isLoading: true, error: null });
     try {
-      const { searchText, status, paymentMethod } = get().salesFilter;
-      const data = await saleService.getSales({
-        searchText: searchText || undefined,
-        status: status ?? undefined,
-        paymentMethod: paymentMethod ?? undefined,
-      });
+      const data = await saleService.getSales(filters);
       set({
         sales: data.content,
         totalSales: data.page.totalElements,

@@ -5,7 +5,7 @@ import { Button, Modal } from "@mantine/core";
 import { useClient } from "@/hooks/useClient";
 import { ListContainer } from "@/components/ListContainer";
 import { ClientList } from "@/components/clients/ClientList";
-import { ClientForm } from "@/components/clients/ClientForm";
+import { ClientForm } from "@/components/clients/NewClientForm";
 import { usePageHeader } from "@/hooks/usePageHeader";
 
 export const Clients = () => {

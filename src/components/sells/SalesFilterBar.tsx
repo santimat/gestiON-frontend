@@ -1,27 +1,39 @@
-import { useState } from "react";
 import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Select, TextInput } from "@mantine/core";
-import { useDebouncedCallback } from "@mantine/hooks";
 
-import { useSales } from "@/hooks/useSales";
-import type { SaleStatus } from "@/types";
+import type { SalesFilter, SaleStatus } from "@/types";
 
 const STATUS_OPTIONS: { value: SaleStatus; label: string }[] = [
   { value: "PAY", label: "Pagas" },
   { value: "PENDING", label: "Pendientes" },
 ];
 
-export const SalesFilterBar = () => {
-  const { salesFilter, setSalesFilter } = useSales();
+type SalesFilterBarProps = {
+  filters: SalesFilter;
+  setFilters: (filters: SalesFilter) => void;
+};
 
-  // el texto viaja con debounce para no pegarle al backend por cada letra
-  const [query, setQuery] = useState(salesFilter.searchText);
-  const debouncedSearch = useDebouncedCallback<(value: string) => void>(
-    (value) => {
-      void setSalesFilter({ searchText: value });
-    },
-    300,
-  );
+export const SalesFilterBar = ({
+  filters,
+  setFilters,
+}: SalesFilterBarProps) => {
+  const [searchText, setSearchText] = useState(filters.searchText);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
+    setSearchText(value);
+  };
+
+  useEffect(() => {
+    if (searchText === (filters.searchText ?? "")) return;
+
+    const timeoutId = setTimeout(() => {
+      setFilters({ searchText: searchText });
+    }, 350);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchText, filters.searchText, setFilters]);
 
   return (
     <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
@@ -29,23 +41,17 @@ export const SalesFilterBar = () => {
         aria-label="Buscar ventas"
         placeholder="Buscar por número, cliente o producto"
         leftSection={<Search size={16} strokeWidth={1.75} />}
-        value={query}
-        onChange={(event) => {
-          const value = event.currentTarget.value;
-          setQuery(value);
-          debouncedSearch(value);
-        }}
+        value={searchText}
+        onChange={handleChange}
       />
       <Select
         aria-label="Filtrar por estado"
         placeholder="Pagas y pendientes"
         clearable
         className="sm:w-40"
-        value={salesFilter.status}
+        value={filters.status}
         data={STATUS_OPTIONS}
-        onChange={(value) =>
-          void setSalesFilter({ status: (value as SaleStatus) ?? null })
-        }
+        onChange={(value) => setFilters({ status: value as SaleStatus })}
       />
     </div>
   );
