@@ -30,11 +30,11 @@ const CommercesPage = lazy(() =>
 );
 
 const SellPage = lazy(() =>
-  import("@/pages/Sales").then((module) => ({ default: module.Sell })),
+  import("@/pages/Sell").then((module) => ({ default: module.Sell })),
 );
 
-const SellsPage = lazy(() =>
-  import("@/pages/Sells").then((module) => ({ default: module.Sells })),
+const SalesPage = lazy(() =>
+  import("@/pages/Sales").then((module) => ({ default: module.Sales })),
 );
 
 const ClientsPage = lazy(() =>
@@ -93,7 +93,7 @@ const App = () => {
             }
           >
             <Route path="/sell" element={<SellPage />} />
-            <Route path="/sells" element={<SellsPage />} />
+            <Route path="/sales" element={<SalesPage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/clients" element={<ClientsPage />} />
           </Route>
