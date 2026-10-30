@@ -196,6 +196,7 @@ export type SaleDetail = {
 export type Sale = {
   id: number;
   clientId: number | null;
+  clientName: string;
   sellPointId: number;
   userName: string;
   paymentMethod: PaymentMethod;
@@ -214,6 +215,8 @@ export type SaleSummary = {
   itemCount: number;
   status: SaleStatus;
   clientName: string | null;
+  paymentMethod: PaymentMethod;
+  createdAt: string;
   total: number;
 };
 
