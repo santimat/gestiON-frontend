@@ -2,9 +2,9 @@ import { toast } from "sonner";
 import { useEffect, useRef } from "react";
 
 import { useFilters } from "@shared/hooks/useFilters";
-import { ProductFiltersSchema } from "@/schemas";
+import { ProductFiltersSchema } from "../schemas/ProductFiltersSchema";
 import type { AppError, CartLine } from "@/types";
-import { useProduct } from "@/hooks/product/useProduct";
+import { useProduct } from "./useProduct";
 
 export const useProductSearch = (cart: CartLine[]) => {
   const { filters, setFilters } = useFilters(ProductFiltersSchema);

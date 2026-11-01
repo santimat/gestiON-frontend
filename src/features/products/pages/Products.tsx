@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
 import { ListContainer } from "@shared/components/ListContainer";
-import { ProductList } from "@/components/products/ProductList";
-import { NewProductForm } from "@/components/products/NewProductForm";
-import { useProduct } from "@/hooks/product/useProduct";
+import { ProductList } from "../components/ProductList";
+import { NewProductForm } from "../components/NewProductForm";
+import { useProduct } from "../hooks/useProduct";
 import { useCommerce } from "@/hooks/useCommerce";
 import { useAuth } from "@/features/auth";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";

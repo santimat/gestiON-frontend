@@ -24,8 +24,8 @@ import type {
   ProductFieldErrors,
   ProductForm,
 } from "@/types";
-import { productMapper } from "@/mappers";
-import { useProduct } from "@/hooks/product/useProduct";
+import { productMapper } from "../mappers/productMapper";
+import { useProduct } from "../hooks/useProduct";
 import { useCategory, SelectCategory } from "@/features/categories";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";

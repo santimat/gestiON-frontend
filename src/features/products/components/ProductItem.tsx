@@ -3,10 +3,10 @@ import type { LucideIcon } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
 import { Avatar, NumberFormatter, Switch, Tooltip } from "@mantine/core";
 
-import { useProduct } from "@/hooks/product/useProduct";
+import { useProduct } from "../hooks/useProduct";
 import type { AppError, Product } from "@/types";
 import { ImageViewer } from "@shared/components/ImageViewer";
-import { ProductItemActions } from "@/components/products/ProductItemActions";
+import { ProductItemActions } from "@shared/components/ProductItemActions";
 
 type ProductItemsProps = {
   product: Product;

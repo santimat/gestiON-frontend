@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { TextInput } from "@mantine/core";
 
 import { useSale } from "@/hooks/useSale";
-import { useProductSearch } from "@/hooks/product/useProductSearch";
-import { useProduct } from "@/hooks/product/useProduct";
+import { useProduct, useProductSearch } from "@/features/products";
 import { ProductSellCard } from "./ProductSellCard";
 import { ListContainer } from "@shared/components/ListContainer";
 

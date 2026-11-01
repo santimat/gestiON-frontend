@@ -1,5 +1,3 @@
-export * from "@/schemas/product/ProductSchema";
-export * from "@/schemas/product/ProductFiltersSchema";
 export * from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
 export * from "@/schemas/commerce/CommerceWithOwnerUpdateSchema";
 export * from "@/schemas/client/ClientSchema";

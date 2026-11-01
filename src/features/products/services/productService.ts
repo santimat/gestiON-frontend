@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 
-import { ProductSchema } from "@/schemas";
+import { ProductSchema } from "../schemas/ProductSchema";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 import { handleZodParsingError } from "@shared/utils/handleZodParseError";

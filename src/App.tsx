@@ -24,7 +24,9 @@ const CashiersPage = lazy(() =>
 );
 
 const ProductsPage = lazy(() =>
-  import("@/pages/Products").then((module) => ({ default: module.Products })),
+  import("@/features/products/pages/Products").then((module) => ({
+    default: module.Products,
+  })),
 );
 
 const CommercesPage = lazy(() =>

@@ -1,8 +1,6 @@
 import z from "zod";
 
 import {
-  ProductSchema,
-  ProductFiltersSchema,
   ClientSchema,
   CashierSchema,
   CommerceWithOwnerRequestSchema,
@@ -59,40 +57,13 @@ export type CurrentCommerce = {
 };
 
 // PRODUCT
-export type ProductRequest = z.infer<typeof ProductSchema>;
-
-export type Product = {
-  id: number;
-  name: string;
-  imageUrl: string;
-  description: string;
-  costPrice: number;
-  salePrice: number;
-  minStock: number;
-  currentStock: number;
-  profitMultiplier: number;
-  category: Category;
-  active: boolean;
-  updatedAt: Date;
-};
-
-export type ProductForm = ProductRequest;
-
-export type ProductFieldErrors = Partial<
-  Record<
-    | "name"
-    | "description"
-    | "categoryId"
-    | "image"
-    | "costPrice"
-    | "salePrice"
-    | "currentStock"
-    | "minStock",
-    string
-  >
->;
-
-export type ProductFilters = z.infer<typeof ProductFiltersSchema>;
+export type {
+  ProductRequest,
+  Product,
+  ProductForm,
+  ProductFieldErrors,
+  ProductFilters,
+} from "@/features/products/types";
 
 // CATEGORY
 export type { Category, CategoryRequest } from "@/features/categories/types";
