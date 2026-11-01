@@ -2,10 +2,10 @@ import { Link } from "react-router";
 import { Store } from "lucide-react";
 
 import { useAuth } from "@/hooks/useAuth";
-import { SIDEBAR_ITEMS } from "@/utils/constants";
-import { getRolesForRoute } from "@/utils/getRolesForRoute";
-import { SideBarItem } from "@/components/sidebar/SiderBarItem";
-import { SidebarFooter } from "@/components/sidebar/SideBarFooter";
+import { SIDEBAR_ITEMS } from "@shared/config/navigation";
+import { getRolesForRoute } from "@shared/config/permissions";
+import { SideBarItem } from "@shared/layout/components/sidebar/SiderBarItem";
+import { SidebarFooter } from "@shared/layout/components/sidebar/SideBarFooter";
 
 export const SideBar = () => {
   const { authenticatedUser, handleLogout } = useAuth();

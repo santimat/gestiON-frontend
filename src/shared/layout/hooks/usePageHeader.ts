@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useShallow } from "zustand/shallow";
 
-import { usePageHeaderStore } from "@/stores/pageHeader/usePageHeaderStore";
-import type { PageHeaderContent } from "@/stores/pageHeader/types";
+import { usePageHeaderStore } from "@shared/layout/stores/pageHeader/usePageHeaderStore";
+import type { PageHeaderContent } from "@shared/layout/stores/pageHeader/types";
 
 export const usePageHeader = (content: PageHeaderContent) => {
   const { setHeader, clearHeader } = usePageHeaderStore(

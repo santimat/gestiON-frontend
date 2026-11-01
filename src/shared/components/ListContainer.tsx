@@ -1,6 +1,6 @@
 import { type LucideIcon } from "lucide-react";
 
-import { LoadingPage } from "@/components/Loading";
+import { LoadingPage } from "@shared/components/Loading";
 
 type ListContainerProps = {
   isLoading: boolean;

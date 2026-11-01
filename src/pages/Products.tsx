@@ -2,13 +2,13 @@ import { Package, PackagePlus } from "lucide-react";
 import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
-import { ListContainer } from "@/components/ListContainer";
+import { ListContainer } from "@shared/components/ListContainer";
 import { ProductList } from "@/components/products/ProductList";
 import { NewProductForm } from "@/components/products/NewProductForm";
 import { useProduct } from "@/hooks/product/useProduct";
 import { useCommerce } from "@/hooks/useCommerce";
 import { useAuth } from "@/hooks/useAuth";
-import { usePageHeader } from "@/hooks/usePageHeader";
+import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 export const Products = () => {
   const { authenticatedUser } = useAuth();

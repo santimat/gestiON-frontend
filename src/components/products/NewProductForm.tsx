@@ -27,8 +27,8 @@ import type {
 import { productMapper } from "@/mappers";
 import { useProduct } from "@/hooks/product/useProduct";
 import { useCategory } from "@/hooks/useCategory";
-import { ModalHeader } from "@/components/ModalHeader";
-import { ModalFormActions } from "@/components/ModalFormActions";
+import { ModalHeader } from "@shared/components/ModalHeader";
+import { ModalFormActions } from "@shared/components/ModalFormActions";
 import { SelectCategory } from "@/components/category/SelectCategory";
 
 const DEFAULT_PRODUCT_FORM: ProductForm = {

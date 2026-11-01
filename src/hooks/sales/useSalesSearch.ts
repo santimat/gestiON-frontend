@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import type { AppError } from "@/types";
 import { SalesFilterSchema } from "@/schemas";
-import { useFilters } from "@/hooks/useFilters";
+import { useFilters } from "@shared/hooks/useFilters";
 import { useSales } from "@/hooks/sales/useSales";
 
 export const useSalesSearch = () => {

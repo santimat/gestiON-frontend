@@ -12,8 +12,8 @@ import type {
 } from "@/types";
 import { useCashier } from "@/hooks/useCashier";
 import { useSellPoint } from "@/hooks/useSellPoint";
-import { ModalHeader } from "@/components/ModalHeader";
-import { ModalFormActions } from "@/components/ModalFormActions";
+import { ModalHeader } from "@shared/components/ModalHeader";
+import { ModalFormActions } from "@shared/components/ModalFormActions";
 
 const DEFAULT_SELL_POINT_FORM: SellPointRequest = {
   name: "",

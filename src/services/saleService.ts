@@ -1,10 +1,10 @@
 import { isAxiosError } from "axios";
 
 import { SaleRequestSchema } from "@/schemas";
-import { backendAPI } from "@/services/axiosConfig";
-import { handleAxiosErrors } from "@/utils/handleAxiosError";
+import { backendAPI } from "@shared/services/axiosConfig";
+import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 import type { Sale, SaleRequest, SalesFilter } from "@/types";
-import { handleZodParsingError } from "@/utils/handleZodParseError";
+import { handleZodParsingError } from "@shared/utils/handleZodParseError";
 
 export const saleService = {
   createSale: async (sale: SaleRequest) => {

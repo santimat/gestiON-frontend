@@ -2,9 +2,9 @@ import { isAxiosError } from "axios";
 
 import { CashierSchema, CashierUpdateSchema } from "@/schemas";
 import type { CashierRequest, CashierUpdate, User } from "@/types";
-import { backendAPI } from "@/services/axiosConfig";
-import { handleAxiosErrors } from "@/utils/handleAxiosError";
-import { handleZodParsingError } from "@/utils/handleZodParseError";
+import { backendAPI } from "@shared/services/axiosConfig";
+import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
+import { handleZodParsingError } from "@shared/utils/handleZodParseError";
 
 export const cashierService = {
   createCashier: async (cashier: CashierRequest) => {

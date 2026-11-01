@@ -2,9 +2,9 @@ import { isAxiosError } from "axios";
 
 import { LoginSchema } from "@/schemas";
 import type { LoginDTO } from "@/types";
-import { backendAPI } from "@/services/axiosConfig";
-import { handleZodParsingError } from "@/utils/handleZodParseError";
-import { handleAxiosErrors } from "@/utils/handleAxiosError";
+import { backendAPI } from "@shared/services/axiosConfig";
+import { handleZodParsingError } from "@shared/utils/handleZodParseError";
+import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 
 export const authService = {
   login: async (loginRequest: LoginDTO) => {

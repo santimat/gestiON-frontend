@@ -3,8 +3,8 @@ import { TagPlus, Tags } from "lucide-react";
 import { Button, Modal } from "@mantine/core";
 
 import { useCategory } from "@/hooks/useCategory";
-import { usePageHeader } from "@/hooks/usePageHeader";
-import { ListContainer } from "@/components/ListContainer";
+import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+import { ListContainer } from "@shared/components/ListContainer";
 import { CategoryList } from "@/components/categories/CategoryList";
 
 const NewCategoryForm = lazy(() =>

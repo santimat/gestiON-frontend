@@ -6,7 +6,7 @@ import { useSale } from "@/hooks/useSale";
 import { useProductSearch } from "@/hooks/product/useProductSearch";
 import { useProduct } from "@/hooks/product/useProduct";
 import { ProductSellCard } from "./ProductSellCard";
-import { ListContainer } from "../ListContainer";
+import { ListContainer } from "@shared/components/ListContainer";
 
 const SEARCH_DEBOUNCE_MS = 350;
 

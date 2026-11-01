@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router";
 
 import { useAuth } from "@/hooks/useAuth";
-import { getRedirectByRole } from "@/utils/getRedirectByRole";
+import { getRedirectByRole } from "@shared/config/permissions";
 
 export const GuestRoute = () => {
   const { checkAuth, authenticatedUser, hasHydrated } = useAuth();

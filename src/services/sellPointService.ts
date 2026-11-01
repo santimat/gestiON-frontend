@@ -1,10 +1,10 @@
 import { isAxiosError } from "axios";
 
 import { SellPointRequestSchema } from "@/schemas";
-import { backendAPI } from "@/services/axiosConfig";
-import { handleAxiosErrors } from "@/utils/handleAxiosError";
+import { backendAPI } from "@shared/services/axiosConfig";
+import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 import type { SellPoint, SellPointRequest, User } from "@/types";
-import { handleZodParsingError } from "@/utils/handleZodParseError";
+import { handleZodParsingError } from "@shared/utils/handleZodParseError";
 
 export const sellPointService = {
   createSellPoint: async (sellPoint: SellPointRequest) => {

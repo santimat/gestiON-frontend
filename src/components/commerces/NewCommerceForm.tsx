@@ -21,8 +21,8 @@ import type {
 } from "@/types";
 import { commerceMapper } from "@/mappers";
 import { useCommerce } from "@/hooks/useCommerce";
-import { ModalHeader } from "@/components/ModalHeader";
-import { ModalFormActions } from "@/components/ModalFormActions";
+import { ModalHeader } from "@shared/components/ModalHeader";
+import { ModalFormActions } from "@shared/components/ModalFormActions";
 
 const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerRequest = {
   userId: 0,

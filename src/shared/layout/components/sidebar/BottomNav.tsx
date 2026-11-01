@@ -1,8 +1,8 @@
 import { NavLink } from "react-router";
 
 import { useAuth } from "@/hooks/useAuth";
-import { SIDEBAR_ITEMS } from "@/utils/constants";
-import { getRolesForRoute } from "@/utils/getRolesForRoute";
+import { SIDEBAR_ITEMS } from "@shared/config/navigation";
+import { getRolesForRoute } from "@shared/config/permissions";
 
 export const BottomNav = () => {
   const { authenticatedUser } = useAuth();

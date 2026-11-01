@@ -1,4 +1,4 @@
-import type { PageHeaderContent } from "@/stores/pageHeader/types";
+import type { PageHeaderContent } from "@shared/layout/stores/pageHeader/types";
 
 // Header de página inyectado de forma fija en MainLayout.
 // Alineado con la sidebar: total 72px (py-3 + h1 28px + subtitle 20px),

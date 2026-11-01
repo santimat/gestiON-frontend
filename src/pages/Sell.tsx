@@ -7,7 +7,7 @@ import { ProductSearch } from "@/components/sell/ProductSearch";
 import { SaleTicketModal } from "@/components/sell/SaleTicketModal";
 import { useClient } from "@/hooks/useClient";
 import { useSale } from "@/hooks/useSale";
-import { usePageHeader } from "@/hooks/usePageHeader";
+import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import type { AppError, Sale } from "@/types";
 
 export const Sell = () => {

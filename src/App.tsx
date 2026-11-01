@@ -2,10 +2,10 @@ import { lazy } from "react";
 import { Routes, Route, Outlet } from "react-router";
 
 import "@/global.css";
-import { GuestRoute } from "@/routes/GuestRoute";
-import { MainLayout } from "@/layouts/MainLayout";
-import { ProtectedRoute } from "@/routes/ProtectedRoute";
-import { getRolesForRoute } from "@/utils/getRolesForRoute";
+import { GuestRoute } from "@shared/routes/GuestRoute";
+import { MainLayout } from "@shared/layout/MainLayout";
+import { ProtectedRoute } from "@shared/routes/ProtectedRoute";
+import { getRolesForRoute } from "@shared/config/permissions";
 
 const LandingPage = lazy(() =>
   import("@/pages/Landing").then((module) => ({ default: module.LandingPage })),
@@ -54,13 +54,13 @@ const SellPointsPage = lazy(() =>
 );
 
 const UnauthorizedPage = lazy(() =>
-  import("@/components/UnauthorizedPage").then((module) => ({
+  import("@shared/pages/UnauthorizedPage").then((module) => ({
     default: module.UnauthorizedPage,
   })),
 );
 
 const NotFoundPage = lazy(() =>
-  import("@/components/NotFoundPage").then((module) => ({
+  import("@shared/pages/NotFoundPage").then((module) => ({
     default: module.NotFoundPage,
   })),
 );

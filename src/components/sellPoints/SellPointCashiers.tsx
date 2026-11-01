@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { UsersIcon } from "lucide-react";
 import { toast } from "sonner";
 
-import { ModalHeader } from "@/components/ModalHeader";
+import { ModalHeader } from "@shared/components/ModalHeader";
 import { useSellPoint } from "@/hooks/useSellPoint";
 import type { AppError, SellPoint, User } from "@/types";
 

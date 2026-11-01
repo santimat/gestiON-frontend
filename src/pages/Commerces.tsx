@@ -8,8 +8,8 @@ import { Button, Modal } from "@mantine/core";
 import { lazy, useEffect } from "react";
 
 import { useCommerce } from "@/hooks/useCommerce";
-import { usePageHeader } from "@/hooks/usePageHeader";
-import { ListContainer } from "@/components/ListContainer";
+import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+import { ListContainer } from "@shared/components/ListContainer";
 import { CommerceList } from "@/components/commerces/CommerceList";
 import { CommerceStatsCard } from "@/components/commerces/CommerceStatsCard";
 

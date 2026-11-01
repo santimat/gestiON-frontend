@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
-import { PageHeader } from "@/components/PageHeader";
-import { SideBar } from "@/components/sidebar/SideBar";
-import { BottomNav } from "@/components/sidebar/BottomNav";
-import { MobileTopbar } from "@/components/sidebar/MobileTopbar";
-import { useHeaderContent } from "@/hooks/usePageHeader";
+import { PageHeader } from "@shared/layout/PageHeader";
+import { SideBar } from "@shared/layout/components/sidebar/SideBar";
+import { BottomNav } from "@shared/layout/components/sidebar/BottomNav";
+import { MobileTopbar } from "@shared/layout/components/sidebar/MobileTopbar";
+import { useHeaderContent } from "@shared/layout/hooks/usePageHeader";
 
 export const MainLayout = ({ children }: { children: ReactNode }) => {
   // cada vista registra su header con usePageHeader

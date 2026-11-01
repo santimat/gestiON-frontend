@@ -3,13 +3,13 @@ import { Button, Modal } from "@mantine/core";
 import { MonitorIcon, Plus, StoreIcon } from "lucide-react";
 
 import { useAuth } from "@/hooks/useAuth";
-import { ListContainer } from "@/components/ListContainer";
+import { ListContainer } from "@shared/components/ListContainer";
 import { NewSellPointForm } from "@/components/sellPoints/NewSellPointForm";
 import { SellPointCashiers } from "@/components/sellPoints/SellPointCashiers";
 import { SellPointsList } from "@/components/sellPoints/SellPointsList";
 import { useCommerce } from "@/hooks/useCommerce";
 import { useSellPoint } from "@/hooks/useSellPoint";
-import { usePageHeader } from "@/hooks/usePageHeader";
+import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 export const SellPoints = () => {
   const { authenticatedUser } = useAuth();

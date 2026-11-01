@@ -10,22 +10,7 @@ import {
   Users,
 } from "lucide-react";
 
-import type { ClientRequest, NavItem } from "@/types";
-
-export const ALLOWEDS_ROUTES_BY_ROLE = {
-  SUDO: ["/commerces"],
-  OWNER: [
-    "/dashboard",
-    "/cashiers",
-    "/sell-point",
-    "/products",
-    "/categories",
-    "/sell",
-    "/sales",
-    "/clients",
-  ],
-  CASHIER: ["/sell", "/sales", "/products", "/clients"],
-};
+import type { NavItem } from "@/types";
 
 export const SIDEBAR_ITEMS: NavItem[] = [
   {
@@ -68,32 +53,3 @@ export const SIDEBAR_ITEMS: NavItem[] = [
     href: "/clients",
   },
 ];
-
-export const ROLE_DICTIONARY = {
-  OWNER: "Dueño",
-  CASHIER: "Cajero",
-  SUDO: "Administrador general",
-};
-
-export const AVAILABLE_AVATAR_COLORS = [
-  "cyan",
-  "blue",
-  "indigo",
-  "violet",
-  "pink",
-  "red",
-  "orange",
-  "lime",
-  "grape",
-  "teal",
-  "yellow",
-  "green",
-];
-
-export const DEFAULT_CLIENT_FORM: ClientRequest = {
-  name: "",
-  lastName: "",
-  address: "",
-  phoneNumber: "",
-  dni: "",
-};

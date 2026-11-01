@@ -6,7 +6,7 @@ import { Button, PasswordInput, TextInput } from "@mantine/core";
 
 import { useAuth } from "@/hooks/useAuth";
 import type { AppError, FieldErrors, LoginDTO } from "@/types";
-import { getRedirectByRole } from "@/utils/getRedirectByRole";
+import { getRedirectByRole } from "@shared/config/permissions";
 
 export const LoginForm = () => {
   const [errors, setErrors] = useState<FieldErrors>({});

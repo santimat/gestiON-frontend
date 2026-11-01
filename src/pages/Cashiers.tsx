@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
 import { useCashier } from "@/hooks/useCashier";
-import { ListContainer } from "@/components/ListContainer";
+import { ListContainer } from "@shared/components/ListContainer";
 import { CashiersList } from "@/components/cashiers/CashiersList";
 import { NewCashierForm } from "@/components/cashiers/NewCashierForm";
-import { usePageHeader } from "@/hooks/usePageHeader";
+import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 export const Cashiers = () => {
   const {

@@ -4,7 +4,7 @@ import { Avatar, Button, Switch } from "@mantine/core";
 
 import { useDisclosure } from "@mantine/hooks";
 import { useCommerce } from "@/hooks/useCommerce";
-import { ImageViewer } from "@/components/ImageViewer";
+import { ImageViewer } from "@shared/components/ImageViewer";
 import type { AppError, CommerceWithOwner } from "@/types";
 
 type CommerceItemProps = {

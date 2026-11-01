@@ -4,8 +4,8 @@ import { TextInput, Textarea } from "@mantine/core";
 
 import { categoryMapper } from "@/mappers";
 import { useCategory } from "@/hooks/useCategory";
-import { ModalHeader } from "@/components/ModalHeader";
-import { ModalFormActions } from "@/components/ModalFormActions";
+import { ModalHeader } from "@shared/components/ModalHeader";
+import { ModalFormActions } from "@shared/components/ModalFormActions";
 import type { AppError, Category, CategoryRequest, FieldErrors } from "@/types";
 import { toast } from "sonner";
 

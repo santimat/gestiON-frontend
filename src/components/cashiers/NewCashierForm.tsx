@@ -6,8 +6,8 @@ import { toast } from "sonner";
 
 import { cashierMapper } from "@/mappers";
 import { useCashier } from "@/hooks/useCashier";
-import { ModalHeader } from "@/components/ModalHeader";
-import { ModalFormActions } from "@/components/ModalFormActions";
+import { ModalHeader } from "@shared/components/ModalHeader";
+import { ModalFormActions } from "@shared/components/ModalFormActions";
 import type { AppError, CashierRequest, FieldErrors, User } from "@/types";
 
 type NewCashierProps = {

@@ -14,7 +14,7 @@ import {
   SaleRequestSchema,
   SalesFilterSchema,
 } from "@/schemas";
-import type { ErrorDictionary } from "@/utils/errorDictionary";
+import type { ErrorDictionary } from "@shared/utils/errorDictionary";
 
 // GENERAL TYPES
 export type NavItem = {

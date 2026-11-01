@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { LeftSection } from "@/components/auth/LeftSection";
 import { RightSection } from "@/components/auth/RightSection";
-import { LoadingPage } from "@/components/Loading";
+import { LoadingPage } from "@shared/components/Loading";
 
 export const AuthPage = () => {
   const { checkAuth, isCheckingAuth, hasHydrated } = useAuth();

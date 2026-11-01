@@ -3,9 +3,9 @@ import { useState } from "react";
 
 import type { SaleSummary } from "@/types";
 import { useSales } from "@/hooks/sales/useSales";
-import { usePageHeader } from "@/hooks/usePageHeader";
+import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { SalesList } from "@/components/sells/SalesList";
-import { ListContainer } from "@/components/ListContainer";
+import { ListContainer } from "@shared/components/ListContainer";
 import { SalesFilterBar } from "@/components/sells/SalesFilterBar";
 import { SaleDetailModal } from "@/components/sells/SaleDetailModal";
 import { useSalesSearch } from "@/hooks/sales/useSalesSearch";

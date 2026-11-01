@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
 import { useClient } from "@/hooks/useClient";
-import { ListContainer } from "@/components/ListContainer";
+import { ListContainer } from "@shared/components/ListContainer";
 import { ClientList } from "@/components/clients/ClientList";
 import { ClientForm } from "@/components/clients/NewClientForm";
-import { usePageHeader } from "@/hooks/usePageHeader";
+import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 export const Clients = () => {
   const {

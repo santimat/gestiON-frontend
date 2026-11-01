@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { useEffect, useRef } from "react";
 
-import { useFilters } from "@/hooks/useFilters";
+import { useFilters } from "@shared/hooks/useFilters";
 import { ProductFiltersSchema } from "@/schemas";
 import type { AppError, CartLine } from "@/types";
 import { useProduct } from "@/hooks/product/useProduct";

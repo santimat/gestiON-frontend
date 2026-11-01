@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router";
 
 import type { UserRole } from "@/types";
 import { useAuth } from "@/hooks/useAuth";
-import { LoadingPage } from "@/components/Loading";
+import { LoadingPage } from "@shared/components/Loading";
 
 export const ProtectedRoute = ({
   allowedRoles,

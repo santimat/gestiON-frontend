@@ -5,7 +5,7 @@ import { Avatar, NumberFormatter, Switch, Tooltip } from "@mantine/core";
 
 import { useProduct } from "@/hooks/product/useProduct";
 import type { AppError, Product } from "@/types";
-import { ImageViewer } from "@/components/ImageViewer";
+import { ImageViewer } from "@shared/components/ImageViewer";
 import { ProductItemActions } from "@/components/products/ProductItemActions";
 
 type ProductItemsProps = {
