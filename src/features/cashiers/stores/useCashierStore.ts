@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 import type { AppError, CashierRequest } from "@/types";
-import { cashierService } from "@/services/cashierService";
-import type { UseCashierStore } from "@/stores/cashier/types";
+import { cashierService } from "../services/cashierService";
+import type { UseCashierStore } from "./types";
 
 export const useCashierStore = create<UseCashierStore>((set) => ({
   formCashier: null,

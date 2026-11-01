@@ -4,8 +4,8 @@ import { PasswordInput, TextInput } from "@mantine/core";
 import { KeyRound, Mail, Phone, UserPen, UserRound } from "lucide-react";
 import { toast } from "sonner";
 
-import { cashierMapper } from "@/mappers";
-import { useCashier } from "@/hooks/useCashier";
+import { cashierMapper } from "../mappers/cashierMapper";
+import { useCashier } from "../hooks/useCashier";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 import type { AppError, CashierRequest, FieldErrors, User } from "@/types";

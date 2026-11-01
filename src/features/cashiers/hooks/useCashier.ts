@@ -1,7 +1,7 @@
 import { useShallow } from "zustand/shallow";
 
-import type { CashierRequest } from "@/types";
-import { useCashierStore } from "@/stores/cashier/useCashierStore";
+import type { CashierRequest } from "../types";
+import { useCashierStore } from "../stores/useCashierStore";
 
 export const useCashier = () => {
   const {

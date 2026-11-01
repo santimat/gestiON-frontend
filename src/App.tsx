@@ -20,7 +20,9 @@ const AuthPage = lazy(() =>
 );
 
 const CashiersPage = lazy(() =>
-  import("@/pages/Cashiers").then((module) => ({ default: module.Cashiers })),
+  import("@/features/cashiers/pages/Cashiers").then((module) => ({
+    default: module.Cashiers,
+  })),
 );
 
 const ProductsPage = lazy(() =>

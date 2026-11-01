@@ -1,9 +1,7 @@
 import z from "zod";
 
 import {
-  CashierSchema,
   CommerceWithOwnerRequestSchema,
-  CashierUpdateSchema,
   SellPointRequestSchema,
   SaleRequestSchema,
   SalesFilterSchema,
@@ -71,8 +69,7 @@ export type { Category, CategoryRequest } from "@/features/categories/types";
 export type { Client, ClientRequest } from "@/features/clients/types";
 
 // CASHIER
-export type CashierRequest = z.infer<typeof CashierSchema>;
-export type CashierUpdate = z.infer<typeof CashierUpdateSchema>;
+export type { CashierRequest, CashierUpdate } from "@/features/cashiers/types";
 
 // SELL POINT
 export type SellPoint = {

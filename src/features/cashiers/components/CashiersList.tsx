@@ -1,6 +1,6 @@
-import { CashierItem } from "@/components/cashiers/CashierItem";
-import { CashierItemMobile } from "@/components/cashiers/CashierItemMobile";
-import { useCashier } from "@/hooks/useCashier";
+import { CashierItem } from "./CashierItem";
+import { CashierItemMobile } from "./CashierItemMobile";
+import { useCashier } from "../hooks/useCashier";
 import type { AppError } from "@/types";
 import { toast } from "sonner";
 
@@ -33,7 +33,7 @@ export const CashiersList = () => {
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
+        <ul className="[&>li]:not-first:border-border text-sm [&>li]:not-first:border-t">
           {cashiers.map((cashier) => {
             return (
               <CashierItem

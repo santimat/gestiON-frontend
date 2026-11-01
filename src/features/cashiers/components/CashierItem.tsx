@@ -2,7 +2,7 @@ import { PenBoxIcon } from "lucide-react";
 import { Button, Switch } from "@mantine/core";
 
 import type { User } from "@/types";
-import { useCashier } from "@/hooks/useCashier";
+import { useCashier } from "../hooks/useCashier";
 
 type CashierItemProps = {
   cashier: User;

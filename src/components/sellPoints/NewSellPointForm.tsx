@@ -10,7 +10,7 @@ import type {
   SellPoint,
   SellPointRequest,
 } from "@/types";
-import { useCashier } from "@/hooks/useCashier";
+import { useCashier } from "@/features/cashiers";
 import { useSellPoint } from "@/hooks/useSellPoint";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
