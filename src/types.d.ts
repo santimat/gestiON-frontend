@@ -1,7 +1,3 @@
-import z from "zod";
-
-import { SaleRequestSchema, SalesFilterSchema } from "@/schemas";
-
 // GENERAL TYPES
 export type {
   NavItem,
@@ -44,64 +40,15 @@ export type { CashierRequest, CashierUpdate } from "@/features/cashiers/types";
 export type { SellPoint, SellPointRequest } from "@/features/sell-points/types";
 
 // SALE
-export type CartLine = {
-  productId: number;
-  name: string;
-  salePrice: number;
-  // snapshot del stock al agregar: el refetch del buscador no muta el carrito
-  currentStock: number;
-  qty: number;
-};
-
-export type SaleDraft = {
-  discount: number;
-  discountType: DiscountType;
-  paymentMethod: PaymentMethod;
-  // null = consumidor final
-  clientId: number | null;
-};
-
-export type SaleRequest = z.infer<typeof SaleRequestSchema>;
-
-export type SaleStatus = "PAY" | "PENDING";
-
-export type SaleDetail = {
-  id: number;
-  productId: number;
-  productName: string;
-  price: number;
-  quantity: number;
-};
-
-export type Sale = {
-  id: number;
-  clientId: number | null;
-  clientName: string;
-  sellPointId: number;
-  userName: string;
-  paymentMethod: PaymentMethod;
-  subtotal: number;
-  discountType: DiscountType | null;
-  discount: number;
-  total: number;
-  createdAt: Date;
-  observations: string | null;
-  status: SaleStatus;
-  details: SaleDetail[];
-};
-
-export type SaleSummary = {
-  id: number;
-  itemCount: number;
-  status: SaleStatus;
-  clientName: string | null;
-  paymentMethod: PaymentMethod;
-  createdAt: string;
-  total: number;
-};
-
-export type SalesFilter = z.infer<typeof SalesFilterSchema>;
-
-export type PaymentMethod = "CASH" | "CARD" | "TRANSFER" | "CREDIT_ACCOUNT";
-
-export type DiscountType = "FIXED_AMOUNT" | "PERCENTAGE";
+export type {
+  CartLine,
+  SaleDraft,
+  SaleRequest,
+  SaleStatus,
+  SaleDetail,
+  Sale,
+  SaleSummary,
+  SalesFilter,
+  PaymentMethod,
+  DiscountType,
+} from "@/features/sales/types";

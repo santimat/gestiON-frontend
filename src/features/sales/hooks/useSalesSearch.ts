@@ -1,10 +1,10 @@
 import { toast } from "sonner";
 import { useEffect } from "react";
 
-import type { AppError } from "@/types";
-import { SalesFilterSchema } from "@/schemas";
+import type { AppError } from "@shared/types";
+import { SalesFilterSchema } from "../schemas/SalesFilterSchema";
 import { useFilters } from "@shared/hooks/useFilters";
-import { useSales } from "@/hooks/sales/useSales";
+import { useSales } from "./useSales";
 
 export const useSalesSearch = () => {
   const { filters, setFilters } = useFilters(SalesFilterSchema);

@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 
-import type { SaleSummary } from "@/types";
+import type { SaleSummary } from "../../types";
 
 type SalesListProps = {
   sales: SaleSummary[];

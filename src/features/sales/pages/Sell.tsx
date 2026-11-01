@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { SaleCart } from "@/components/sell/SaleCart";
-import { SaleSummary } from "@/components/sell/SaleSummary";
-import { ProductSearch } from "@/components/sell/ProductSearch";
-import { SaleTicketModal } from "@/components/sell/SaleTicketModal";
+import { SaleCart } from "../components/sell/SaleCart";
+import { SaleSummary } from "../components/sell/SaleSummary";
+import { ProductSearch } from "../components/sell/ProductSearch";
+import { SaleTicketModal } from "../components/sell/SaleTicketModal";
 import { useClient } from "@/features/clients";
-import { useSale } from "@/hooks/useSale";
+import { useSale } from "../hooks/useSale";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
-import type { AppError, Sale } from "@/types";
+import type { AppError } from "@shared/types";
+import type { Sale } from "../types";
 
 export const Sell = () => {
   const [ticket, setTicket] = useState<Sale | null>(null);

@@ -2,7 +2,7 @@ import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Select, TextInput } from "@mantine/core";
 
-import type { SalesFilter, SaleStatus } from "@/types";
+import type { SalesFilter, SaleStatus } from "../../types";
 
 const STATUS_OPTIONS: { value: SaleStatus; label: string }[] = [
   { value: "PAY", label: "Pagas" },

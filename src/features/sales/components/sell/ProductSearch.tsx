@@ -2,7 +2,7 @@ import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { TextInput } from "@mantine/core";
 
-import { useSale } from "@/hooks/useSale";
+import { useSale } from "../../hooks/useSale";
 import { useProduct, useProductSearch } from "@/features/products";
 import { ProductSellCard } from "./ProductSellCard";
 import { ListContainer } from "@shared/components/ListContainer";

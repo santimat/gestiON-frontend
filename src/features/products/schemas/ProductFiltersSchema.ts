@@ -1,5 +1,5 @@
 import z from "zod";
-import { FiltersBaseSchema } from "@/schemas/FiltersBaseSchema";
+import { FiltersBaseSchema } from "@shared/schemas/FiltersBaseSchema";
 
 export const ProductFiltersSchema = z.object({
   searchText: z.string().trim().optional(),

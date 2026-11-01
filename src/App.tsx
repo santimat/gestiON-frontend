@@ -38,11 +38,15 @@ const CommercesPage = lazy(() =>
 );
 
 const SellPage = lazy(() =>
-  import("@/pages/Sell").then((module) => ({ default: module.Sell })),
+  import("@/features/sales/pages/Sell").then((module) => ({
+    default: module.Sell,
+  })),
 );
 
 const SalesPage = lazy(() =>
-  import("@/pages/Sales").then((module) => ({ default: module.Sales })),
+  import("@/features/sales/pages/Sales").then((module) => ({
+    default: module.Sales,
+  })),
 );
 
 const ClientsPage = lazy(() =>

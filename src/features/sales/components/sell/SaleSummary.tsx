@@ -8,8 +8,8 @@ import {
 } from "lucide-react";
 
 import { useClient } from "@/features/clients";
-import { useSale } from "@/hooks/useSale";
-import type { DiscountType, PaymentMethod } from "@/types";
+import { useSale } from "../../hooks/useSale";
+import type { DiscountType, PaymentMethod } from "../../types";
 
 type PaymentOption = {
   value: PaymentMethod;
