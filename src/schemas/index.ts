@@ -2,7 +2,6 @@ export * from "@/schemas/product/ProductSchema";
 export * from "@/schemas/product/ProductFiltersSchema";
 export * from "@/schemas/commerce/CommerceWithOwnerRequestSchema";
 export * from "@/schemas/commerce/CommerceWithOwnerUpdateSchema";
-export * from "@/schemas/category/CategorySchema";
 export * from "@/schemas/client/ClientSchema";
 export * from "@/schemas/cashier/CashierSchema";
 export * from "@/schemas/cashier/CashierUpdateSchema";

@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 import type { AppError, Category, CategoryRequest } from "@/types";
-import { categoryService } from "@/services/categoryService";
-import type { UseCategoryStore } from "@/stores/category/types";
+import { categoryService } from "../services/categoryService";
+import type { UseCategoryStore } from "./types";
 
 export const useCategoryStore = create<UseCategoryStore>((set) => ({
   formCategory: null,

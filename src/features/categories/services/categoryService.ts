@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 
-import { CategorySchema } from "@/schemas";
+import { CategorySchema } from "../schemas/CategorySchema";
 import type { CategoryRequest } from "@/types";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";

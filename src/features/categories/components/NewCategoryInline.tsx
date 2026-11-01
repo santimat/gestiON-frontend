@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { Button, TextInput } from "@mantine/core";
 
-import { useCategory } from "@/hooks/useCategory";
+import { useCategory } from "../hooks/useCategory";
 import type { AppError, FieldErrors, ProductForm } from "@/types";
 
 type NewCategoryInlineProps = {

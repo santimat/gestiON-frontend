@@ -1,7 +1,7 @@
 import { Pencil } from "lucide-react";
 
 import type { Category } from "@/types";
-import { useCategory } from "@/hooks/useCategory";
+import { useCategory } from "../hooks/useCategory";
 import { Tooltip } from "@mantine/core";
 
 type CategoryItemProps = {

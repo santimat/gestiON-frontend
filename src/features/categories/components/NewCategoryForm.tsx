@@ -2,8 +2,8 @@ import { Tags } from "lucide-react";
 import { useState, type SubmitEvent } from "react";
 import { TextInput, Textarea } from "@mantine/core";
 
-import { categoryMapper } from "@/mappers";
-import { useCategory } from "@/hooks/useCategory";
+import { categoryMapper } from "../mappers/categoryMapper";
+import { useCategory } from "../hooks/useCategory";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 import type { AppError, Category, CategoryRequest, FieldErrors } from "@/types";

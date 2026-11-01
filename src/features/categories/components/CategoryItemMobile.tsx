@@ -1,7 +1,7 @@
 import { Pencil } from "lucide-react";
 import { Button } from "@mantine/core";
 import type { Category } from "@/types";
-import { useCategory } from "@/hooks/useCategory";
+import { useCategory } from "../hooks/useCategory";
 
 type CategoryItemMobileProps = {
   category: Category;

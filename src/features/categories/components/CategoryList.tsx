@@ -3,13 +3,13 @@ import { lazy } from "react";
 import type { Category } from "@/types";
 
 const CategoryItem = lazy(() =>
-  import("@/components/categories/CategoryItem").then((module) => ({
+  import("./CategoryItem").then((module) => ({
     default: module.CategoryItem,
   })),
 );
 
 const CategoryItemMobile = lazy(() =>
-  import("@/components/categories/CategoryItemMobile").then((module) => ({
+  import("./CategoryItemMobile").then((module) => ({
     default: module.CategoryItemMobile,
   })),
 );
@@ -33,7 +33,7 @@ export const CategoryList = ({ categories }: CategoryListProps) => {
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
+        <ul className="[&>li]:not-first:border-border text-sm [&>li]:not-first:border-t">
           {categories.map((category) => (
             <CategoryItem
               key={`category-${category.id}`}

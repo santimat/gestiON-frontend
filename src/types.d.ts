@@ -3,7 +3,6 @@ import z from "zod";
 import {
   ProductSchema,
   ProductFiltersSchema,
-  CategorySchema,
   ClientSchema,
   CashierSchema,
   CommerceWithOwnerRequestSchema,
@@ -96,15 +95,7 @@ export type ProductFieldErrors = Partial<
 export type ProductFilters = z.infer<typeof ProductFiltersSchema>;
 
 // CATEGORY
-export type CategoryRequest = z.infer<typeof CategorySchema>;
-
-export type Category = {
-  id: number;
-  name: string;
-  description?: string;
-  updatedAt: Date;
-  productCount: number;
-};
+export type { Category, CategoryRequest } from "@/features/categories/types";
 
 // CLIENT
 export type ClientRequest = z.infer<typeof ClientSchema>;
