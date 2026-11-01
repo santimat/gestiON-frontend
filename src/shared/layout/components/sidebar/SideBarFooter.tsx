@@ -7,7 +7,7 @@ import { getAvatarColor } from "@shared/utils/getAvatarColor";
 import { LogOut } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect } from "react";
-import { useCommerce } from "@/hooks/useCommerce";
+import { useCommerce } from "@/features/commerces";
 import { ImageViewer } from "@shared/components/ImageViewer";
 
 type SidebarFooterProps = {

@@ -17,13 +17,9 @@ import {
 import { toast } from "sonner";
 import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
-import type {
-  AppError,
-  CurrentCommerce,
-  Product,
-  ProductFieldErrors,
-  ProductForm,
-} from "@/types";
+import type { AppError } from "@shared/types";
+import type { CurrentCommerce } from "@/features/commerces";
+import type { Product, ProductFieldErrors, ProductForm } from "../types";
 import { productMapper } from "../mappers/productMapper";
 import { useProduct } from "../hooks/useProduct";
 import { useCategory, SelectCategory } from "@/features/categories";

@@ -6,7 +6,7 @@ import { ListContainer } from "@shared/components/ListContainer";
 import { ProductList } from "../components/ProductList";
 import { NewProductForm } from "../components/NewProductForm";
 import { useProduct } from "../hooks/useProduct";
-import { useCommerce } from "@/hooks/useCommerce";
+import { useCommerce } from "@/features/commerces";
 import { useAuth } from "@/features/auth";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 

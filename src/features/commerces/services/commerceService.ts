@@ -1,9 +1,7 @@
 import { isAxiosError } from "axios";
 
-import {
-  CommerceWithOwnerUpdateSchema,
-  CommerceWithOwnerRequestSchema,
-} from "@/schemas";
+import { CommerceWithOwnerRequestSchema } from "../schemas/CommerceWithOwnerRequestSchema";
+import { CommerceWithOwnerUpdateSchema } from "../schemas/CommerceWithOwnerUpdateSchema";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 import { handleZodParsingError } from "@shared/utils/handleZodParseError";

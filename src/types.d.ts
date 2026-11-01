@@ -1,7 +1,6 @@
 import z from "zod";
 
 import {
-  CommerceWithOwnerRequestSchema,
   SellPointRequestSchema,
   SaleRequestSchema,
   SalesFilterSchema,
@@ -20,38 +19,12 @@ export type {
 export type { LoginDTO, User, AuthUser } from "@/features/auth/types";
 
 // COMMERCE
-export type CommerceWithOwner = {
-  userId: number;
-  commerceId: number;
-  username: string;
-  email: string;
-  phoneNumber: string;
-  name: string;
-  cuit: string;
-  address: string;
-  businessLogoUrl: string;
-  businessActive: boolean;
-  profitMultiplier: number;
-  updatedAt: Date;
-};
-
-export type CommerceWithOwnerRequest = z.infer<
-  typeof CommerceWithOwnerRequestSchema
->;
-
-export type CommerceStats = {
-  total: number;
-  active: number;
-  inactive: number;
-};
-
-export type CurrentCommerce = {
-  id: number;
-  name: string;
-  businessLogoUrl: string;
-  businessActive: boolean;
-  profitMultiplier: number;
-};
+export type {
+  CommerceWithOwner,
+  CommerceWithOwnerRequest,
+  CommerceStats,
+  CurrentCommerce,
+} from "@/features/commerces/types";
 
 // PRODUCT
 export type {

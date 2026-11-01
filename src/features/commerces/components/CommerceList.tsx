@@ -1,5 +1,5 @@
-import { CommerceItem } from "@/components/commerces/CommerceItem";
-import type { CommerceWithOwner } from "@/types";
+import { CommerceItem } from "./CommerceItem";
+import type { CommerceWithOwner } from "../types";
 
 type CommerceListProps = {
   commercesWithOwner: CommerceWithOwner[];
@@ -33,7 +33,7 @@ export const CommerceList = ({ commercesWithOwner }: CommerceListProps) => {
             </p>
           ))}
         </div>
-        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
+        <ul className="[&>li]:not-first:border-border text-sm [&>li]:not-first:border-t">
           {commercesWithOwner.map((commerce) => {
             return (
               <CommerceItem

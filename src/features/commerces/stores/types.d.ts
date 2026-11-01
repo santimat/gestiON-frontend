@@ -2,7 +2,7 @@ import type {
   CommerceStats,
   CommerceWithOwner,
   CurrentCommerce,
-} from "@/types";
+} from "../types";
 
 export type UseCommerceStore = {
   // Estado de UI: modal de alta/edición de comercio

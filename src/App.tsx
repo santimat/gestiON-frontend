@@ -32,7 +32,7 @@ const ProductsPage = lazy(() =>
 );
 
 const CommercesPage = lazy(() =>
-  import("@/pages/Commerces").then((module) => ({
+  import("@/features/commerces/pages/Commerces").then((module) => ({
     default: module.Commerces,
   })),
 );

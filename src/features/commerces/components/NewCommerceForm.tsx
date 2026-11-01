@@ -13,14 +13,10 @@ import { toast } from "sonner";
 import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import { Fieldset, TextInput, FileInput, PasswordInput } from "@mantine/core";
 
-import type {
-  AppError,
-  CommerceWithOwner,
-  CommerceWithOwnerRequest,
-  FieldErrors,
-} from "@/types";
-import { commerceMapper } from "@/mappers";
-import { useCommerce } from "@/hooks/useCommerce";
+import type { AppError, FieldErrors } from "@shared/types";
+import type { CommerceWithOwner, CommerceWithOwnerRequest } from "../types";
+import { commerceMapper } from "../mappers/commerceMapper";
+import { useCommerce } from "../hooks/useCommerce";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 

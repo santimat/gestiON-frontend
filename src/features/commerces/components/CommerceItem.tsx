@@ -3,9 +3,10 @@ import { PenBoxIcon } from "lucide-react";
 import { Avatar, Button, Switch } from "@mantine/core";
 
 import { useDisclosure } from "@mantine/hooks";
-import { useCommerce } from "@/hooks/useCommerce";
+import { useCommerce } from "../hooks/useCommerce";
 import { ImageViewer } from "@shared/components/ImageViewer";
-import type { AppError, CommerceWithOwner } from "@/types";
+import type { AppError } from "@shared/types";
+import type { CommerceWithOwner } from "../types";
 
 type CommerceItemProps = {
   commerce: CommerceWithOwner;
