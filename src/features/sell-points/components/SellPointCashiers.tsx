@@ -3,8 +3,10 @@ import { UsersIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { ModalHeader } from "@shared/components/ModalHeader";
-import { useSellPoint } from "@/hooks/useSellPoint";
-import type { AppError, SellPoint, User } from "@/types";
+import { useSellPoint } from "../hooks/useSellPoint";
+import type { AppError } from "@shared/types";
+import type { User } from "@features/auth";
+import type { SellPoint } from "../types";
 
 type SellPointCashiersProps = {
   sellPoint: SellPoint | null;

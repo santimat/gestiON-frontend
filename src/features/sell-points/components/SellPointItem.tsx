@@ -1,8 +1,8 @@
 import { PenBoxIcon } from "lucide-react";
 import { Button, Switch } from "@mantine/core";
 
-import type { SellPoint } from "@/types";
-import { useSellPoint } from "@/hooks/useSellPoint";
+import type { SellPoint } from "../types";
+import { useSellPoint } from "../hooks/useSellPoint";
 
 type SellPointItemProps = {
   sellPoint: SellPoint;

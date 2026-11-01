@@ -1,7 +1,8 @@
-import { SellPointItem } from "@/components/sellPoints/SellPointItem";
-import { SellPointItemMobile } from "@/components/sellPoints/SellPointItemMobile";
-import { useSellPoint } from "@/hooks/useSellPoint";
-import type { AppError, SellPoint } from "@/types";
+import { SellPointItem } from "./SellPointItem";
+import { SellPointItemMobile } from "./SellPointItemMobile";
+import { useSellPoint } from "../hooks/useSellPoint";
+import type { AppError } from "@shared/types";
+import type { SellPoint } from "../types";
 import { toast } from "sonner";
 
 type SellPointsListProps = {
@@ -43,7 +44,7 @@ export const SellPointsList = ({ sellPoints }: SellPointsListProps) => {
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
+        <ul className="[&>li]:not-first:border-border text-sm [&>li]:not-first:border-t">
           {sellPoints.map((sellPoint) => {
             return (
               <SellPointItem

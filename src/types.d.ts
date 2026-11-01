@@ -1,10 +1,6 @@
 import z from "zod";
 
-import {
-  SellPointRequestSchema,
-  SaleRequestSchema,
-  SalesFilterSchema,
-} from "@/schemas";
+import { SaleRequestSchema, SalesFilterSchema } from "@/schemas";
 
 // GENERAL TYPES
 export type {
@@ -45,16 +41,7 @@ export type { Client, ClientRequest } from "@/features/clients/types";
 export type { CashierRequest, CashierUpdate } from "@/features/cashiers/types";
 
 // SELL POINT
-export type SellPoint = {
-  id: number;
-  name: string;
-  commerceId: number;
-  active: boolean;
-  cashierIds?: number[];
-  updatedAt: Date;
-};
-
-export type SellPointRequest = z.infer<typeof SellPointRequestSchema>;
+export type { SellPoint, SellPointRequest } from "@/features/sell-points/types";
 
 // SALE
 export type CartLine = {

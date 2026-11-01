@@ -1,9 +1,10 @@
 import { isAxiosError } from "axios";
 
-import { SellPointRequestSchema } from "@/schemas";
+import { SellPointRequestSchema } from "../schemas/SellPointSchema";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
-import type { SellPoint, SellPointRequest, User } from "@/types";
+import type { User } from "@features/auth";
+import type { SellPoint, SellPointRequest } from "../types";
 import { handleZodParsingError } from "@shared/utils/handleZodParseError";
 
 export const sellPointService = {

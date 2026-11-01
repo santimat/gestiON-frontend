@@ -58,7 +58,7 @@ const CategoriesPage = lazy(() =>
 );
 
 const SellPointsPage = lazy(() =>
-  import("@/pages/SellPoints").then((module) => ({
+  import("@/features/sell-points/pages/SellPoints").then((module) => ({
     default: module.SellPoints,
   })),
 );

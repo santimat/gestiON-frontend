@@ -4,11 +4,11 @@ import { MonitorIcon, Plus, StoreIcon } from "lucide-react";
 
 import { useAuth } from "@/features/auth";
 import { ListContainer } from "@shared/components/ListContainer";
-import { NewSellPointForm } from "@/components/sellPoints/NewSellPointForm";
-import { SellPointCashiers } from "@/components/sellPoints/SellPointCashiers";
-import { SellPointsList } from "@/components/sellPoints/SellPointsList";
+import { NewSellPointForm } from "../components/NewSellPointForm";
+import { SellPointCashiers } from "../components/SellPointCashiers";
+import { SellPointsList } from "../components/SellPointsList";
 import { useCommerce } from "@/features/commerces";
-import { useSellPoint } from "@/hooks/useSellPoint";
+import { useSellPoint } from "../hooks/useSellPoint";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 export const SellPoints = () => {
