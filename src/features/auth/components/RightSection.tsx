@@ -1,6 +1,6 @@
 import { StoreIcon } from "lucide-react";
 
-import { LoginForm } from "@/components/auth/LoginForm";
+import { LoginForm } from "./LoginForm";
 
 export const RightSection = () => {
   return (

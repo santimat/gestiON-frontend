@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 
-import { useAuth } from "@/hooks/useAuth";
-import { LeftSection } from "@/components/auth/LeftSection";
-import { RightSection } from "@/components/auth/RightSection";
+import { useAuth } from "../hooks/useAuth";
+import { LeftSection } from "../components/LeftSection";
+import { RightSection } from "../components/RightSection";
 import { LoadingPage } from "@shared/components/Loading";
 
 export const AuthPage = () => {

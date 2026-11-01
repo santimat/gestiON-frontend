@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 import { MonitorIcon, Plus, StoreIcon } from "lucide-react";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/features/auth";
 import { ListContainer } from "@shared/components/ListContainer";
 import { NewSellPointForm } from "@/components/sellPoints/NewSellPointForm";
 import { SellPointCashiers } from "@/components/sellPoints/SellPointCashiers";

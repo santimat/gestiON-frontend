@@ -14,7 +14,9 @@ const LandingPage = lazy(() =>
 );
 
 const AuthPage = lazy(() =>
-  import("@/pages/Auth").then((module) => ({ default: module.AuthPage })),
+  import("@/features/auth/pages/Auth").then((module) => ({
+    default: module.AuthPage,
+  })),
 );
 
 const CashiersPage = lazy(() =>

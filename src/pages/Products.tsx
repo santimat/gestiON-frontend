@@ -7,7 +7,7 @@ import { ProductList } from "@/components/products/ProductList";
 import { NewProductForm } from "@/components/products/NewProductForm";
 import { useProduct } from "@/hooks/product/useProduct";
 import { useCommerce } from "@/hooks/useCommerce";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/features/auth";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 export const Products = () => {

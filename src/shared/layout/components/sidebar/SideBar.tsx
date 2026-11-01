@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Store } from "lucide-react";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/features/auth";
 import { SIDEBAR_ITEMS } from "@shared/config/navigation";
 import { getRolesForRoute } from "@shared/config/permissions";
 import { SideBarItem } from "@shared/layout/components/sidebar/SiderBarItem";

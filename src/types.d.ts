@@ -1,8 +1,6 @@
 import z from "zod";
-import type { LucideIcon } from "lucide-react";
 
 import {
-  LoginSchema,
   ProductSchema,
   ProductFiltersSchema,
   CategorySchema,
@@ -14,44 +12,18 @@ import {
   SaleRequestSchema,
   SalesFilterSchema,
 } from "@/schemas";
-import type { ErrorDictionary } from "@shared/utils/errorDictionary";
 
 // GENERAL TYPES
-export type NavItem = {
-  text: string;
-  // etiqueta corta para la barra de navegación inferior en mobile
-  short: string;
-  href: string;
-  icon: LucideIcon;
-};
-
-export type ZodParseResult<T = unknown> = z.ZodSafeParseResult<T>;
-
-export type AppError = {
-  code: keyof typeof ErrorDictionary;
-  message: string;
-  fieldErrors?: FieldErrors;
-};
-
-export type FieldErrors = Record<string, string | undefined>;
+export type {
+  NavItem,
+  UserRole,
+  ZodParseResult,
+  AppError,
+  FieldErrors,
+} from "@/shared/types";
 
 // USER
-export type LoginDTO = z.infer<typeof LoginSchema>;
-
-export type UserRole = "OWNER" | "CASHIER" | "SUDO";
-
-export type User = {
-  id: number;
-  name: string;
-  email: string;
-  phoneNumber: string;
-  updatedAt: Date;
-  role: UserRole;
-  active: boolean;
-  commerceId?: number;
-};
-
-export type AuthUser = Omit<User, "phoneNumber" | "updatedAt">;
+export type { LoginDTO, User, AuthUser } from "@/features/auth/types";
 
 // COMMERCE
 export type CommerceWithOwner = {

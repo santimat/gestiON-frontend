@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { useShallow } from "zustand/shallow";
 
 import type { AppError, LoginDTO } from "@/types";
-import { useAuthStore } from "@/stores/auth/useAuthStore";
+import { useAuthStore } from "../stores/useAuthStore";
 
 export const useAuth = () => {
   const {
