@@ -6,7 +6,8 @@ import { categoryMapper } from "../mappers/categoryMapper";
 import { useCategory } from "../hooks/useCategory";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
-import type { AppError, Category, CategoryRequest, FieldErrors } from "@/types";
+import type { AppError, FieldErrors } from "@shared/types";
+import type { Category, CategoryRequest } from "../types";
 import { toast } from "sonner";
 
 type NewCategoryFormProps = {

@@ -1,6 +1,6 @@
 import { lazy } from "react";
 
-import type { Category } from "@/types";
+import type { Category } from "../types";
 
 const CategoryItem = lazy(() =>
   import("./CategoryItem").then((module) => ({

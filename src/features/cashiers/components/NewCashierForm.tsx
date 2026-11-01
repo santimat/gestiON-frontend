@@ -8,7 +8,9 @@ import { cashierMapper } from "../mappers/cashierMapper";
 import { useCashier } from "../hooks/useCashier";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
-import type { AppError, CashierRequest, FieldErrors, User } from "@/types";
+import type { AppError, FieldErrors } from "@shared/types";
+import type { User } from "@features/auth";
+import type { CashierRequest } from "../types";
 
 type NewCashierProps = {
   cashier: User | null;

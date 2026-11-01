@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
-import type { AppError, CashierRequest } from "@/types";
+import type { AppError } from "@shared/types";
+import type { CashierRequest } from "../types";
 import { cashierService } from "../services/cashierService";
 import type { UseCashierStore } from "./types";
 

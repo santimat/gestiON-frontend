@@ -1,4 +1,4 @@
-import type { Client, ClientRequest } from "@/types";
+import type { Client, ClientRequest } from "../types";
 
 export const clientMapper = {
   toForm: (client: Client): ClientRequest => ({

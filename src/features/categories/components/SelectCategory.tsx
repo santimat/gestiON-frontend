@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ListSortAscending, PlusIcon, XIcon } from "lucide-react";
 import { Select, type ComboboxItem, type OptionsFilter } from "@mantine/core";
 
-import type { ProductForm } from "@/types";
+import type { ProductForm } from "@/features/products";
 import { useCategory } from "../hooks/useCategory";
 import { NewCategoryInline } from "./NewCategoryInline";
 

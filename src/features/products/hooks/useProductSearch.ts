@@ -3,7 +3,8 @@ import { useEffect, useRef } from "react";
 
 import { useFilters } from "@shared/hooks/useFilters";
 import { ProductFiltersSchema } from "../schemas/ProductFiltersSchema";
-import type { AppError, CartLine } from "@/types";
+import type { AppError } from "@shared/types";
+import type { CartLine } from "@features/sales";
 import { useProduct } from "./useProduct";
 
 export const useProductSearch = (cart: CartLine[]) => {

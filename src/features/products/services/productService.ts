@@ -4,7 +4,7 @@ import { ProductSchema } from "../schemas/ProductSchema";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 import { handleZodParsingError } from "@shared/utils/handleZodParseError";
-import type { ProductFilters } from "@/types";
+import type { ProductFilters } from "../types";
 
 export const productService = {
   createProduct: async (product: FormData) => {

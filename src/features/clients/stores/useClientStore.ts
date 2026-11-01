@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
-import type { AppError, ClientRequest } from "@/types";
+import type { AppError } from "@shared/types";
+import type { ClientRequest } from "../types";
 import { clientService } from "../services/clientService";
 import type { UseClientStore } from "./types";
 

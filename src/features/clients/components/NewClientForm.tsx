@@ -9,7 +9,8 @@ import { useClient } from "../hooks/useClient";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { DEFAULT_CLIENT_FORM } from "../constants";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
-import type { AppError, Client, ClientRequest, FieldErrors } from "@/types";
+import type { AppError, FieldErrors } from "@shared/types";
+import type { Client, ClientRequest } from "../types";
 
 type ClientFormProps = {
   client: Client | null;

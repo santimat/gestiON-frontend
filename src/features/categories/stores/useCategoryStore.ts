@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
-import type { AppError, Category, CategoryRequest } from "@/types";
+import type { AppError } from "@shared/types";
+import type { Category, CategoryRequest } from "../types";
 import { categoryService } from "../services/categoryService";
 import type { UseCategoryStore } from "./types";
 

@@ -1,4 +1,4 @@
-import type { UserRole } from "@/types";
+import type { UserRole } from "@shared/types";
 
 export const ALLOWEDS_ROUTES_BY_ROLE = {
   SUDO: ["/commerces"],

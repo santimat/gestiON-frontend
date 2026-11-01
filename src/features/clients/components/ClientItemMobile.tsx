@@ -1,4 +1,4 @@
-import type { Client } from "@/types";
+import type { Client } from "../types";
 import { useClient } from "../hooks/useClient";
 import { ProductItemActions } from "@shared/components/ProductItemActions";
 import type { LucideIcon } from "lucide-react";

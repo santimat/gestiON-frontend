@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import type { AppError } from "@/types";
+import type { AppError } from "@shared/types";
 import { ErrorDictionary } from "./errorDictionary";
 
 export const handleAxiosErrors = (error: AxiosError): AppError => {

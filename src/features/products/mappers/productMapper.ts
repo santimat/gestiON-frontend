@@ -1,4 +1,4 @@
-import type { Product, ProductForm } from "@/types";
+import type { Product, ProductForm } from "../types";
 
 export const productMapper = {
   toForm: (product: Product): ProductForm => ({

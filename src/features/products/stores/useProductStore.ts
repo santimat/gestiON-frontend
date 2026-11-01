@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { AppError } from "@/types";
+import type { AppError } from "@shared/types";
 import { productService } from "../services/productService";
 import type { UseProductStore } from "./types";
 

@@ -1,4 +1,4 @@
-import type { AppError, FieldErrors, ZodParseResult } from "@/types";
+import type { AppError, FieldErrors, ZodParseResult } from "@shared/types";
 
 export const handleZodParsingError = <T>(parsedData: ZodParseResult<T>) => {
   if (!parsedData.success) {

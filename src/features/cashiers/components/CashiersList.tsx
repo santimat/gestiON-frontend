@@ -1,7 +1,7 @@
 import { CashierItem } from "./CashierItem";
 import { CashierItemMobile } from "./CashierItemMobile";
 import { useCashier } from "../hooks/useCashier";
-import type { AppError } from "@/types";
+import type { AppError } from "@shared/types";
 import { toast } from "sonner";
 
 export const CashiersList = () => {

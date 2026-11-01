@@ -1,4 +1,4 @@
-import type { CategoryRequest } from "@/types";
+import type { CategoryRequest } from "../types";
 import { useCategoryStore } from "../stores/useCategoryStore";
 import { useShallow } from "zustand/shallow";
 

@@ -1,7 +1,8 @@
 import { toast } from "sonner";
 import { useShallow } from "zustand/shallow";
 
-import type { AppError, LoginDTO } from "@/types";
+import type { AppError } from "@shared/types";
+import type { LoginDTO } from "../types";
 import { useAuthStore } from "../stores/useAuthStore";
 
 export const useAuth = () => {

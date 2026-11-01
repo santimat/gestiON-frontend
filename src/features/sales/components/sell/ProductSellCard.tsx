@@ -1,4 +1,4 @@
-import type { Product } from "@/types";
+import type { Product } from "@/features/products";
 import { NumberFormatter } from "@mantine/core";
 
 type ProductSellCardProps = {

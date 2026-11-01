@@ -2,7 +2,8 @@ import { NumberFormatter, Switch } from "@mantine/core";
 import { PackageIcon, PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 
-import type { AppError, Product } from "@/types";
+import type { AppError } from "@shared/types";
+import type { Product } from "../types";
 import { useProduct } from "../hooks/useProduct";
 
 type ProductItemMobileProps = {

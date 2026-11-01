@@ -10,7 +10,7 @@ import {
   Users,
 } from "lucide-react";
 
-import type { NavItem } from "@/types";
+import type { NavItem } from "@shared/types";
 
 export const SIDEBAR_ITEMS: NavItem[] = [
   {

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { LoginDTO } from "@/types";
+import type { LoginDTO } from "../types";
 import { authService } from "../services/authService";
 import type { UseAuthStore } from "./types";
 

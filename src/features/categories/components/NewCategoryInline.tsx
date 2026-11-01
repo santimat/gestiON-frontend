@@ -3,7 +3,8 @@ import { useState } from "react";
 import { Button, TextInput } from "@mantine/core";
 
 import { useCategory } from "../hooks/useCategory";
-import type { AppError, FieldErrors, ProductForm } from "@/types";
+import type { AppError, FieldErrors } from "@shared/types";
+import type { ProductForm } from "@features/products";
 
 type NewCategoryInlineProps = {
   setIsNewCategory: React.Dispatch<React.SetStateAction<boolean>>;

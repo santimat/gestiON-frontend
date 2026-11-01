@@ -1,4 +1,4 @@
-import type { Product, ProductFilters } from "@/types";
+import type { Product, ProductFilters } from "../types";
 
 export type UseProductStore = {
   formProduct: Product | null;

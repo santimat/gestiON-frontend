@@ -4,7 +4,8 @@ import { useDisclosure } from "@mantine/hooks";
 import { Avatar, NumberFormatter, Switch, Tooltip } from "@mantine/core";
 
 import { useProduct } from "../hooks/useProduct";
-import type { AppError, Product } from "@/types";
+import type { AppError } from "@shared/types";
+import type { Product } from "../types";
 import { ImageViewer } from "@shared/components/ImageViewer";
 import { ProductItemActions } from "@shared/components/ProductItemActions";
 
