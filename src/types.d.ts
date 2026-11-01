@@ -1,7 +1,6 @@
 import z from "zod";
 
 import {
-  ClientSchema,
   CashierSchema,
   CommerceWithOwnerRequestSchema,
   CashierUpdateSchema,
@@ -69,17 +68,7 @@ export type {
 export type { Category, CategoryRequest } from "@/features/categories/types";
 
 // CLIENT
-export type ClientRequest = z.infer<typeof ClientSchema>;
-
-export type Client = {
-  id: number;
-  name: string;
-  lastName: string;
-  address: string;
-  phoneNumber: string;
-  dni: string;
-  updatedAt: Date;
-};
+export type { Client, ClientRequest } from "@/features/clients/types";
 
 // CASHIER
 export type CashierRequest = z.infer<typeof CashierSchema>;

@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 import type { AppError, ClientRequest } from "@/types";
-import { clientService } from "@/services/clientService";
-import type { UseClientStore } from "@/stores/client/types";
+import { clientService } from "../services/clientService";
+import type { UseClientStore } from "./types";
 
 export const useClientStore = create<UseClientStore>((set) => ({
   formClient: null,

@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 
-import { ClientSchema } from "@/schemas";
+import { ClientSchema } from "../schemas/ClientSchema";
 import type { ClientRequest } from "@/types";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";

@@ -7,7 +7,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { useClient } from "@/hooks/useClient";
+import { useClient } from "@/features/clients";
 import { useSale } from "@/hooks/useSale";
 import type { DiscountType, PaymentMethod } from "@/types";
 

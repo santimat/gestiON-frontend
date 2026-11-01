@@ -1,7 +1,7 @@
 import { useShallow } from "zustand/shallow";
 
 import type { ClientRequest } from "@/types";
-import { useClientStore } from "@/stores/client/useClientStore";
+import { useClientStore } from "../stores/useClientStore";
 
 export const useClient = () => {
   const {

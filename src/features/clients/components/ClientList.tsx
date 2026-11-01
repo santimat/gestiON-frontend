@@ -1,8 +1,8 @@
 import { Pencil } from "lucide-react";
 
-import { ClientItem } from "@/components/clients/ClientItem";
-import { ClientItemMobile } from "@/components/clients/ClientItemMobile";
-import { useClient } from "@/hooks/useClient";
+import { ClientItem } from "./ClientItem";
+import { ClientItemMobile } from "./ClientItemMobile";
+import { useClient } from "../hooks/useClient";
 
 export const ClientList = () => {
   const { clients } = useClient();
@@ -25,7 +25,7 @@ export const ClientList = () => {
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul className="[&>li]:not-first:border-border [&>li]:not-first:border-t text-sm">
+        <ul className="[&>li]:not-first:border-border text-sm [&>li]:not-first:border-t">
           {clients.map((client) => {
             return (
               <ClientItem

@@ -44,7 +44,9 @@ const SalesPage = lazy(() =>
 );
 
 const ClientsPage = lazy(() =>
-  import("@/pages/Clients").then((module) => ({ default: module.Clients })),
+  import("@/features/clients/pages/Clients").then((module) => ({
+    default: module.Clients,
+  })),
 );
 
 const CategoriesPage = lazy(() =>

@@ -4,10 +4,10 @@ import { TextInput } from "@mantine/core";
 import type { ChangeEvent, SubmitEvent } from "react";
 import { IdCard, MapPinHouse, Phone, UserPen, UserRound } from "lucide-react";
 
-import { clientMapper } from "@/mappers";
-import { useClient } from "@/hooks/useClient";
+import { clientMapper } from "../mappers/clientMapper";
+import { useClient } from "../hooks/useClient";
 import { ModalHeader } from "@shared/components/ModalHeader";
-import { DEFAULT_CLIENT_FORM } from "@/features/clients/constants";
+import { DEFAULT_CLIENT_FORM } from "../constants";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 import type { AppError, Client, ClientRequest, FieldErrors } from "@/types";
 

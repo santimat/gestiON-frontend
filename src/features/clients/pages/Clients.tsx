@@ -2,10 +2,10 @@ import { Contact, UserPlus } from "lucide-react";
 import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
-import { useClient } from "@/hooks/useClient";
+import { useClient } from "../hooks/useClient";
 import { ListContainer } from "@shared/components/ListContainer";
-import { ClientList } from "@/components/clients/ClientList";
-import { ClientForm } from "@/components/clients/NewClientForm";
+import { ClientList } from "../components/ClientList";
+import { ClientForm } from "../components/NewClientForm";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 export const Clients = () => {
