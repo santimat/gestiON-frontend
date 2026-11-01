@@ -8,7 +8,9 @@ import { ProtectedRoute } from "@shared/routes/ProtectedRoute";
 import { getRolesForRoute } from "@shared/config/permissions";
 
 const LandingPage = lazy(() =>
-  import("@/pages/Landing").then((module) => ({ default: module.LandingPage })),
+  import("@/features/landing/pages/Landing").then((module) => ({
+    default: module.LandingPage,
+  })),
 );
 
 const AuthPage = lazy(() =>
