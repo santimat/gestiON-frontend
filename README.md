@@ -35,24 +35,37 @@ El typecheck es `npx tsc -p tsconfig.app.json --noEmit` (o `npx tsc -b`, que ade
 
 ## Estructura
 
+Arquitectura por features (`src/features/<recurso>/`) con una capa compartida (`src/shared/`):
+
 ```
 src/
-├── components/   # vistas en componentes, DOM por dominio (commerces/, sell/, sellPoints/…) y páginas full-screen
-├── pages/        # páginas de rutas (lazy-loaded en App.tsx)
-├── hooks/        # useX: API ligera por dominio para los componentes (seletores zustand)
-├── stores/       # zustand por dominio
-├── services/     # axios por dominio: zod safeParse → request → AppError
-├── schemas/      # zod por dominio (contratos de request)
-├── mappers/      # domain ↔ form/lógica
-├── utils/        # errorDictionary, constantes (permisos por rol), helpers
-└── types.d.ts    # tipos compartidos
+├── shared/        # shell reutilizable, sin lógica de un recurso
+│   ├── components/    # ListContainer, Loading, ModalHeader, ModalFormActions, ImageViewer, ProductItemActions…
+│   ├── pages/         # NotFoundPage, UnauthorizedPage (full-screen, fuera del layout)
+│   ├── layout/        # MainLayout, PageHeader + store/hook del header, components/sidebar/
+│   ├── routes/        # ProtectedRoute, GuestRoute
+│   ├── hooks/         # useFilters (filtros en URL con schema zod)
+│   ├── services/      # axiosConfig (backendAPI)
+│   ├── utils/         # errorDictionary, handleAxiosError(s), handleZodParseError, getAvatarColor
+│   ├── config/        # permissions.ts (roles/rutas/redirects) y navigation.ts (SIDEBAR_ITEMS)
+│   ├── schemas/       # FiltersBaseSchema (base de filtros compartida)
+│   └── types.d.ts     # tipos cross-cutting: AppError, FieldErrors, NavItem, UserRole, ZodParseResult
+└── features/      # un recurso por carpeta, autosuficiente:
+    ├── auth/  cashiers/  categories/  clients/  commerces/
+    ├── landing/  products/  sell-points/
+    └── sales/        # POS (components/sell/, Sell.tsx, useSaleStore) + historial (components/sells/, Sales.tsx, useSalesStore)
+        cada uno: components/ pages/ schemas/ services/ stores/ hooks/ mappers/
+                  types.ts (tipos de dominio) · constants.ts · index.ts (barrel público)
 ```
+
+- **Aliases:** `@/`, `@shared/`, `@features/` → `src/`, `src/shared/`, `src/features/` (en `vite.config.ts` y `tsconfig.app.json`).
+- **Reglas de import:** dentro de un feature, rutas relativas; entre features, **solo por el barrel** `@/features/<recurso>` (`index.ts`, sin deep imports); feature → `@shared/*` libre.
 
 ## Convenciones clave
 
 - Copys, comentarios y mensajes de error en **español**.
-- Flujo de datos: `pages/components → hooks/useX → stores/useXStore → services/<domain> → backendAPI`.
-- Servicios: `safeParse` → `handleZodParsingError` → request → `handleAxiosErrors` (nunca tragar errores desconocidos); los códigos y mensajes en español de `src/utils/errorDictionary.ts`.
+- Flujo de datos: `pages/components (feature) → hooks/useX → stores/useXStore → services/<x>Service → backendAPI`.
+- Servicios: `safeParse` → `handleZodParsingError` → request → `handleAxiosErrors` (nunca tragar errores desconocidos); los códigos y mensajes en español de `src/shared/utils/errorDictionary.ts`.
 - Exportaciones nombradas en todo el repo (default solo en `App.tsx` y `main.tsx`).
-- Permisos por rol: `ALLOWEDS_ROUTES_BY_ROLE` en `src/utils/constants.ts` es la única fuente de verdad (sidebar + `ProtectedRoute`).
+- Permisos por rol: `ALLOWEDS_ROUTES_BY_ROLE` en `@shared/config/permissions.ts` es la única fuente de verdad (sidebar + `ProtectedRoute`).
 - Más detalles de patrones y trampas en [`AGENTS.md`](./AGENTS.md).
