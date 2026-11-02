@@ -1,24 +1,25 @@
+const STEPS = [
+  {
+    step: 1,
+    title: "Pedí el alta de tu comercio",
+    description:
+      "El comercio lo creamos nosotros desde el panel privado y te pasamos el acceso.",
+  },
+  {
+    step: 2,
+    title: "Cargá productos y categorías",
+    description:
+      "Precio, stock inicial y código. Los que ya tenés los editás cuando quieras.",
+  },
+  {
+    step: 3,
+    title: "Vendé y mirá el panel",
+    description:
+      "Tus cajeros cobran desde el mostrador; vos revisás ganancias cuando quieras.",
+  },
+];
+
 export const StepsSection = () => {
-  const STEPS = [
-    {
-      step: 1,
-      title: "Pedí el alta de tu comercio",
-      description:
-        "El comercio lo creamos nosotros desde el panel privado y te pasamos el acceso.",
-    },
-    {
-      step: 2,
-      title: "Cargá productos y categorías",
-      description:
-        "Precio, stock inicial y código. Los que ya tenés los editás cuando quieras.",
-    },
-    {
-      step: 3,
-      title: "Vendé y mirá el panel",
-      description:
-        "Tus cajeros cobran desde el mostrador; vos revisás ganancias cuando quieras.",
-    },
-  ];
   return (
     <section id="how-to-start" className="border-border scroll-mt-20 border-b">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-20">

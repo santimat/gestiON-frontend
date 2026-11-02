@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { Button } from "@mantine/core";
-import { ArrowRight, StoreIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { GestiONLogo } from "@/shared/components/GestiONLogo";
 
 export const Header = () => {
   return (
@@ -11,9 +12,7 @@ export const Header = () => {
           className="flex items-center gap-2.5"
           aria-label="GestiON - Inicio"
         >
-          <span className="bg-primary text-primary-foreground grid h-8 w-8 shrink-0 place-items-center rounded-lg">
-            <StoreIcon className="h-auto w-6" color="white" />
-          </span>
+          <GestiONLogo className="h-auto w-6" />
           <span className="font-display text-base font-semibold">GestiON</span>
         </Link>
 

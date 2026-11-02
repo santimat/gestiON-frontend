@@ -2,13 +2,13 @@ import { ReceiptText } from "lucide-react";
 import { useState } from "react";
 
 import type { SaleSummary } from "../types";
-import { useSales } from "../hooks/useSales";
+import { useSales } from "@/features/sales/hooks/useSales";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
-import { SalesList } from "../components/sells/SalesList";
+import { SalesList } from "@/features/sales/components/sales/SalesList";
 import { ListContainer } from "@shared/components/ListContainer";
-import { SalesFilterBar } from "../components/sells/SalesFilterBar";
-import { SaleDetailModal } from "../components/sells/SaleDetailModal";
-import { useSalesSearch } from "../hooks/useSalesSearch";
+import { SalesFilterBar } from "@/features/sales/components/sales/SalesFilterBar";
+import { SaleDetailModal } from "@/features/sales/components/sales/SaleDetailModal";
+import { useSalesSearch } from "@/features/sales/hooks/useSalesSearch";
 
 export const Sales = () => {
   const [detail, setDetail] = useState<SaleSummary | null>(null);
