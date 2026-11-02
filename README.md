@@ -44,7 +44,7 @@ src/
 │   ├── pages/         # NotFoundPage, UnauthorizedPage (full-screen, fuera del layout)
 │   ├── layout/        # MainLayout, PageHeader + store/hook del header, components/sidebar/
 │   ├── routes/        # ProtectedRoute, GuestRoute
-│   ├── hooks/         # useFilters (filtros en URL con schema zod)
+│   ├── hooks/         # useFilters (filtros en URL con schema zod), useMediaQuery (render condicional mobile/desktop)
 │   ├── services/      # axiosConfig (backendAPI)
 │   ├── utils/         # errorDictionary, handleAxiosError(s), handleZodParseError, getAvatarColor
 │   ├── config/        # permissions.ts (roles/rutas/redirects) y navigation.ts (SIDEBAR_ITEMS)
@@ -53,7 +53,7 @@ src/
 └── features/      # un recurso por carpeta, autosuficiente:
     ├── auth/  cashiers/  categories/  clients/  commerces/
     ├── landing/  products/  sell-points/
-    └── sales/        # POS (components/sell/, Sell.tsx, useSaleStore) + historial (components/sells/, Sales.tsx, useSalesStore)
+    └── sales/        # POS (components/sell/, Sell.tsx, useSaleStore) + historial (components/sales/, Sales.tsx, useSalesStore)
         cada uno: components/ pages/ schemas/ services/ stores/ hooks/ mappers/
                   types.ts (tipos de dominio) · constants.ts · index.ts (barrel público)
 ```

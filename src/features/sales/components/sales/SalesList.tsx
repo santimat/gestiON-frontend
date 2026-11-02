@@ -1,6 +1,14 @@
+import { lazy } from "react";
 import { ChevronRight } from "lucide-react";
 
+import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { SaleSummary } from "@features/sales/types";
+
+const SaleItemMobile = lazy(() =>
+  import("@/features/sales/components/sales/SaleItemMobile").then((module) => ({
+    default: module.SaleItemMobile,
+  })),
+);
 
 type SalesListProps = {
   sales: SaleSummary[];
@@ -11,10 +19,25 @@ const HEADERS = ["N° venta", "Cliente", "Ítems", "Total"];
 const DESKTOP_COLUMNS =
   "grid grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)_0.5fr_0.8fr_0.1fr] items-center gap-x-4";
 
-export const SalesList = ({ sales, onOpenDetail }: SalesListProps) => (
-  <>
-    {/* Escritorio */}
-    <section className="bg-background border-border hidden rounded-lg border md:block">
+export const SalesList = ({ sales, onOpenDetail }: SalesListProps) => {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <div className="grid gap-3">
+        {sales.map((sale) => (
+          <SaleItemMobile
+            key={`sale-mobile-${sale.id}`}
+            sale={sale}
+            onOpenDetail={onOpenDetail}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <section className="bg-background border-border rounded-lg border">
       <ul
         className={`border-border text-secondary-foreground ${DESKTOP_COLUMNS} border-b p-2 text-sm`}
       >
@@ -46,29 +69,5 @@ export const SalesList = ({ sales, onOpenDetail }: SalesListProps) => (
         ))}
       </ul>
     </section>
-
-    {/* Mobile */}
-    <div className="grid gap-3 md:hidden">
-      {sales.map((sale) => (
-        <button
-          key={`sale-mobile-${sale.id}`}
-          onClick={() => onOpenDetail(sale)}
-          className="bg-card border-border hover:bg-background-soft flex w-full items-center justify-between gap-3 rounded-xl border p-4 text-left transition-colors"
-        >
-          <div className="min-w-0">
-            <p className="font-medium">#{sale.id}</p>
-            <p className="text-secondary-foreground truncate text-xs">
-              {sale.clientName ?? "Consumidor final"}
-            </p>
-            <p className="text-secondary-foreground text-xs">
-              {sale.itemCount} ítems
-            </p>
-          </div>
-          <span className="shrink-0 font-semibold tabular-nums">
-            ${sale.total.toLocaleString("es-AR")}
-          </span>
-        </button>
-      ))}
-    </div>
-  </>
-);
+  );
+};

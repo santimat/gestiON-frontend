@@ -3,9 +3,11 @@ import { Pencil } from "lucide-react";
 import { ClientItem } from "./ClientItem";
 import { ClientItemMobile } from "./ClientItemMobile";
 import { useClient } from "../hooks/useClient";
+import { useIsMobile } from "@shared/hooks/useMediaQuery";
 
 export const ClientList = () => {
   const { clients } = useClient();
+  const isMobile = useIsMobile();
 
   const headers = ["Cliente", "DNI", "Telefono", "Direccion", "Acciones"];
 
@@ -14,10 +16,23 @@ export const ClientList = () => {
   const columns =
     "grid grid-cols-[1fr_0.5fr_0.7fr_1fr_0.2fr] items-center gap-x-4";
 
+  if (isMobile) {
+    return (
+      <div className="grid gap-3">
+        {clients.map((client) => (
+          <ClientItemMobile
+            key={`client-mobile-${client.id}`}
+            client={client}
+            actionsIcons={actionsIcons}
+          />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <>
-      {/* Escritorio */}
-      <section className="bg-background border-border hidden rounded-lg border md:block">
+      <section className="bg-background border-border rounded-lg border">
         <ul
           className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
         >
@@ -38,17 +53,6 @@ export const ClientList = () => {
           })}
         </ul>
       </section>
-
-      {/* Mobile */}
-      <div className="grid gap-3 md:hidden">
-        {clients.map((client) => (
-          <ClientItemMobile
-            key={`client-mobile-${client.id}`}
-            client={client}
-            actionsIcons={actionsIcons}
-          />
-        ))}
-      </div>
     </>
   );
 };

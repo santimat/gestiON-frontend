@@ -1,11 +1,13 @@
 import { CashierItem } from "./CashierItem";
 import { CashierItemMobile } from "./CashierItemMobile";
 import { useCashier } from "../hooks/useCashier";
+import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { AppError } from "@shared/types";
 import { toast } from "sonner";
 
 export const CashiersList = () => {
   const { cashiers, toggleActive, isPendingToggleActive } = useCashier();
+  const isMobile = useIsMobile();
 
   const headers = ["Cajero", "Email", "Actualizado", "Estado", "Acceso"];
 
@@ -22,10 +24,24 @@ export const CashiersList = () => {
     }
   };
 
+  if (isMobile) {
+    return (
+      <div className="grid gap-3">
+        {cashiers.map((cashier) => (
+          <CashierItemMobile
+            key={`cashier-mobile-${cashier.id}`}
+            cashier={cashier}
+            onChangeSwitch={handleOnChangeSwitch}
+            isPendingToggleActive={isPendingToggleActive}
+          />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <>
-      {/* Escritorio */}
-      <section className="bg-background border-border hidden rounded-lg border md:block">
+      <section className="bg-background border-border rounded-lg border">
         <ul
           className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
         >
@@ -47,18 +63,6 @@ export const CashiersList = () => {
           })}
         </ul>
       </section>
-
-      {/* Mobile */}
-      <div className="grid gap-3 md:hidden">
-        {cashiers.map((cashier) => (
-          <CashierItemMobile
-            key={`cashier-mobile-${cashier.id}`}
-            cashier={cashier}
-            onChangeSwitch={handleOnChangeSwitch}
-            isPendingToggleActive={isPendingToggleActive}
-          />
-        ))}
-      </div>
     </>
   );
 };

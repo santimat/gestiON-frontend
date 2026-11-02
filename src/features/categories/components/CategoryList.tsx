@@ -1,5 +1,6 @@
 import { lazy } from "react";
 
+import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { Category } from "../types";
 
 const CategoryItem = lazy(() =>
@@ -24,10 +25,24 @@ const COLUMNS =
   "grid grid-cols-[1fr_1.2fr_0.5fr_0.5fr_0.3fr] items-center gap-x-4";
 
 export const CategoryList = ({ categories }: CategoryListProps) => {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <div className="grid gap-3">
+        {categories.map((category) => (
+          <CategoryItemMobile
+            key={`category-mobile-${category.id}`}
+            category={category}
+          />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <>
-      {/* Desktop */}
-      <section className="bg-background border-border hidden overflow-hidden rounded-lg border md:block">
+      <section className="bg-background border-border overflow-hidden rounded-lg border">
         <ul className="border-border text-secondary-foreground grid grid-cols-[1fr_1.2fr_0.5fr_0.5fr_0.3fr] items-center gap-x-4 border-b p-2 text-sm">
           {HEADERS.map((header) => (
             <li key={header}>{header}</li>
@@ -43,16 +58,6 @@ export const CategoryList = ({ categories }: CategoryListProps) => {
           ))}
         </ul>
       </section>
-
-      {/* Mobile */}
-      <div className="grid gap-3 md:hidden">
-        {categories.map((category) => (
-          <CategoryItemMobile
-            key={`category-mobile-${category.id}`}
-            category={category}
-          />
-        ))}
-      </div>
     </>
   );
 };

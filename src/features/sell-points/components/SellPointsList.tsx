@@ -1,6 +1,7 @@
 import { SellPointItem } from "./SellPointItem";
 import { SellPointItemMobile } from "./SellPointItemMobile";
 import { useSellPoint } from "../hooks/useSellPoint";
+import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { AppError } from "@shared/types";
 import type { SellPoint } from "../types";
 import { toast } from "sonner";
@@ -11,6 +12,7 @@ type SellPointsListProps = {
 
 export const SellPointsList = ({ sellPoints }: SellPointsListProps) => {
   const { toggleActive } = useSellPoint();
+  const isMobile = useIsMobile();
 
   const handleChangeSwitch = async (sellPointId: number) => {
     try {
@@ -33,10 +35,23 @@ export const SellPointsList = ({ sellPoints }: SellPointsListProps) => {
   const columns =
     "grid grid-cols-[1fr_1.2fr_0.6fr_0.5fr_0.3fr] items-center gap-x-4";
 
+  if (isMobile) {
+    return (
+      <div className="grid gap-3">
+        {sellPoints.map((sellPoint) => (
+          <SellPointItemMobile
+            key={`sell-point-mobile-${sellPoint.id}`}
+            sellPoint={sellPoint}
+            onChangeSwitch={handleChangeSwitch}
+          />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <>
-      {/* Escritorio */}
-      <section className="bg-background border-border hidden rounded-lg border md:block">
+      <section className="bg-background border-border rounded-lg border">
         <ul
           className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
         >
@@ -57,17 +72,6 @@ export const SellPointsList = ({ sellPoints }: SellPointsListProps) => {
           })}
         </ul>
       </section>
-
-      {/* Mobile */}
-      <div className="grid gap-3 md:hidden">
-        {sellPoints.map((sellPoint) => (
-          <SellPointItemMobile
-            key={`sell-point-mobile-${sellPoint.id}`}
-            sellPoint={sellPoint}
-            onChangeSwitch={handleChangeSwitch}
-          />
-        ))}
-      </div>
     </>
   );
 };
