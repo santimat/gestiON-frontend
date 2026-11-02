@@ -26,7 +26,7 @@ export type SaleDraft = {
 
 export type SaleRequest = z.infer<typeof SaleRequestSchema>;
 
-export type SaleStatus = "PAY" | "PENDING";
+export type SaleStatus = "PAYED" | "PENDING";
 
 export type SaleDetail = {
   id: number;

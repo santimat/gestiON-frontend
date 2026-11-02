@@ -3,12 +3,12 @@ import { useState } from "react";
 
 import type { SaleSummary } from "../types";
 import { useSales } from "@/features/sales/hooks/useSales";
-import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
-import { SalesList } from "@/features/sales/components/sales/SalesList";
 import { ListContainer } from "@shared/components/ListContainer";
+import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+import { useSalesSearch } from "@/features/sales/hooks/useSalesSearch";
+import { SalesList } from "@/features/sales/components/sales/SalesList";
 import { SalesFilterBar } from "@/features/sales/components/sales/SalesFilterBar";
 import { SaleDetailModal } from "@/features/sales/components/sales/SaleDetailModal";
-import { useSalesSearch } from "@/features/sales/hooks/useSalesSearch";
 
 export const Sales = () => {
   const [detail, setDetail] = useState<SaleSummary | null>(null);

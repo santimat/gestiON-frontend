@@ -38,7 +38,7 @@ export const SaleDetailModal = ({
           </div>
           <div>
             <p className="text-secondary-foreground text-xs">Estado</p>
-            {sale.status === "PAY" ? (
+            {sale.status === "PAYED" ? (
               <span className="bg-success/40 text-success rounded-full px-2.5 py-0.5 text-xs font-medium">
                 Pagada
               </span>

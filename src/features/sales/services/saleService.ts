@@ -31,7 +31,8 @@ export const saleService = {
       throw error;
     }
   },
-  getSaleDetailsBySaleId: async (saleId: string) => {
+
+  getSaleWithDetails: async (saleId: string) => {
     try {
       const { data } = await backendAPI.get(`/sales/${saleId}`);
       return data;
