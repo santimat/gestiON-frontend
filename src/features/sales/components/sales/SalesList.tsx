@@ -4,6 +4,7 @@ import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { SaleSummary } from "@features/sales/types";
 import { PAYMENT_METHODS } from "@features/sales/dictionary";
 import { StatusBadge } from "@features/sales/components/sales/StatusBadge";
+import { ChevronRight } from "lucide-react";
 
 const SaleItemMobile = lazy(() =>
   import("@/features/sales/components/sales/SaleItemMobile").then((module) => ({
@@ -27,7 +28,7 @@ const HEADERS = [
   "Total",
 ];
 const DESKTOP_COLUMNS =
-  "grid grid-cols-[0.2fr_0.2fr_0.2fr_0.5fr_0.2fr_0.4fr_0.3fr_0.2fr] items-center gap-x-4";
+  "grid grid-cols-[0.2fr_0.2fr_0.2fr_0.5fr_0.2fr_0.4fr_0.3fr_0.2fr_0.1fr] items-center gap-x-4";
 
 export const SalesList = ({ sales, onOpenDetail }: SalesListProps) => {
   const isMobile = useIsMobile();
@@ -78,6 +79,7 @@ export const SalesList = ({ sales, onOpenDetail }: SalesListProps) => {
               <p className="font-semibold">
                 ${sale.total.toLocaleString("es-AR")}
               </p>
+              <ChevronRight size={20} className="text-secondary-foreground" />
             </li>
           );
         })}

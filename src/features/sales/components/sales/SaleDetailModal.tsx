@@ -3,6 +3,7 @@ import { ReceiptText } from "lucide-react";
 
 import { ModalHeader } from "@shared/components/ModalHeader";
 import type { SaleSummary } from "../../types";
+import { StatusBadge } from "./StatusBadge";
 
 type SaleDetailModalProps = {
   opened: boolean;
@@ -38,15 +39,7 @@ export const SaleDetailModal = ({
           </div>
           <div>
             <p className="text-secondary-foreground text-xs">Estado</p>
-            {sale.status === "PAYED" ? (
-              <span className="bg-success/40 text-success rounded-full px-2.5 py-0.5 text-xs font-medium">
-                Pagada
-              </span>
-            ) : (
-              <span className="bg-warning/40 text-warning rounded-full px-2.5 py-0.5 text-xs font-medium">
-                Pendiente
-              </span>
-            )}
+            <StatusBadge status={sale.status} />
           </div>
         </div>
 
