@@ -95,7 +95,7 @@ export const SellPoints = () => {
 
       <main className="flex flex-col gap-6 p-6">
         {!hasCommerce && (
-          <div className="border-border bg-card flex items-center gap-3 rounded-xl border border-dashed p-4">
+          <div className="border-background-soft bg-card flex items-center gap-3 rounded-xl border border-dashed p-4">
             <StoreIcon
               className="text-secondary-foreground shrink-0"
               size={20}

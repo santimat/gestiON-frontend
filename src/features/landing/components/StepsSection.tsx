@@ -21,7 +21,10 @@ const STEPS = [
 
 export const StepsSection = () => {
   return (
-    <section id="how-to-start" className="border-border scroll-mt-20 border-b">
+    <section
+      id="how-to-start"
+      className="border-background-soft scroll-mt-20 border-b"
+    >
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-20">
         <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
           Cómo empezar
@@ -32,7 +35,7 @@ export const StepsSection = () => {
               {step < STEPS.length && (
                 <span className="border-primary absolute top-4 left-8 hidden w-full border-t-2 border-dashed md:block"></span>
               )}
-              <span className="bg-card text-primary border-border grid h-8 w-8 place-items-center rounded-full border text-sm font-semibold">
+              <span className="bg-card text-primary border-background-soft grid h-8 w-8 place-items-center rounded-full border text-sm font-semibold">
                 {step}
               </span>
               <h3 className="mt-4 text-base font-semibold">{title}</h3>

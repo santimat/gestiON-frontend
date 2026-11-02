@@ -5,7 +5,7 @@ import { GestiONLogo } from "@/shared/components/GestiONLogo";
 
 export const Header = () => {
   return (
-    <header className="bg-background/85 border-border sticky top-0 z-30 border-b backdrop-blur">
+    <header className="bg-background border-border sticky top-0 z-30 border-b backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link
           to="/"

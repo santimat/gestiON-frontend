@@ -33,7 +33,7 @@ export const ListContainer = ({
 
   if (isEmpty) {
     return (
-      <div className="border-border text-secondary-foreground flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border p-10">
+      <div className="border-background-soft bg-card text-secondary-foreground flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border p-10">
         <Icon size={40} strokeWidth={1.5} />
         <p className="text-foreground font-medium">{emptyMessage}</p>
       </div>

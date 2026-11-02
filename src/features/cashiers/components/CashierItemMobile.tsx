@@ -25,7 +25,7 @@ export const CashierItemMobile = ({
     .join("");
 
   return (
-    <div className="border-border bg-card shadow-card rounded-xl border p-4">
+    <div className="border-background-soft bg-card shadow-card rounded-xl border p-4">
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
         <div className="flex min-w-0 items-center gap-3">
           <span className="bg-primary/40 text-primary flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-semibold">

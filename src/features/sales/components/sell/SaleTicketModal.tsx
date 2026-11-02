@@ -51,7 +51,7 @@ export const SaleTicketModal = ({
       </div>
 
       {sale && (
-        <div className="border-border bg-background-soft mt-4 rounded-xl border p-4 text-sm">
+        <div className="border-background-soft bg-card mt-4 rounded-xl border p-4 text-sm">
           <div className="flex justify-between">
             <span className="text-secondary-foreground">Comprobante</span>
             <span className="font-medium">#{sale.id}</span>
@@ -84,7 +84,7 @@ export const SaleTicketModal = ({
               </span>
             </div>
           )}
-          <div className="border-border mt-3 flex items-end justify-between border-t pt-3">
+          <div className="border-background-soft mt-3 flex items-end justify-between border-t pt-3">
             <span className="text-secondary-foreground">Total</span>
             <span className="text-xl font-semibold tabular-nums">
               ${sale.total.toLocaleString("es-AR")}

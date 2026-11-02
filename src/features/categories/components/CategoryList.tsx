@@ -42,13 +42,13 @@ export const CategoryList = ({ categories }: CategoryListProps) => {
 
   return (
     <>
-      <section className="bg-background border-border overflow-hidden rounded-lg border">
-        <ul className="border-border text-secondary-foreground grid grid-cols-[1fr_1.2fr_0.5fr_0.5fr_0.3fr] items-center gap-x-4 border-b p-2 text-sm">
+      <section className="bg-card border-background-soft overflow-hidden rounded-lg border">
+        <ul className="border-background-soft text-secondary-foreground grid grid-cols-[1fr_1.2fr_0.5fr_0.5fr_0.3fr] items-center gap-x-4 border-b p-2 text-sm">
           {HEADERS.map((header) => (
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul className="[&>li]:not-first:border-border text-sm [&>li]:not-first:border-t">
+        <ul className="[&>li]:not-first:border-background-soft text-sm [&>li]:not-first:border-t">
           {categories.map((category) => (
             <CategoryItem
               key={`category-${category.id}`}

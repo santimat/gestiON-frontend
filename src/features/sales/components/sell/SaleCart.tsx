@@ -17,8 +17,8 @@ export const SaleCart = () => {
   };
 
   return (
-    <div className="border-border bg-card shadow-card overflow-hidden rounded-xl border">
-      <div className="border-border flex items-center justify-between gap-3 border-b px-4 py-3">
+    <div className="border-background-soft bg-card shadow-card overflow-hidden rounded-xl border">
+      <div className="border-background-soft flex items-center justify-between gap-3 border-b px-4 py-3">
         <p className="text-sm font-semibold">Carrito</p>
         <span className="bg-primary-soft text-primary rounded-full px-2 py-0.5 text-xs font-medium">
           {totalItems} ítems
@@ -55,7 +55,7 @@ export const SaleCart = () => {
                 />
               </div>
               <div className="mt-2.5 flex items-center gap-2">
-                <div className="border-border flex items-center rounded-lg border">
+                <div className="border-background-soft flex items-center rounded-lg border">
                   <Button
                     variant="subtle"
                     size="compact-sm"

@@ -52,14 +52,14 @@ export const SaleDetailModal = ({
 
         {/* el backend todavía no expone el detalle por venta (GET /sales/{id}):
             cuando llegue, acá van las líneas de productos */}
-        <div className="border-border bg-background-soft rounded-lg border p-3 text-sm">
+        <div className="border-background-soft bg-card rounded-lg border p-3 text-sm">
           <p className="text-secondary-foreground text-xs">
             El detalle de los productos se podrá ver cuando el backend sume el
             endpoint de detalle por venta.
           </p>
         </div>
 
-        <div className="border-border flex items-end justify-between border-t pt-3">
+        <div className="border-background-soft flex items-end justify-between border-t pt-3">
           <span className="text-secondary-foreground text-sm">Total</span>
           <span className="text-xl font-semibold tabular-nums">
             ${sale.total.toLocaleString("es-AR")}

@@ -48,15 +48,15 @@ export const SalesList = ({ sales, onOpenDetail }: SalesListProps) => {
   }
 
   return (
-    <section className="bg-background border-border rounded-lg border">
+    <section className="bg-card border-background-soft rounded-lg border">
       <ul
-        className={`border-border text-secondary-foreground ${DESKTOP_COLUMNS} border-b p-2 text-sm`}
+        className={`border-background-soft text-secondary-foreground ${DESKTOP_COLUMNS} border-b p-2 text-sm`}
       >
         {HEADERS.map((header) => (
           <li key={header}>{header}</li>
         ))}
       </ul>
-      <ul className="[&>li]:not-first:border-border text-sm [&>li]:not-first:border-t">
+      <ul className="[&>li]:not-first:border-background-soft text-sm [&>li]:not-first:border-t">
         {sales.map((sale) => {
           const date = new Date(sale.createdAt);
           const createdDate = date.toLocaleDateString();

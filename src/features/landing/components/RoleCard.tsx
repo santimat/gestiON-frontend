@@ -14,7 +14,7 @@ export const RoleCard = ({
   items,
 }: RoleCardProps) => {
   return (
-    <div className="bg-card shadow-card border-border rounded-xl border p-6">
+    <div className="bg-card shadow-card border-background-soft rounded-xl border p-6">
       <div className="flex items-center gap-3">
         <span className="bg-primary-soft text-primary grid h-10 w-10 place-items-center rounded-lg">
           <Icon className="h-5 w-5" />

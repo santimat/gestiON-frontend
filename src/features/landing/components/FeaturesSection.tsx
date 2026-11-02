@@ -48,7 +48,10 @@ export const FeaturesSection = () => {
   ];
 
   return (
-    <section id="features" className="border-border scroll-mt-20 border-b">
+    <section
+      id="features"
+      className="border-background-soft scroll-mt-20 border-b"
+    >
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-20">
         <div className="max-w-2.5xl">
           <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -64,7 +67,7 @@ export const FeaturesSection = () => {
           {FEATURES.map(({ title, icon: Icon, description }) => (
             <li
               key={title}
-              className="bg-card shadow-card hover:border-input border-border rounded-xl border p-5 transition-colors"
+              className="bg-card shadow-card hover:border-input border-background-soft rounded-xl border p-5 transition-colors"
             >
               <span className="bg-primary-soft text-primary grid h-9 w-9 place-items-center rounded-lg">
                 <Icon className="h-auto w-5" />

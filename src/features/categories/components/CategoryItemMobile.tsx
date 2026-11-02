@@ -13,7 +13,7 @@ export const CategoryItemMobile = ({ category }: CategoryItemMobileProps) => {
   return (
     <div
       key={`category-mobile-${category.id}`}
-      className="border-border bg-card shadow-card flex flex-col rounded-xl border p-4"
+      className="border-background-soft bg-card shadow-card flex flex-col rounded-xl border p-4"
     >
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">

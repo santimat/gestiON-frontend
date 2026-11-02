@@ -18,7 +18,7 @@ export const SellPointItemMobile = ({
   const updatedAt = new Date(sellPoint.updatedAt).toLocaleDateString("es-AR");
 
   return (
-    <div className="border-border bg-card shadow-card rounded-xl border p-4">
+    <div className="border-background-soft bg-card shadow-card rounded-xl border p-4">
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold">{sellPoint.name}</p>

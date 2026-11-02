@@ -26,7 +26,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex h-screen">
       <SideBar />
-      <section className="flex h-screen min-w-0 flex-1 flex-col">
+      <section className="bg-background flex h-screen min-w-0 flex-1 flex-col">
         {/* barra superior con logo y logout, sólo mobile */}
         {isMobileShell ? (
           <Suspense fallback={null}>

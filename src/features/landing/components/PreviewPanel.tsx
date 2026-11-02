@@ -14,8 +14,8 @@ export const PreviewPanel = () => {
   const PREVIEW_BARS = [38, 62, 45, 80, 55, 92, 70];
 
   return (
-    <div className="bg-card shadow-raised border-border overflow-hidden rounded-2xl border">
-      <div className="border-border flex items-center justify-between border-b px-5 py-3">
+    <div className="bg-card shadow-raised border-background-soft overflow-hidden rounded-2xl border">
+      <div className="border-background-soft flex items-center justify-between border-b px-5 py-3">
         <div className="flex items-center gap-2">
           <span className="bg-primary text-primary-foreground grid h-6 w-6 place-items-center rounded-md">
             <StoreIcon className="h-auto w-4" color="white" strokeWidth={2} />
@@ -25,11 +25,11 @@ export const PreviewPanel = () => {
         <p className="text-secondary-foreground text-xs">Hoy</p>
       </div>
 
-      <div className="border-border grid grid-cols-3 gap-3 border-b p-5">
+      <div className="border-background-soft grid grid-cols-3 gap-3 border-b p-5">
         {PREVIEW_STATS.map(({ label, value }) => (
           <div
             key={label}
-            className="bg-background border-border rounded-lg border p-3"
+            className="bg-background border-background-soft rounded-lg border p-3"
           >
             <p className="text-secondary-foreground text-[11px]">{label}</p>
             <p className="mt-1 text-sm font-semibold sm:text-base">{value}</p>
@@ -37,7 +37,7 @@ export const PreviewPanel = () => {
         ))}
       </div>
 
-      <div className="border-border flex h-32 items-end gap-2 border-b px-5 py-5">
+      <div className="border-background-soft flex h-32 items-end gap-2 border-b px-5 py-5">
         {PREVIEW_BARS.map((height, index) => (
           <div
             key={`bar-${index}`}
@@ -53,7 +53,7 @@ export const PreviewPanel = () => {
         {SELL_DETAIL.map(({ code, detail, total }) => (
           <div
             key={`detail-${code}`}
-            className="border-border flex items-center justify-between rounded-lg border p-3"
+            className="border-background-soft flex items-center justify-between rounded-lg border p-3"
           >
             <div>
               <p className="text-xs font-medium">{code}</p>

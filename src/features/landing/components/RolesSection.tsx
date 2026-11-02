@@ -17,7 +17,10 @@ export const RolesSection = () => {
     "Emite el ticket al terminar",
   ];
   return (
-    <section id="roles" className="border-border scroll-mt-20 border-b">
+    <section
+      id="roles"
+      className="border-background-soft scroll-mt-20 border-b"
+    >
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-20">
         <div className="max-w-2xl">
           <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -44,7 +47,7 @@ export const RolesSection = () => {
           />
         </div>
 
-        <div className="bg-card text-secondary-foreground border-border mt-6 flex items-center gap-2.5 rounded-xl border p-4 text-sm">
+        <div className="bg-card text-secondary-foreground border-background-soft mt-6 flex items-center gap-2.5 rounded-xl border p-4 text-sm">
           <SmartphoneIcon className="text-primary h-4 w-4" strokeWidth={2} />
           Los mismos módulos funcionan en la PC del mostrador y en el celular:
           no hay que aprender dos formas de trabajar.
