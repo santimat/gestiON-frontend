@@ -1,15 +1,15 @@
+import { GestiONLogo } from "@/shared/components/GestiONLogo";
 import {
   BanknoteArrowUp,
   ChartNoAxesColumnIncreasing,
   Package,
-  Store,
 } from "lucide-react";
 
 export const LeftSection = () => {
   return (
     <section className="bg-card hidden max-w-140 flex-col justify-between p-12 lg:flex">
       <header className="flex items-center gap-2">
-        <Store className="bg-primary text-card h-10 w-10 rounded-lg p-1" />
+        <GestiONLogo className="h-auto w-10" />
         <h1 className="text-foreground font-semibold">GestiON</h1>
       </header>
       <div>
