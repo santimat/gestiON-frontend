@@ -8,6 +8,7 @@ React 19 + Vite 8 + TypeScript SPA (stock & sales management). UI copy, comments
 - Typecheck: `npx tsc -b` (no dedicated script; `pnpm build` = `tsc -b && vite build`)
 - Lint: `pnpm lint` (`eslint .`)
 - No test framework, no CI, no format script. Prettier config exists (`.prettierrc` = defaults + `prettier-plugin-tailwindcss`); run `npx prettier --write <files>` only on files you touched — repo-wide it would reformat tab-indented files.
+- just commit when the dev says that you have
 
 **Package manager:** `pnpm` (`pnpm-lock.yaml` + pnpm-layout `node_modules`). `package-lock.json` is a stale duplicate — do not run `npm install` or update it.
 
