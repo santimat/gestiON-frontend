@@ -148,7 +148,7 @@ export const ProductForm = ({
           />
 
           <FileInput
-            label="Imagen del prducto"
+            label="Imagen del producto"
             name="image"
             placeholder="Máximo de imagen 10MB"
             leftSection={<FileImage size={20} />}
