@@ -54,6 +54,7 @@ export const SaleTicketModal = ({
             content={sale.clientName ?? "Consumidor Final"}
           />
           <SaleTicketModalRow title="Metodo de pago" content={paymentMethod} />
+          <hr className="my-4" />
           <SaleTicketModalRow title="Subtotal" content={subtTotal} />
           {sale.discount > 0 && (
             <SaleTicketModalRow

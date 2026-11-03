@@ -45,7 +45,7 @@ export type Sale = {
   paymentMethod: PaymentMethod;
   subtotal: number;
   discountType: DiscountType | null;
-  discount: number;
+  discount: number | null;
   total: number;
   createdAt: Date;
   observations: string | null;

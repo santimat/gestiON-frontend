@@ -32,7 +32,7 @@ export const saleService = {
     }
   },
 
-  getSaleWithDetails: async (saleId: string) => {
+  getSaleWithDetails: async (saleId: number) => {
     try {
       const { data } = await backendAPI.get(`/sales/${saleId}`);
       return data;

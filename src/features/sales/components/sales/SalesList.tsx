@@ -1,10 +1,8 @@
 import { lazy } from "react";
 
-import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { SaleSummary } from "@features/sales/types";
-import { PAYMENT_METHODS } from "@features/sales/dictionary";
-import { StatusBadge } from "@features/sales/components/sales/StatusBadge";
-import { ChevronRight } from "lucide-react";
+import { useIsMobile } from "@shared/hooks/useMediaQuery";
+import { SaleItem } from "@features/sales/components/sales/SaleItem";
 
 const SaleItemMobile = lazy(() =>
   import("@features/sales/components/sales/SaleItemMobile").then((module) => ({
@@ -14,7 +12,6 @@ const SaleItemMobile = lazy(() =>
 
 type SalesListProps = {
   sales: SaleSummary[];
-  onOpenDetail: (sale: SaleSummary) => void;
 };
 
 const HEADERS = [
@@ -27,23 +24,20 @@ const HEADERS = [
   "Estado",
   "Total",
 ];
+
 const DESKTOP_COLUMNS =
   "grid grid-cols-[0.2fr_0.2fr_0.2fr_0.5fr_0.2fr_0.4fr_0.3fr_0.2fr_0.1fr] items-center gap-x-4";
 
-export const SalesList = ({ sales, onOpenDetail }: SalesListProps) => {
+export const SalesList = ({ sales }: SalesListProps) => {
   const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
-      <div className="grid gap-3">
+      <ul className="grid gap-3">
         {sales.map((sale) => (
-          <SaleItemMobile
-            key={`sale-mobile-${sale.id}`}
-            sale={sale}
-            onOpenDetail={onOpenDetail}
-          />
+          <SaleItemMobile key={`sale-mobile-${sale.id}`} sale={sale} />
         ))}
-      </div>
+      </ul>
     );
   }
 
@@ -57,32 +51,13 @@ export const SalesList = ({ sales, onOpenDetail }: SalesListProps) => {
         ))}
       </ul>
       <ul className="[&>li]:not-first:border-background-soft text-sm [&>li]:not-first:border-t">
-        {sales.map((sale) => {
-          const date = new Date(sale.createdAt);
-          const createdDate = date.toLocaleDateString();
-          const createdHour = `${date.getHours()}:${date.getMinutes()}`;
-          const paymentMethod = PAYMENT_METHODS[sale.paymentMethod];
-          return (
-            <li
-              key={`sale-${sale.id}`}
-              onClick={() => onOpenDetail(sale)}
-              title={`Ver detalle de la venta ${sale.id}`}
-              className={`${DESKTOP_COLUMNS} hover:bg-background-soft cursor-pointer px-2 py-3 transition-colors`}
-            >
-              <p className="font-medium">#{sale.id}</p>
-              <p>{createdDate}</p>
-              <p>{createdHour}</p>
-              <p className="truncate">{sale.clientName}</p>
-              <p className="text-secondary-foreground">{sale.itemCount}</p>
-              <p>{paymentMethod}</p>
-              <StatusBadge status={sale.status} />
-              <p className="font-semibold">
-                ${sale.total.toLocaleString("es-AR")}
-              </p>
-              <ChevronRight size={20} className="text-secondary-foreground" />
-            </li>
-          );
-        })}
+        {sales.map((sale) => (
+          <SaleItem
+            key={`sale-${sale.id}`}
+            sale={sale}
+            desktopColumns={DESKTOP_COLUMNS}
+          />
+        ))}
       </ul>
     </section>
   );

@@ -17,9 +17,6 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
   openEdit: (sellPoint) =>
     set(() => ({ formSellPoint: sellPoint, isFormModalOpen: true })),
   openCreate: () => set(() => ({ formSellPoint: null, isFormModalOpen: true })),
-  // no limpiamos formSellPoint al cerrar: Mantine mantiene el contenido montado
-  // durante la transición de salida y limpiarlo a mitad del fade resetea el form.
-  // openCreate / openEdit sobreescriben el valor al volver a abrir.
   closeFormModal: () => set(() => ({ isFormModalOpen: false })),
   cashiersModalSellPoint: null,
   isCashiersModalOpen: false,
@@ -28,9 +25,6 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
       cashiersModalSellPoint: sellPoint,
       isCashiersModalOpen: true,
     })),
-  // no limpiamos cashiersModalSellPoint al cerrar: Mantine mantiene el contenido
-  // montado durante la transición de salida y limpiarlo a mitad del fade resetea
-  // el contenido del modal. openCashiersModal sobreescribe el valor al abrir.
   closeCashiersModal: () => set(() => ({ isCashiersModalOpen: false })),
 
   createSellPoint: async (sellPoint: SellPointRequest) => {

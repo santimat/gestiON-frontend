@@ -26,3 +26,13 @@ export type UseSalesStore = {
   error: string | null;
   getSales: (filters: SalesFilter) => Promise<void>;
 };
+
+export type UseSaleDetailsStore = {
+  isLoading: boolean;
+  error: string | null;
+  isDetailModalOpen: boolean;
+  openDetailModal: () => void;
+  closeDetailModal: () => void;
+  getSaleWithDetails: (saleId: number) => Promise<void>;
+  saleWithDetails: Sale | null;
+};
