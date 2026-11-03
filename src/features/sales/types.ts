@@ -62,6 +62,7 @@ export type SaleSummary = {
   createdAt: string;
   subtotal: number;
   discount: number;
+  discountType: string;
   total: number;
 };
 

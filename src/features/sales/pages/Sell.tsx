@@ -3,11 +3,11 @@ import { toast } from "sonner";
 
 import type { AppError } from "@shared/types";
 import { useClient } from "@features/clients";
-import type { SaleSummary as SaleSummaryData } from "@features/sales/types";
 import { useSale } from "@features/sales/hooks/useSale";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { SaleCart } from "@features/sales/components/sell/SaleCart";
 import { SaleSummary } from "@features/sales/components/sell/SaleSummary";
+import type { SaleSummary as SaleSummaryData } from "@features/sales/types";
 import { ProductSearch } from "@features/sales/components/sell/ProductSearch";
 import { SaleTicketModal } from "@features/sales/components/sell/SaleTicketModal";
 

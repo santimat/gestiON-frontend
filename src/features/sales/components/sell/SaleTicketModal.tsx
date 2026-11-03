@@ -1,14 +1,9 @@
-import { Button, Modal } from "@mantine/core";
 import { CheckCircle2 } from "lucide-react";
+import { Button, Modal } from "@mantine/core";
 
-import type { PaymentMethod, SaleSummary } from "@features/sales/types";
-
-const PAYMENT_LABELS: Record<PaymentMethod, string> = {
-  CASH: "Efectivo",
-  CARD: "Tarjeta",
-  TRANSFER: "Transferencia",
-  CREDIT_ACCOUNT: "Cuenta corriente",
-};
+import type { SaleSummary } from "@features/sales/types";
+import { PAYMENT_METHODS } from "@features/sales/dictionary";
+import { SaleTicketModalRow } from "@features/sales/components/sell/SaleTickModalRow";
 
 type SaleTicketModalProps = {
   opened: boolean;
@@ -23,6 +18,17 @@ export const SaleTicketModal = ({
   closeModal,
   onNewSale,
 }: SaleTicketModalProps) => {
+  const paymentMethod = sale?.paymentMethod
+    ? PAYMENT_METHODS[sale.paymentMethod]
+    : "";
+  const dicountText =
+    sale?.discountType === "PERCENTAGE"
+      ? `${sale.discount}%`
+      : `$${sale?.discount.toLocaleString("es-AR")}`;
+
+  const subtTotal = `$${sale?.subtotal.toLocaleString("es-AR")}`;
+  const total = `$${sale?.total.toLocaleString("es-AR")}`;
+
   return (
     <Modal
       opened={opened}
@@ -40,50 +46,29 @@ export const SaleTicketModal = ({
       </div>
 
       {sale && (
-        <div className="border-background-soft bg-card mt-4 rounded-xl border p-4 text-sm">
-          <div className="flex justify-between">
-            <span className="text-secondary-foreground">Comprobante</span>
-            <span className="font-medium">#{sale.id}</span>
-          </div>
-          <div className="mt-2 flex justify-between">
-            <span className="text-secondary-foreground">Ítems</span>
-            <span className="font-medium tabular-nums">{sale.itemCount}</span>
-          </div>
-          <div className="mt-2 flex justify-between gap-3">
-            <span className="text-secondary-foreground">Cliente</span>
-            <span className="truncate font-medium">
-              {sale.clientName ?? "Consumidor final"}
-            </span>
-          </div>
-          <div className="mt-2 flex justify-between">
-            <span className="text-secondary-foreground">Pago</span>
-            <span className="font-medium">
-              {PAYMENT_LABELS[sale.paymentMethod]}
-            </span>
-          </div>
+        <div className="border-background-soft bg-card mt-4 rounded-xl border p-4 text-sm [&>div]:not-first:mt-2">
+          <SaleTicketModalRow title="Comprobante" content={`#${sale.id}`} />
+          <SaleTicketModalRow title="Ítems" content={sale.itemCount} />
+          <SaleTicketModalRow
+            title="Cliente"
+            content={sale.clientName ?? "Consumidor Final"}
+          />
+          <SaleTicketModalRow title="Metodo de pago" content={paymentMethod} />
+          <SaleTicketModalRow title="Subtotal" content={subtTotal} />
           {sale.discount > 0 && (
-            <div className="mt-2 flex justify-between gap-3">
-              <span className="text-secondary-foreground">Descuento</span>
-              <span className="text-destructive font-medium tabular-nums">
-                -${sale.discount.toLocaleString("es-AR")}
-              </span>
-            </div>
+            <SaleTicketModalRow
+              title="Descuento"
+              content={dicountText}
+              color="destructive"
+            />
           )}
-          <div className="border-background-soft mt-3 flex items-end justify-between border-t pt-3">
-            <span className="text-secondary-foreground">Total</span>
-            <span className="text-xl font-semibold tabular-nums">
-              ${sale.total.toLocaleString("es-AR")}
-            </span>
-          </div>
+          <SaleTicketModalRow title="Total" content={total} />
         </div>
       )}
 
       <div className="mt-5 flex flex-col gap-2">
         <Button onClick={onNewSale} className="bg-primary">
           Nueva venta
-        </Button>
-        <Button variant="default" onClick={closeModal}>
-          Imprimir ticket
         </Button>
       </div>
     </Modal>

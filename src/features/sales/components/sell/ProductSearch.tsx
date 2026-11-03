@@ -49,7 +49,13 @@ export const ProductSearch = () => {
           error={error}
         >
           {products.map((product) => {
-            return <ProductSellCard product={product} addToCart={addToCart} />;
+            return (
+              <ProductSellCard
+                key={`product-${product.name}`}
+                product={product}
+                addToCart={addToCart}
+              />
+            );
           })}
         </ListContainer>
       </div>
