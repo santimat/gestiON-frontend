@@ -1,8 +1,8 @@
 import { Button, Modal } from "@mantine/core";
 import { CheckCircle2 } from "lucide-react";
 
-import { useClient } from "@/features/clients";
-import type { PaymentMethod, Sale } from "../../types";
+import { useClient } from "@features/clients";
+import type { PaymentMethod, Sale } from "@features/sales/types";
 
 const PAYMENT_LABELS: Record<PaymentMethod, string> = {
   CASH: "Efectivo",

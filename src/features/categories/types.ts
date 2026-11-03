@@ -1,6 +1,6 @@
 import type { z } from "zod";
 
-import { CategorySchema } from "./schemas/CategorySchema";
+import { CategorySchema } from "@features/categories/schemas/CategorySchema";
 
 export type CategoryRequest = z.infer<typeof CategorySchema>;
 

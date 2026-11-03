@@ -7,7 +7,7 @@ import { StatusBadge } from "@features/sales/components/sales/StatusBadge";
 import { ChevronRight } from "lucide-react";
 
 const SaleItemMobile = lazy(() =>
-  import("@/features/sales/components/sales/SaleItemMobile").then((module) => ({
+  import("@features/sales/components/sales/SaleItemMobile").then((module) => ({
     default: module.SaleItemMobile,
   })),
 );

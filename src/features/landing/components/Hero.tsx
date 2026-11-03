@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { Button } from "@mantine/core";
-import { PreviewPanel } from "./PreviewPanel";
+import { PreviewPanel } from "@features/landing/components/PreviewPanel";
 import { ArrowRightIcon } from "lucide-react";
 
 export const Hero = () => {

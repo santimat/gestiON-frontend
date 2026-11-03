@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { Button, TextInput } from "@mantine/core";
 
-import { useCategory } from "../hooks/useCategory";
+import { useCategory } from "@features/categories/hooks/useCategory";
 import type { AppError, FieldErrors } from "@shared/types";
 import type { ProductForm } from "@features/products";
 

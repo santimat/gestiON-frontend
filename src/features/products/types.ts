@@ -1,8 +1,8 @@
 import type { z } from "zod";
 
-import { ProductSchema } from "./schemas/ProductSchema";
-import { ProductFiltersSchema } from "./schemas/ProductFiltersSchema";
-import type { Category } from "@/features/categories";
+import { ProductSchema } from "@features/products/schemas/ProductSchema";
+import { ProductFiltersSchema } from "@features/products/schemas/ProductFiltersSchema";
+import type { Category } from "@features/categories";
 
 export type ProductRequest = z.infer<typeof ProductSchema>;
 

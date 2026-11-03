@@ -1,8 +1,8 @@
 import { Button, NumberFormatter } from "@mantine/core";
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 
-import { useSale } from "../../hooks/useSale";
-import type { CartLine } from "../../types";
+import { useSale } from "@features/sales/hooks/useSale";
+import type { CartLine } from "@features/sales/types";
 
 export const SaleCart = () => {
   const { cart, setQty, removeLine } = useSale();

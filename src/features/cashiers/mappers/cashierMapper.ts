@@ -1,5 +1,5 @@
 import type { User } from "@features/auth";
-import type { CashierRequest } from "../types";
+import type { CashierRequest } from "@features/cashiers/types";
 
 export const cashierMapper = {
   toForm: (cashier: User): CashierRequest => ({

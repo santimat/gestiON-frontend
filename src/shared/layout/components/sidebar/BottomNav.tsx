@@ -1,6 +1,6 @@
 import { NavLink } from "react-router";
 
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@features/auth";
 import { SIDEBAR_ITEMS } from "@shared/config/navigation";
 import { getRolesForRoute } from "@shared/config/permissions";
 

@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Button } from "@mantine/core";
 import { ArrowRight } from "lucide-react";
-import { GestiONLogo } from "@/shared/components/GestiONLogo";
+import { GestiONLogo } from "@shared/components/GestiONLogo";
 
 export const Header = () => {
   return (

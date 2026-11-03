@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 import type { AppError } from "@shared/types";
-import type { SellPoint, SellPointRequest } from "../types";
-import { sellPointService } from "../services/sellPointService";
-import type { UseSellPointStore } from "./types";
+import type { SellPoint, SellPointRequest } from "@features/sell-points/types";
+import { sellPointService } from "@features/sell-points/services/sellPointService";
+import type { UseSellPointStore } from "@features/sell-points/stores/types";
 
 export const useSellPointStore = create<UseSellPointStore>((set) => ({
   sellPoints: [],

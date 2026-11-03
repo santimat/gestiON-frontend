@@ -2,12 +2,12 @@ import { Tags } from "lucide-react";
 import { useState, type SubmitEvent } from "react";
 import { TextInput, Textarea } from "@mantine/core";
 
-import { categoryMapper } from "../mappers/categoryMapper";
-import { useCategory } from "../hooks/useCategory";
+import { categoryMapper } from "@features/categories/mappers/categoryMapper";
+import { useCategory } from "@features/categories/hooks/useCategory";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 import type { AppError, FieldErrors } from "@shared/types";
-import type { Category, CategoryRequest } from "../types";
+import type { Category, CategoryRequest } from "@features/categories/types";
 import { toast } from "sonner";
 
 type NewCategoryFormProps = {

@@ -5,9 +5,9 @@ import type { ChangeEvent, SubmitEvent } from "react";
 import { Checkbox, TextInput } from "@mantine/core";
 
 import type { AppError, FieldErrors } from "@shared/types";
-import type { SellPoint, SellPointRequest } from "../types";
-import { useCashier } from "@/features/cashiers";
-import { useSellPoint } from "../hooks/useSellPoint";
+import type { SellPoint, SellPointRequest } from "@features/sell-points/types";
+import { useCashier } from "@features/cashiers";
+import { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 

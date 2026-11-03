@@ -1,5 +1,5 @@
-import type { CashierRequest, CashierUpdate } from "../types";
-import type { User } from "@/features/auth";
+import type { CashierRequest, CashierUpdate } from "@features/cashiers/types";
+import type { User } from "@features/auth";
 
 export type UseCashierStore = {
   // Estado de UI: modal de alta/edición de cajero

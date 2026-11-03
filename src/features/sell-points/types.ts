@@ -1,6 +1,6 @@
 import type { z } from "zod";
 
-import { SellPointRequestSchema } from "./schemas/SellPointSchema";
+import { SellPointRequestSchema } from "@features/sell-points/schemas/SellPointSchema";
 
 export type SellPoint = {
   id: number;

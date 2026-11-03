@@ -1,4 +1,4 @@
-import { useProductStore } from "../stores/useProductStore";
+import { useProductStore } from "@features/products/stores/useProductStore";
 import { useShallow } from "zustand/shallow";
 
 export const useProduct = () => {

@@ -8,61 +8,61 @@ import { ProtectedRoute } from "@shared/routes/ProtectedRoute";
 import { getRolesForRoute } from "@shared/config/permissions";
 
 const LandingPage = lazy(() =>
-  import("@/features/landing/pages/Landing").then((module) => ({
+  import("@features/landing/pages/Landing").then((module) => ({
     default: module.LandingPage,
   })),
 );
 
 const AuthPage = lazy(() =>
-  import("@/features/auth/pages/Auth").then((module) => ({
+  import("@features/auth/pages/Auth").then((module) => ({
     default: module.AuthPage,
   })),
 );
 
 const CashiersPage = lazy(() =>
-  import("@/features/cashiers/pages/Cashiers").then((module) => ({
+  import("@features/cashiers/pages/Cashiers").then((module) => ({
     default: module.Cashiers,
   })),
 );
 
 const ProductsPage = lazy(() =>
-  import("@/features/products/pages/Products").then((module) => ({
+  import("@features/products/pages/Products").then((module) => ({
     default: module.Products,
   })),
 );
 
 const CommercesPage = lazy(() =>
-  import("@/features/commerces/pages/Commerces").then((module) => ({
+  import("@features/commerces/pages/Commerces").then((module) => ({
     default: module.Commerces,
   })),
 );
 
 const SellPage = lazy(() =>
-  import("@/features/sales/pages/Sell").then((module) => ({
+  import("@features/sales/pages/Sell").then((module) => ({
     default: module.Sell,
   })),
 );
 
 const SalesPage = lazy(() =>
-  import("@/features/sales/pages/Sales").then((module) => ({
+  import("@features/sales/pages/Sales").then((module) => ({
     default: module.Sales,
   })),
 );
 
 const ClientsPage = lazy(() =>
-  import("@/features/clients/pages/Clients").then((module) => ({
+  import("@features/clients/pages/Clients").then((module) => ({
     default: module.Clients,
   })),
 );
 
 const CategoriesPage = lazy(() =>
-  import("@/features/categories/pages/Categories").then((module) => ({
+  import("@features/categories/pages/Categories").then((module) => ({
     default: module.Categories,
   })),
 );
 
 const SellPointsPage = lazy(() =>
-  import("@/features/sell-points/pages/SellPoints").then((module) => ({
+  import("@features/sell-points/pages/SellPoints").then((module) => ({
     default: module.SellPoints,
   })),
 );

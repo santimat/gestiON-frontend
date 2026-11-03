@@ -4,13 +4,13 @@ import { TextInput } from "@mantine/core";
 import type { ChangeEvent, SubmitEvent } from "react";
 import { IdCard, MapPinHouse, Phone, UserPen, UserRound } from "lucide-react";
 
-import { clientMapper } from "../mappers/clientMapper";
-import { useClient } from "../hooks/useClient";
+import { clientMapper } from "@features/clients/mappers/clientMapper";
+import { useClient } from "@features/clients/hooks/useClient";
 import { ModalHeader } from "@shared/components/ModalHeader";
-import { DEFAULT_CLIENT_FORM } from "../constants";
+import { DEFAULT_CLIENT_FORM } from "@features/clients/constants";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 import type { AppError, FieldErrors } from "@shared/types";
-import type { Client, ClientRequest } from "../types";
+import type { Client, ClientRequest } from "@features/clients/types";
 
 type ClientFormProps = {
   client: Client | null;

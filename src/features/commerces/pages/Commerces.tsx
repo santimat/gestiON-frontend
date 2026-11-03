@@ -7,14 +7,14 @@ import {
 import { Button, Modal } from "@mantine/core";
 import { lazy, useEffect } from "react";
 
-import { useCommerce } from "../hooks/useCommerce";
+import { useCommerce } from "@features/commerces/hooks/useCommerce";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { ListContainer } from "@shared/components/ListContainer";
-import { CommerceList } from "../components/CommerceList";
-import { CommerceStatsCard } from "../components/CommerceStatsCard";
+import { CommerceList } from "@features/commerces/components/CommerceList";
+import { CommerceStatsCard } from "@features/commerces/components/CommerceStatsCard";
 
 const NewCommerceForm = lazy(() =>
-  import("../components/NewCommerceForm").then((module) => ({
+  import("@features/commerces/components/NewCommerceForm").then((module) => ({
     default: module.NewCommerceForm,
   })),
 );

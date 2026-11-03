@@ -1,7 +1,7 @@
 import type { z } from "zod";
 
-import { SaleRequestSchema } from "./schemas/SaleRequestSchema";
-import { SalesFilterSchema } from "./schemas/SalesFilterSchema";
+import { SaleRequestSchema } from "@features/sales/schemas/SaleRequestSchema";
+import { SalesFilterSchema } from "@features/sales/schemas/SalesFilterSchema";
 
 export type CartLine = {
   productId: number;

@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
-import type { LoginDTO } from "../types";
-import { authService } from "../services/authService";
-import type { UseAuthStore } from "./types";
+import type { LoginDTO } from "@features/auth/types";
+import { authService } from "@features/auth/services/authService";
+import type { UseAuthStore } from "@features/auth/stores/types";
 
 export const useAuthStore = create<UseAuthStore>((set, get) => ({
   authenticatedUser: null,

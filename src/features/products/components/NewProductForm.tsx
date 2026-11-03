@@ -18,11 +18,15 @@ import { toast } from "sonner";
 import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
 import type { AppError } from "@shared/types";
-import type { CurrentCommerce } from "@/features/commerces";
-import type { Product, ProductFieldErrors, ProductForm } from "../types";
-import { productMapper } from "../mappers/productMapper";
-import { useProduct } from "../hooks/useProduct";
-import { useCategory, SelectCategory } from "@/features/categories";
+import type { CurrentCommerce } from "@features/commerces";
+import type {
+  Product,
+  ProductFieldErrors,
+  ProductForm,
+} from "@features/products/types";
+import { productMapper } from "@features/products/mappers/productMapper";
+import { useProduct } from "@features/products/hooks/useProduct";
+import { useCategory, SelectCategory } from "@features/categories";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 

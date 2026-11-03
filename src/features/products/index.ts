@@ -1,9 +1,9 @@
-export { useProduct } from "./hooks/useProduct";
-export { useProductSearch } from "./hooks/useProductSearch";
+export { useProduct } from "@features/products/hooks/useProduct";
+export { useProductSearch } from "@features/products/hooks/useProductSearch";
 export type {
   ProductRequest,
   Product,
   ProductForm,
   ProductFieldErrors,
   ProductFilters,
-} from "./types";
+} from "@features/products/types";

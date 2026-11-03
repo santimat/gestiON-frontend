@@ -1,6 +1,6 @@
 import type { z } from "zod";
 
-import { ClientSchema } from "./schemas/ClientSchema";
+import { ClientSchema } from "@features/clients/schemas/ClientSchema";
 
 export type ClientRequest = z.infer<typeof ClientSchema>;
 

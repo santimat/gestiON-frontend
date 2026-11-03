@@ -1,11 +1,11 @@
-import type { Product } from "@/features/products";
+import type { Product } from "@features/products";
 import type {
   CartLine,
   Sale,
   SaleDraft,
   SaleRequest,
   SalesFilter,
-} from "./types";
+} from "@features/sales/stores/types";
 
 export type UseSaleStore = {
   cart: CartLine[];

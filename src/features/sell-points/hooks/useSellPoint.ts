@@ -1,7 +1,7 @@
 import { useShallow } from "zustand/shallow";
 
-import { useSellPointStore } from "../stores/useSellPointStore";
-import type { SellPointRequest } from "../types";
+import { useSellPointStore } from "@features/sell-points/stores/useSellPointStore";
+import type { SellPointRequest } from "@features/sell-points/types";
 
 export const useSellPoint = () => {
   const {

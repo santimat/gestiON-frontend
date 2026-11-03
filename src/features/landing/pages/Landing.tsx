@@ -1,10 +1,10 @@
-import { Hero } from "../components/Hero";
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
-import { CTASection } from "../components/CTASection";
-import { RolesSection } from "../components/RolesSection";
-import { StepsSection } from "../components/StepsSection";
-import { FeaturesSection } from "../components/FeaturesSection";
+import { Hero } from "@features/landing/components/Hero";
+import { Header } from "@features/landing/components/Header";
+import { Footer } from "@features/landing/components/Footer";
+import { CTASection } from "@features/landing/components/CTASection";
+import { RolesSection } from "@features/landing/components/RolesSection";
+import { StepsSection } from "@features/landing/components/StepsSection";
+import { FeaturesSection } from "@features/landing/components/FeaturesSection";
 
 export const LandingPage = () => {
   return (

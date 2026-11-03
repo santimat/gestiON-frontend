@@ -2,13 +2,13 @@ import { lazy, useEffect } from "react";
 import { TagPlus, Tags } from "lucide-react";
 import { Button, Modal } from "@mantine/core";
 
-import { useCategory } from "../hooks/useCategory";
+import { useCategory } from "@features/categories/hooks/useCategory";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { ListContainer } from "@shared/components/ListContainer";
-import { CategoryList } from "../components/CategoryList";
+import { CategoryList } from "@features/categories/components/CategoryList";
 
 const NewCategoryForm = lazy(() =>
-  import("../components/NewCategoryForm").then((module) => ({
+  import("@features/categories/components/NewCategoryForm").then((module) => ({
     default: module.NewCategoryForm,
   })),
 );

@@ -1,7 +1,7 @@
 import type { z } from "zod";
 
-import { LoginSchema } from "./schemas/LoginSchema";
-import type { UserRole } from "@/shared/types";
+import { LoginSchema } from "@features/auth/schemas/LoginSchema";
+import type { UserRole } from "@shared/types";
 
 export type LoginDTO = z.infer<typeof LoginSchema>;
 

@@ -1,7 +1,7 @@
-export { useCommerce } from "./hooks/useCommerce";
+export { useCommerce } from "@features/commerces/hooks/useCommerce";
 export type {
   CommerceWithOwner,
   CommerceWithOwnerRequest,
   CommerceStats,
   CurrentCommerce,
-} from "./types";
+} from "@features/commerces/types";

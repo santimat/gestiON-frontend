@@ -1,4 +1,4 @@
-import type { ClientRequest } from "./types";
+import type { ClientRequest } from "@features/clients/types";
 
 export const DEFAULT_CLIENT_FORM: ClientRequest = {
   name: "",

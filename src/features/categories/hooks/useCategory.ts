@@ -1,5 +1,5 @@
-import type { CategoryRequest } from "../types";
-import { useCategoryStore } from "../stores/useCategoryStore";
+import type { CategoryRequest } from "@features/categories/types";
+import { useCategoryStore } from "@features/categories/stores/useCategoryStore";
 import { useShallow } from "zustand/shallow";
 
 export const useCategory = () => {

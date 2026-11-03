@@ -1,5 +1,5 @@
 import type { User } from "@features/auth";
-import type { SellPoint, SellPointRequest } from "../types";
+import type { SellPoint, SellPointRequest } from "@features/sell-points/types";
 
 export type UseSellPointStore = {
   sellPoints: SellPoint[];

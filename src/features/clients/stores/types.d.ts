@@ -1,4 +1,4 @@
-import type { Client, ClientRequest } from "../types";
+import type { Client, ClientRequest } from "@features/clients/types";
 
 export type UseClientStore = {
   // Estado de UI: modal de alta/edición de cliente

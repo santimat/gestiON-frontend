@@ -1,4 +1,4 @@
-import type { Category, CategoryRequest } from "../types";
+import type { Category, CategoryRequest } from "@features/categories/types";
 
 export const categoryMapper = {
   toForm: (category: Category): CategoryRequest => ({

@@ -2,9 +2,9 @@ import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { TextInput } from "@mantine/core";
 
-import { useSale } from "../../hooks/useSale";
-import { useProduct, useProductSearch } from "@/features/products";
-import { ProductSellCard } from "./ProductSellCard";
+import { useSale } from "@features/sales/hooks/useSale";
+import { useProduct, useProductSearch } from "@features/products";
+import { ProductSellCard } from "@features/sales/components/sell/ProductSellCard";
 import { ListContainer } from "@shared/components/ListContainer";
 
 const SEARCH_DEBOUNCE_MS = 350;

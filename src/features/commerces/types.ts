@@ -1,6 +1,6 @@
 import type { z } from "zod";
 
-import { CommerceWithOwnerRequestSchema } from "./schemas/CommerceWithOwnerRequestSchema";
+import { CommerceWithOwnerRequestSchema } from "@features/commerces/schemas/CommerceWithOwnerRequestSchema";
 
 export type CommerceWithOwner = {
   userId: number;

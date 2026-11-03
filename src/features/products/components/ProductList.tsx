@@ -1,9 +1,9 @@
 import { Pencil } from "lucide-react";
 
-import { ProductItem } from "./ProductItem";
-import { ProductItemMobile } from "./ProductItemMobile";
+import { ProductItem } from "@features/products/components/ProductItem";
+import { ProductItemMobile } from "@features/products/components/ProductItemMobile";
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
-import type { Product } from "../types";
+import type { Product } from "@features/products/types";
 type ProductListProps = {
   products: Product[];
 };

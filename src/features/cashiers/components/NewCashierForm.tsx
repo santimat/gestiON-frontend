@@ -4,13 +4,13 @@ import { PasswordInput, TextInput } from "@mantine/core";
 import { KeyRound, Mail, Phone, UserPen, UserRound } from "lucide-react";
 import { toast } from "sonner";
 
-import { cashierMapper } from "../mappers/cashierMapper";
-import { useCashier } from "../hooks/useCashier";
+import { cashierMapper } from "@features/cashiers/mappers/cashierMapper";
+import { useCashier } from "@features/cashiers/hooks/useCashier";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 import type { AppError, FieldErrors } from "@shared/types";
 import type { User } from "@features/auth";
-import type { CashierRequest } from "../types";
+import type { CashierRequest } from "@features/cashiers/types";
 
 type NewCashierProps = {
   cashier: User | null;

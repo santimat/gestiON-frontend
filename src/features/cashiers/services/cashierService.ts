@@ -1,9 +1,9 @@
 import { isAxiosError } from "axios";
 
-import { CashierSchema } from "../schemas/CashierSchema";
-import { CashierUpdateSchema } from "../schemas/CashierUpdateSchema";
-import type { CashierRequest, CashierUpdate } from "../types";
-import type { User } from "@/features/auth";
+import { CashierSchema } from "@features/cashiers/schemas/CashierSchema";
+import { CashierUpdateSchema } from "@features/cashiers/schemas/CashierUpdateSchema";
+import type { CashierRequest, CashierUpdate } from "@features/cashiers/types";
+import type { User } from "@features/auth";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 import { handleZodParsingError } from "@shared/utils/handleZodParseError";

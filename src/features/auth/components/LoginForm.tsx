@@ -4,9 +4,9 @@ import { AtSign, Lock } from "lucide-react";
 import { useState, type SubmitEvent } from "react";
 import { Button, PasswordInput, TextInput } from "@mantine/core";
 
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "@features/auth/hooks/useAuth";
 import type { AppError, FieldErrors } from "@shared/types";
-import type { LoginDTO } from "../types";
+import type { LoginDTO } from "@features/auth/types";
 import { getRedirectByRole } from "@shared/config/permissions";
 
 export const LoginForm = () => {

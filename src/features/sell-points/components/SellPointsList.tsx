@@ -1,9 +1,9 @@
-import { SellPointItem } from "./SellPointItem";
-import { SellPointItemMobile } from "./SellPointItemMobile";
-import { useSellPoint } from "../hooks/useSellPoint";
+import { SellPointItem } from "@features/sell-points/components/SellPointItem";
+import { SellPointItemMobile } from "@features/sell-points/components/SellPointItemMobile";
+import { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { AppError } from "@shared/types";
-import type { SellPoint } from "../types";
+import type { SellPoint } from "@features/sell-points/types";
 import { toast } from "sonner";
 
 type SellPointsListProps = {

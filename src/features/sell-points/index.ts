@@ -1,2 +1,2 @@
-export { useSellPoint } from "./hooks/useSellPoint";
-export type { SellPoint, SellPointRequest } from "./types";
+export { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
+export type { SellPoint, SellPointRequest } from "@features/sell-points/types";

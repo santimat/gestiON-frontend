@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 import type { AppError } from "@shared/types";
-import { commerceService } from "../services/commerceService";
-import type { UseCommerceStore } from "./types";
+import { commerceService } from "@features/commerces/services/commerceService";
+import type { UseCommerceStore } from "@features/commerces/stores/types";
 
 export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   formCommerce: null,

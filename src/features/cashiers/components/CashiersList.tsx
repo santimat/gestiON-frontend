@@ -1,6 +1,6 @@
-import { CashierItem } from "./CashierItem";
-import { CashierItemMobile } from "./CashierItemMobile";
-import { useCashier } from "../hooks/useCashier";
+import { CashierItem } from "@features/cashiers/components/CashierItem";
+import { CashierItemMobile } from "@features/cashiers/components/CashierItemMobile";
+import { useCashier } from "@features/cashiers/hooks/useCashier";
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { AppError } from "@shared/types";
 import { toast } from "sonner";

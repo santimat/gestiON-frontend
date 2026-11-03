@@ -1,6 +1,6 @@
-export { useSale } from "./hooks/useSale";
-export { useSales } from "./hooks/useSales";
-export { useSalesSearch } from "./hooks/useSalesSearch";
+export { useSale } from "@features/sales/hooks/useSale";
+export { useSales } from "@features/sales/hooks/useSales";
+export { useSalesSearch } from "@features/sales/hooks/useSalesSearch";
 export type {
   CartLine,
   SaleDraft,
@@ -12,4 +12,4 @@ export type {
   SalesFilter,
   PaymentMethod,
   DiscountType,
-} from "./types";
+} from "@features/sales/types";

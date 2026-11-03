@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import type { AppError } from "@shared/types";
-import { ErrorDictionary } from "./errorDictionary";
+import { ErrorDictionary } from "@shared/utils/errorDictionary";
 
 export const handleAxiosErrors = (error: AxiosError): AppError => {
   const code = (error.response?.data as AppError | undefined)?.code;

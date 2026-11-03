@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
-import { saleService } from "../services/saleService";
-import type { SaleDraft, SaleRequest } from "../types";
-import type { UseSaleStore } from "./types";
+import { saleService } from "@features/sales/services/saleService";
+import type { SaleDraft, SaleRequest } from "@features/sales/types";
+import type { UseSaleStore } from "@features/sales/stores/types";
 
 const DEFAULT_SALE_DRAFT: SaleDraft = {
   discount: 0,

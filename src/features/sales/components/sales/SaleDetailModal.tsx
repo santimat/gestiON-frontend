@@ -2,8 +2,8 @@ import { Button, Modal } from "@mantine/core";
 import { ReceiptText } from "lucide-react";
 
 import { ModalHeader } from "@shared/components/ModalHeader";
-import type { SaleSummary } from "../../types";
-import { StatusBadge } from "./StatusBadge";
+import type { SaleSummary } from "@features/sales/types";
+import { StatusBadge } from "@features/sales/components/sales/StatusBadge";
 
 type SaleDetailModalProps = {
   opened: boolean;

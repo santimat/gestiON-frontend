@@ -1,8 +1,8 @@
 import { Pencil } from "lucide-react";
 
-import { ClientItem } from "./ClientItem";
-import { ClientItemMobile } from "./ClientItemMobile";
-import { useClient } from "../hooks/useClient";
+import { ClientItem } from "@features/clients/components/ClientItem";
+import { ClientItemMobile } from "@features/clients/components/ClientItemMobile";
+import { useClient } from "@features/clients/hooks/useClient";
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
 
 export const ClientList = () => {

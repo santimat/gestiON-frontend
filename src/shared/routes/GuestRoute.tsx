@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router";
 
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@features/auth";
 import { getRedirectByRole } from "@shared/config/permissions";
 
 export const GuestRoute = () => {

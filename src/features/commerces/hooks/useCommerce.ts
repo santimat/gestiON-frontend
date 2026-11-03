@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/shallow";
 
-import { useCommerceStore } from "../stores/useCommerceStore";
+import { useCommerceStore } from "@features/commerces/stores/useCommerceStore";
 
 export const useCommerce = () => {
   const {

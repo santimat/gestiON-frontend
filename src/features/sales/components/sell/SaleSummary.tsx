@@ -7,9 +7,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { useClient } from "@/features/clients";
-import { useSale } from "../../hooks/useSale";
-import type { DiscountType, PaymentMethod } from "../../types";
+import { useClient } from "@features/clients";
+import { useSale } from "@features/sales/hooks/useSale";
+import type { DiscountType, PaymentMethod } from "@features/sales/types";
 
 type PaymentOption = {
   value: PaymentMethod;

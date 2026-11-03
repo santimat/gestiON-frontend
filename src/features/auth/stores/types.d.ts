@@ -1,5 +1,5 @@
 import type { UserRole } from "@shared/types";
-import type { AuthUser, LoginDTO } from "../types";
+import type { AuthUser, LoginDTO } from "@features/auth/types";
 
 export type UseAuthStore = {
   authenticatedUser: AuthUser | null;

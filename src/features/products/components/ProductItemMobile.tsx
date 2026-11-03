@@ -3,8 +3,8 @@ import { PackageIcon, PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import type { AppError } from "@shared/types";
-import type { Product } from "../types";
-import { useProduct } from "../hooks/useProduct";
+import type { Product } from "@features/products/types";
+import { useProduct } from "@features/products/hooks/useProduct";
 
 type ProductItemMobileProps = {
   product: Product;

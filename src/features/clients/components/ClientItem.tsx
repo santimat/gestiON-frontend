@@ -1,7 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 
-import type { Client } from "../types";
-import { useClient } from "../hooks/useClient";
+import type { Client } from "@features/clients/types";
+import { useClient } from "@features/clients/hooks/useClient";
 import { ProductItemActions } from "@shared/components/ProductItemActions";
 
 type ClientItemProps = {

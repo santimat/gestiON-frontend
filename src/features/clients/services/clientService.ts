@@ -1,7 +1,7 @@
 import { isAxiosError } from "axios";
 
-import { ClientSchema } from "../schemas/ClientSchema";
-import type { ClientRequest } from "../types";
+import { ClientSchema } from "@features/clients/schemas/ClientSchema";
+import type { ClientRequest } from "@features/clients/types";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 import { handleZodParsingError } from "@shared/utils/handleZodParseError";

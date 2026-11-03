@@ -1,4 +1,4 @@
-import { GestiONLogo } from "@/shared/components/GestiONLogo";
+import { GestiONLogo } from "@shared/components/GestiONLogo";
 import {
   BanknoteArrowUp,
   ChartNoAxesColumnIncreasing,

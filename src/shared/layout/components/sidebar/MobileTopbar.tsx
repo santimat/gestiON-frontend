@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router";
 import { LogOut, StoreIcon } from "lucide-react";
 
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@features/auth";
 
 export const MobileTopbar = () => {
   const { authenticatedUser, handleLogout } = useAuth();

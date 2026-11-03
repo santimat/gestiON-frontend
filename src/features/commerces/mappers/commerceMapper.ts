@@ -1,4 +1,7 @@
-import type { CommerceWithOwner, CommerceWithOwnerRequest } from "../types";
+import type {
+  CommerceWithOwner,
+  CommerceWithOwnerRequest,
+} from "@features/commerces/types";
 
 export const commerceMapper = {
   toForm: (commerce: CommerceWithOwner): CommerceWithOwnerRequest => ({

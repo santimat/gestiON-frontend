@@ -14,9 +14,12 @@ import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import { Fieldset, TextInput, FileInput, PasswordInput } from "@mantine/core";
 
 import type { AppError, FieldErrors } from "@shared/types";
-import type { CommerceWithOwner, CommerceWithOwnerRequest } from "../types";
-import { commerceMapper } from "../mappers/commerceMapper";
-import { useCommerce } from "../hooks/useCommerce";
+import type {
+  CommerceWithOwner,
+  CommerceWithOwnerRequest,
+} from "@features/commerces/types";
+import { commerceMapper } from "@features/commerces/mappers/commerceMapper";
+import { useCommerce } from "@features/commerces/hooks/useCommerce";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 

@@ -1,7 +1,7 @@
 import { isAxiosError } from "axios";
 
-import { CategorySchema } from "../schemas/CategorySchema";
-import type { CategoryRequest } from "../types";
+import { CategorySchema } from "@features/categories/schemas/CategorySchema";
+import type { CategoryRequest } from "@features/categories/types";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 import { handleZodParsingError } from "@shared/utils/handleZodParseError";

@@ -1,4 +1,4 @@
-import type { Category, CategoryRequest } from "../types";
+import type { Category, CategoryRequest } from "@features/categories/types";
 
 export type UseCategoryStore = {
   formCategory: Category | null;

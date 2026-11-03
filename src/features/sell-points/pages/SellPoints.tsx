@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 import { MonitorIcon, Plus, StoreIcon } from "lucide-react";
 
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@features/auth";
 import { ListContainer } from "@shared/components/ListContainer";
-import { NewSellPointForm } from "../components/NewSellPointForm";
-import { SellPointCashiers } from "../components/SellPointCashiers";
-import { SellPointsList } from "../components/SellPointsList";
-import { useCommerce } from "@/features/commerces";
-import { useSellPoint } from "../hooks/useSellPoint";
+import { NewSellPointForm } from "@features/sell-points/components/NewSellPointForm";
+import { SellPointCashiers } from "@features/sell-points/components/SellPointCashiers";
+import { SellPointsList } from "@features/sell-points/components/SellPointsList";
+import { useCommerce } from "@features/commerces";
+import { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 export const SellPoints = () => {

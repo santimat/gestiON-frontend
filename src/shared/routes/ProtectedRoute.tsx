@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router";
 
 import type { UserRole } from "@shared/types";
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@features/auth";
 import { LoadingPage } from "@shared/components/Loading";
 
 export const ProtectedRoute = ({

@@ -2,10 +2,10 @@ import { BuildingComplexIcon, UserPlus } from "lucide-react";
 import { useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
-import { useCashier } from "../hooks/useCashier";
+import { useCashier } from "@features/cashiers/hooks/useCashier";
 import { ListContainer } from "@shared/components/ListContainer";
-import { CashiersList } from "../components/CashiersList";
-import { NewCashierForm } from "../components/NewCashierForm";
+import { CashiersList } from "@features/cashiers/components/CashiersList";
+import { NewCashierForm } from "@features/cashiers/components/NewCashierForm";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 export const Cashiers = () => {

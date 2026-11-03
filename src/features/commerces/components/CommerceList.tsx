@@ -1,5 +1,5 @@
-import { CommerceItem } from "./CommerceItem";
-import type { CommerceWithOwner } from "../types";
+import { CommerceItem } from "@features/commerces/components/CommerceItem";
+import type { CommerceWithOwner } from "@features/commerces/types";
 
 type CommerceListProps = {
   commercesWithOwner: CommerceWithOwner[];

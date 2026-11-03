@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 import type { AppError } from "@shared/types";
-import type { SalesFilter } from "../types";
-import { saleService } from "../services/saleService";
-import type { UseSalesStore } from "./types";
+import type { SalesFilter } from "@features/sales/types";
+import { saleService } from "@features/sales/services/saleService";
+import type { UseSalesStore } from "@features/sales/stores/types";
 
 export const useSalesStore = create<UseSalesStore>((set) => ({
   sales: [],

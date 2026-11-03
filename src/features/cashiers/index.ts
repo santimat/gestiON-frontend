@@ -1,2 +1,2 @@
-export { useCashier } from "./hooks/useCashier";
-export type { CashierRequest, CashierUpdate } from "./types";
+export { useCashier } from "@features/cashiers/hooks/useCashier";
+export type { CashierRequest, CashierUpdate } from "@features/cashiers/types";

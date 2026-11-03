@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/shallow";
 
-import { useSaleStore } from "../stores/useSaleStore";
+import { useSaleStore } from "@features/sales/stores/useSaleStore";
 
 export const useSale = () => {
   const {

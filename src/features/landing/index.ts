@@ -1,1 +1,1 @@
-export { LandingPage } from "./pages/Landing";
+export { LandingPage } from "@features/landing/pages/Landing";

@@ -1,6 +1,6 @@
 import { Building2Icon, ScanBarcodeIcon, SmartphoneIcon } from "lucide-react";
 
-import { RoleCard } from "./RoleCard";
+import { RoleCard } from "@features/landing/components/RoleCard";
 
 export const RolesSection = () => {
   const ROLE_ADMIN_ITEMS = [

@@ -1,18 +1,20 @@
 import { lazy } from "react";
 
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
-import type { Category } from "../types";
+import type { Category } from "@features/categories/types";
 
 const CategoryItem = lazy(() =>
-  import("./CategoryItem").then((module) => ({
+  import("@features/categories/components/CategoryItem").then((module) => ({
     default: module.CategoryItem,
   })),
 );
 
 const CategoryItemMobile = lazy(() =>
-  import("./CategoryItemMobile").then((module) => ({
-    default: module.CategoryItemMobile,
-  })),
+  import("@features/categories/components/CategoryItemMobile").then(
+    (module) => ({
+      default: module.CategoryItemMobile,
+    }),
+  ),
 );
 
 type CategoryListProps = {

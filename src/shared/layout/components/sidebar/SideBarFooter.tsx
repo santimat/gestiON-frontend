@@ -1,13 +1,13 @@
 import { Avatar } from "@mantine/core";
 import { useNavigate } from "react-router";
 
-import type { AuthUser } from "@/features/auth";
+import type { AuthUser } from "@features/auth";
 import { ROLE_DICTIONARY } from "@shared/config/permissions";
 import { getAvatarColor } from "@shared/utils/getAvatarColor";
 import { LogOut } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect } from "react";
-import { useCommerce } from "@/features/commerces";
+import { useCommerce } from "@features/commerces";
 import { ImageViewer } from "@shared/components/ImageViewer";
 
 type SidebarFooterProps = {

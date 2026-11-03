@@ -3,9 +3,9 @@ import { useState } from "react";
 import { ListSortAscending, PlusIcon, XIcon } from "lucide-react";
 import { Select, type ComboboxItem, type OptionsFilter } from "@mantine/core";
 
-import type { ProductForm } from "@/features/products";
-import { useCategory } from "../hooks/useCategory";
-import { NewCategoryInline } from "./NewCategoryInline";
+import type { ProductForm } from "@features/products";
+import { useCategory } from "@features/categories/hooks/useCategory";
+import { NewCategoryInline } from "@features/categories/components/NewCategoryInline";
 
 type SelectCategoryProps = {
   setProductForm: React.Dispatch<React.SetStateAction<ProductForm>>;
