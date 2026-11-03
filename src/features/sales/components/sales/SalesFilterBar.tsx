@@ -4,7 +4,7 @@ import { Select, TextInput } from "@mantine/core";
 
 import type { SalesFilter, SaleStatus } from "@features/sales/types";
 
-const STATUS_OPTIONS: { value: SaleStatus; label: string }[] = [
+const STATUS_OPTIONS: { value: SaleStatus | ""; label: string }[] = [
   { value: "PAYED", label: "Pagas" },
   { value: "PENDING", label: "Pendientes" },
 ];
@@ -39,7 +39,7 @@ export const SalesFilterBar = ({
     <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
       <TextInput
         aria-label="Buscar ventas"
-        placeholder="Buscar por número, cliente o producto"
+        placeholder="Buscar por cliente"
         leftSection={<Search size={16} strokeWidth={1.75} />}
         value={searchText}
         onChange={handleChange}
@@ -47,8 +47,8 @@ export const SalesFilterBar = ({
       <Select
         aria-label="Filtrar por estado"
         placeholder="Pagas y pendientes"
-        clearable
         className="sm:w-40"
+        clearable
         value={filters.status}
         data={STATUS_OPTIONS}
         onChange={(value) => setFilters({ status: value as SaleStatus })}

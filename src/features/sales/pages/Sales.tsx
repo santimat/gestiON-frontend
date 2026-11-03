@@ -8,6 +8,8 @@ import { useSaleDetails } from "@features/sales/hooks/useSaleDetails";
 import { SalesList } from "@features/sales/components/sales/SalesList";
 import { SalesFilterBar } from "@features/sales/components/sales/SalesFilterBar";
 import { SaleDetailModal } from "@features/sales/components/sales/SaleDetailModal";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export const Sales = () => {
   const { sales, totalSales, isLoading, error } = useSales();
@@ -19,6 +21,12 @@ export const Sales = () => {
     title: "Ventas",
     subtitle: `${totalSales} ${totalSales === 1 ? "venta" : "ventas"} registradas`,
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   return (
     <>

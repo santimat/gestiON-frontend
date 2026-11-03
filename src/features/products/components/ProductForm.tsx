@@ -6,6 +6,7 @@ import {
   Textarea,
 } from "@mantine/core";
 import {
+  BanknoteArrowUp,
   CircleAlert,
   DollarSign,
   FileImage,
@@ -30,12 +31,13 @@ import { useCategory, SelectCategory } from "@features/categories";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 
-const DEFAULT_PRODUCT_FORM: ProductFormData = {
+const DEFAULT_PRODUCT_FORM = {
   name: "",
   description: "",
   categoryId: 0,
   costPrice: 0,
   salePrice: 0,
+  profitMultiplier: 0,
   currentStock: 0,
   minStock: 0,
   image: null,
@@ -172,7 +174,13 @@ export const ProductForm = ({
             error={errors.description}
             className="col-span-1 sm:col-span-3"
           />
-
+          <NumberInput
+            leftSection={<BanknoteArrowUp size={20} />}
+            name="profitMultiplier"
+            label="Margen de ganancia"
+            placeholder="15"
+            value={productForm.profitMultiplier}
+          />
           <NumberInput
             leftSection={<DollarSign size={20} />}
             label="Precio de Costo"

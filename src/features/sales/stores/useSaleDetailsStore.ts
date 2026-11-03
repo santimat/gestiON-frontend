@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 import { saleService } from "@features/sales/services/saleService";
 import type { UseSaleDetailsStore } from "@features/sales/stores/types";
+import type { AppError } from "@/shared/types";
 
 export const useSaleDetailsStore = create<UseSaleDetailsStore>((set, get) => ({
   isLoading: false,
@@ -16,12 +17,17 @@ export const useSaleDetailsStore = create<UseSaleDetailsStore>((set, get) => ({
   },
   getSaleWithDetails: async (saleId: number) => {
     set({ isLoading: true, error: null });
-    const data = await saleService.getSaleWithDetails(saleId);
-    set({
-      saleWithDetails: data,
-      isLoading: false,
-      error: null,
-    });
-    get().openDetailModal();
+    try {
+      const data = await saleService.getSaleWithDetails(saleId);
+      set({
+        saleWithDetails: data,
+        isLoading: false,
+        error: null,
+      });
+      get().openDetailModal();
+    } catch (error) {
+      const appError = error as AppError;
+      set({ error: appError.message });
+    }
   },
 }));

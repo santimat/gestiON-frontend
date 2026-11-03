@@ -40,4 +40,8 @@ export const ProductSchema = z.object({
     )
     .optional()
     .nullable(),
+  profitMultiplier: z
+    .number("El margen de ganancia debe ser un número")
+    .nonnegative("El margen de ganancia debe ser un numero positivo")
+    .optional(),
 });
