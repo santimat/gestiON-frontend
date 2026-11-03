@@ -26,5 +26,7 @@
 }
 
 :root {
+  /* evitar salto cuando aparece la barra de scroll */
+  scrollbar-gutter: stable;
   scroll-behavior: smooth;
 }

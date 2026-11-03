@@ -28,7 +28,7 @@ export const ProductSearch = () => {
   }, [searchText, filters.searchText, setFilters]);
 
   return (
-    <div className="border-border bg-card shadow-card rounded-xl border p-3">
+    <div className="border-background-soft bg-card shadow-card rounded-xl border p-3">
       <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
         <TextInput
           leftSection={<SearchIcon size={20} />}

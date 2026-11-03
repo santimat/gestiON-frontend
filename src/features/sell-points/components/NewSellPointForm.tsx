@@ -138,7 +138,7 @@ export const NewSellPointForm = ({
 
           <div className="space-y-1">
             <p className="text-sm font-medium">Cajeros asignados</p>
-            <div className="border-border max-h-48 overflow-y-auto rounded-lg border p-2">
+            <div className="border-background-soft max-h-48 overflow-y-auto rounded-lg border p-2">
               {isLoadingCashiers || isLoadingAssigned ? (
                 <p className="text-secondary-foreground p-2 text-xs">
                   Cargando cajeros...

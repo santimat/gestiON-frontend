@@ -42,15 +42,15 @@ export const ProductList = ({ products }: ProductListProps) => {
 
   return (
     <>
-      <section className="bg-background border-border rounded-lg border">
+      <section className="bg-card border-background-soft rounded-lg border">
         <ul
-          className={`border-border text-secondary-foreground ${columns} border-b p-2 text-sm`}
+          className={`border-background-soft text-secondary-foreground ${columns} border-b p-2 text-sm`}
         >
           {headers.map((header) => (
             <li key={header}>{header}</li>
           ))}
         </ul>
-        <ul className="[&>li]:not-first:border-border text-sm [&>li]:not-first:border-t">
+        <ul className="[&>li]:not-first:border-background-soft text-sm [&>li]:not-first:border-t">
           {products.map((product) => {
             return (
               <ProductItem

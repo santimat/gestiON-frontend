@@ -5,7 +5,7 @@ import { Select, TextInput } from "@mantine/core";
 import type { SalesFilter, SaleStatus } from "@features/sales/types";
 
 const STATUS_OPTIONS: { value: SaleStatus; label: string }[] = [
-  { value: "PAY", label: "Pagas" },
+  { value: "PAYED", label: "Pagas" },
   { value: "PENDING", label: "Pendientes" },
 ];
 

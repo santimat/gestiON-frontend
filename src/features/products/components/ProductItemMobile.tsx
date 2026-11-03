@@ -26,7 +26,7 @@ export const ProductItemMobile = ({ product }: ProductItemMobileProps) => {
   const isLowStock = product.currentStock <= product.minStock;
 
   return (
-    <div className="border-border bg-card shadow-card rounded-xl border p-4">
+    <div className="border-background-soft bg-card shadow-card rounded-xl border p-4">
       <div className="flex items-start gap-3">
         <div className="bg-primary/40 text-primary flex h-9 w-9 shrink-0 items-center justify-center rounded-lg">
           <PackageIcon size={16} strokeWidth={1.75} />

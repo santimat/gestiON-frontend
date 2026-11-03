@@ -60,7 +60,7 @@ export const SaleSummary = ({
   const total = Math.max(0, subtotal - discountValue);
 
   return (
-    <div className="border-border bg-card shadow-card rounded-xl border p-4 lg:sticky lg:top-6">
+    <div className="border-background-soft bg-card shadow-card rounded-xl border p-4 lg:sticky lg:top-6">
       <p className="text-sm font-semibold">Resumen de la venta</p>
 
       <div className="mt-4 space-y-2 text-sm">
@@ -93,7 +93,7 @@ export const SaleSummary = ({
             onChange={(value) => setSaleDraft({ discount: Number(value) || 0 })}
             aria-label="Importe del descuento"
           />
-          <div className="border-border flex rounded-lg border p-1">
+          <div className="border-background-soft flex rounded-lg border p-1">
             {discountTypes.map((type) => (
               <button
                 key={type}
@@ -156,7 +156,7 @@ export const SaleSummary = ({
         </p>
       </div>
 
-      <div className="border-border mt-5 flex items-end justify-between border-t pt-4">
+      <div className="border-background-soft mt-5 flex items-end justify-between border-t pt-4">
         <span className="text-secondary-foreground text-sm">
           Total a cobrar
         </span>

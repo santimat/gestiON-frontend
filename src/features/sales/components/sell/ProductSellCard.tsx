@@ -17,7 +17,7 @@ export const ProductSellCard = ({
       key={`product-${product.id}`}
       onClick={() => addToCart(product)}
       disabled={isOutOfStock}
-      className="border-border bg-surface hover:bg-background-soft flex items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-left transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+      className="border-background-soft bg-surface hover:bg-background-soft flex items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-left transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
     >
       <div>
         <p className="truncate text-sm font-medium">{product.name}</p>

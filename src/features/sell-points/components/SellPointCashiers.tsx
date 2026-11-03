@@ -57,7 +57,7 @@ export const SellPointCashiers = ({
           {cashiers.map((cashier) => (
             <li
               key={`sell-point-cashier-${cashier.id}`}
-              className="border-border bg-background-soft rounded-lg border p-3"
+              className="border-background-soft bg-card rounded-lg border p-3"
             >
               <p className="truncate text-sm font-medium">
                 {cashier.name}

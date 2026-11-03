@@ -17,7 +17,7 @@ export const BottomNav = () => {
   return (
     <nav
       aria-label="Navegación principal"
-      className="bg-background border-border fixed inset-x-0 bottom-0 z-30 border-t lg:hidden"
+      className="bg-background border-background-soft fixed inset-x-0 bottom-0 z-30 border-t lg:hidden"
     >
       <ul className="flex items-stretch">
         {sidebarItemsToShow.map(({ icon: Icon, text, short, href }) => (

@@ -16,7 +16,7 @@ export const SideBar = () => {
 
   return (
     <aside className="bg-background border-border hidden h-screen max-w-80 flex-col items-start justify-items-start gap-4 border-r lg:flex lg:w-70">
-      <header className="border-border flex h-18 w-full items-center gap-4 border-b px-4">
+      <header className="border-background-soft flex h-18 w-full items-center gap-4 border-b px-4">
         <Link to="/">
           <GestiONLogo className="h-auto w-10" />
         </Link>

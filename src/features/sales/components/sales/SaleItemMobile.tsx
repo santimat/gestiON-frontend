@@ -8,7 +8,7 @@ type SaleItemMobileProps = {
 export const SaleItemMobile = ({ sale, onOpenDetail }: SaleItemMobileProps) => (
   <button
     onClick={() => onOpenDetail(sale)}
-    className="bg-card border-border hover:bg-background-soft flex w-full items-center justify-between gap-3 rounded-xl border p-4 text-left transition-colors"
+    className="bg-card border-background-soft hover:bg-background-soft flex w-full items-center justify-between gap-3 rounded-xl border p-4 text-left transition-colors"
   >
     <div className="min-w-0">
       <p className="font-medium">#{sale.id}</p>
