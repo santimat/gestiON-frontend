@@ -23,7 +23,7 @@ export const saleService = {
   getSales: async (filters: SalesFilter) => {
     try {
       const { data } = await backendAPI.get("/sales", {
-        params: filters,
+        params: { ...filters, size: 20 },
       });
       return data;
     } catch (error) {

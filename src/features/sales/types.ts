@@ -40,7 +40,7 @@ export type Sale = {
   id: number;
   clientId: number | null;
   clientName: string;
-  sellPointId: number;
+  sellPointName: string;
   userName: string;
   paymentMethod: PaymentMethod;
   subtotal: number;
