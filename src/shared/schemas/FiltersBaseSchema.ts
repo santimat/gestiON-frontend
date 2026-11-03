@@ -13,4 +13,5 @@ export const FiltersBaseSchema = z.object({
     .optional(),
   sortBy: z.string().optional(),
   sortDir: z.enum(["asc", "desc"]).optional(),
+  active: z.boolean("El estado debe ser un booleano").optional(),
 });

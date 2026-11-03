@@ -23,10 +23,12 @@ export const ProductSchema = z.object({
     .positive("El ID de la categoría debe ser un número positivo"),
   minStock: z.coerce
     .number("El stock mínimo debe ser un número")
+    .min(1, "EL stock mínimo no puede ser 0")
     .int("El stock mínimo debe ser un número entero")
     .nonnegative("El stock mínimo debe ser un número no negativo"),
   currentStock: z.coerce
     .number("El stock actual debe ser un número")
+    .min(1, "El stock actual no puede ser 0")
     .int("El stock actual debe ser un número entero")
     .nonnegative("El stock actual debe ser un número no negativo"),
   image: z

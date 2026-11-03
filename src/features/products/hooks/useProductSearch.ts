@@ -13,7 +13,7 @@ export const useProductSearch = (cart: CartLine[]) => {
   const prevCartCountRef = useRef(cart.length);
 
   useEffect(() => {
-    getProducts(filters).catch((error) => {
+    getProducts({ ...filters, active: true }).catch((error) => {
       const appError = error as AppError;
       toast.error(appError?.message ?? "No se pudieron cargar los productos.");
     });

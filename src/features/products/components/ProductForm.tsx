@@ -61,6 +61,7 @@ export const ProductForm = ({
     product ? productMapper.toForm(product) : DEFAULT_PRODUCT_FORM,
   );
   const [errors, setErrors] = useState<ProductFieldErrors>({});
+
   // para evitar que el usuario haga doble click en el boton de guardar y se envie dos veces el formulario
   const [isSubmitting, setIsSubmitting] = useState(false);
 

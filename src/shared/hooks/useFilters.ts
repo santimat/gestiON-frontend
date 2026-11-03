@@ -1,12 +1,12 @@
-import { useSearchParams } from "react-router";
 import type { z } from "zod";
+import { useSearchParams } from "react-router";
 
 export const useFilters = <TSchema extends z.ZodType>(schema: TSchema) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const rawParams = Object.fromEntries(searchParams.entries());
 
-  // descartamos params vacíos: "?searchText=" no es un filtro
+  // descartamos params vacios: "?searchText=" no es un filtro
   const cleanedParams = Object.fromEntries(
     Object.entries(rawParams).filter(([, value]) => value !== ""),
   );
