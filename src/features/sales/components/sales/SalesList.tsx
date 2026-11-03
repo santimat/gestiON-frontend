@@ -1,8 +1,8 @@
 import { lazy } from "react";
 import { ChevronRight } from "lucide-react";
 
-import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { SaleSummary } from "@features/sales/types";
+import { useIsMobile } from "@shared/hooks/useMediaQuery";
 
 const SaleItemMobile = lazy(() =>
   import("@/features/sales/components/sales/SaleItemMobile").then((module) => ({
@@ -54,7 +54,7 @@ export const SalesList = ({ sales, onOpenDetail }: SalesListProps) => {
             className={`${DESKTOP_COLUMNS} hover:bg-background-soft cursor-pointer px-2 py-3 transition-colors`}
           >
             <p className="font-medium">#{sale.id}</p>
-            <p className="truncate">{sale.clientName ?? "Consumidor final"}</p>
+            <p>{sale.clientName ?? "Consumidor final"}</p>
             <p className="text-secondary-foreground tabular-nums">
               {sale.itemCount}
             </p>

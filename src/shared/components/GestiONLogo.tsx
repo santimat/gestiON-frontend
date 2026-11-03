@@ -20,7 +20,7 @@ export const GestiONLogo = (props: React.SVGProps<SVGSVGElement>) => (
       d="M110.203 9v84m101.203 33.642h-60"
     />
     <g fill="#039256">
-      <circle cx="181.406" cy="51" r="22" fill-opacity=".25" />
+      <circle cx="181.406" cy="51" r="22" fillOpacity=".25" />
       <circle cx="181.406" cy="51" r="12" />
     </g>
   </svg>
