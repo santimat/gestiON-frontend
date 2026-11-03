@@ -20,7 +20,7 @@ const DEFAULT_CATEGORY_FORM: CategoryRequest = {
   description: "",
 };
 
-export const NewCategoryForm = ({
+export const CategoryForm = ({
   category,
   closeModal,
 }: NewCategoryFormProps) => {

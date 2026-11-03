@@ -60,6 +60,8 @@ export type SaleSummary = {
   clientName: string | null;
   paymentMethod: PaymentMethod;
   createdAt: string;
+  subtotal: number;
+  discount: number;
   total: number;
 };
 

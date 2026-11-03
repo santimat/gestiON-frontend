@@ -7,9 +7,9 @@ import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { ListContainer } from "@shared/components/ListContainer";
 import { CategoryList } from "@features/categories/components/CategoryList";
 
-const NewCategoryForm = lazy(() =>
-  import("@features/categories/components/NewCategoryForm").then((module) => ({
-    default: module.NewCategoryForm,
+const CategoryForm = lazy(() =>
+  import("@features/categories/components/CategoryForm").then((module) => ({
+    default: module.CategoryForm,
   })),
 );
 
@@ -57,7 +57,7 @@ export const Categories = () => {
         transitionProps={{ transition: "fade-down", duration: 300 }}
         withCloseButton={false}
       >
-        <NewCategoryForm
+        <CategoryForm
           key={formCategory?.id ?? "create"}
           category={formCategory}
           closeModal={closeFormModal}

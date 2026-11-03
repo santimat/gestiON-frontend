@@ -21,7 +21,7 @@ type NewSellPointFormProps = {
   closeModal: () => void;
 };
 
-export const NewSellPointForm = ({
+export const SellPointForm = ({
   sellPoint,
   closeModal,
 }: NewSellPointFormProps) => {

@@ -4,7 +4,7 @@ import { MonitorIcon, Plus, StoreIcon } from "lucide-react";
 
 import { useAuth } from "@features/auth";
 import { ListContainer } from "@shared/components/ListContainer";
-import { NewSellPointForm } from "@features/sell-points/components/NewSellPointForm";
+import { SellPointForm } from "@features/sell-points/components/SellPointForm";
 import { SellPointCashiers } from "@features/sell-points/components/SellPointCashiers";
 import { SellPointsList } from "@features/sell-points/components/SellPointsList";
 import { useCommerce } from "@features/commerces";
@@ -71,7 +71,7 @@ export const SellPoints = () => {
         transitionProps={{ transition: "fade-down", duration: 300 }}
         withCloseButton={false}
       >
-        <NewSellPointForm
+        <SellPointForm
           key={formSellPoint?.id ?? "create"}
           sellPoint={formSellPoint}
           closeModal={closeFormModal}

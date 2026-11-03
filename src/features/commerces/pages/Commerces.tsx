@@ -13,9 +13,9 @@ import { ListContainer } from "@shared/components/ListContainer";
 import { CommerceList } from "@features/commerces/components/CommerceList";
 import { CommerceStatsCard } from "@features/commerces/components/CommerceStatsCard";
 
-const NewCommerceForm = lazy(() =>
-  import("@features/commerces/components/NewCommerceForm").then((module) => ({
-    default: module.NewCommerceForm,
+const CommerceForm = lazy(() =>
+  import("@features/commerces/components/CommerceForm").then((module) => ({
+    default: module.CommerceForm,
   })),
 );
 
@@ -60,7 +60,7 @@ export const Commerces = () => {
         size="xl"
         transitionProps={{ transition: "fade-down", duration: 300 }}
       >
-        <NewCommerceForm
+        <CommerceForm
           key={formCommerce?.commerceId ?? "create"}
           commerce={formCommerce}
           closeModal={closeFormModal}

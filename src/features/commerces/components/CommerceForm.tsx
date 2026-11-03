@@ -41,7 +41,7 @@ type NewCommerceFormProps = {
   closeModal: () => void;
 };
 
-export const NewCommerceForm = ({
+export const CommerceForm = ({
   commerce,
   closeModal,
 }: NewCommerceFormProps) => {

@@ -1,8 +1,7 @@
 import { Button, Modal } from "@mantine/core";
 import { CheckCircle2 } from "lucide-react";
 
-import { useClient } from "@features/clients";
-import type { PaymentMethod, Sale } from "@features/sales/types";
+import type { PaymentMethod, SaleSummary } from "@features/sales/types";
 
 const PAYMENT_LABELS: Record<PaymentMethod, string> = {
   CASH: "Efectivo",
@@ -13,7 +12,7 @@ const PAYMENT_LABELS: Record<PaymentMethod, string> = {
 
 type SaleTicketModalProps = {
   opened: boolean;
-  sale: Sale | null;
+  sale: SaleSummary | null;
   closeModal: () => void;
   onNewSale: () => void;
 };
@@ -24,16 +23,6 @@ export const SaleTicketModal = ({
   closeModal,
   onNewSale,
 }: SaleTicketModalProps) => {
-  const { clients } = useClient();
-
-  const client =
-    sale?.clientId != null
-      ? clients.find((candidate) => candidate.id === sale.clientId)
-      : null;
-
-  const totalItems =
-    sale?.details.reduce((acc, detail) => acc + detail.quantity, 0) ?? 0;
-
   return (
     <Modal
       opened={opened}
@@ -58,16 +47,12 @@ export const SaleTicketModal = ({
           </div>
           <div className="mt-2 flex justify-between">
             <span className="text-secondary-foreground">Ítems</span>
-            <span className="font-medium tabular-nums">{totalItems}</span>
+            <span className="font-medium tabular-nums">{sale.itemCount}</span>
           </div>
           <div className="mt-2 flex justify-between gap-3">
             <span className="text-secondary-foreground">Cliente</span>
             <span className="truncate font-medium">
-              {sale.clientId === null
-                ? "Consumidor final"
-                : client
-                  ? `${client.lastName}, ${client.name}`
-                  : "—"}
+              {sale.clientName ?? "Consumidor final"}
             </span>
           </div>
           <div className="mt-2 flex justify-between">

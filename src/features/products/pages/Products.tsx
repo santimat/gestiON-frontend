@@ -4,7 +4,7 @@ import { Button, Modal } from "@mantine/core";
 
 import { ListContainer } from "@shared/components/ListContainer";
 import { ProductList } from "@features/products/components/ProductList";
-import { NewProductForm } from "@features/products/components/NewProductForm";
+import { ProductForm } from "@features/products/components/ProductForm";
 import { useProduct } from "@features/products/hooks/useProduct";
 import { useCommerce } from "@features/commerces";
 import { useAuth } from "@features/auth";
@@ -56,7 +56,7 @@ export const Products = () => {
         transitionProps={{ transition: "fade-down", duration: 300 }}
         withCloseButton={false}
       >
-        <NewProductForm
+        <ProductForm
           key={formProduct?.id ?? "create"}
           product={formProduct}
           currentCommerce={currentCommerce ?? null}

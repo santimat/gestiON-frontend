@@ -22,7 +22,7 @@ import type { CurrentCommerce } from "@features/commerces";
 import type {
   Product,
   ProductFieldErrors,
-  ProductForm,
+  ProductForm as ProductFormData,
 } from "@features/products/types";
 import { productMapper } from "@features/products/mappers/productMapper";
 import { useProduct } from "@features/products/hooks/useProduct";
@@ -30,7 +30,7 @@ import { useCategory, SelectCategory } from "@features/categories";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 
-const DEFAULT_PRODUCT_FORM: ProductForm = {
+const DEFAULT_PRODUCT_FORM: ProductFormData = {
   name: "",
   description: "",
   categoryId: 0,
@@ -47,7 +47,7 @@ type NewProductFormProps = {
   currentCommerce: CurrentCommerce | null;
 };
 
-export const NewProductForm = ({
+export const ProductForm = ({
   product,
   currentCommerce,
   closeModal,
@@ -57,7 +57,7 @@ export const NewProductForm = ({
   const { getCategories } = useCategory();
   const { handleCreateProduct, updateProduct } = useProduct();
 
-  const [productForm, setProductForm] = useState<ProductForm>(() =>
+  const [productForm, setProductForm] = useState<ProductFormData>(() =>
     product ? productMapper.toForm(product) : DEFAULT_PRODUCT_FORM,
   );
   const [errors, setErrors] = useState<ProductFieldErrors>({});

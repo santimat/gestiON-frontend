@@ -3,7 +3,7 @@ import { toast } from "sonner";
 
 import type { AppError } from "@shared/types";
 import { useClient } from "@features/clients";
-import type { Sale } from "@features/sales/types";
+import type { SaleSummary as SaleSummaryData } from "@features/sales/types";
 import { useSale } from "@features/sales/hooks/useSale";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { SaleCart } from "@features/sales/components/sell/SaleCart";
@@ -12,7 +12,7 @@ import { ProductSearch } from "@features/sales/components/sell/ProductSearch";
 import { SaleTicketModal } from "@features/sales/components/sell/SaleTicketModal";
 
 export const Sell = () => {
-  const [ticket, setTicket] = useState<Sale | null>(null);
+  const [ticket, setTicket] = useState<SaleSummaryData | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { cart, saleDraft, createSale, resetSale, clearCart } = useSale();

@@ -5,7 +5,7 @@ import { Button, Modal } from "@mantine/core";
 import { useCashier } from "@features/cashiers/hooks/useCashier";
 import { ListContainer } from "@shared/components/ListContainer";
 import { CashiersList } from "@features/cashiers/components/CashiersList";
-import { NewCashierForm } from "@features/cashiers/components/NewCashierForm";
+import { CashierForm } from "@features/cashiers/components/CashierForm";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 export const Cashiers = () => {
@@ -50,7 +50,7 @@ export const Cashiers = () => {
         transitionProps={{ transition: "fade-down", duration: 300 }}
         withCloseButton={false}
       >
-        <NewCashierForm
+        <CashierForm
           key={formCashier?.id ?? "create"}
           cashier={formCashier}
           closeModal={closeFormModal}

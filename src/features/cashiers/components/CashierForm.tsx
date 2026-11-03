@@ -24,7 +24,7 @@ const DEFAULT_CASHIER_FORM: CashierRequest = {
   phoneNumber: "",
 };
 
-export const NewCashierForm = ({ cashier, closeModal }: NewCashierProps) => {
+export const CashierForm = ({ cashier, closeModal }: NewCashierProps) => {
   const isEditing = cashier !== null;
 
   const { handleCreateCashier, updateCashier } = useCashier();
