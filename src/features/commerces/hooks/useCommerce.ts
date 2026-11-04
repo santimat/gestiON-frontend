@@ -77,11 +77,6 @@ export const useCommerce = () => {
   };
 };
 
-/**
- * Acciones estables para las filas de la lista: el comercio llega por props y
- * acá solo se suscribe a las acciones, así que el toggle no re-renderiza
- * todas las filas — solo la fila cuyo comercio cambió.
- */
 export const useCommerceItem = () => {
   const { toggleCommerceActive, getCommerceStats, openEdit } = useCommerceStore(
     useShallow((s) => ({

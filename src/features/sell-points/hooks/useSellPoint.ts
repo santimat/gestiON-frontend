@@ -81,11 +81,6 @@ export const useSellPoint = () => {
   };
 };
 
-/**
- * Acciones estables para las filas de la lista: el punto de venta llega por
- * props y acá solo se suscribe a las acciones, así que el toggle no re-renderiza
- * todas las filas — solo la fila cuyo punto de venta cambió.
- */
 export const useSellPointItem = () => {
   const { toggleActive, openEdit, openCashiersModal } = useSellPointStore(
     useShallow((s) => ({
