@@ -1,8 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useShallow } from "zustand/shallow";
 
 import { usePageHeaderStore } from "@shared/layout/stores/pageHeader/usePageHeaderStore";
 import type { PageHeaderContent } from "@shared/layout/stores/pageHeader/types";
+
+const isSameHeader = (
+  last: PageHeaderContent | null,
+  next: PageHeaderContent,
+) =>
+  last !== null &&
+  last.title === next.title &&
+  last.subtitle === next.subtitle &&
+  last.actions === next.actions;
 
 export const usePageHeader = (content: PageHeaderContent) => {
   const { setHeader, clearHeader } = usePageHeaderStore(
@@ -11,12 +20,16 @@ export const usePageHeader = (content: PageHeaderContent) => {
       clearHeader: s.clearHeader,
     })),
   );
+  const lastContent = useRef<PageHeaderContent | null>(null);
 
   useEffect(() => {
+    if (isSameHeader(lastContent.current, content)) return;
+    lastContent.current = content;
     setHeader(content);
-    // Al desmontar la vista dejamos el header vacío
-    return () => clearHeader();
-  }, [content, setHeader, clearHeader]);
+  }, [content, setHeader]);
+
+  // al desmontar la vista dejamos el header vacio
+  useEffect(() => () => clearHeader(), [clearHeader]);
 };
 
 export const useHeaderContent = () => {
