@@ -2,12 +2,23 @@ import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Select, TextInput } from "@mantine/core";
 
-import type { SalesFilter, SaleStatus } from "@features/sales/types";
+import type {
+  PaymentMethod,
+  SalesFilter,
+  SaleStatus,
+} from "@features/sales/types";
+import { PAYMENT_METHODS, STATUS_PAYMENT } from "@features/sales/dictionary";
 
 const STATUS_OPTIONS: { value: SaleStatus | ""; label: string }[] = [
-  { value: "PAYED", label: "Pagas" },
-  { value: "PENDING", label: "Pendientes" },
+  { value: "PAYED", label: STATUS_PAYMENT.PAYED },
+  { value: "PENDING", label: STATUS_PAYMENT.PENDING },
 ];
+
+const PAYMENT_METHOD_OPTIONS: { value: PaymentMethod; label: string }[] =
+  Object.entries(PAYMENT_METHODS).map(([value, label]) => ({
+    value: value as PaymentMethod,
+    label,
+  }));
 
 type SalesFilterBarProps = {
   filters: SalesFilter;
@@ -36,7 +47,7 @@ export const SalesFilterBar = ({
   }, [searchText, filters.searchText, setFilters]);
 
   return (
-    <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
+    <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
       <TextInput
         aria-label="Buscar ventas"
         placeholder="Buscar por cliente"
@@ -45,11 +56,22 @@ export const SalesFilterBar = ({
         onChange={handleChange}
       />
       <Select
-        aria-label="Filtrar por estado"
-        placeholder="Pagas y pendientes"
+        aria-label="Filtrar por método de pago"
+        placeholder="Todos los métodos"
+        className="sm:w-44"
+        clearable
+        value={filters.paymentMethod ?? null}
+        data={PAYMENT_METHOD_OPTIONS}
+        onChange={(value) =>
+          setFilters({ paymentMethod: value as PaymentMethod })
+        }
+      />
+      <Select
+        aria-label="Filtrar por estado de pago"
+        placeholder="Pago o pendiente"
         className="sm:w-40"
         clearable
-        value={filters.status}
+        value={filters.status ?? null}
         data={STATUS_OPTIONS}
         onChange={(value) => setFilters({ status: value as SaleStatus })}
       />
