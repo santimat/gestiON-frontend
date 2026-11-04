@@ -38,6 +38,10 @@ export const SaleSummary = ({
 
   const { discount, discountType, paymentMethod, clientId } = saleDraft;
 
+  const SelectedIcon = PAYMENT_OPTIONS.find(
+    (option) => option.value === paymentMethod,
+  )?.Icon;
+
   const discountTypes: DiscountType[] = ["FIXED_AMOUNT", "PERCENTAGE"];
 
   const subtotal = cart.reduce(
@@ -132,24 +136,18 @@ export const SaleSummary = ({
       </div>
 
       <div className="mt-4 space-y-2">
-        <p className="text-sm font-medium">Método de pago</p>
-        <div className="grid grid-cols-2 gap-2">
-          {PAYMENT_OPTIONS.map(({ value, label, Icon }) => (
-            <button
-              key={value}
-              type="button"
-              onClick={() => setSaleDraft({ paymentMethod: value })}
-              className={`flex items-center gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium transition-colors hover:cursor-pointer ${
-                paymentMethod === value
-                  ? "border-primary bg-primary-soft text-primary"
-                  : "text-secondary-foreground hover:bg-background-soft"
-              }`}
-            >
-              <Icon size={18} strokeWidth={1.75} className="shrink-0" />
-              <span className="truncate">{label}</span>
-            </button>
-          ))}
-        </div>
+        <Select
+          label="Método de pago"
+          data={PAYMENT_OPTIONS.map(({ value, label }) => ({ value, label }))}
+          value={paymentMethod}
+          onChange={(value) => {
+            if (value) setSaleDraft({ paymentMethod: value as PaymentMethod });
+          }}
+          allowDeselect={false}
+          leftSection={
+            SelectedIcon ? <SelectedIcon size={18} strokeWidth={1.75} /> : null
+          }
+        />
         <p className="text-secondary-foreground text-xs">
           El cobro se realiza fuera del sistema: el método queda registrado como
           dato informativo.
