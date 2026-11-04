@@ -8,11 +8,12 @@ export const ALLOWEDS_ROUTES_BY_ROLE = {
     "/sell-point",
     "/products",
     "/categories",
+    "/offers",
     "/sell",
     "/sales",
     "/clients",
   ],
-  CASHIER: ["/sell", "/sales", "/products", "/clients"],
+  CASHIER: ["/sell", "/sales", "/products", "/clients", "/offers"],
 };
 
 export const ROLE_DICTIONARY = {

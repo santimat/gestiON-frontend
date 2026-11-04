@@ -1,4 +1,5 @@
 import {
+  BadgePercent,
   LayoutDashboard,
   Package,
   ReceiptText,
@@ -33,6 +34,7 @@ export const SIDEBAR_ITEMS: NavItem[] = [
   },
   { icon: Package, text: "Productos", short: "Productos", href: "/products" },
   { icon: Tags, text: "Categorías", short: "Categorías", href: "/categories" },
+  { icon: BadgePercent, text: "Ofertas", short: "Ofertas", href: "/offers" },
   {
     icon: StoreIcon,
     text: "Comercios",

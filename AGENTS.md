@@ -18,7 +18,7 @@ Note: `npx tsc -b` (and `pnpm build`) also type-checks `tsconfig.node.json`. Run
 
 ## Architecture
 
-Feature-based layout. Each resource lives in `src/features/<recurso>/` with its own `components/ pages/ schemas/ services/ stores/ hooks/ mappers/ types.ts` (+ `constants.ts` and `index.ts` barrel when needed). The reusable shell lives in `src/shared/` (`components/ pages/ layout/ routes/ hooks/ services/ utils/ config/ schemas/ types.d.ts`). Features: `auth`, `cashiers`, `categories`, `clients`, `commerces`, `landing`, `products`, `sales` (POS `components/sell/` + `pages/Sell.tsx` + `useSaleStore`, and history `components/sales/` + `pages/Sales.tsx` + `useSalesStore`), `sell-points`.
+Feature-based layout. Each resource lives in `src/features/<recurso>/` with its own `components/ pages/ schemas/ services/ stores/ hooks/ mappers/ types.ts` (+ `constants.ts` and `index.ts` barrel when needed). The reusable shell lives in `src/shared/` (`components/ pages/ layout/ routes/ hooks/ services/ utils/ config/ schemas/ types.d.ts`). Features: `auth`, `cashiers`, `categories`, `clients`, `commerces`, `landing`, `offers`, `products`, `sales` (POS `components/sell/` + `pages/Sell.tsx` + `useSaleStore`, and history `components/sales/` + `pages/Sales.tsx` + `useSalesStore`), `sell-points`.
 
 Data flow: feature `pages/`/`components/` → feature `hooks/useX.ts` → feature `stores/useXStore.ts` (zustand) → feature `services/<x>Service.ts` → `backendAPI` (axios). Each feature's `stores/` holds `useXStore.ts` plus a `types.d.ts` with the store's `UseXStore` interface (imported by alias: `@features/<x>/types`).
 

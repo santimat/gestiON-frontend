@@ -67,6 +67,12 @@ const SellPointsPage = lazy(() =>
   })),
 );
 
+const OffersPage = lazy(() =>
+  import("@features/offers/pages/Offers").then((module) => ({
+    default: module.Offers,
+  })),
+);
+
 const UnauthorizedPage = lazy(() =>
   import("@shared/pages/UnauthorizedPage").then((module) => ({
     default: module.UnauthorizedPage,
@@ -124,6 +130,13 @@ const App = () => {
             }
           >
             <Route path="/categories" element={<CategoriesPage />} />
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute allowedRoles={getRolesForRoute("/offers")} />
+            }
+          >
+            <Route path="/offers" element={<OffersPage />} />
           </Route>
           <Route
             element={
