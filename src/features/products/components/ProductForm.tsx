@@ -1,11 +1,4 @@
 import {
-  TextInput,
-  NumberInput,
-  FileInput,
-  Tooltip,
-  Textarea,
-} from "@mantine/core";
-import {
   BanknoteArrowUp,
   CircleAlert,
   DollarSign,
@@ -15,21 +8,28 @@ import {
   PackageIcon,
   SquareText,
 } from "lucide-react";
+import {
+  TextInput,
+  NumberInput,
+  FileInput,
+  Tooltip,
+  Textarea,
+} from "@mantine/core";
 import { toast } from "sonner";
 import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 
-import type { AppError } from "@shared/types";
-import type { CurrentCommerce } from "@features/commerces";
 import type {
   Product,
   ProductFieldErrors,
   ProductForm as ProductFormData,
 } from "@features/products/types";
-import { productMapper } from "@features/products/mappers/productMapper";
+import type { AppError } from "@shared/types";
+import type { CurrentCommerce } from "@features/commerces";
+import { ModalHeader } from "@shared/components/ModalHeader";
 import { useProduct } from "@features/products/hooks/useProduct";
 import { useCategory, SelectCategory } from "@features/categories";
-import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
+import { productMapper } from "@features/products/mappers/productMapper";
 
 const DEFAULT_PRODUCT_FORM = {
   name: "",
@@ -174,6 +174,7 @@ export const ProductForm = ({
             error={errors.description}
             className="col-span-1 sm:col-span-3"
           />
+          
           <NumberInput
             leftSection={<BanknoteArrowUp size={20} />}
             name="profitMultiplier"

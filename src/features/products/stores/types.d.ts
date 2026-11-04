@@ -10,7 +10,6 @@ export type UseProductStore = {
   totalProducts: number;
   isLoading: boolean;
   error: string | null;
-  isPendingToggleActive: boolean;
   createProduct: (product: FormData) => Promise<void>;
   getProducts: (filters?: ProductFilters) => Promise<void>;
   updateProduct: (productId: number, product: FormData) => Promise<void>;

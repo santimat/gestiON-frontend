@@ -1,25 +1,30 @@
+import { useState } from "react";
 import { NumberFormatter, Switch } from "@mantine/core";
 import { PackageIcon, PencilIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import type { AppError } from "@shared/types";
 import type { Product } from "@features/products/types";
-import { useProduct } from "@features/products/hooks/useProduct";
+import { useProductItem } from "@features/products/hooks/useProduct";
 
 type ProductItemMobileProps = {
   product: Product;
 };
 
 export const ProductItemMobile = ({ product }: ProductItemMobileProps) => {
-  const { isPendingToggleActive, toggleActive, openEdit } = useProduct();
+  const { toggleActive, openEdit } = useProductItem();
+  const [isToggling, setIsToggling] = useState(false);
 
   const handleOnChangeSwitch = async () => {
+    setIsToggling(true);
     try {
       await toggleActive(product.id);
       toast.success("Estado del producto actualizado con éxito");
     } catch (error) {
       const appError = error as AppError;
       toast.error(appError?.message ?? "No se pudo cambiar el estado.");
+    } finally {
+      setIsToggling(false);
     }
   };
 
@@ -68,7 +73,7 @@ export const ProductItemMobile = ({ product }: ProductItemMobileProps) => {
             title="Cambiar estado del producto"
             color="green"
             checked={product.active}
-            disabled={isPendingToggleActive}
+            disabled={isToggling}
             onChange={handleOnChangeSwitch}
           />
         </div>

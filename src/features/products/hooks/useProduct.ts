@@ -7,7 +7,6 @@ export const useProduct = () => {
     totalProducts,
     isLoading,
     error,
-    isPendingToggleActive,
     formProduct,
     isFormModalOpen,
     createProduct,
@@ -23,7 +22,6 @@ export const useProduct = () => {
       totalProducts: s.totalProducts,
       isLoading: s.isLoading,
       error: s.error,
-      isPendingToggleActive: s.isPendingToggleActive,
       formProduct: s.formProduct,
       isFormModalOpen: s.isFormModalOpen,
       createProduct: s.createProduct,
@@ -46,7 +44,6 @@ export const useProduct = () => {
     isLoading,
     error,
     products,
-    isPendingToggleActive,
     totalProducts,
     formProduct,
     isFormModalOpen,
@@ -58,4 +55,20 @@ export const useProduct = () => {
     openCreate,
     closeFormModal,
   };
+};
+
+/**
+ * Acciones estables para las filas de la lista: el producto llega por props y
+ * acá solo se suscribe a las acciones, así que el toggle no re-renderiza
+ * todas las filas — solo la fila cuyo producto cambió.
+ */
+export const useProductItem = () => {
+  const { toggleActive, openEdit } = useProductStore(
+    useShallow((s) => ({
+      toggleActive: s.toggleActive,
+      openEdit: s.openEdit,
+    })),
+  );
+
+  return { toggleActive, openEdit };
 };

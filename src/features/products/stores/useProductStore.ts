@@ -17,7 +17,6 @@ export const useProductStore = create<UseProductStore>((set) => ({
   totalProducts: 0,
   isLoading: false,
   error: null,
-  isPendingToggleActive: false,
   createProduct: async (product: FormData) => {
     await productService.createProduct(product);
   },
@@ -35,19 +34,12 @@ export const useProductStore = create<UseProductStore>((set) => ({
     }));
   },
   toggleActive: async (productId: number) => {
-    set({ isPendingToggleActive: true });
-    try {
-      const newStatus = await productService.toggleActive(productId);
-      set((prevState) => ({
-        products: prevState.products.map((product) =>
-          product.id === newStatus.id ? { ...product, ...newStatus } : product,
-        ),
-        isPendingToggleActive: false,
-      }));
-    } catch (error) {
-      set({ isPendingToggleActive: false });
-      throw error;
-    }
+    const newStatus = await productService.toggleActive(productId);
+    set((prevState) => ({
+      products: prevState.products.map((product) =>
+        product.id === newStatus.id ? { ...product, ...newStatus } : product,
+      ),
+    }));
   },
 
   getProducts: async (filters) => {
