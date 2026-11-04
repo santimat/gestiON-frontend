@@ -17,7 +17,6 @@ export const useCashierStore = create<UseCashierStore>((set) => ({
   totalCashiers: 0,
   cashiers: [],
   isLoading: false,
-  isPendingToggleActive: false,
   error: null,
   createCashier: async (cashier: CashierRequest) => {
     await cashierService.createCashier(cashier);
@@ -52,18 +51,11 @@ export const useCashierStore = create<UseCashierStore>((set) => ({
     }));
   },
   toggleActive: async (userId: number) => {
-    set({ isPendingToggleActive: true });
-    try {
-      const newStatus = await cashierService.toggleActive(userId);
-      set((prevState) => ({
-        cashiers: prevState.cashiers.map((cashier) =>
-          cashier.id === newStatus.id ? { ...cashier, ...newStatus } : cashier,
-        ),
-        isPendingToggleActive: false,
-      }));
-    } catch (error) {
-      set({ isPendingToggleActive: false });
-      throw error;
-    }
+    const newStatus = await cashierService.toggleActive(userId);
+    set((prevState) => ({
+      cashiers: prevState.cashiers.map((cashier) =>
+        cashier.id === newStatus.id ? { ...cashier, ...newStatus } : cashier,
+      ),
+    }));
   },
 }));

@@ -16,7 +16,6 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   commercesWithOwner: [],
   commerceStats: null,
   currentCommerce: null,
-  isPendingToggleActive: false,
   isLoading: false,
   error: null,
   createCommerceWithOwner: async (commercesWithOwner: FormData) => {
@@ -48,20 +47,13 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
     set(() => ({ currentCommerce }));
   },
   toggleCommerceActive: async (commerceId: number) => {
-    set(() => ({ isPendingToggleActive: true }));
-    try {
-      const newStatus = await commerceService.toggleCommerceActive(commerceId);
-      set((prevState) => ({
-        commercesWithOwner: prevState.commercesWithOwner.map((commerce) => {
-          if (commerce.commerceId !== newStatus.commerceId) return commerce;
-          return { ...commerce, businessActive: newStatus.active };
-        }),
-        isPendingToggleActive: false,
-      }));
-    } catch (error) {
-      set(() => ({ isPendingToggleActive: false }));
-      throw error;
-    }
+    const newStatus = await commerceService.toggleCommerceActive(commerceId);
+    set((prevState) => ({
+      commercesWithOwner: prevState.commercesWithOwner.map((commerce) => {
+        if (commerce.commerceId !== newStatus.commerceId) return commerce;
+        return { ...commerce, businessActive: newStatus.active };
+      }),
+    }));
   },
   updateCommerceWithOwner: async ({
     commerceId,

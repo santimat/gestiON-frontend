@@ -1,23 +1,33 @@
+import { useState } from "react";
 import { PenBoxIcon } from "lucide-react";
+import { toast } from "sonner";
 import { Button, Switch } from "@mantine/core";
 
 import type { User } from "@features/auth";
-import { useCashier } from "@features/cashiers/hooks/useCashier";
+import { useCashierItem } from "@features/cashiers/hooks/useCashier";
+import type { AppError } from "@shared/types";
 
 type CashierItemProps = {
   cashier: User;
   columns: string;
-  onChangeSwitch?: (cashierId: number) => Promise<void>;
-  isPendingToggleActive?: boolean;
 };
 
-export const CashierItem = ({
-  cashier,
-  columns,
-  isPendingToggleActive,
-  onChangeSwitch,
-}: CashierItemProps) => {
-  const { openEdit } = useCashier();
+export const CashierItem = ({ cashier, columns }: CashierItemProps) => {
+  const { toggleActive, openEdit } = useCashierItem();
+  const [isToggling, setIsToggling] = useState(false);
+
+  const handleOnChangeSwitch = async () => {
+    setIsToggling(true);
+    try {
+      await toggleActive(cashier.id);
+      toast.success("Se cambió el estado del cajero correctamente.");
+    } catch (error) {
+      const appError = error as AppError;
+      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
+    } finally {
+      setIsToggling(false);
+    }
+  };
 
   const updatedAt = new Date(cashier.updatedAt).toLocaleDateString("es-AR");
 
@@ -31,8 +41,8 @@ export const CashierItem = ({
         title="Cambiar acceso del cajero"
         color="green"
         checked={cashier.active}
-        disabled={isPendingToggleActive}
-        onChange={() => onChangeSwitch && onChangeSwitch(cashier.id)}
+        disabled={isToggling}
+        onChange={handleOnChangeSwitch}
       />
       <div className="justify-center">
         <Button

@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { toast } from "sonner";
 import { PenBoxIcon } from "lucide-react";
 import { Avatar, Button, Switch } from "@mantine/core";
 
 import { useDisclosure } from "@mantine/hooks";
-import { useCommerce } from "@features/commerces/hooks/useCommerce";
+import { useCommerceItem } from "@features/commerces/hooks/useCommerce";
 import { ImageViewer } from "@shared/components/ImageViewer";
 import type { AppError } from "@shared/types";
 import type { CommerceWithOwner } from "@features/commerces/types";
@@ -14,8 +15,8 @@ type CommerceItemProps = {
 };
 
 export const CommerceItem = ({ commerce, columns }: CommerceItemProps) => {
-  const { handleToggleCommerceActive, isPendingToggleActive, openEdit } =
-    useCommerce();
+  const { handleToggleCommerceActive, openEdit } = useCommerceItem();
+  const [isToggling, setIsToggling] = useState(false);
 
   const [opened, { open: openAvatar, close: closeAvatar }] =
     useDisclosure(false);
@@ -23,11 +24,14 @@ export const CommerceItem = ({ commerce, columns }: CommerceItemProps) => {
   const updatedAt = new Date(commerce.updatedAt).toLocaleDateString("es-AR");
 
   const handleChangeActive = async () => {
+    setIsToggling(true);
     try {
       await handleToggleCommerceActive(commerce.commerceId);
     } catch (error) {
       const appError = error as AppError;
       toast.error(appError?.message ?? "No se pudo cambiar el estado.");
+    } finally {
+      setIsToggling(false);
     }
   };
 
@@ -66,7 +70,7 @@ export const CommerceItem = ({ commerce, columns }: CommerceItemProps) => {
           color="green"
           checked={commerce.businessActive}
           onChange={handleChangeActive}
-          disabled={isPendingToggleActive}
+          disabled={isToggling}
         />
         <div className="justify-center">
           <Button

@@ -8,7 +8,6 @@ export type UseSellPointStore = {
   isFormModalOpen: boolean;
   isLoading: boolean;
   error: string | null;
-  isPendingToggleActive: boolean;
   openEdit: (sellPoint: SellPoint) => void;
   openCreate: () => void;
   closeFormModal: () => void;

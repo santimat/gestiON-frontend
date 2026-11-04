@@ -8,7 +8,6 @@ export const useCashier = () => {
     cashiers,
     totalCashiers,
     isLoading,
-    isPendingToggleActive,
     error,
     formCashier,
     isFormModalOpen,
@@ -24,7 +23,6 @@ export const useCashier = () => {
       cashiers: s.cashiers,
       totalCashiers: s.totalCashiers,
       isLoading: s.isLoading,
-      isPendingToggleActive: s.isPendingToggleActive,
       error: s.error,
       formCashier: s.formCashier,
       isFormModalOpen: s.isFormModalOpen,
@@ -48,7 +46,6 @@ export const useCashier = () => {
     cashiers,
     totalCashiers,
     isLoading,
-    isPendingToggleActive,
     error,
     formCashier,
     isFormModalOpen,
@@ -60,4 +57,20 @@ export const useCashier = () => {
     openCreate,
     closeFormModal,
   };
+};
+
+/**
+ * Acciones estables para las filas de la lista: el cajero llega por props y
+ * acá solo se suscribe a las acciones, así que el toggle no re-renderiza
+ * todas las filas — solo la fila cuyo cajero cambió.
+ */
+export const useCashierItem = () => {
+  const { toggleActive, openEdit } = useCashierStore(
+    useShallow((s) => ({
+      toggleActive: s.toggleActive,
+      openEdit: s.openEdit,
+    })),
+  );
+
+  return { toggleActive, openEdit };
 };

@@ -7,7 +7,6 @@ export const useCommerce = () => {
     commercesWithOwner,
     commerceStats,
     currentCommerce,
-    isPendingToggleActive,
     isLoading,
     error,
     formCommerce,
@@ -16,7 +15,6 @@ export const useCommerce = () => {
     getCommercesWithOwner,
     getCommerceStats,
     getCurrentCommerce,
-    toggleCommerceActive,
     updateCommerceWithOwner,
     openEdit,
     openCreate,
@@ -26,7 +24,6 @@ export const useCommerce = () => {
       commercesWithOwner: s.commercesWithOwner,
       commerceStats: s.commerceStats,
       currentCommerce: s.currentCommerce,
-      isPendingToggleActive: s.isPendingToggleActive,
       isLoading: s.isLoading,
       error: s.error,
       formCommerce: s.formCommerce,
@@ -35,7 +32,6 @@ export const useCommerce = () => {
       getCommercesWithOwner: s.getCommercesWithOwner,
       getCommerceStats: s.getCommerceStats,
       getCurrentCommerce: s.getCurrentCommerce,
-      toggleCommerceActive: s.toggleCommerceActive,
       updateCommerceWithOwner: s.updateCommerceWithOwner,
       openEdit: s.openEdit,
       openCreate: s.openCreate,
@@ -47,12 +43,6 @@ export const useCommerce = () => {
     await createCommerceWithOwner(commerceWithOwner);
     // al crear refrescamos la lista y las estadísticas con lo que devuelve el backend
     await getCommercesWithOwner();
-    await getCommerceStats();
-  };
-
-  const handleToggleCommerceActive = async (commerceId?: number) => {
-    if (!commerceId) return;
-    await toggleCommerceActive(commerceId);
     await getCommerceStats();
   };
 
@@ -72,14 +62,12 @@ export const useCommerce = () => {
     commercesWithOwner,
     commerceStats,
     currentCommerce,
-    isPendingToggleActive,
     isLoading,
     error,
     formCommerce,
     isFormModalOpen,
     handleUpdateCommerceWithOwner,
     handleCreateCommerceWithOwner,
-    handleToggleCommerceActive,
     getCommercesWithOwner,
     getCommerceStats,
     getCurrentCommerce,
@@ -87,4 +75,27 @@ export const useCommerce = () => {
     openCreate,
     closeFormModal,
   };
+};
+
+/**
+ * Acciones estables para las filas de la lista: el comercio llega por props y
+ * acá solo se suscribe a las acciones, así que el toggle no re-renderiza
+ * todas las filas — solo la fila cuyo comercio cambió.
+ */
+export const useCommerceItem = () => {
+  const { toggleCommerceActive, getCommerceStats, openEdit } = useCommerceStore(
+    useShallow((s) => ({
+      toggleCommerceActive: s.toggleCommerceActive,
+      getCommerceStats: s.getCommerceStats,
+      openEdit: s.openEdit,
+    })),
+  );
+
+  const handleToggleCommerceActive = async (commerceId?: number) => {
+    if (!commerceId) return;
+    await toggleCommerceActive(commerceId);
+    await getCommerceStats();
+  };
+
+  return { handleToggleCommerceActive, openEdit };
 };

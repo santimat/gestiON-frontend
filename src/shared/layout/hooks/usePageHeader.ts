@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useShallow } from "zustand/shallow";
 
-import { usePageHeaderStore } from "@shared/layout/stores/pageHeader/usePageHeaderStore";
 import type { PageHeaderContent } from "@shared/layout/stores/pageHeader/types";
+import { usePageHeaderStore } from "@shared/layout/stores/pageHeader/usePageHeaderStore";
 
 const isSameHeader = (
   last: PageHeaderContent | null,

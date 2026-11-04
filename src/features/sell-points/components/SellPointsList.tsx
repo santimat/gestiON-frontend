@@ -1,28 +1,14 @@
 import { SellPointItem } from "@features/sell-points/components/SellPointItem";
 import { SellPointItemMobile } from "@features/sell-points/components/SellPointItemMobile";
-import { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
-import type { AppError } from "@shared/types";
 import type { SellPoint } from "@features/sell-points/types";
-import { toast } from "sonner";
 
 type SellPointsListProps = {
   sellPoints: SellPoint[];
 };
 
 export const SellPointsList = ({ sellPoints }: SellPointsListProps) => {
-  const { toggleActive } = useSellPoint();
   const isMobile = useIsMobile();
-
-  const handleChangeSwitch = async (sellPointId: number) => {
-    try {
-      await toggleActive(sellPointId);
-      toast.success("Se cambió el estado del punto de venta correctamente.");
-    } catch (error) {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
-    }
-  };
 
   const headers = [
     "Punto de venta",
@@ -42,7 +28,6 @@ export const SellPointsList = ({ sellPoints }: SellPointsListProps) => {
           <SellPointItemMobile
             key={`sell-point-mobile-${sellPoint.id}`}
             sellPoint={sellPoint}
-            onChangeSwitch={handleChangeSwitch}
           />
         ))}
       </div>
@@ -66,7 +51,6 @@ export const SellPointsList = ({ sellPoints }: SellPointsListProps) => {
                 key={`sell-point-${sellPoint.id}`}
                 sellPoint={sellPoint}
                 columns={columns}
-                onChangeSwitch={handleChangeSwitch}
               />
             );
           })}

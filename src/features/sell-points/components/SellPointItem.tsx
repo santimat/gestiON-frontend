@@ -1,21 +1,33 @@
+import { useState } from "react";
 import { PenBoxIcon } from "lucide-react";
+import { toast } from "sonner";
 import { Button, Switch } from "@mantine/core";
 
 import type { SellPoint } from "@features/sell-points/types";
-import { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
+import { useSellPointItem } from "@features/sell-points/hooks/useSellPoint";
+import type { AppError } from "@shared/types";
 
 type SellPointItemProps = {
   sellPoint: SellPoint;
   columns: string;
-  onChangeSwitch: (sellPointId: number) => void;
 };
 
-export const SellPointItem = ({
-  sellPoint,
-  columns,
-  onChangeSwitch,
-}: SellPointItemProps) => {
-  const { openEdit, openCashiersModal } = useSellPoint();
+export const SellPointItem = ({ sellPoint, columns }: SellPointItemProps) => {
+  const { toggleActive, openEdit, openCashiersModal } = useSellPointItem();
+  const [isToggling, setIsToggling] = useState(false);
+
+  const handleOnChangeSwitch = async () => {
+    setIsToggling(true);
+    try {
+      await toggleActive(sellPoint.id);
+      toast.success("Se cambió el estado del punto de venta correctamente.");
+    } catch (error) {
+      const appError = error as AppError;
+      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
+    } finally {
+      setIsToggling(false);
+    }
+  };
 
   const updatedAt = new Date(sellPoint.updatedAt).toLocaleDateString("es-AR");
 
@@ -38,7 +50,8 @@ export const SellPointItem = ({
         title="Cambiar estado del punto de venta"
         color="green"
         checked={sellPoint.active}
-        onChange={() => onChangeSwitch(sellPoint.id)}
+        disabled={isToggling}
+        onChange={handleOnChangeSwitch}
       />
       <div className="justify-center">
         <Button

@@ -12,7 +12,6 @@ export type UseCashierStore = {
   totalCashiers: number;
   cashiers: User[];
   isLoading: boolean;
-  isPendingToggleActive: boolean;
   error: string | null;
   createCashier: (cashier: CashierRequest) => Promise<void>;
   getCashiers: () => Promise<void>;

@@ -12,7 +12,6 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
   isFormModalOpen: false,
   isLoading: false,
   error: null,
-  isPendingToggleActive: false,
 
   openEdit: (sellPoint) =>
     set(() => ({ formSellPoint: sellPoint, isFormModalOpen: true })),
@@ -91,7 +90,6 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
     }
   },
   toggleActive: async (sellPointId: number) => {
-    set({ isPendingToggleActive: true });
     const updatedSellPoint = await sellPointService.toggleActive(sellPointId);
     set((prevState) => ({
       sellPoints: prevState.sellPoints.map((sellPoint) =>
@@ -100,6 +98,5 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
           : sellPoint,
       ),
     }));
-    set({ isPendingToggleActive: false });
   },
 }));

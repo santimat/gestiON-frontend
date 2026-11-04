@@ -15,7 +15,6 @@ export type UseCommerceStore = {
   commercesWithOwner: CommerceWithOwner[];
   commerceStats?: CommerceStats | null;
   currentCommerce?: CurrentCommerce | null;
-  isPendingToggleActive: boolean;
   isLoading: boolean;
   error: string | null;
   createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
