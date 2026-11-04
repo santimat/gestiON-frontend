@@ -1,4 +1,4 @@
-import { lazy, Suspense, type ReactNode } from "react";
+import { lazy, type ReactNode } from "react";
 
 import { SideBar } from "@shared/layout/components/sidebar/SideBar";
 import { BottomNav } from "@shared/layout/components/sidebar/BottomNav";
