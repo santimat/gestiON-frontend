@@ -24,11 +24,9 @@ export const Offers = () => {
   } = useOffer();
   const { filters, setFilters, isFiltered } = useOfferSearch();
 
-  // el POST /offers es solo de OWNER: el cajero ve la lista pero no crea
   const canCreate = authenticatedUser?.role === "OWNER";
 
   useEffect(() => {
-    // usamos el close para limpiar el estado al salir de la vista
     return () => closeFormModal();
   }, [closeFormModal]);
 

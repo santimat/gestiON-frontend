@@ -23,6 +23,23 @@ export type Product = {
 
 export type ProductForm = ProductRequest;
 
+/**
+ * Estado del formulario de producto: en creación parte de DEFAULT_PRODUCT_FORM
+ * con null en los campos numéricos todavía no escritos, y al editar recibe
+ * productMapper.toForm. ProductForm (el request) es asignable a este tipo.
+ */
+export type ProductFormValues = {
+  name: string;
+  description?: string;
+  categoryId: number | null;
+  costPrice: number | null;
+  salePrice: number | null;
+  profitMultiplier?: number | null;
+  currentStock: number | null;
+  minStock: number | null;
+  image?: File | null;
+};
+
 export type ProductFieldErrors = Partial<
   Record<
     | "name"
@@ -31,6 +48,7 @@ export type ProductFieldErrors = Partial<
     | "image"
     | "costPrice"
     | "salePrice"
+    | "profitMultiplier"
     | "currentStock"
     | "minStock",
     string

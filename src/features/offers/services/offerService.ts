@@ -1,9 +1,9 @@
 import { isAxiosError } from "axios";
 
-import { OfferSchema } from "@features/offers/schemas/OfferSchema";
-import type { OfferRequest, OffersFilter } from "@features/offers/types";
 import { backendAPI } from "@shared/services/axiosConfig";
+import { OfferSchema } from "@features/offers/schemas/OfferSchema";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
+import type { OfferRequest, OffersFilter } from "@features/offers/types";
 import { handleZodParsingError } from "@shared/utils/handleZodParseError";
 
 export const offerService = {

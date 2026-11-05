@@ -21,7 +21,7 @@ import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
 import type {
   Product,
   ProductFieldErrors,
-  ProductForm as ProductFormData,
+  ProductFormValues,
 } from "@features/products/types";
 import type { AppError } from "@shared/types";
 import type { CurrentCommerce } from "@features/commerces";
@@ -34,12 +34,12 @@ import { productMapper } from "@features/products/mappers/productMapper";
 const DEFAULT_PRODUCT_FORM = {
   name: "",
   description: "",
-  categoryId: 0,
-  costPrice: 0,
-  salePrice: 0,
-  profitMultiplier: 0,
-  currentStock: 0,
-  minStock: 0,
+  categoryId: null,
+  costPrice: null,
+  salePrice: null,
+  profitMultiplier: null,
+  currentStock: null,
+  minStock: null,
   image: null,
 };
 
@@ -59,7 +59,7 @@ export const ProductForm = ({
   const { getCategories } = useCategory();
   const { handleCreateProduct, updateProduct } = useProduct();
 
-  const [productForm, setProductForm] = useState<ProductFormData>(() =>
+  const [productForm, setProductForm] = useState<ProductFormValues>(() =>
     product ? productMapper.toForm(product) : DEFAULT_PRODUCT_FORM,
   );
   const [errors, setErrors] = useState<ProductFieldErrors>({});
@@ -69,7 +69,9 @@ export const ProductForm = ({
 
   const profitMultiplier =
     product?.profitMultiplier ?? currentCommerce?.profitMultiplier ?? 1;
-  const suggestedPrice = Math.round(productForm.costPrice * profitMultiplier);
+  const suggestedPrice = Math.round(
+    (productForm.costPrice ?? 0) * profitMultiplier,
+  );
 
   useEffect(() => {
     getCategories();
@@ -118,10 +120,15 @@ export const ProductForm = ({
   };
 
   const handleNumberChange = (
-    field: "costPrice" | "salePrice" | "currentStock" | "minStock",
+    field:
+      | "costPrice"
+      | "salePrice"
+      | "profitMultiplier"
+      | "currentStock"
+      | "minStock",
     value: string | number,
   ) => {
-    const numericValue = Number(value);
+    const numericValue = value === "" ? null : Number(value);
     setProductForm((prevState) => ({ ...prevState, [field]: numericValue }));
   };
 
@@ -174,13 +181,16 @@ export const ProductForm = ({
             error={errors.description}
             className="col-span-1 sm:col-span-3"
           />
-          
+
           <NumberInput
             leftSection={<BanknoteArrowUp size={20} />}
             name="profitMultiplier"
             label="Margen de ganancia"
             placeholder="15"
-            value={productForm.profitMultiplier}
+            value={productForm.profitMultiplier ?? ""}
+            onChange={(value) => handleNumberChange("profitMultiplier", value)}
+            error={errors.profitMultiplier}
+            min={0}
           />
           <NumberInput
             leftSection={<DollarSign size={20} />}
@@ -190,7 +200,7 @@ export const ProductForm = ({
             min={0}
             error={errors.costPrice}
             decimalScale={2}
-            value={productForm.costPrice}
+            value={productForm.costPrice ?? ""}
             onChange={(value) => handleNumberChange("costPrice", value)}
             required
           />
@@ -203,7 +213,7 @@ export const ProductForm = ({
             error={errors.salePrice}
             min={0}
             decimalScale={2}
-            value={productForm.salePrice}
+            value={productForm.salePrice ?? ""}
             onChange={(value) => handleNumberChange("salePrice", value)}
             required
           />
@@ -231,7 +241,9 @@ export const ProductForm = ({
                 <InfoIcon size={20} />
               </Tooltip>
             }
-            value={productForm.costPrice > 0 ? suggestedPrice.toFixed(2) : ""}
+            value={
+              (productForm.costPrice ?? 0) > 0 ? suggestedPrice.toFixed(2) : ""
+            }
             readOnly
             leftSectionPointerEvents="none"
           />
@@ -244,7 +256,7 @@ export const ProductForm = ({
             min={0}
             error={errors.currentStock}
             decimalScale={0}
-            value={productForm.currentStock}
+            value={productForm.currentStock ?? ""}
             onChange={(value) => handleNumberChange("currentStock", value)}
             required
           />
@@ -254,7 +266,7 @@ export const ProductForm = ({
             placeholder="0"
             min={0}
             error={errors.minStock}
-            value={productForm.minStock}
+            value={productForm.minStock ?? ""}
             onChange={(value) => handleNumberChange("minStock", value)}
             decimalScale={0}
             required

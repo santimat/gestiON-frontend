@@ -21,17 +21,15 @@ const PAYMENT_METHOD_OPTIONS = Object.entries(PAYMENT_METHODS).map(
   ([value, label]) => ({ value, label }),
 );
 
-// "en-CA" da YYYY-MM-DD en el horario local: toISOString() usa UTC y podría
-// desfasar un día
-const today = () => new Date().toLocaleDateString("en-CA");
+const today = () => new Date().toLocaleDateString("en-AR");
 
-const emptyOfferForm = (): OfferFormValues => ({
+const DEFAULT_OFFER_FORM: OfferFormValues = {
   discountType: "PERCENTAGE",
   value: "",
   startDate: today(),
   endDate: today(),
   paymentMethods: [],
-});
+};
 
 type OfferFormProps = {
   offer: Offer | null;
@@ -43,8 +41,9 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
   const isEditing = offer !== null;
 
   const [offerForm, setOfferForm] = useState<OfferFormValues>(() =>
-    offer ? offerMapper.toForm(offer) : emptyOfferForm(),
+    offer ? offerMapper.toForm(offer) : DEFAULT_OFFER_FORM,
   );
+
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -145,8 +144,10 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
 
           <MultiSelect
             label="Métodos de pago (opcional)"
-            placeholder="Todos los métodos"
-            description="Sin seleccionar ningún método la oferta aplica a todos."
+            placeholder={
+              offerForm.paymentMethods?.length > 0 ? "" : "Sin seleccionar"
+            }
+            description="Sin seleccionar, para luego agregar a productos."
             data={PAYMENT_METHOD_OPTIONS}
             value={offerForm.paymentMethods}
             error={errors.paymentMethods}

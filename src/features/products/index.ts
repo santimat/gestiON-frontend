@@ -4,6 +4,7 @@ export type {
   ProductRequest,
   Product,
   ProductForm,
+  ProductFormValues,
   ProductFieldErrors,
   ProductFilters,
 } from "@features/products/types";

@@ -40,7 +40,8 @@ export const ProductSchema = z.object({
     )
     .optional()
     .nullable(),
-  profitMultiplier: z
+  // coerce: la validación corre sobre el FormData (strings), no sobre el state
+  profitMultiplier: z.coerce
     .number("El margen de ganancia debe ser un número")
     .nonnegative("El margen de ganancia debe ser un numero positivo")
     .optional(),

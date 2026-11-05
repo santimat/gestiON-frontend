@@ -4,11 +4,11 @@ import { Button, TextInput } from "@mantine/core";
 
 import { useCategory } from "@features/categories/hooks/useCategory";
 import type { AppError, FieldErrors } from "@shared/types";
-import type { ProductForm } from "@features/products";
+import type { ProductFormValues } from "@features/products";
 
 type NewCategoryInlineProps = {
   setIsNewCategory: React.Dispatch<React.SetStateAction<boolean>>;
-  setProductForm: React.Dispatch<React.SetStateAction<ProductForm>>;
+  setProductForm: React.Dispatch<React.SetStateAction<ProductFormValues>>;
 };
 
 export const NewCategoryInline = ({
