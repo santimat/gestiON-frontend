@@ -1,12 +1,17 @@
 import { Contact, UserPlus } from "lucide-react";
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
 import { useClient } from "@features/clients/hooks/useClient";
 import { ListContainer } from "@shared/components/ListContainer";
 import { ClientList } from "@features/clients/components/ClientList";
-import { ClientForm } from "@features/clients/components/ClientForm";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+
+const ClientForm = lazy(() =>
+  import("@features/clients/components/ClientForm").then((module) => ({
+    default: module.ClientForm,
+  })),
+);
 
 export const Clients = () => {
   const {

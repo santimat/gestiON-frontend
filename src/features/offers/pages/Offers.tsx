@@ -1,15 +1,20 @@
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 import { BadgePercent, Plus } from "lucide-react";
 
 import { useAuth } from "@features/auth";
 import { useOffer } from "@features/offers/hooks/useOffer";
 import { ListContainer } from "@shared/components/ListContainer";
-import { OfferForm } from "@features/offers/components/OfferForm";
 import { OfferList } from "@features/offers/components/OfferList";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { useOfferSearch } from "@features/offers/hooks/useOfferSearch";
 import { OffersFilterBar } from "@features/offers/components/OffersFilterBar";
+
+const OfferForm = lazy(() =>
+  import("@features/offers/components/OfferForm").then((module) => ({
+    default: module.OfferForm,
+  })),
+);
 
 export const Offers = () => {
   const { authenticatedUser } = useAuth();

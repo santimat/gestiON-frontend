@@ -1,14 +1,19 @@
 import { Package, PackagePlus } from "lucide-react";
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 
 import { ListContainer } from "@shared/components/ListContainer";
 import { ProductList } from "@features/products/components/ProductList";
-import { ProductForm } from "@features/products/components/ProductForm";
 import { useProduct } from "@features/products/hooks/useProduct";
 import { useCommerce } from "@features/commerces";
 import { useAuth } from "@features/auth";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+
+const ProductForm = lazy(() =>
+  import("@features/products/components/ProductForm").then((module) => ({
+    default: module.ProductForm,
+  })),
+);
 
 export const Products = () => {
   const { authenticatedUser } = useAuth();

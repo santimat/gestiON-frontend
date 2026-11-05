@@ -107,7 +107,7 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
               onChange={(value) =>
                 setOfferForm((prevState) => ({
                   ...prevState,
-                  value: String(value),
+                  value: value,
                 }))
               }
             />

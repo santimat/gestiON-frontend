@@ -1,7 +1,21 @@
-import { SellPointItem } from "@features/sell-points/components/SellPointItem";
-import { SellPointItemMobile } from "@features/sell-points/components/SellPointItemMobile";
+import { lazy } from "react";
+
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { SellPoint } from "@features/sell-points/types";
+
+const SellPointItem = lazy(() =>
+  import("@features/sell-points/components/SellPointItem").then((module) => ({
+    default: module.SellPointItem,
+  })),
+);
+
+const SellPointItemMobile = lazy(() =>
+  import("@features/sell-points/components/SellPointItemMobile").then(
+    (module) => ({
+      default: module.SellPointItemMobile,
+    }),
+  ),
+);
 
 type SellPointsListProps = {
   sellPoints: SellPoint[];

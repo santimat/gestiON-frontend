@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import type { AppError } from "@shared/types";
@@ -9,7 +9,12 @@ import { SaleCart } from "@features/sales/components/sell/SaleCart";
 import { SaleSummary } from "@features/sales/components/sell/SaleSummary";
 import type { SaleSummary as SaleSummaryData } from "@features/sales/types";
 import { ProductSearch } from "@features/sales/components/sell/ProductSearch";
-import { SaleTicketModal } from "@features/sales/components/sell/SaleTicketModal";
+
+const SaleTicketModal = lazy(() =>
+  import("@features/sales/components/sell/SaleTicketModal").then((module) => ({
+    default: module.SaleTicketModal,
+  })),
+);
 
 export const Sell = () => {
   const [ticket, setTicket] = useState<SaleSummaryData | null>(null);

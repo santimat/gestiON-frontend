@@ -2,7 +2,12 @@ import { lazy } from "react";
 
 import type { SaleSummary } from "@features/sales/types";
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
-import { SaleItem } from "@features/sales/components/sales/SaleItem";
+
+const SaleItem = lazy(() =>
+  import("@features/sales/components/sales/SaleItem").then((module) => ({
+    default: module.SaleItem,
+  })),
+);
 
 const SaleItemMobile = lazy(() =>
   import("@features/sales/components/sales/SaleItemMobile").then((module) => ({

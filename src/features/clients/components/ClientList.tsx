@@ -1,9 +1,20 @@
+import { lazy } from "react";
 import { Pencil } from "lucide-react";
 
-import { ClientItem } from "@features/clients/components/ClientItem";
-import { ClientItemMobile } from "@features/clients/components/ClientItemMobile";
 import { useClient } from "@features/clients/hooks/useClient";
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
+
+const ClientItem = lazy(() =>
+  import("@features/clients/components/ClientItem").then((module) => ({
+    default: module.ClientItem,
+  })),
+);
+
+const ClientItemMobile = lazy(() =>
+  import("@features/clients/components/ClientItemMobile").then((module) => ({
+    default: module.ClientItemMobile,
+  })),
+);
 
 export const ClientList = () => {
   const { clients } = useClient();

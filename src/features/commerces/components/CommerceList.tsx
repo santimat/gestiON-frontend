@@ -1,5 +1,12 @@
-import { CommerceItem } from "@features/commerces/components/CommerceItem";
+import { lazy } from "react";
+
 import type { CommerceWithOwner } from "@features/commerces/types";
+
+const CommerceItem = lazy(() =>
+  import("@features/commerces/components/CommerceItem").then((module) => ({
+    default: module.CommerceItem,
+  })),
+);
 
 type CommerceListProps = {
   commercesWithOwner: CommerceWithOwner[];

@@ -1,15 +1,27 @@
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { Button, Modal } from "@mantine/core";
 import { MonitorIcon, Plus, StoreIcon } from "lucide-react";
 
 import { useAuth } from "@features/auth";
 import { ListContainer } from "@shared/components/ListContainer";
-import { SellPointForm } from "@features/sell-points/components/SellPointForm";
-import { SellPointCashiers } from "@features/sell-points/components/SellPointCashiers";
 import { SellPointsList } from "@features/sell-points/components/SellPointsList";
 import { useCommerce } from "@features/commerces";
 import { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+
+const SellPointForm = lazy(() =>
+  import("@features/sell-points/components/SellPointForm").then((module) => ({
+    default: module.SellPointForm,
+  })),
+);
+
+const SellPointCashiers = lazy(() =>
+  import("@features/sell-points/components/SellPointCashiers").then(
+    (module) => ({
+      default: module.SellPointCashiers,
+    }),
+  ),
+);
 
 export const SellPoints = () => {
   const { authenticatedUser } = useAuth();

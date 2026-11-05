@@ -1,7 +1,19 @@
-import { CashierItem } from "@features/cashiers/components/CashierItem";
-import { CashierItemMobile } from "@features/cashiers/components/CashierItemMobile";
+import { lazy } from "react";
+
 import { useCashier } from "@features/cashiers/hooks/useCashier";
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
+
+const CashierItem = lazy(() =>
+  import("@features/cashiers/components/CashierItem").then((module) => ({
+    default: module.CashierItem,
+  })),
+);
+
+const CashierItemMobile = lazy(() =>
+  import("@features/cashiers/components/CashierItemMobile").then((module) => ({
+    default: module.CashierItemMobile,
+  })),
+);
 
 export const CashiersList = () => {
   const { cashiers } = useCashier();

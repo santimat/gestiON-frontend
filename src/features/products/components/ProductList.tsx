@@ -1,9 +1,21 @@
+import { lazy } from "react";
 import { Pencil } from "lucide-react";
 
-import { ProductItem } from "@features/products/components/ProductItem";
-import { ProductItemMobile } from "@features/products/components/ProductItemMobile";
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { Product } from "@features/products/types";
+
+const ProductItem = lazy(() =>
+  import("@features/products/components/ProductItem").then((module) => ({
+    default: module.ProductItem,
+  })),
+);
+
+const ProductItemMobile = lazy(() =>
+  import("@features/products/components/ProductItemMobile").then((module) => ({
+    default: module.ProductItemMobile,
+  })),
+);
+
 type ProductListProps = {
   products: Product[];
 };
