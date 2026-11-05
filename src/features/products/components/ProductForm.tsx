@@ -44,8 +44,8 @@ const DEFAULT_PRODUCT_FORM = {
 };
 
 type NewProductFormProps = {
-  product: Product | null;
   closeModal: () => void;
+  product: Product | null;
   currentCommerce: CurrentCommerce | null;
 };
 

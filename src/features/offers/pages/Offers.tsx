@@ -1,14 +1,14 @@
 import { useEffect } from "react";
-import { BadgePercent, Plus } from "lucide-react";
 import { Button, Modal } from "@mantine/core";
+import { BadgePercent, Plus } from "lucide-react";
 
 import { useAuth } from "@features/auth";
 import { useOffer } from "@features/offers/hooks/useOffer";
-import { useOfferSearch } from "@features/offers/hooks/useOfferSearch";
+import { ListContainer } from "@shared/components/ListContainer";
 import { OfferForm } from "@features/offers/components/OfferForm";
 import { OfferList } from "@features/offers/components/OfferList";
-import { ListContainer } from "@shared/components/ListContainer";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+import { useOfferSearch } from "@features/offers/hooks/useOfferSearch";
 import { OffersFilterBar } from "@features/offers/components/OffersFilterBar";
 
 export const Offers = () => {

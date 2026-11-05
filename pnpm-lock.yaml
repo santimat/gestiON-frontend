@@ -9,17 +9,23 @@ importers:
   .:
     dependencies:
       '@mantine/core':
-        specifier: 9.6.0
-        version: 9.6.0(@mantine/hooks@9.6.0(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: 9.7.5
+        version: 9.7.5(@mantine/hooks@9.7.5(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@mantine/dates':
+        specifier: ^9.7.5
+        version: 9.7.5(@mantine/core@9.7.5(@mantine/hooks@9.7.5(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@mantine/hooks@9.7.5(react@19.2.8))(dayjs@1.11.23)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@mantine/hooks':
-        specifier: 9.6.0
-        version: 9.6.0(react@19.2.8)
+        specifier: 9.7.5
+        version: 9.7.5(react@19.2.8)
       '@tailwindcss/vite':
         specifier: 4.3.3
         version: 4.3.3(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0))
       axios:
         specifier: 1.20.0
         version: 1.20.0
+      dayjs:
+        specifier: ^1.11.23
+        version: 1.11.23
       fuse.js:
         specifier: 7.5.0
         version: 7.5.0
@@ -271,15 +277,24 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@mantine/core@9.6.0':
-    resolution: {integrity: sha512-WpdtSv9q2k4RrAVUxBlABMyEul4vv94EkjoVuQglBBC7jVmLhBBgI64HltE6di/l6zvj9D7k1vgkbVjyxQsn1g==}
+  '@mantine/core@9.7.5':
+    resolution: {integrity: sha512-NiOTHpAZssi1Z5ISZBvcXEA4XDn0BWcxwpmmUthFx/eL0CsJ18FXMn/ydRCJmoeMGcIKmRE+pjt90KM70GOsUw==}
     peerDependencies:
-      '@mantine/hooks': 9.6.0
+      '@mantine/hooks': 9.7.5
       react: ^19.2.0
       react-dom: ^19.2.0
 
-  '@mantine/hooks@9.6.0':
-    resolution: {integrity: sha512-r+1RWxc0F2XK9exKIk3Cxc17eyDTEtRqvomeQMCqI4S2Z3A78ObAGuNS8WXn8aqDGN66MJlO+WV7oCgQn2iQfQ==}
+  '@mantine/dates@9.7.5':
+    resolution: {integrity: sha512-5gCln+ZUzlyW0muMp+E+XA3udnPGdA2gaP2LE6Y6qWt3jJiDN/gyXX1supXWexZ7JTLnaQeYb1LDyNz8J92apA==}
+    peerDependencies:
+      '@mantine/core': 9.7.5
+      '@mantine/hooks': 9.7.5
+      dayjs: '>=1.0.0'
+      react: ^19.2.0
+      react-dom: ^19.2.0
+
+  '@mantine/hooks@9.7.5':
+    resolution: {integrity: sha512-+3cNisLOUkzF77SjRKkG/V+svZii9WDGvcwlaxFH58b14MNohz1zWbV+WfjZt9qfzrIPPUOedks/z6PMo5rAFA==}
     peerDependencies:
       react: ^19.2.0
 
@@ -678,6 +693,9 @@ packages:
 
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
+
+  dayjs@1.11.23:
+    resolution: {integrity: sha512-QDTCU0M0MxR3hQfnlDJfwekQiaanm1ubOD231u73WBckQ/fsamwRLiE2GBz6D3a/xF1NgfiDLJjXBa1hYOYTtQ==}
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -1733,10 +1751,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@mantine/core@9.6.0(@mantine/hooks@9.6.0(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@mantine/core@9.7.5(@mantine/hooks@9.7.5(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@floating-ui/react': 0.27.20(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@mantine/hooks': 9.6.0(react@19.2.8)
+      '@mantine/hooks': 9.7.5(react@19.2.8)
       clsx: 2.1.1
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
@@ -1746,7 +1764,16 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@mantine/hooks@9.6.0(react@19.2.8)':
+  '@mantine/dates@9.7.5(@mantine/core@9.7.5(@mantine/hooks@9.7.5(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@mantine/hooks@9.7.5(react@19.2.8))(dayjs@1.11.23)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      '@mantine/core': 9.7.5(@mantine/hooks@9.7.5(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@mantine/hooks': 9.7.5(react@19.2.8)
+      clsx: 2.1.1
+      dayjs: 1.11.23
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
+
+  '@mantine/hooks@9.7.5(react@19.2.8)':
     dependencies:
       react: 19.2.8
 
@@ -2090,6 +2117,8 @@ snapshots:
       which: 2.0.2
 
   csstype@3.2.3: {}
+
+  dayjs@1.11.23: {}
 
   debug@4.4.3:
     dependencies:

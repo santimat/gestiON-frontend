@@ -1,16 +1,18 @@
+import { toast } from "sonner";
 import { BadgePercent } from "lucide-react";
+import { DateTimePicker } from "@mantine/dates";
 import { useState, type SubmitEvent } from "react";
 import { MultiSelect, NumberInput, Select, TextInput } from "@mantine/core";
-import { toast } from "sonner";
 
-import type { AppError, FieldErrors } from "@shared/types";
-import type { DiscountType, PaymentMethod } from "@features/sales";
-import type { Offer, OfferFormValues } from "@features/offers/types";
 import { PAYMENT_METHODS } from "@features/sales";
-import { ModalHeader } from "@shared/components/ModalHeader";
+import type { AppError, FieldErrors } from "@shared/types";
 import { useOffer } from "@features/offers/hooks/useOffer";
+import { ModalHeader } from "@shared/components/ModalHeader";
+import type { DiscountType, PaymentMethod } from "@features/sales";
 import { offerMapper } from "@features/offers/mappers/offerMapper";
+import type { Offer, OfferFormValues } from "@features/offers/types";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
+import { getToday } from "../utils/offerUtils";
 
 const DISCOUNT_TYPE_OPTIONS: { value: DiscountType; label: string }[] = [
   { value: "PERCENTAGE", label: "Porcentaje (%)" },
@@ -21,13 +23,11 @@ const PAYMENT_METHOD_OPTIONS = Object.entries(PAYMENT_METHODS).map(
   ([value, label]) => ({ value, label }),
 );
 
-const today = () => new Date().toLocaleDateString("en-AR");
-
 const DEFAULT_OFFER_FORM: OfferFormValues = {
   discountType: "PERCENTAGE",
   value: "",
-  startDate: today(),
-  endDate: today(),
+  startDate: getToday(),
+  endDate: getToday(),
   paymentMethods: [],
 };
 
@@ -113,32 +113,37 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
             />
           </div>
 
+          {/* DATES */}
           <div className="grid grid-cols-2 gap-3">
-            <TextInput
-              type="date"
-              label="Inicio"
+            <DateTimePicker
+              // valueFormat={"YYYY-MM-DDTHH:mm:ss"}
+              label="Fecha de inicio"
               value={offerForm.startDate}
               error={errors.startDate}
               required
-              onChange={(event) =>
+              onChange={(value) => {
+                if (!value) return;
                 setOfferForm((prevState) => ({
                   ...prevState,
-                  startDate: event.currentTarget.value,
-                }))
-              }
+                  startDate: value,
+                }));
+              }}
+              timePickerProps={{ withDropdown: true, format: "24h" }}
             />
-            <TextInput
-              type="date"
-              label="Finalización"
+            <DateTimePicker
+              // valueFormat={"YYYY-MM-DDTHH:mm:ss"}
+              label="Fecha de finalización"
               value={offerForm.endDate}
               error={errors.endDate}
               required
-              onChange={(event) =>
+              onChange={(value) => {
+                if (!value) return;
                 setOfferForm((prevState) => ({
                   ...prevState,
-                  endDate: event.currentTarget.value,
-                }))
-              }
+                  endDate: value,
+                }));
+              }}
+              timePickerProps={{ withDropdown: true, format: "24h" }}
             />
           </div>
 
