@@ -25,8 +25,9 @@ const PAYMENT_METHOD_OPTIONS = Object.entries(PAYMENT_METHODS).map(
 
 const DEFAULT_OFFER_FORM: OfferFormValues = {
   discountType: "PERCENTAGE",
-  value: "",
+  value: null,
   startDate: getToday(),
+  status: null,
   endDate: getToday(),
   paymentMethods: [],
 };
@@ -100,14 +101,14 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
                   ? "Valor (%)"
                   : "Valor ($)"
               }
-              value={offerForm.value}
+              value={offerForm.value ?? ""}
               error={errors.value}
               min={0}
               required
               onChange={(value) =>
                 setOfferForm((prevState) => ({
                   ...prevState,
-                  value: value,
+                  value: Number(value),
                 }))
               }
             />
@@ -116,7 +117,6 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
           {/* DATES */}
           <div className="grid grid-cols-2 gap-3">
             <DateTimePicker
-              // valueFormat={"YYYY-MM-DDTHH:mm:ss"}
               label="Fecha de inicio"
               value={offerForm.startDate}
               error={errors.startDate}
@@ -131,7 +131,6 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
               timePickerProps={{ withDropdown: true, format: "24h" }}
             />
             <DateTimePicker
-              // valueFormat={"YYYY-MM-DDTHH:mm:ss"}
               label="Fecha de finalización"
               value={offerForm.endDate}
               error={errors.endDate}

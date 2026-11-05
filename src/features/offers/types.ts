@@ -19,4 +19,11 @@ export type Offer = {
   paymentMethods: PaymentMethod[];
 };
 
-export type OfferFormValues = Omit<Offer, "id" | "status">;
+export type OfferFormValues = {
+  discountType: DiscountType;
+  value: number | null;
+  startDate: string;
+  endDate: string;
+  status: OfferStatus | null;
+  paymentMethods: PaymentMethod[];
+};

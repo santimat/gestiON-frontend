@@ -23,8 +23,8 @@ export const OfferSchema = z
       path: ["value"],
     },
   )
-  // las fechas llegan como ISO ("YYYY-MM-DDTHH:mm:ss"): el orden lexicográfico
-  // coincide con el orden cronológico, así que se pueden comparar como texto
+  .refine((offer) => offer.startDate <= new Date().toISOString())
+  // las fechas llegan como ("YYYY-MM-DDTHH:mm:ss")
   .refine((offer) => offer.endDate >= offer.startDate, {
     message: "La fecha de fin debe ser posterior a la de inicio",
     path: ["endDate"],
