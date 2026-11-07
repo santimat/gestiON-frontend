@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { UsersIcon } from "lucide-react";
-import { toast } from "sonner";
 
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
-import type { AppError } from "@shared/types";
+import { toastAppError } from "@shared/utils/toastAppError";
 import type { User } from "@features/auth";
 import type { SellPoint } from "@features/sell-points/types";
 
@@ -30,8 +29,10 @@ export const SellPointCashiers = ({
     getSellPointCashiers(sellPoint.id)
       .then((assigned) => setCashiers(assigned))
       .catch((error) => {
-        const appError = error as AppError;
-        toast.error(appError?.message);
+        toastAppError(
+          error,
+          "No se pudieron cargar los cajeros del punto de venta.",
+        );
         closeModal();
       })
       .finally(() => setIsLoading(false));
