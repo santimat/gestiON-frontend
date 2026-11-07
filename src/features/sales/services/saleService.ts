@@ -1,44 +1,22 @@
-import { isAxiosError } from "axios";
-
 import { SaleRequestSchema } from "@features/sales/schemas/SaleRequestSchema";
-import { backendAPI } from "@shared/services/axiosConfig";
-import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 import type { SaleRequest, SalesFilter } from "@features/sales/types";
-import { handleZodParsingError } from "@shared/utils/handleZodParseError";
+import { backendAPI } from "@shared/services/axiosConfig";
+import { executeApiCall } from "@shared/utils/apiClient";
+import { parseOrThrow } from "@shared/utils/parseOrThrow";
 
 export const saleService = {
   createSale: async (sale: SaleRequest) => {
-    const parsedData = SaleRequestSchema.safeParse(sale);
-    handleZodParsingError(parsedData);
-
-    try {
-      const { data } = await backendAPI.post("/sales", parsedData.data);
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    const parsedData = parseOrThrow(SaleRequestSchema, sale);
+    return executeApiCall(() => backendAPI.post("/sales", parsedData));
   },
 
   getSales: async (filters: SalesFilter) => {
-    try {
-      const { data } = await backendAPI.get("/sales", {
-        params: { ...filters, size: 20 },
-      });
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() =>
+      backendAPI.get("/sales", { params: { ...filters, size: 20 } }),
+    );
   },
 
   getSaleWithDetails: async (saleId: number) => {
-    try {
-      const { data } = await backendAPI.get(`/sales/${saleId}`);
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() => backendAPI.get(`/sales/${saleId}`));
   },
 };

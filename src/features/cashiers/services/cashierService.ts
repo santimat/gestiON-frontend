@@ -1,62 +1,35 @@
-import { isAxiosError } from "axios";
-
-import { CashierSchema } from "@features/cashiers/schemas/CashierSchema";
-import { CashierUpdateSchema } from "@features/cashiers/schemas/CashierUpdateSchema";
-import type { CashierRequest, CashierUpdate } from "@features/cashiers/types";
 import type { User } from "@features/auth";
+import { executeApiCall } from "@shared/utils/apiClient";
 import { backendAPI } from "@shared/services/axiosConfig";
-import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
-import { handleZodParsingError } from "@shared/utils/handleZodParseError";
+import { parseOrThrow } from "@shared/utils/parseOrThrow";
+import { CashierSchema } from "@features/cashiers/schemas/CashierSchema";
+import type { CashierRequest, CashierUpdate } from "@features/cashiers/types";
+import { CashierUpdateSchema } from "@features/cashiers/schemas/CashierUpdateSchema";
 
 export const cashierService = {
   createCashier: async (cashier: CashierRequest) => {
-    const parsedData = CashierSchema.safeParse(cashier);
-    handleZodParsingError(parsedData);
-
-    try {
-      const { data } = await backendAPI.post("/cashiers", cashier);
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    parseOrThrow(CashierSchema, cashier);
+    return executeApiCall(() => backendAPI.post("/cashiers", cashier));
   },
   updateCashier: async (userId: number, cashier: CashierUpdate) => {
     // si la contraseña quedó vacía no se envía: el backend conserva la actual
-
-    const parsedData = CashierUpdateSchema.safeParse(cashier);
-    handleZodParsingError(parsedData);
-
-    try {
-      const { data } = await backendAPI.put(`/cashiers/${userId}`, cashier);
-      return data as User;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    parseOrThrow(CashierUpdateSchema, cashier);
+    const data = await executeApiCall(() =>
+      backendAPI.put(`/cashiers/${userId}`, cashier),
+    );
+    return data as User;
   },
   getCashiers: async () => {
-    try {
-      const { data } = await backendAPI.get("/cashiers");
-      const cashiers: User[] = data?.content ?? [];
-      const totalCashiers: number =
-        data?.totalElements ?? data?.page?.totalElements ?? cashiers.length;
+    const data = await executeApiCall(() => backendAPI.get("/cashiers"));
+    const cashiers: User[] = data?.content ?? [];
+    const totalCashiers: number =
+      data?.totalElements ?? data?.page?.totalElements ?? cashiers.length;
 
-      return { cashiers, totalCashiers };
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return { cashiers, totalCashiers };
   },
   toggleActive: async (userId: number) => {
-    try {
-      const { data } = await backendAPI.patch(
-        `/cashiers/${userId}/toggle-active`,
-      );
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() =>
+      backendAPI.patch(`/cashiers/${userId}/toggle-active`),
+    );
   },
 };

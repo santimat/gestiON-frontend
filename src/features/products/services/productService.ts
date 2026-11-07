@@ -1,59 +1,35 @@
-import { isAxiosError } from "axios";
-
 import { ProductSchema } from "@features/products/schemas/ProductSchema";
-import { backendAPI } from "@shared/services/axiosConfig";
-import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
-import { handleZodParsingError } from "@shared/utils/handleZodParseError";
 import type { ProductFilters } from "@features/products/types";
+import { backendAPI } from "@shared/services/axiosConfig";
+import { executeApiCall } from "@shared/utils/apiClient";
+import { parseOrThrow } from "@shared/utils/parseOrThrow";
 
 export const productService = {
   createProduct: async (product: FormData) => {
     const productToParse = Object.fromEntries(product.entries());
-    const parsedData = ProductSchema.safeParse(productToParse);
-    handleZodParsingError(parsedData);
+    parseOrThrow(ProductSchema, productToParse);
 
-    try {
-      const { data } = await backendAPI.post("/products", product);
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() => backendAPI.post("/products", product));
   },
 
   updateProduct: async (productId: number, product: FormData) => {
     const productToParse = Object.fromEntries(product.entries());
-    const parsedData = ProductSchema.safeParse(productToParse);
-    handleZodParsingError(parsedData);
+    parseOrThrow(ProductSchema, productToParse);
 
-    try {
-      const { data } = await backendAPI.put(`/products/${productId}`, product);
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() =>
+      backendAPI.put(`/products/${productId}`, product),
+    );
   },
 
   toggleActive: async (productId: number) => {
-    try {
-      const { data } = await backendAPI.patch(
-        `/products/${productId}/toggle-active`,
-      );
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() =>
+      backendAPI.patch(`/products/${productId}/toggle-active`),
+    );
   },
 
   getProducts: async (filters?: ProductFilters) => {
-    try {
-      const { data } = await backendAPI.get("/products", { params: filters });
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() =>
+      backendAPI.get("/products", { params: filters }),
+    );
   },
 };

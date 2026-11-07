@@ -1,39 +1,18 @@
-import { isAxiosError } from "axios";
-
-import { LoginSchema } from "@features/auth/schemas/LoginSchema";
 import type { LoginDTO } from "@features/auth/types";
+import { executeApiCall } from "@shared/utils/apiClient";
 import { backendAPI } from "@shared/services/axiosConfig";
-import { handleZodParsingError } from "@shared/utils/handleZodParseError";
-import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
+import { parseOrThrow } from "@shared/utils/parseOrThrow";
+import { LoginSchema } from "@features/auth/schemas/LoginSchema";
 
 export const authService = {
   login: async (loginRequest: LoginDTO) => {
-    const parsedLogin = LoginSchema.safeParse(loginRequest);
-    handleZodParsingError(parsedLogin);
-
-    try {
-      const { data } = await backendAPI.post("/auth/login", parsedLogin.data);
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    const parsedLogin = parseOrThrow(LoginSchema, loginRequest);
+    return executeApiCall(() => backendAPI.post("/auth/login", parsedLogin));
   },
   logout: async () => {
-    try {
-      await backendAPI.post("/auth/logout");
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    await executeApiCall(() => backendAPI.post("/auth/logout"));
   },
   checkAuth: async () => {
-    try {
-      const { data } = await backendAPI.get("/auth/me");
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() => backendAPI.get("/auth/me"));
   },
 };

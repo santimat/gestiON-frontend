@@ -1,78 +1,47 @@
-import { isAxiosError } from "axios";
-
 import { SellPointRequestSchema } from "@features/sell-points/schemas/SellPointSchema";
-import { backendAPI } from "@shared/services/axiosConfig";
-import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 import type { User } from "@features/auth";
 import type { SellPoint, SellPointRequest } from "@features/sell-points/types";
-import { handleZodParsingError } from "@shared/utils/handleZodParseError";
+import { backendAPI } from "@shared/services/axiosConfig";
+import { executeApiCall } from "@shared/utils/apiClient";
+import { parseOrThrow } from "@shared/utils/parseOrThrow";
 
 export const sellPointService = {
   createSellPoint: async (sellPoint: SellPointRequest) => {
-    const parsedData = SellPointRequestSchema.safeParse(sellPoint);
-    handleZodParsingError(parsedData);
-
-    try {
-      const { data } = await backendAPI.post("/sell-points", parsedData.data);
-      return data as SellPoint;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    const parsedData = parseOrThrow(SellPointRequestSchema, sellPoint);
+    const data = await executeApiCall(() =>
+      backendAPI.post("/sell-points", parsedData),
+    );
+    return data as SellPoint;
   },
 
   updateSellPoint: async (sellPointId: number, sellPoint: SellPointRequest) => {
-    const parsedData = SellPointRequestSchema.safeParse(sellPoint);
-    handleZodParsingError(parsedData);
-
-    try {
-      const { data } = await backendAPI.put(
-        `/sell-points/${sellPointId}`,
-        parsedData.data,
-      );
-      return data as SellPoint;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    const parsedData = parseOrThrow(SellPointRequestSchema, sellPoint);
+    const data = await executeApiCall(() =>
+      backendAPI.put(`/sell-points/${sellPointId}`, parsedData),
+    );
+    return data as SellPoint;
   },
 
   getSellPoints: async () => {
-    try {
-      const { data } = await backendAPI.get("/sell-points");
-      const sellPoints: SellPoint[] = data?.content ?? [];
-      const totalSellPoints: number = data?.page?.totalElements;
+    const data = await executeApiCall(() => backendAPI.get("/sell-points"));
+    const sellPoints: SellPoint[] = data?.content ?? [];
+    const totalSellPoints: number = data?.page?.totalElements;
 
-      return { sellPoints, totalSellPoints };
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return { sellPoints, totalSellPoints };
   },
 
   getSellPointCashiers: async (sellPointId: number) => {
-    try {
-      const { data } = await backendAPI.get(
-        `/sell-points/${sellPointId}/cashiers`,
-      );
-      // el endpoint devuelve un array directo de cajeros (con fallback por si lo envuelven en paginación)
-      const cashiers: User[] = data?.content;
-      return cashiers;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    const data = await executeApiCall(() =>
+      backendAPI.get(`/sell-points/${sellPointId}/cashiers`),
+    );
+    // el endpoint devuelve un array directo de cajeros (con fallback por si lo envuelven en paginación)
+    const cashiers: User[] = data?.content;
+    return cashiers;
   },
 
   toggleActive: async (sellPointId: number) => {
-    try {
-      const { data } = await backendAPI.patch(
-        `/sell-points/${sellPointId}/toggle-active`,
-      );
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() =>
+      backendAPI.patch(`/sell-points/${sellPointId}/toggle-active`),
+    );
   },
 };

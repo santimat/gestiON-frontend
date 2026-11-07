@@ -1,64 +1,36 @@
-import { isAxiosError } from "axios";
-
-import { CommerceWithOwnerRequestSchema } from "@features/commerces/schemas/CommerceWithOwnerRequestSchema";
-import { CommerceWithOwnerUpdateSchema } from "@features/commerces/schemas/CommerceWithOwnerUpdateSchema";
+import {
+  CommerceWithOwnerUpdateSchema,
+  CommerceWithOwnerRequestSchema,
+} from "@features/commerces/schemas";
+import { executeApiCall } from "@shared/utils/apiClient";
+import { parseOrThrow } from "@shared/utils/parseOrThrow";
 import { backendAPI } from "@shared/services/axiosConfig";
-import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
-import { handleZodParsingError } from "@shared/utils/handleZodParseError";
 
 export const commerceService = {
   createCommerceWithOwner: async (commerceWithOwner: FormData) => {
     const objectToParse = Object.fromEntries(commerceWithOwner.entries());
-    const parsedData = CommerceWithOwnerRequestSchema.safeParse(objectToParse);
-    handleZodParsingError(parsedData);
+    parseOrThrow(CommerceWithOwnerRequestSchema, objectToParse);
 
-    try {
-      const { data } = await backendAPI.post("/commerces", commerceWithOwner);
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() =>
+      backendAPI.post("/commerces", commerceWithOwner),
+    );
   },
   getCommercesWithOwner: async () => {
-    try {
-      const {
-        data: { content },
-      } = await backendAPI.get("/commerces");
-      return content;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    const { content } = await executeApiCall(() =>
+      backendAPI.get("/commerces"),
+    );
+    return content;
   },
   getCommerceStats: async () => {
-    try {
-      const { data } = await backendAPI.get("/commerces/stats");
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() => backendAPI.get("/commerces/stats"));
   },
   getCurrentCommerce: async () => {
-    try {
-      const { data } = await backendAPI.get("/commerces/current");
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() => backendAPI.get("/commerces/current"));
   },
   toggleCommerceActive: async (commerceId: number) => {
-    try {
-      const { data } = await backendAPI.patch(
-        `/commerces/${commerceId}/toggle-active`,
-      );
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() =>
+      backendAPI.patch(`/commerces/${commerceId}/toggle-active`),
+    );
   },
   updateCommerceWithOwner: async ({
     commerceId,
@@ -69,19 +41,11 @@ export const commerceService = {
     userId: number;
     formData: FormData;
   }) => {
-    const dataToparse = { ...Object.fromEntries(formData), commerceId, userId };
-    const parsedData = CommerceWithOwnerUpdateSchema.safeParse(dataToparse);
-    handleZodParsingError(parsedData);
+    const dataToParse = { ...Object.fromEntries(formData), commerceId, userId };
+    parseOrThrow(CommerceWithOwnerUpdateSchema, dataToParse);
 
-    try {
-      const { data } = await backendAPI.put(
-        `/commerces/${commerceId}/user/${userId}`,
-        formData,
-      );
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() =>
+      backendAPI.put(`/commerces/${commerceId}/user/${userId}`, formData),
+    );
   },
 };
