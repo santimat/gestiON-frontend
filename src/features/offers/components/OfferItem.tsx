@@ -5,6 +5,7 @@ import { useOffer } from "@features/offers/hooks/useOffer";
 import { formatOfferValue } from "@features/offers/utils/offerUtils";
 import { OfferStatusBadge } from "@features/offers/components/OfferStatusBadge";
 import { OfferActiveRangeDate } from "@features/offers/components/OfferActiveRangeDate";
+import { OfferAppliesTo } from "./OfferAppliesTo";
 
 type OfferItemProps = {
   offer: Offer;
@@ -15,17 +16,16 @@ export const OfferItem = ({ offer, columns }: OfferItemProps) => {
   const { openEdit } = useOffer();
 
   return (
-    <li className={`p-2 ${columns} hover:bg-background-soft transition-colors`}>
-      <div>
-        <p className="font-semibold tabular-nums">{formatOfferValue(offer)}</p>
-      </div>
-      <p className="text-secondary-foreground truncate">
-        {/* SE APLICA A: */}
-        {/* TODO */}
-        {JSON.stringify(offer.paymentMethods)}
+    <li className={`p-2 ${columns} `}>
+      <p className="pl-2 font-semibold tabular-nums">
+        {formatOfferValue(offer)}
       </p>
-      <OfferActiveRangeDate offer={offer} />
-      <OfferStatusBadge offer={offer} />
+      <OfferAppliesTo paymentMethods={offer.paymentMethods} />
+      <OfferActiveRangeDate
+        startDate={offer.startDate}
+        endDate={offer.endDate}
+      />
+      <OfferStatusBadge status={offer.status} />
       <div className="justify-center">
         <button
           aria-label={`Editar oferta ${""}`}

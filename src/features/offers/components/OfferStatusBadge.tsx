@@ -1,5 +1,5 @@
 import { StatusBadge } from "@shared/components/StatusBadge";
-import type { Offer, OfferStatus } from "@features/offers/types";
+import type { OfferStatus } from "@features/offers/types";
 import type { StatusTone } from "@shared/components/StatusBadge";
 
 const OFFER_STATUS_LABELS: Record<OfferStatus, string> = {
@@ -15,12 +15,12 @@ const STATUS_TONES: Record<OfferStatus, StatusTone> = {
 };
 
 type OfferStatusBadgeProps = {
-  offer: Offer;
+  status: OfferStatus;
 };
 
-export const OfferStatusBadge = ({ offer }: OfferStatusBadgeProps) => (
+export const OfferStatusBadge = ({ status }: OfferStatusBadgeProps) => (
   <StatusBadge
-    label={OFFER_STATUS_LABELS[offer.status]}
-    tone={STATUS_TONES[offer.status]}
+    label={OFFER_STATUS_LABELS[status]}
+    tone={STATUS_TONES[status]}
   />
 );

@@ -3,8 +3,8 @@ import { Button } from "@mantine/core";
 
 import type { Offer } from "@features/offers/types";
 import { useOffer } from "@features/offers/hooks/useOffer";
-import { formatOfferValue } from "@features/offers/utils/offerUtils";
 import { OfferStatusBadge } from "@features/offers/components/OfferStatusBadge";
+import { OfferActiveRangeDate } from "@features/offers/components/OfferActiveRangeDate";
 
 type OfferItemMobileProps = {
   offer: Offer;
@@ -16,19 +16,16 @@ export const OfferItemMobile = ({ offer }: OfferItemMobileProps) => {
   return (
     <div className="border-background-soft bg-card shadow-card flex flex-col rounded-xl border p-4">
       <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0 flex-1">
-          <p className="font-semibold tabular-nums">
-            {formatOfferValue(offer)}
-          </p>
-          <p className="text-secondary-foreground truncate text-xs">
-            {/*{formatOfferTargets(offer)}*/}
-          </p>
-        </div>
-        <OfferStatusBadge offer={offer} />
+        <p className="text-secondary-foreground truncate text-xs">
+          {/* TODO: agregar donde se aplica la oferta*/}
+          {/*{formatOfferTargets(offer)}*/}
+        </p>
+        <OfferStatusBadge status={offer.status} />
       </div>
-      <p className="text-secondary-foreground mt-2 text-xs tabular-nums">
-        {/*{formatOfferPeriod(offer)}*/}
-      </p>
+      <OfferActiveRangeDate
+        startDate={offer.startDate}
+        endDate={offer.endDate}
+      />
       <div className="mt-3 flex gap-2">
         <Button
           variant="outline"
