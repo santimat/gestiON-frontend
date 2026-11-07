@@ -1,9 +1,10 @@
 import { Contact, UserPlus } from "lucide-react";
 import { lazy, useEffect } from "react";
-import { Button, Modal } from "@mantine/core";
+import { Button } from "@mantine/core";
 
 import { useClient } from "@features/clients/hooks/useClient";
 import { ListContainer } from "@shared/components/ListContainer";
+import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { ClientList } from "@features/clients/components/ClientList";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
@@ -47,20 +48,13 @@ export const Clients = () => {
 
   return (
     <>
-      <Modal
+      <EntityFormModal
         opened={isFormModalOpen}
-        onClose={closeFormModal}
-        centered
-        size="xl"
-        transitionProps={{ transition: "fade-down", duration: 300 }}
-        withCloseButton={false}
+        closeModal={closeFormModal}
+        entityKey={formClient?.id ?? "create"}
       >
-        <ClientForm
-          key={formClient?.id ?? "create"}
-          client={formClient}
-          closeModal={closeFormModal}
-        />
-      </Modal>
+        <ClientForm client={formClient} closeModal={closeFormModal} />
+      </EntityFormModal>
 
       <main className="flex flex-col gap-6 p-6">
         <ListContainer

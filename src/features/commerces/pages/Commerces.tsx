@@ -4,12 +4,13 @@ import {
   StoreIcon,
   UsersIcon,
 } from "lucide-react";
-import { Button, Modal } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { lazy, useEffect } from "react";
 
 import { useCommerce } from "@features/commerces/hooks/useCommerce";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { ListContainer } from "@shared/components/ListContainer";
+import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { CommerceList } from "@features/commerces/components/CommerceList";
 import { CommerceStatsCard } from "@features/commerces/components/CommerceStatsCard";
 
@@ -52,20 +53,13 @@ export const Commerces = () => {
 
   return (
     <>
-      <Modal
+      <EntityFormModal
         opened={isFormModalOpen}
-        onClose={closeFormModal}
-        withCloseButton={false}
-        centered
-        size="xl"
-        transitionProps={{ transition: "fade-down", duration: 300 }}
+        closeModal={closeFormModal}
+        entityKey={formCommerce?.commerceId ?? "create"}
       >
-        <CommerceForm
-          key={formCommerce?.commerceId ?? "create"}
-          commerce={formCommerce}
-          closeModal={closeFormModal}
-        />
-      </Modal>
+        <CommerceForm commerce={formCommerce} closeModal={closeFormModal} />
+      </EntityFormModal>
 
       <main className="flex flex-col gap-6 p-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">

@@ -1,10 +1,11 @@
 import { lazy, useEffect } from "react";
-import { Button, Modal } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { BadgePercent, Plus } from "lucide-react";
 
 import { useAuth } from "@features/auth";
 import { useOffer } from "@features/offers/hooks/useOffer";
 import { ListContainer } from "@shared/components/ListContainer";
+import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { OfferList } from "@features/offers/components/OfferList";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { useOfferSearch } from "@features/offers/hooks/useOfferSearch";
@@ -51,20 +52,14 @@ export const Offers = () => {
 
   return (
     <>
-      <Modal
+      <EntityFormModal
         opened={isFormModalOpen}
-        onClose={closeFormModal}
-        centered
+        closeModal={closeFormModal}
         size="md"
-        transitionProps={{ transition: "fade-down", duration: 300 }}
-        withCloseButton={false}
+        entityKey={formOffer?.id ?? "create"}
       >
-        <OfferForm
-          key={formOffer?.id ?? "create"}
-          offer={formOffer}
-          closeModal={closeFormModal}
-        />
-      </Modal>
+        <OfferForm offer={formOffer} closeModal={closeFormModal} />
+      </EntityFormModal>
 
       <main className="flex flex-col gap-6 p-6">
         <OffersFilterBar filters={filters} setFilters={setFilters} />

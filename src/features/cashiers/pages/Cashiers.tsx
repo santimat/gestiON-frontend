@@ -1,9 +1,10 @@
 import { BuildingComplexIcon, UserPlus } from "lucide-react";
 import { lazy, useEffect } from "react";
-import { Button, Modal } from "@mantine/core";
+import { Button } from "@mantine/core";
 
 import { useCashier } from "@features/cashiers/hooks/useCashier";
 import { ListContainer } from "@shared/components/ListContainer";
+import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { CashiersList } from "@features/cashiers/components/CashiersList";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
@@ -47,20 +48,13 @@ export const Cashiers = () => {
 
   return (
     <>
-      <Modal
+      <EntityFormModal
         opened={isFormModalOpen}
-        onClose={closeFormModal}
-        centered
-        size="xl"
-        transitionProps={{ transition: "fade-down", duration: 300 }}
-        withCloseButton={false}
+        closeModal={closeFormModal}
+        entityKey={formCashier?.id ?? "create"}
       >
-        <CashierForm
-          key={formCashier?.id ?? "create"}
-          cashier={formCashier}
-          closeModal={closeFormModal}
-        />
-      </Modal>
+        <CashierForm cashier={formCashier} closeModal={closeFormModal} />
+      </EntityFormModal>
 
       <main className="flex flex-col gap-6 p-6">
         <ListContainer

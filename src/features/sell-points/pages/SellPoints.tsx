@@ -1,9 +1,10 @@
 import { lazy, useEffect } from "react";
-import { Button, Modal } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { MonitorIcon, Plus, StoreIcon } from "lucide-react";
 
 import { useAuth } from "@features/auth";
 import { ListContainer } from "@shared/components/ListContainer";
+import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { SellPointsList } from "@features/sell-points/components/SellPointsList";
 import { useCommerce } from "@features/commerces";
 import { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
@@ -75,35 +76,25 @@ export const SellPoints = () => {
 
   return (
     <>
-      <Modal
+      <EntityFormModal
         opened={isFormModalOpen}
-        onClose={closeFormModal}
-        centered
-        size="xl"
-        transitionProps={{ transition: "fade-down", duration: 300 }}
-        withCloseButton={false}
+        closeModal={closeFormModal}
+        entityKey={formSellPoint?.id ?? "create"}
       >
-        <SellPointForm
-          key={formSellPoint?.id ?? "create"}
-          sellPoint={formSellPoint}
-          closeModal={closeFormModal}
-        />
-      </Modal>
+        <SellPointForm sellPoint={formSellPoint} closeModal={closeFormModal} />
+      </EntityFormModal>
 
-      <Modal
+      <EntityFormModal
         opened={isCashiersModalOpen}
-        onClose={closeCashiersModal}
-        centered
+        closeModal={closeCashiersModal}
         size="md"
-        transitionProps={{ transition: "fade-down", duration: 300 }}
-        withCloseButton={false}
+        entityKey={cashiersModalSellPoint?.id ?? "cashiers"}
       >
         <SellPointCashiers
-          key={cashiersModalSellPoint?.id ?? "cashiers"}
           sellPoint={cashiersModalSellPoint}
           closeModal={closeCashiersModal}
         />
-      </Modal>
+      </EntityFormModal>
 
       <main className="flex flex-col gap-6 p-6">
         {!hasCommerce && (

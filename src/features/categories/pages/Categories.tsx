@@ -1,10 +1,11 @@
 import { lazy, useEffect } from "react";
 import { TagPlus, Tags } from "lucide-react";
-import { Button, Modal } from "@mantine/core";
+import { Button } from "@mantine/core";
 
 import { useCategory } from "@features/categories/hooks/useCategory";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { ListContainer } from "@shared/components/ListContainer";
+import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { CategoryList } from "@features/categories/components/CategoryList";
 
 const CategoryForm = lazy(() =>
@@ -49,20 +50,14 @@ export const Categories = () => {
 
   return (
     <>
-      <Modal
+      <EntityFormModal
         opened={isFormModalOpen}
-        onClose={closeFormModal}
-        centered
+        closeModal={closeFormModal}
         size="md"
-        transitionProps={{ transition: "fade-down", duration: 300 }}
-        withCloseButton={false}
+        entityKey={formCategory?.id ?? "create"}
       >
-        <CategoryForm
-          key={formCategory?.id ?? "create"}
-          category={formCategory}
-          closeModal={closeFormModal}
-        />
-      </Modal>
+        <CategoryForm category={formCategory} closeModal={closeFormModal} />
+      </EntityFormModal>
 
       <main className="flex flex-col gap-6 p-6">
         <ListContainer
