@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, TextInput } from "@mantine/core";
 
 import { useCategory } from "@features/categories/hooks/useCategory";
+import { toastAppError } from "@shared/utils/toastAppError";
 import type { AppError, FieldErrors } from "@shared/types";
 import type { ProductFormValues } from "@features/products";
 
@@ -37,7 +38,7 @@ export const NewCategoryInline = ({
       if (appError.fieldErrors) {
         return setErrors(appError.fieldErrors);
       }
-      toast.error(appError?.message ?? "No se pudo crear la categoría.");
+      toastAppError(error, "No se pudo crear la categoría.");
     }
   };
 

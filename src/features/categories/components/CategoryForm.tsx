@@ -1,14 +1,12 @@
 import { Tags } from "lucide-react";
-import { useState, type SubmitEvent } from "react";
 import { TextInput, Textarea } from "@mantine/core";
 
 import { categoryMapper } from "@features/categories/mappers/categoryMapper";
 import { useCategory } from "@features/categories/hooks/useCategory";
+import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
-import type { AppError, FieldErrors } from "@shared/types";
 import type { Category, CategoryRequest } from "@features/categories/types";
-import { toast } from "sonner";
 
 type NewCategoryFormProps = {
   category: Category | null;
@@ -27,46 +25,37 @@ export const CategoryForm = ({
   const { handleCreateCategory, updateCategory } = useCategory();
   const isEditing = category !== null;
 
-  const [categoryForm, setCategoryForm] = useState<CategoryRequest>(() =>
-    category ? categoryMapper.toForm(category) : DEFAULT_CATEGORY_FORM,
-  );
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    form: categoryForm,
+    setForm: setCategoryForm,
+    errors,
+    isSubmitting,
+    handleSubmit,
+  } = useEntityForm<CategoryRequest>({
+    initialValues: category
+      ? categoryMapper.toForm(category)
+      : DEFAULT_CATEGORY_FORM,
+    isEditing,
+    closeModal,
+    submit: async (form) => {
+      if (isEditing && category) await updateCategory(category.id, form);
+      else await handleCreateCategory(form);
+    },
+    successMessages: {
+      create: "Categoría creada con éxito",
+      update: "Categoría actualizada con éxito",
+    },
+    errorMessages: {
+      create: "No se pudo crear la categoría.",
+      update: "No se pudo actualizar la categoría.",
+    },
+  });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setCategoryForm((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    const categoryRequest = Object.fromEntries(
-      formData.entries(),
-    ) as CategoryRequest;
-    setIsSubmitting(true);
-
-    try {
-      if (isEditing) {
-        await updateCategory(category.id, categoryRequest);
-      } else {
-        await handleCreateCategory(categoryRequest);
-      }
-      toast.success(
-        `Categoría ${isEditing ? "actualizada" : "creada"} con éxito`,
-      );
-      closeModal();
-    } catch (error) {
-      const appError = error as AppError;
-      if (appError.fieldErrors) return setErrors(appError.fieldErrors);
-      toast.error(appError.message);
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   return (
