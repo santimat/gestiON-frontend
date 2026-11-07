@@ -1,16 +1,15 @@
 export type StatusTone = "success" | "warning" | "destructive" | "primary";
 
 const TONE_CLASSES: Record<StatusTone, string> = {
-  success: "bg-success/30 text-success",
   warning: "bg-warning/30 text-warning",
-  destructive: "bg-destructive/30 text-destructive",
+  success: "bg-success/30 text-success",
   primary: "bg-primary-soft text-primary",
+  destructive: "bg-destructive/30 text-destructive",
 };
 
 type StatusBadgeProps = {
   label: string;
   tone: StatusTone;
-  // xs = chip compacto dentro de items (text-xs), sm = badge de lista (default)
   size?: "xs" | "sm";
 };
 
