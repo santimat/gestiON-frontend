@@ -1,6 +1,7 @@
 import { CheckCircle2 } from "lucide-react";
 import { Button, Modal } from "@mantine/core";
 
+import { formatCurrency } from "@shared/utils/money";
 import type { SaleSummary } from "@features/sales/types";
 import { PAYMENT_METHODS } from "@features/sales/dictionary";
 import { SaleTicketModalRow } from "@features/sales/components/sell/SaleTickModalRow";
@@ -24,10 +25,12 @@ export const SaleTicketModal = ({
   const dicountText =
     sale?.discountType === "PERCENTAGE"
       ? `${sale.discount}%`
-      : `$${sale?.discount.toLocaleString("es-AR")}`;
+      : sale
+        ? formatCurrency(sale.discount)
+        : "";
 
-  const subtTotal = `$${sale?.subtotal.toLocaleString("es-AR")}`;
-  const total = `$${sale?.total.toLocaleString("es-AR")}`;
+  const subtTotal = sale ? formatCurrency(sale.subtotal) : "";
+  const total = sale ? formatCurrency(sale.total) : "";
 
   return (
     <Modal

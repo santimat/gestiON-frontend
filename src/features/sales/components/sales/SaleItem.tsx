@@ -1,9 +1,11 @@
 import { ChevronRight } from "lucide-react";
 
+import { formatDate } from "@shared/utils/dates";
+import { formatCurrency } from "@shared/utils/money";
 import type { SaleSummary } from "@features/sales/types";
 import { PAYMENT_METHODS } from "@features/sales/dictionary";
 import { useSaleDetails } from "@features/sales/hooks/useSaleDetails";
-import { StatusBadge } from "@features/sales/components/sales/StatusBadge";
+import { SaleStatusBadge } from "@features/sales/components/sales/SaleStatusBadge";
 
 type SaleItemProps = {
   sale: SaleSummary;
@@ -14,7 +16,7 @@ export const SaleItem = ({ sale, desktopColumns }: SaleItemProps) => {
   const { getSaleWithDetails } = useSaleDetails();
 
   const date = new Date(sale.createdAt);
-  const createdDate = date.toLocaleDateString();
+  const createdDate = formatDate(date);
   const createdHour = `${date.getHours()}:${date.getMinutes()}`;
   const paymentMethod = PAYMENT_METHODS[sale.paymentMethod];
 
@@ -34,8 +36,8 @@ export const SaleItem = ({ sale, desktopColumns }: SaleItemProps) => {
       <p className="truncate">{sale.clientName}</p>
       <p className="text-secondary-foreground">{sale.itemCount}</p>
       <p>{paymentMethod}</p>
-      <StatusBadge status={sale.status} />
-      <p className="font-semibold">${sale.total.toLocaleString("es-AR")}</p>
+      <SaleStatusBadge status={sale.status} />
+      <p className="font-semibold">{formatCurrency(sale.total)}</p>
       <ChevronRight size={20} className="text-secondary-foreground" />
     </li>
   );

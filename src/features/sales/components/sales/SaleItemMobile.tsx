@@ -1,4 +1,5 @@
 import type { SaleSummary } from "@features/sales/types";
+import { formatCurrency } from "@shared/utils/money";
 import { useSaleDetails } from "@features/sales/hooks/useSaleDetails";
 
 type SaleItemMobileProps = {
@@ -26,7 +27,7 @@ export const SaleItemMobile = ({ sale }: SaleItemMobileProps) => {
         </p>
       </div>
       <span className="shrink-0 font-semibold tabular-nums">
-        ${sale.total.toLocaleString("es-AR")}
+        {formatCurrency(sale.total)}
       </span>
     </li>
   );
