@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { PenBoxIcon } from "lucide-react";
-import { toast } from "sonner";
 import { Button, Switch } from "@mantine/core";
 
 import type { SellPoint } from "@features/sell-points/types";
 import { useSellPointItem } from "@features/sell-points/hooks/useSellPoint";
-import type { AppError } from "@shared/types";
+import { ProductItemActions } from "@shared/components/ProductItemActions";
+import { useToggleActive } from "@shared/hooks/useToggleActive";
+import { formatDate } from "@shared/utils/dates";
 
 type SellPointItemProps = {
   sellPoint: SellPoint;
@@ -14,22 +14,11 @@ type SellPointItemProps = {
 
 export const SellPointItem = ({ sellPoint, columns }: SellPointItemProps) => {
   const { toggleActive, openEdit, openCashiersModal } = useSellPointItem();
-  const [isToggling, setIsToggling] = useState(false);
+  const { isToggling, handleToggle } = useToggleActive(
+    "Se cambió el estado del punto de venta correctamente.",
+  );
 
-  const handleOnChangeSwitch = async () => {
-    setIsToggling(true);
-    try {
-      await toggleActive(sellPoint.id);
-      toast.success("Se cambió el estado del punto de venta correctamente.");
-    } catch (error) {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
-    } finally {
-      setIsToggling(false);
-    }
-  };
-
-  const updatedAt = new Date(sellPoint.updatedAt).toLocaleDateString("es-AR");
+  const updatedAt = formatDate(sellPoint.updatedAt);
 
   return (
     <li className={`p-2 ${columns}`}>
@@ -51,17 +40,13 @@ export const SellPointItem = ({ sellPoint, columns }: SellPointItemProps) => {
         color="green"
         checked={sellPoint.active}
         disabled={isToggling}
-        onChange={handleOnChangeSwitch}
+        onChange={() => handleToggle(() => toggleActive(sellPoint.id))}
       />
       <div className="justify-center">
-        <Button
-          size="compact-sm"
-          aria-label="Editar punto de venta"
-          title="Editar punto de venta"
-          onClick={() => openEdit(sellPoint)}
-        >
-          <PenBoxIcon pointerEvents={"none"} size={20} />
-        </Button>
+        <ProductItemActions
+          actionsIcons={[{ Icon: PenBoxIcon, label: "Editar punto de venta" }]}
+          onEdit={() => openEdit(sellPoint)}
+        />
       </div>
     </li>
   );

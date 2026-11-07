@@ -2,6 +2,8 @@ import { Pencil } from "lucide-react";
 
 import type { Category } from "@features/categories/types";
 import { useCategory } from "@features/categories/hooks/useCategory";
+import { ProductItemActions } from "@shared/components/ProductItemActions";
+import { formatDate } from "@shared/utils/dates";
 import { Tooltip } from "@mantine/core";
 
 type CategoryItemProps = {
@@ -10,7 +12,7 @@ type CategoryItemProps = {
 };
 
 export const CategoryItem = ({ category, columns }: CategoryItemProps) => {
-  const updatedAt = new Date(category.updatedAt).toLocaleDateString("es-AR");
+  const updatedAt = formatDate(category.updatedAt);
   const { openEdit } = useCategory();
   return (
     <li className={`p-2 ${columns}`}>
@@ -23,14 +25,10 @@ export const CategoryItem = ({ category, columns }: CategoryItemProps) => {
       <p className="text-gray-500">{category.productCount} productos</p>
       <p className="text-gray-500">{updatedAt}</p>
       <div className="justify-center">
-        <button
-          aria-label={`Editar ${category.name}`}
-          title="Editar"
-          onClick={() => openEdit(category)}
-          className="hover:bg-background-soft rounded-md p-2 transition-transform hover:scale-110 hover:cursor-pointer active:scale-95"
-        >
-          <Pencil pointerEvents="none" size={20} />
-        </button>
+        <ProductItemActions
+          actionsIcons={[{ Icon: Pencil, label: `Editar ${category.name}` }]}
+          onEdit={() => openEdit(category)}
+        />
       </div>
     </li>
   );

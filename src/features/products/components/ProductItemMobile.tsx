@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { NumberFormatter, Switch } from "@mantine/core";
 import { PackageIcon, PencilIcon } from "lucide-react";
-import { toast } from "sonner";
+import { NumberFormatter, Switch } from "@mantine/core";
 
-import type { AppError } from "@shared/types";
 import type { Product } from "@features/products/types";
+import { StatusBadge } from "@shared/components/StatusBadge";
+import { useToggleActive } from "@shared/hooks/useToggleActive";
 import { useProductItem } from "@features/products/hooks/useProduct";
+import { ProductItemActions } from "@shared/components/ProductItemActions";
 
 type ProductItemMobileProps = {
   product: Product;
@@ -13,20 +13,9 @@ type ProductItemMobileProps = {
 
 export const ProductItemMobile = ({ product }: ProductItemMobileProps) => {
   const { toggleActive, openEdit } = useProductItem();
-  const [isToggling, setIsToggling] = useState(false);
-
-  const handleOnChangeSwitch = async () => {
-    setIsToggling(true);
-    try {
-      await toggleActive(product.id);
-      toast.success("Estado del producto actualizado con éxito");
-    } catch (error) {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
-    } finally {
-      setIsToggling(false);
-    }
-  };
+  const { isToggling, handleToggle } = useToggleActive(
+    "Estado del producto actualizado con éxito",
+  );
 
   const isLowStock = product.currentStock <= product.minStock;
 
@@ -51,30 +40,24 @@ export const ProductItemMobile = ({ product }: ProductItemMobileProps) => {
       </div>
       <div className="border-background-soft mt-3 flex items-center justify-between border-t pt-3">
         {isLowStock ? (
-          <span className="bg-warning/40 text-warning rounded-full px-2 py-0.5 text-xs font-medium">
-            stock bajo
-          </span>
+          <StatusBadge label="stock bajo" tone="warning" size="xs" />
         ) : (
           <p className="text-secondary-foreground text-xs">
             Stock mínimo: {product.minStock}
           </p>
         )}
         <div className="flex items-center gap-3">
-          <button
-            aria-label="Editar producto"
-            title="Editar producto"
-            onClick={() => openEdit(product)}
-            className="text-secondary-foreground hover:bg-background-soft hover:text-foreground cursor-pointer rounded-md p-1.5 transition-colors"
-          >
-            <PencilIcon pointerEvents="none" size={18} />
-          </button>
+          <ProductItemActions
+            actionsIcons={[{ Icon: PencilIcon, label: "Editar producto" }]}
+            onEdit={() => openEdit(product)}
+          />
           <Switch
             aria-label="Cambiar estado del producto"
             title="Cambiar estado del producto"
             color="green"
             checked={product.active}
             disabled={isToggling}
-            onChange={handleOnChangeSwitch}
+            onChange={() => handleToggle(() => toggleActive(product.id))}
           />
         </div>
       </div>

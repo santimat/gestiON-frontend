@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { PenBoxIcon } from "lucide-react";
-import { toast } from "sonner";
-import { Button, Switch } from "@mantine/core";
+import { Switch } from "@mantine/core";
 
 import type { User } from "@features/auth";
 import { useCashierItem } from "@features/cashiers/hooks/useCashier";
-import type { AppError } from "@shared/types";
+import { ProductItemActions } from "@shared/components/ProductItemActions";
+import { useToggleActive } from "@shared/hooks/useToggleActive";
+import { formatDate } from "@shared/utils/dates";
 
 type CashierItemProps = {
   cashier: User;
@@ -14,22 +14,11 @@ type CashierItemProps = {
 
 export const CashierItem = ({ cashier, columns }: CashierItemProps) => {
   const { toggleActive, openEdit } = useCashierItem();
-  const [isToggling, setIsToggling] = useState(false);
+  const { isToggling, handleToggle } = useToggleActive(
+    "Se cambió el estado del cajero correctamente.",
+  );
 
-  const handleOnChangeSwitch = async () => {
-    setIsToggling(true);
-    try {
-      await toggleActive(cashier.id);
-      toast.success("Se cambió el estado del cajero correctamente.");
-    } catch (error) {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
-    } finally {
-      setIsToggling(false);
-    }
-  };
-
-  const updatedAt = new Date(cashier.updatedAt).toLocaleDateString("es-AR");
+  const updatedAt = formatDate(cashier.updatedAt);
 
   return (
     <li className={`p-2 ${columns}`}>
@@ -42,17 +31,13 @@ export const CashierItem = ({ cashier, columns }: CashierItemProps) => {
         color="green"
         checked={cashier.active}
         disabled={isToggling}
-        onChange={handleOnChangeSwitch}
+        onChange={() => handleToggle(() => toggleActive(cashier.id))}
       />
       <div className="justify-center">
-        <Button
-          size="compact-sm"
-          aria-label="Editar cajero"
-          title="Editar cajero"
-          onClick={() => openEdit(cashier)}
-        >
-          <PenBoxIcon pointerEvents={"none"} size={20} />
-        </Button>
+        <ProductItemActions
+          actionsIcons={[{ Icon: PenBoxIcon, label: "Editar cajero" }]}
+          onEdit={() => openEdit(cashier)}
+        />
       </div>
     </li>
   );

@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Switch } from "@mantine/core";
 import { PenBoxIcon } from "lucide-react";
-import { toast } from "sonner";
+import { Switch } from "@mantine/core";
 
 import type { User } from "@features/auth";
 import { useCashierItem } from "@features/cashiers/hooks/useCashier";
-import type { AppError } from "@shared/types";
+import { ProductItemActions } from "@shared/components/ProductItemActions";
+import { useToggleActive } from "@shared/hooks/useToggleActive";
+import { formatDate } from "@shared/utils/dates";
 
 type CashierItemMobileProps = {
   cashier: User;
@@ -13,22 +13,11 @@ type CashierItemMobileProps = {
 
 export const CashierItemMobile = ({ cashier }: CashierItemMobileProps) => {
   const { toggleActive, openEdit } = useCashierItem();
-  const [isToggling, setIsToggling] = useState(false);
+  const { isToggling, handleToggle } = useToggleActive(
+    "Se cambió el estado del cajero correctamente.",
+  );
 
-  const handleOnChangeSwitch = async () => {
-    setIsToggling(true);
-    try {
-      await toggleActive(cashier.id);
-      toast.success("Se cambió el estado del cajero correctamente.");
-    } catch (error) {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
-    } finally {
-      setIsToggling(false);
-    }
-  };
-
-  const updatedAt = new Date(cashier.updatedAt).toLocaleDateString("es-AR");
+  const updatedAt = formatDate(cashier.updatedAt);
   const initials = cashier.name
     .split(" ")
     .map((word) => word[0])
@@ -50,21 +39,17 @@ export const CashierItemMobile = ({ cashier }: CashierItemMobileProps) => {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button
-            aria-label="Editar cajero"
-            title="Editar cajero"
-            onClick={() => openEdit(cashier)}
-            className="text-secondary-foreground hover:bg-background-soft hover:text-foreground rounded-md p-1.5 transition-colors"
-          >
-            <PenBoxIcon pointerEvents="none" size={18} />
-          </button>
+          <ProductItemActions
+            actionsIcons={[{ Icon: PenBoxIcon, label: "Editar cajero" }]}
+            onEdit={() => openEdit(cashier)}
+          />
           <Switch
             aria-label="Cambiar acceso del cajero"
             title="Cambiar acceso del cajero"
             color="green"
             checked={cashier.active}
             disabled={isToggling}
-            onChange={handleOnChangeSwitch}
+            onChange={() => handleToggle(() => toggleActive(cashier.id))}
           />
         </div>
       </div>

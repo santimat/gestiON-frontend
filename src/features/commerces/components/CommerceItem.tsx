@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { toast } from "sonner";
 import { PenBoxIcon } from "lucide-react";
-import { Avatar, Button, Switch } from "@mantine/core";
+import { Avatar, Switch } from "@mantine/core";
 
 import { useDisclosure } from "@mantine/hooks";
 import { useCommerceItem } from "@features/commerces/hooks/useCommerce";
 import { ImageViewer } from "@shared/components/ImageViewer";
-import type { AppError } from "@shared/types";
+import { ProductItemActions } from "@shared/components/ProductItemActions";
+import { useToggleActive } from "@shared/hooks/useToggleActive";
+import { formatDate } from "@shared/utils/dates";
 import type { CommerceWithOwner } from "@features/commerces/types";
 
 type CommerceItemProps = {
@@ -16,24 +16,13 @@ type CommerceItemProps = {
 
 export const CommerceItem = ({ commerce, columns }: CommerceItemProps) => {
   const { handleToggleCommerceActive, openEdit } = useCommerceItem();
-  const [isToggling, setIsToggling] = useState(false);
+  // el comercio ya avisa por su cuenta en el hook: sin toast de éxito extra
+  const { isToggling, handleToggle } = useToggleActive(null);
 
   const [opened, { open: openAvatar, close: closeAvatar }] =
     useDisclosure(false);
 
-  const updatedAt = new Date(commerce.updatedAt).toLocaleDateString("es-AR");
-
-  const handleChangeActive = async () => {
-    setIsToggling(true);
-    try {
-      await handleToggleCommerceActive(commerce.commerceId);
-    } catch (error) {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudo cambiar el estado.");
-    } finally {
-      setIsToggling(false);
-    }
-  };
+  const updatedAt = formatDate(commerce.updatedAt);
 
   return (
     <>
@@ -69,18 +58,16 @@ export const CommerceItem = ({ commerce, columns }: CommerceItemProps) => {
           title="Cambiar estado del comercio"
           color="green"
           checked={commerce.businessActive}
-          onChange={handleChangeActive}
           disabled={isToggling}
+          onChange={() =>
+            handleToggle(() => handleToggleCommerceActive(commerce.commerceId))
+          }
         />
         <div className="justify-center">
-          <Button
-            size="compact-sm"
-            aria-label="Editar comercio"
-            title="Editar comercio"
-            onClick={() => openEdit(commerce)}
-          >
-            <PenBoxIcon pointerEvents={"none"} size={20} />
-          </Button>
+          <ProductItemActions
+            actionsIcons={[{ Icon: PenBoxIcon, label: "Editar comercio" }]}
+            onEdit={() => openEdit(commerce)}
+          />
         </div>
       </li>
     </>
