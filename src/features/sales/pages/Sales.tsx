@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+import { lazy, useEffect } from "react";
 import { ReceiptText } from "lucide-react";
 
 import { useSales } from "@features/sales/hooks/useSales";
@@ -7,8 +9,6 @@ import { useSalesSearch } from "@features/sales/hooks/useSalesSearch";
 import { useSaleDetails } from "@features/sales/hooks/useSaleDetails";
 import { SalesList } from "@features/sales/components/sales/SalesList";
 import { SalesFilterBar } from "@features/sales/components/sales/SalesFilterBar";
-import { lazy, useEffect } from "react";
-import { toast } from "sonner";
 
 const SaleDetailModal = lazy(() =>
   import("@features/sales/components/sales/SaleDetailModal").then((module) => ({

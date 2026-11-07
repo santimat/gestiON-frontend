@@ -1,13 +1,14 @@
-import { Package, PackagePlus } from "lucide-react";
+import { Button } from "@mantine/core";
 import { lazy, useEffect } from "react";
-import { Button, Modal } from "@mantine/core";
+import { Package, PackagePlus } from "lucide-react";
 
-import { ListContainer } from "@shared/components/ListContainer";
-import { ProductList } from "@features/products/components/ProductList";
-import { useProduct } from "@features/products/hooks/useProduct";
-import { useCommerce } from "@features/commerces";
 import { useAuth } from "@features/auth";
+import { useCommerce } from "@features/commerces";
+import { ListContainer } from "@shared/components/ListContainer";
+import { useProduct } from "@features/products/hooks/useProduct";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+import { EntityFormModal } from "@shared/components/EntityFormModal";
+import { ProductList } from "@features/products/components/ProductList";
 
 const ProductForm = lazy(() =>
   import("@features/products/components/ProductForm").then((module) => ({
@@ -53,21 +54,17 @@ export const Products = () => {
 
   return (
     <>
-      <Modal
+      <EntityFormModal
         opened={isFormModalOpen}
-        onClose={closeFormModal}
-        centered
-        size="xl"
-        transitionProps={{ transition: "fade-down", duration: 300 }}
-        withCloseButton={false}
+        closeModal={closeFormModal}
+        entityKey={formProduct?.id ?? "create"}
       >
         <ProductForm
-          key={formProduct?.id ?? "create"}
           product={formProduct}
           currentCommerce={currentCommerce ?? null}
           closeModal={closeFormModal}
         />
-      </Modal>
+      </EntityFormModal>
 
       <main className="flex flex-col gap-6 p-6">
         <ListContainer

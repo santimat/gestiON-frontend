@@ -1,43 +1,19 @@
-import { isAxiosError } from "axios";
-
 import { ClientSchema } from "@features/clients/schemas/ClientSchema";
 import type { ClientRequest } from "@features/clients/types";
 import { backendAPI } from "@shared/services/axiosConfig";
-import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
-import { handleZodParsingError } from "@shared/utils/handleZodParseError";
+import { executeApiCall } from "@shared/utils/apiClient";
+import { parseOrThrow } from "@shared/utils/parseOrThrow";
 
 export const clientService = {
   createClient: async (client: ClientRequest) => {
-    const parsedData = ClientSchema.safeParse(client);
-    handleZodParsingError(parsedData);
-
-    try {
-      const { data } = await backendAPI.post("/clients", client);
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    parseOrThrow(ClientSchema, client);
+    return executeApiCall(() => backendAPI.post("/clients", client));
   },
   updateClient: async (clientId: number, client: ClientRequest) => {
-    const parsedData = ClientSchema.safeParse(client);
-    handleZodParsingError(parsedData);
-
-    try {
-      const { data } = await backendAPI.put(`/clients/${clientId}`, client);
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    parseOrThrow(ClientSchema, client);
+    return executeApiCall(() => backendAPI.put(`/clients/${clientId}`, client));
   },
   getClients: async () => {
-    try {
-      const { data } = await backendAPI.get("/clients");
-      return data;
-    } catch (error) {
-      if (isAxiosError(error)) throw handleAxiosErrors(error);
-      throw error;
-    }
+    return executeApiCall(() => backendAPI.get("/clients"));
   },
 };

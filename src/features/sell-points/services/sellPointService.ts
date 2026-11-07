@@ -1,9 +1,9 @@
-import { SellPointRequestSchema } from "@features/sell-points/schemas/SellPointSchema";
 import type { User } from "@features/auth";
-import type { SellPoint, SellPointRequest } from "@features/sell-points/types";
-import { backendAPI } from "@shared/services/axiosConfig";
 import { executeApiCall } from "@shared/utils/apiClient";
+import { backendAPI } from "@shared/services/axiosConfig";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
+import type { SellPoint, SellPointRequest } from "@features/sell-points/types";
+import { SellPointRequestSchema } from "@features/sell-points/schemas/SellPointSchema";
 
 export const sellPointService = {
   createSellPoint: async (sellPoint: SellPointRequest) => {
@@ -34,9 +34,7 @@ export const sellPointService = {
     const data = await executeApiCall(() =>
       backendAPI.get(`/sell-points/${sellPointId}/cashiers`),
     );
-    // el endpoint devuelve un array directo de cajeros (con fallback por si lo envuelven en paginación)
-    const cashiers: User[] = data?.content;
-    return cashiers;
+    return data?.content as User[];
   },
 
   toggleActive: async (sellPointId: number) => {
