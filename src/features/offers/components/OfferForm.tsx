@@ -1,18 +1,16 @@
-import { toast } from "sonner";
 import { BadgePercent } from "lucide-react";
 import { DateTimePicker } from "@mantine/dates";
-import { useState, type SubmitEvent } from "react";
-import { MultiSelect, NumberInput, Select, TextInput } from "@mantine/core";
+import { MultiSelect, NumberInput, Select } from "@mantine/core";
 
 import { PAYMENT_METHODS } from "@features/sales";
-import type { AppError, FieldErrors } from "@shared/types";
 import { useOffer } from "@features/offers/hooks/useOffer";
+import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import type { DiscountType, PaymentMethod } from "@features/sales";
 import { offerMapper } from "@features/offers/mappers/offerMapper";
 import type { Offer, OfferFormValues } from "@features/offers/types";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
-import { getToday } from "../utils/offerUtils";
+import { getToday } from "@features/offers/utils/offerUtils";
 
 const DISCOUNT_TYPE_OPTIONS: { value: DiscountType; label: string }[] = [
   { value: "PERCENTAGE", label: "Porcentaje (%)" },
@@ -41,35 +39,30 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
   const { createOffer, updateOffer } = useOffer();
   const isEditing = offer !== null;
 
-  const [offerForm, setOfferForm] = useState<OfferFormValues>(() =>
-    offer ? offerMapper.toForm(offer) : DEFAULT_OFFER_FORM,
-  );
-
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const offerRequest = offerMapper.toRequest(offerForm);
-      if (isEditing) await updateOffer(offer.id, offerRequest);
+  const {
+    form: offerForm,
+    setForm: setOfferForm,
+    errors,
+    isSubmitting,
+    handleSubmit,
+  } = useEntityForm<OfferFormValues>({
+    initialValues: offer ? offerMapper.toForm(offer) : DEFAULT_OFFER_FORM,
+    isEditing,
+    closeModal,
+    submit: async (form) => {
+      const offerRequest = offerMapper.toRequest(form);
+      if (isEditing && offer) await updateOffer(offer.id, offerRequest);
       else await createOffer(offerRequest);
-
-      toast.success(`Oferta ${isEditing ? "actualizada" : "creada"} con éxito`);
-      closeModal();
-    } catch (error) {
-      const appError = error as AppError;
-      if (appError.fieldErrors) {
-        setErrors(appError.fieldErrors);
-        return;
-      }
-      toast.error(appError.message);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    },
+    successMessages: {
+      create: "Oferta creada con éxito",
+      update: "Oferta actualizada con éxito",
+    },
+    errorMessages: {
+      create: "No se pudo guardar la oferta.",
+      update: "No se pudo guardar la oferta.",
+    },
+  });
 
   return (
     <>

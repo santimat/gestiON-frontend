@@ -1,14 +1,12 @@
-import type { ChangeEvent, SubmitEvent } from "react";
-import { useState } from "react";
+import type { ChangeEvent } from "react";
 import { PasswordInput, TextInput } from "@mantine/core";
 import { KeyRound, Mail, Phone, UserPen, UserRound } from "lucide-react";
-import { toast } from "sonner";
 
 import { cashierMapper } from "@features/cashiers/mappers/cashierMapper";
 import { useCashier } from "@features/cashiers/hooks/useCashier";
+import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
-import type { AppError, FieldErrors } from "@shared/types";
 import type { User } from "@features/auth";
 import type { CashierRequest } from "@features/cashiers/types";
 
@@ -29,42 +27,31 @@ export const CashierForm = ({ cashier, closeModal }: NewCashierProps) => {
 
   const { handleCreateCashier, updateCashier } = useCashier();
 
-  const [cashierForm, setCashierForm] = useState<CashierRequest>(() =>
-    cashier ? cashierMapper.toForm(cashier) : DEFAULT_CASHIER_FORM,
-  );
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    setIsSubmitting(true);
-    try {
-      if (isEditing) {
-        await updateCashier({ cashierId: cashier.id, cashier: cashierForm });
-      } else {
-        await handleCreateCashier(cashierForm);
-      }
-      setErrors({});
-      closeModal();
-      toast.success(
-        isEditing
-          ? "Cajero actualizado correctamente"
-          : "Cajero creado correctamente",
-      );
-    } catch (error) {
-      const appError = error as AppError;
-      if (appError?.fieldErrors) return setErrors(appError.fieldErrors);
-      toast.error(
-        appError?.message ??
-          (isEditing
-            ? "No se pudo actualizar el cajero."
-            : "No se pudo crear el cajero."),
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const {
+    form: cashierForm,
+    setForm: setCashierForm,
+    errors,
+    isSubmitting,
+    handleSubmit,
+  } = useEntityForm<CashierRequest>({
+    initialValues: cashier
+      ? cashierMapper.toForm(cashier)
+      : DEFAULT_CASHIER_FORM,
+    isEditing,
+    closeModal,
+    submit: (form) =>
+      isEditing && cashier
+        ? updateCashier({ cashierId: cashier.id, cashier: form })
+        : handleCreateCashier(form),
+    successMessages: {
+      create: "Cajero creado correctamente",
+      update: "Cajero actualizado correctamente",
+    },
+    errorMessages: {
+      create: "No se pudo crear el cajero.",
+      update: "No se pudo actualizar el cajero.",
+    },
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

@@ -1,15 +1,13 @@
-import { toast } from "sonner";
-import { useState } from "react";
 import { TextInput } from "@mantine/core";
-import type { ChangeEvent, SubmitEvent } from "react";
+import type { ChangeEvent } from "react";
 import { IdCard, MapPinHouse, Phone, UserPen, UserRound } from "lucide-react";
 
 import { clientMapper } from "@features/clients/mappers/clientMapper";
 import { useClient } from "@features/clients/hooks/useClient";
+import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { DEFAULT_CLIENT_FORM } from "@features/clients/constants";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
-import type { AppError, FieldErrors } from "@shared/types";
 import type { Client, ClientRequest } from "@features/clients/types";
 
 type ClientFormProps = {
@@ -22,37 +20,29 @@ export const ClientForm = ({ client, closeModal }: ClientFormProps) => {
 
   const { handleCreateClient, updateClient } = useClient();
 
-  const [clientForm, setClientForm] = useState<ClientRequest>(() =>
-    client ? clientMapper.toForm(client) : DEFAULT_CLIENT_FORM,
-  );
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    setIsSubmitting(true);
-    try {
-      if (isEditing) {
-        await updateClient(client.id, clientForm);
-      } else {
-        await handleCreateClient(clientForm);
-      }
-      setErrors({});
-      closeModal();
-      toast.success(
-        isEditing
-          ? "Cliente actualizado correctamente"
-          : "Cliente creado correctamente",
-      );
-    } catch (error) {
-      const appError = error as AppError;
-      if (appError?.fieldErrors) return setErrors(appError.fieldErrors);
-      toast.error(appError?.message ?? "No se pudo guardar el cliente.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const {
+    form: clientForm,
+    setForm: setClientForm,
+    errors,
+    isSubmitting,
+    handleSubmit,
+  } = useEntityForm<ClientRequest>({
+    initialValues: client ? clientMapper.toForm(client) : DEFAULT_CLIENT_FORM,
+    isEditing,
+    closeModal,
+    submit: (form) =>
+      isEditing && client
+        ? updateClient(client.id, form)
+        : handleCreateClient(form),
+    successMessages: {
+      create: "Cliente creado correctamente",
+      update: "Cliente actualizado correctamente",
+    },
+    errorMessages: {
+      create: "No se pudo guardar el cliente.",
+      update: "No se pudo guardar el cliente.",
+    },
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

@@ -9,19 +9,18 @@ import {
   UserIcon,
   UserKey,
 } from "lucide-react";
-import { toast } from "sonner";
-import { useState, type ChangeEvent, type SubmitEvent } from "react";
+import type { ChangeEvent } from "react";
 import { Fieldset, TextInput, FileInput, PasswordInput } from "@mantine/core";
 
-import type { AppError, FieldErrors } from "@shared/types";
 import type {
   CommerceWithOwner,
   CommerceWithOwnerRequest,
 } from "@features/commerces/types";
-import { commerceMapper } from "@features/commerces/mappers/commerceMapper";
-import { useCommerce } from "@features/commerces/hooks/useCommerce";
+import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { ModalHeader } from "@shared/components/ModalHeader";
+import { useCommerce } from "@features/commerces/hooks/useCommerce";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
+import { commerceMapper } from "@features/commerces/mappers/commerceMapper";
 
 const DEFAULT_COMMERCE_WITH_OWNER: CommerceWithOwnerRequest = {
   userId: 0,
@@ -50,45 +49,45 @@ export const CommerceForm = ({
 
   const isEditing = commerce !== null;
 
-  const [commerceForm, setCommerceForm] = useState<CommerceWithOwnerRequest>(
-    () =>
-      commerce ? commerceMapper.toForm(commerce) : DEFAULT_COMMERCE_WITH_OWNER,
-  );
+  const {
+    form: commerceForm,
+    setForm: setCommerceForm,
+    errors,
+    isSubmitting,
+    handleSubmit,
+  } = useEntityForm<CommerceWithOwnerRequest>({
+    initialValues: commerce
+      ? commerceMapper.toForm(commerce)
+      : DEFAULT_COMMERCE_WITH_OWNER,
+    isEditing,
+    closeModal,
+    submit: async (form, e) => {
+      // el FormData sale del DOM: la validación del schema recibe strings
+      const formData = new FormData(e.currentTarget);
 
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+      if (form?.businessLogo == null) {
+        formData.delete("businessLogo");
+      }
 
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    if (commerceForm?.businessLogo == null) {
-      formData.delete("businessLogo");
-    }
-
-    setIsSubmitting(true);
-    try {
-      if (isEditing) {
+      if (isEditing && commerce) {
         await handleUpdateCommerceWithOwner({
           commerceId: commerce.commerceId,
           userId: commerce.userId,
           formData,
         });
-        toast.success("Comercio actualizado con éxito");
       } else {
         await handleCreateCommerceWithOwner(formData);
-        toast.success("Comercio creado con éxito");
       }
-      closeModal();
-    } catch (error) {
-      const appError = error as AppError;
-      if (appError.fieldErrors) return setErrors(appError.fieldErrors);
-      toast.error(appError?.message ?? "No se pudo guardar el comercio.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    },
+    successMessages: {
+      create: "Comercio creado con éxito",
+      update: "Comercio actualizado con éxito",
+    },
+    errorMessages: {
+      create: "No se pudo guardar el comercio.",
+      update: "No se pudo guardar el comercio.",
+    },
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

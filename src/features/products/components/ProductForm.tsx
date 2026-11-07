@@ -15,18 +15,13 @@ import {
   Tooltip,
   Textarea,
 } from "@mantine/core";
-import { toast } from "sonner";
-import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
+import { useEffect, type ChangeEvent } from "react";
 
-import type {
-  Product,
-  ProductFieldErrors,
-  ProductFormValues,
-} from "@features/products/types";
-import type { AppError } from "@shared/types";
+import type { Product, ProductFormValues } from "@features/products/types";
 import type { CurrentCommerce } from "@features/commerces";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { useProduct } from "@features/products/hooks/useProduct";
+import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { useCategory, SelectCategory } from "@features/categories";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 import { productMapper } from "@features/products/mappers/productMapper";
@@ -59,13 +54,38 @@ export const ProductForm = ({
   const { getCategories } = useCategory();
   const { handleCreateProduct, updateProduct } = useProduct();
 
-  const [productForm, setProductForm] = useState<ProductFormValues>(() =>
-    product ? productMapper.toForm(product) : DEFAULT_PRODUCT_FORM,
-  );
+  const {
+    form: productForm,
+    setForm: setProductForm,
+    errors,
+    isSubmitting,
+    handleSubmit,
+  } = useEntityForm<ProductFormValues>({
+    initialValues: product
+      ? productMapper.toForm(product)
+      : DEFAULT_PRODUCT_FORM,
+    isEditing,
+    closeModal,
+    submit: async (form, e) => {
+      // el FormData sale del DOM: la validación del schema recibe strings
+      const formData = new FormData(e.currentTarget);
 
-  const [errors, setErrors] = useState<ProductFieldErrors>({});
+      if (!form.image) {
+        formData.delete("image");
+      }
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+      if (isEditing && product) await updateProduct(product.id, formData);
+      else await handleCreateProduct(formData);
+    },
+    successMessages: {
+      create: "Producto creado correctamente",
+      update: "Producto actualizado correctamente",
+    },
+    errorMessages: {
+      create: "No se pudo guardar el producto.",
+      update: "No se pudo guardar el producto.",
+    },
+  });
 
   const profitMultiplier =
     product?.profitMultiplier ?? currentCommerce?.profitMultiplier ?? 1;
@@ -76,38 +96,6 @@ export const ProductForm = ({
   useEffect(() => {
     getCategories();
   }, [getCategories]);
-
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    if (!productForm.image) {
-      formData.delete("image");
-    }
-
-    setIsSubmitting(true);
-    try {
-      if (isEditing) {
-        await updateProduct(product.id, formData);
-      } else {
-        await handleCreateProduct(formData);
-      }
-      setErrors({});
-      closeModal();
-      toast.success(
-        isEditing
-          ? "Producto actualizado correctamente"
-          : "Producto creado correctamente",
-      );
-    } catch (error) {
-      const appError = error as AppError;
-      if (appError?.fieldErrors) return setErrors(appError.fieldErrors);
-      toast.error(appError?.message ?? "No se pudo guardar el producto.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

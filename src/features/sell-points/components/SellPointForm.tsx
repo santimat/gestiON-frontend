@@ -1,15 +1,15 @@
-import { toast } from "sonner";
 import { MonitorIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { ChangeEvent, SubmitEvent } from "react";
+import type { ChangeEvent } from "react";
 import { Checkbox, TextInput } from "@mantine/core";
 
-import type { AppError, FieldErrors } from "@shared/types";
 import type { SellPoint, SellPointRequest } from "@features/sell-points/types";
 import { useCashier } from "@features/cashiers";
 import { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
+import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
+import { toastAppError } from "@shared/utils/toastAppError";
 
 const DEFAULT_SELL_POINT_FORM: SellPointRequest = {
   name: "",
@@ -31,13 +31,33 @@ export const SellPointForm = ({
   const { handleCreateSellPoint, handleUpdateSellPoint, getSellPointCashiers } =
     useSellPoint();
 
-  const [sellPointForm, setSellPointForm] = useState<SellPointRequest>(() =>
-    sellPoint
+  const {
+    form: sellPointForm,
+    setForm: setSellPointForm,
+    errors,
+    isSubmitting,
+    handleSubmit,
+  } = useEntityForm<SellPointRequest>({
+    initialValues: sellPoint
       ? { name: sellPoint.name, cashierIds: [] }
       : DEFAULT_SELL_POINT_FORM,
-  );
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+    isEditing,
+    closeModal,
+    submit: (form) => {
+      const request = { name: form.name.trim(), cashierIds: form.cashierIds };
+      return isEditing && sellPoint
+        ? handleUpdateSellPoint(sellPoint.id, request)
+        : handleCreateSellPoint(request);
+    },
+    successMessages: {
+      create: "Punto de venta creado correctamente",
+      update: "Punto de venta actualizado correctamente",
+    },
+    errorMessages: {
+      create: "No se pudo crear el punto de venta.",
+      update: "No se pudo actualizar el punto de venta.",
+    },
+  });
   // arranca en true al editar: espera el fetch de los cajeros ya asignados
   const [isLoadingAssigned, setIsLoadingAssigned] = useState(isEditing);
 
@@ -56,52 +76,20 @@ export const SellPointForm = ({
         })),
       )
       .catch((error) => {
-        const appError = error as AppError;
-        toast.error(
-          appError?.message ??
-            "No se pudieron cargar los cajeros del punto de venta.",
+        toastAppError(
+          error,
+          "No se pudieron cargar los cajeros del punto de venta.",
         );
         closeModal();
       })
       .finally(() => setIsLoadingAssigned(false));
-  }, [sellPoint, getCashiers, getSellPointCashiers, closeModal]);
-
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    setIsSubmitting(true);
-    try {
-      if (isEditing) {
-        await handleUpdateSellPoint(sellPoint.id, {
-          name: sellPointForm.name.trim(),
-          cashierIds: sellPointForm.cashierIds,
-        });
-      } else {
-        await handleCreateSellPoint({
-          name: sellPointForm.name.trim(),
-          cashierIds: sellPointForm.cashierIds,
-        });
-      }
-      setErrors({});
-      closeModal();
-      toast.success(
-        isEditing
-          ? "Punto de venta actualizado correctamente"
-          : "Punto de venta creado correctamente",
-      );
-    } catch (error) {
-      const appError = error as AppError;
-      if (appError?.fieldErrors) return setErrors(appError.fieldErrors);
-      toast.error(
-        appError?.message ??
-          (isEditing
-            ? "No se pudo actualizar el punto de venta."
-            : "No se pudo crear el punto de venta."),
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  }, [
+    sellPoint,
+    getCashiers,
+    getSellPointCashiers,
+    closeModal,
+    setSellPointForm,
+  ]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
