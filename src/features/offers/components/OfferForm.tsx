@@ -6,11 +6,11 @@ import { PAYMENT_METHODS } from "@features/sales";
 import { useOffer } from "@features/offers/hooks/useOffer";
 import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { ModalHeader } from "@shared/components/ModalHeader";
+import { getToday } from "@features/offers/utils/offerUtils";
 import type { DiscountType, PaymentMethod } from "@features/sales";
 import { offerMapper } from "@features/offers/mappers/offerMapper";
 import type { Offer, OfferFormValues } from "@features/offers/types";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
-import { getToday } from "@features/offers/utils/offerUtils";
 
 const DISCOUNT_TYPE_OPTIONS: { value: DiscountType; label: string }[] = [
   { value: "PERCENTAGE", label: "Porcentaje (%)" },
@@ -110,6 +110,7 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
           {/* DATES */}
           <div className="grid grid-cols-2 gap-3">
             <DateTimePicker
+              minDate={getToday()}
               label="Fecha de inicio"
               value={offerForm.startDate}
               error={errors.startDate}
@@ -124,6 +125,7 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
               timePickerProps={{ withDropdown: true, format: "24h" }}
             />
             <DateTimePicker
+              minDate={getToday()}
               label="Fecha de finalización"
               value={offerForm.endDate}
               error={errors.endDate}

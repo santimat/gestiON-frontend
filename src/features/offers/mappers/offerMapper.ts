@@ -8,8 +8,14 @@ export const offerMapper = {
   toForm: (offer: Offer): OfferFormValues => ({
     discountType: offer.discountType ?? "PERCENTAGE",
     value: offer.value,
-    startDate: offer.startDate.slice(0, 10),
-    endDate: offer.endDate.slice(0, 10),
+    startDate: new Date(offer.startDate)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " "),
+    endDate: new Date(offer.endDate)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " "),
     status: offer.status,
     paymentMethods: offer.paymentMethods,
   }),
@@ -17,8 +23,8 @@ export const offerMapper = {
   toRequest: (form: OfferFormValues): OfferRequest => ({
     discountType: form.discountType,
     value: Number(form.value),
-    startDate: `${form.startDate}T00:00:00`,
-    endDate: `${form.endDate}T23:59:59`,
+    startDate: form.startDate,
+    endDate: form.endDate,
     paymentMethods: form.paymentMethods,
   }),
 };

@@ -14,6 +14,7 @@ export const offerService = {
 
   createOffer: async (offer: OfferRequest) => {
     const parsedData = parseOrThrow(OfferSchema, offer);
+
     return executeApiCall(() => backendAPI.post("/offers", parsedData));
   },
 
