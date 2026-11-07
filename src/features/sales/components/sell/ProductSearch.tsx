@@ -1,6 +1,7 @@
 import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { TextInput } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
 
 import { useSale } from "@features/sales/hooks/useSale";
 import { useProduct, useProductSearch } from "@features/products";
@@ -16,16 +17,13 @@ export const ProductSearch = () => {
   const { filters, setFilters } = useProductSearch(cart);
 
   const [searchText, setSearchText] = useState(filters.searchText ?? "");
+  const [debouncedSearch] = useDebouncedValue(searchText, SEARCH_DEBOUNCE_MS);
 
   useEffect(() => {
-    if (searchText === (filters.searchText ?? "")) return;
+    if (debouncedSearch === (filters.searchText ?? "")) return;
 
-    const timeoutId = setTimeout(() => {
-      setFilters({ searchText: searchText });
-    }, SEARCH_DEBOUNCE_MS);
-
-    return () => clearTimeout(timeoutId);
-  }, [searchText, filters.searchText, setFilters]);
+    setFilters({ searchText: debouncedSearch });
+  }, [debouncedSearch, filters.searchText, setFilters]);
 
   return (
     <div className="border-background-soft bg-card shadow-card rounded-xl border p-3">

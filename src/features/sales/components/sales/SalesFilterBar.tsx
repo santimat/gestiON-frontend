@@ -1,6 +1,7 @@
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Select, TextInput } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
 
 import type {
   PaymentMethod,
@@ -30,6 +31,7 @@ export const SalesFilterBar = ({
   setFilters,
 }: SalesFilterBarProps) => {
   const [searchText, setSearchText] = useState(filters.searchText);
+  const [debouncedSearch] = useDebouncedValue(searchText, 350);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget;
@@ -37,14 +39,10 @@ export const SalesFilterBar = ({
   };
 
   useEffect(() => {
-    if (searchText === (filters.searchText ?? "")) return;
+    if (debouncedSearch === (filters.searchText ?? "")) return;
 
-    const timeoutId = setTimeout(() => {
-      setFilters({ searchText: searchText });
-    }, 350);
-
-    return () => clearTimeout(timeoutId);
-  }, [searchText, filters.searchText, setFilters]);
+    setFilters({ searchText: debouncedSearch });
+  }, [debouncedSearch, filters.searchText, setFilters]);
 
   return (
     <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
