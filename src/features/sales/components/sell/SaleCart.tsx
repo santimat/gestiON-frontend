@@ -1,28 +1,29 @@
 import { Button, NumberFormatter } from "@mantine/core";
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 
-import { useSale } from "@features/sales/hooks/useSale";
 import type { CartLine } from "@features/sales/types";
+import { useSale } from "@features/sales/hooks/useSale";
+import { StatusBadge } from "@shared/components/StatusBadge";
 
 export const SaleCart = () => {
   const { cart, setQty, removeLine } = useSale();
 
   const totalItems = cart.reduce((acc, line) => acc + line.qty, 0);
 
-  const handleQtyInput = (rawValue: string, line: CartLine) => {
+  const handleQuantityInput = (rawValue: string, line: CartLine) => {
     const parsed = Number(rawValue);
     // vacío o inválido: volvemos a 1 para no perder la línea mientras se tipea
-    const qty = Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : 1;
-    setQty(line.productId, qty);
+    const quantity =
+      Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : 1;
+
+    setQty(line.productId, quantity);
   };
 
   return (
     <div className="border-background-soft bg-card shadow-card overflow-hidden rounded-xl border">
       <div className="border-background-soft flex items-center justify-between gap-3 border-b px-4 py-3">
         <p className="text-sm font-semibold">Carrito</p>
-        <span className="bg-primary-soft text-primary rounded-full px-2 py-0.5 text-xs font-medium">
-          {totalItems} ítems
-        </span>
+        <StatusBadge label={`${totalItems} ítems`} tone="primary" size="xs" />
       </div>
 
       {cart.length === 0 ? (
@@ -67,7 +68,7 @@ export const SaleCart = () => {
                   <input
                     value={line.qty}
                     onChange={(event) =>
-                      handleQtyInput(event.currentTarget.value, line)
+                      handleQuantityInput(event.currentTarget.value, line)
                     }
                     aria-label={`Cantidad de ${line.name}`}
                     className="w-10 border-0 bg-transparent text-center text-sm font-medium tabular-nums outline-none"

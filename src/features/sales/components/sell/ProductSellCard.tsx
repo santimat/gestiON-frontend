@@ -1,5 +1,7 @@
-import type { Product } from "@features/products";
 import { NumberFormatter } from "@mantine/core";
+
+import type { Product } from "@features/products";
+import { StatusBadge } from "@shared/components/StatusBadge";
 
 type ProductSellCardProps = {
   product: Product;
@@ -27,14 +29,10 @@ export const ProductSellCard = ({
       </div>
       <div className="flex shrink-0 items-center gap-2">
         {isOutOfStock ? (
-          <span className="bg-destructive/40 text-destructive rounded-full px-2 py-0.5 text-xs font-medium">
-            Sin stock
-          </span>
+          <StatusBadge label="Sin stock" tone="destructive" size="xs" />
         ) : (
           isLowStock && (
-            <span className="bg-warning/40 text-warning rounded-full px-2 py-0.5 text-xs font-medium">
-              Bajo stock
-            </span>
+            <StatusBadge label="Bajo stock" tone="warning" size="xs" />
           )
         )}
         <NumberFormatter
