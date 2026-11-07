@@ -3,7 +3,7 @@ import { isAxiosError, type AxiosResponse } from "axios";
 import { handleAxiosErrors } from "@shared/utils/handleAxiosError";
 
 // request handler
-export const withErrorHandling = async <T>(
+export const executeApiCall = async <T>(
   call: () => Promise<AxiosResponse<T>>,
 ): Promise<T> => {
   try {
