@@ -48,6 +48,6 @@ export const ErrorDictionary = {
   INVALID_DATE: "La fecha no es válida.",
   DISCOUNT_PERCENTAGE_EXCEEDS_100:
     "El descuento porcentual no puede superar el 100%.",
-  OFFER_OVERLAP: "Ya existe una oferta solapada para el alcance seleccionado.",
+  OFFER_OVERLAP: "Ya existe una oferta con las mismas caracteristicas.",
   INTERNAL_ERROR: "No se pudieron cargar los datos.",
 } as const;
