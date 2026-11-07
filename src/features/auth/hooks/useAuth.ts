@@ -1,8 +1,7 @@
-import { toast } from "sonner";
 import { useShallow } from "zustand/shallow";
 
-import type { AppError } from "@shared/types";
 import type { LoginDTO } from "@features/auth/types";
+import { toastAppError } from "@shared/utils/toastAppError";
 import { useAuthStore } from "@features/auth/stores/useAuthStore";
 
 export const useAuth = () => {
@@ -46,8 +45,7 @@ export const useAuth = () => {
     try {
       await logout();
     } catch (error) {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudo cerrar la sesión.");
+      toastAppError(error, "No se pudo cerrar la sesión.");
     }
   };
 

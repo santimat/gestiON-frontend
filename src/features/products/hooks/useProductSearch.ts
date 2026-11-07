@@ -1,9 +1,8 @@
-import { toast } from "sonner";
 import { useEffect, useRef } from "react";
 
 import { useFilters } from "@shared/hooks/useFilters";
 import { ProductFiltersSchema } from "@features/products/schemas/ProductFiltersSchema";
-import type { AppError } from "@shared/types";
+import { toastAppError } from "@shared/utils/toastAppError";
 import type { CartLine } from "@features/sales";
 import { useProduct } from "@features/products/hooks/useProduct";
 
@@ -14,8 +13,7 @@ export const useProductSearch = (cart: CartLine[]) => {
 
   useEffect(() => {
     getProducts({ ...filters, active: true }).catch((error) => {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudieron cargar los productos.");
+      toastAppError(error, "No se pudieron cargar los productos.");
     });
   }, [getProducts, filters]);
 
@@ -23,10 +21,7 @@ export const useProductSearch = (cart: CartLine[]) => {
   useEffect(() => {
     if (prevCartCountRef.current > 0 && cart.length === 0) {
       getProducts(filters).catch((error) => {
-        const appError = error as AppError;
-        toast.error(
-          appError?.message ?? "No se pudieron cargar los productos.",
-        );
+        toastAppError(error, "No se pudieron cargar los productos.");
       });
     }
     prevCartCountRef.current = cart.length;

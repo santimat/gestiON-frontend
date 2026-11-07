@@ -1,9 +1,8 @@
-import { toast } from "sonner";
 import { useEffect } from "react";
 
-import type { AppError } from "@shared/types";
 import { SalesFilterSchema } from "@features/sales/schemas/SalesFilterSchema";
 import { useFilters } from "@shared/hooks/useFilters";
+import { toastAppError } from "@shared/utils/toastAppError";
 import { useSales } from "@features/sales/hooks/useSales";
 
 export const useSalesSearch = () => {
@@ -16,8 +15,7 @@ export const useSalesSearch = () => {
 
   useEffect(() => {
     getSales(filters).catch((error) => {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudieron cargar las ventas.");
+      toastAppError(error, "No se pudieron cargar las ventas.");
     });
   }, [getSales, filters]);
 

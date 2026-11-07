@@ -1,12 +1,11 @@
 import { lazy, useEffect, useState } from "react";
-import { toast } from "sonner";
 
-import type { AppError } from "@shared/types";
 import { useClient } from "@features/clients";
 import { useSale } from "@features/sales/hooks/useSale";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { SaleCart } from "@features/sales/components/sell/SaleCart";
 import { SaleSummary } from "@features/sales/components/sell/SaleSummary";
+import { toastAppError } from "@shared/utils/toastAppError";
 import type { SaleSummary as SaleSummaryData } from "@features/sales/types";
 import { ProductSearch } from "@features/sales/components/sell/ProductSearch";
 
@@ -62,8 +61,7 @@ export const Sell = () => {
       });
       setTicket(sale);
     } catch (error) {
-      const appError = error as AppError;
-      toast.error(appError?.message ?? "No se pudo registrar la venta.");
+      toastAppError(error, "No se pudo registrar la venta.");
     } finally {
       clearCart();
       setIsSubmitting(false);

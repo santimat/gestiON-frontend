@@ -1,4 +1,3 @@
-import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { AtSign, Lock } from "lucide-react";
 import { useState, type SubmitEvent } from "react";
@@ -7,6 +6,7 @@ import { Button, PasswordInput, TextInput } from "@mantine/core";
 import { useAuth } from "@features/auth/hooks/useAuth";
 import type { AppError, FieldErrors } from "@shared/types";
 import type { LoginDTO } from "@features/auth/types";
+import { toastAppError } from "@shared/utils/toastAppError";
 import { getRedirectByRole } from "@shared/config/permissions";
 
 export const LoginForm = () => {
@@ -32,7 +32,7 @@ export const LoginForm = () => {
         return setErrors(appError.fieldErrors);
       }
 
-      toast.error(appError.message);
+      toastAppError(err, "No se pudo iniciar la sesión.");
       form.reset();
     } finally {
       setIsLoading(false);
