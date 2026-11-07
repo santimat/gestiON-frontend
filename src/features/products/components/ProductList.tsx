@@ -1,8 +1,8 @@
 import { lazy } from "react";
 import { Pencil } from "lucide-react";
 
-import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { Product } from "@features/products/types";
+import { EntityListShell } from "@shared/components/EntityListShell";
 
 const ProductItem = lazy(() =>
   import("@features/products/components/ProductItem").then((module) => ({
@@ -19,62 +19,37 @@ const ProductItemMobile = lazy(() =>
 type ProductListProps = {
   products: Product[];
 };
-export const ProductList = ({ products }: ProductListProps) => {
-  const headers = [
-    "Foto",
-    "Producto",
-    "Categoría",
-    "Descripción",
-    "Precio",
-    "Stock Actual",
-    "Stock Mínimo",
-    "Estado",
-    "Acciones",
-  ];
 
-  const actionsIcons = [{ Icon: Pencil, label: "Editar" }];
+const HEADERS = [
+  "Foto",
+  "Producto",
+  "Categoría",
+  "Descripción",
+  "Precio",
+  "Stock Actual",
+  "Stock Mínimo",
+  "Estado",
+  "Acciones",
+];
 
-  const columns =
-    "grid grid-cols-[0.2fr_1fr_0.5fr_1fr_0.4fr_0.4fr_0.4fr_0.4fr_0.2fr] items-center gap-x-4";
+const COLUMNS =
+  "grid grid-cols-[0.2fr_1fr_0.5fr_1fr_0.4fr_0.4fr_0.4fr_0.4fr_0.2fr] items-center gap-x-4";
 
-  const isMobile = useIsMobile();
+const ACTIONS_ICONS = [{ Icon: Pencil, label: "Editar" }];
 
-  if (isMobile) {
-    return (
-      <div className="grid gap-3">
-        {products.map((product) => (
-          <ProductItemMobile
-            key={`product-mobile-${product.id}`}
-            product={product}
-          />
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <>
-      <section className="bg-card border-background-soft rounded-lg border">
-        <ul
-          className={`border-background-soft text-secondary-foreground ${columns} border-b p-2 text-sm`}
-        >
-          {headers.map((header) => (
-            <li key={header}>{header}</li>
-          ))}
-        </ul>
-        <ul className="[&>li]:not-first:border-background-soft text-sm [&>li]:not-first:border-t">
-          {products.map((product) => {
-            return (
-              <ProductItem
-                key={`product-${product.id}`}
-                product={product}
-                columns={columns}
-                actionsIcons={actionsIcons}
-              />
-            );
-          })}
-        </ul>
-      </section>
-    </>
-  );
-};
+export const ProductList = ({ products }: ProductListProps) => (
+  <EntityListShell
+    items={products}
+    getKey={(product) => product.id}
+    headers={HEADERS}
+    columns={COLUMNS}
+    renderMobile={(product) => <ProductItemMobile product={product} />}
+    renderDesktop={(product) => (
+      <ProductItem
+        product={product}
+        columns={COLUMNS}
+        actionsIcons={ACTIONS_ICONS}
+      />
+    )}
+  />
+);

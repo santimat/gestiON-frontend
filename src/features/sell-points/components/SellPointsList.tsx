@@ -1,7 +1,7 @@
 import { lazy } from "react";
 
-import { useIsMobile } from "@shared/hooks/useMediaQuery";
 import type { SellPoint } from "@features/sell-points/types";
+import { EntityListShell } from "@shared/components/EntityListShell";
 
 const SellPointItem = lazy(() =>
   import("@features/sell-points/components/SellPointItem").then((module) => ({
@@ -21,55 +21,26 @@ type SellPointsListProps = {
   sellPoints: SellPoint[];
 };
 
-export const SellPointsList = ({ sellPoints }: SellPointsListProps) => {
-  const isMobile = useIsMobile();
+const HEADERS = [
+  "Punto de venta",
+  "Cajeros",
+  "Actualizado",
+  "Estado",
+  "Acciones",
+];
 
-  const headers = [
-    "Punto de venta",
-    "Cajeros",
-    "Actualizado",
-    "Estado",
-    "Acciones",
-  ];
+const COLUMNS =
+  "grid grid-cols-[1fr_1.2fr_0.6fr_0.5fr_0.3fr] items-center gap-x-4";
 
-  const columns =
-    "grid grid-cols-[1fr_1.2fr_0.6fr_0.5fr_0.3fr] items-center gap-x-4";
-
-  if (isMobile) {
-    return (
-      <div className="grid gap-3">
-        {sellPoints.map((sellPoint) => (
-          <SellPointItemMobile
-            key={`sell-point-mobile-${sellPoint.id}`}
-            sellPoint={sellPoint}
-          />
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <>
-      <section className="bg-card border-background-soft rounded-lg border">
-        <ul
-          className={`border-background-soft text-secondary-foreground ${columns} border-b p-2 text-sm`}
-        >
-          {headers.map((header) => (
-            <li key={header}>{header}</li>
-          ))}
-        </ul>
-        <ul className="[&>li]:not-first:border-background-soft text-sm [&>li]:not-first:border-t">
-          {sellPoints.map((sellPoint) => {
-            return (
-              <SellPointItem
-                key={`sell-point-${sellPoint.id}`}
-                sellPoint={sellPoint}
-                columns={columns}
-              />
-            );
-          })}
-        </ul>
-      </section>
-    </>
-  );
-};
+export const SellPointsList = ({ sellPoints }: SellPointsListProps) => (
+  <EntityListShell
+    items={sellPoints}
+    getKey={(sellPoint) => sellPoint.id}
+    headers={HEADERS}
+    columns={COLUMNS}
+    renderMobile={(sellPoint) => <SellPointItemMobile sellPoint={sellPoint} />}
+    renderDesktop={(sellPoint) => (
+      <SellPointItem sellPoint={sellPoint} columns={COLUMNS} />
+    )}
+  />
+);

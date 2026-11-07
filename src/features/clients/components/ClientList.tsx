@@ -2,7 +2,7 @@ import { lazy } from "react";
 import { Pencil } from "lucide-react";
 
 import { useClient } from "@features/clients/hooks/useClient";
-import { useIsMobile } from "@shared/hooks/useMediaQuery";
+import { EntityListShell } from "@shared/components/EntityListShell";
 
 const ClientItem = lazy(() =>
   import("@features/clients/components/ClientItem").then((module) => ({
@@ -16,54 +16,32 @@ const ClientItemMobile = lazy(() =>
   })),
 );
 
+const HEADERS = ["Cliente", "DNI", "Telefono", "Direccion", "Acciones"];
+
+const COLUMNS =
+  "grid grid-cols-[1fr_0.5fr_0.7fr_1fr_0.2fr] items-center gap-x-4";
+
+const ACTIONS_ICONS = [{ Icon: Pencil, label: "Editar" }];
+
 export const ClientList = () => {
   const { clients } = useClient();
-  const isMobile = useIsMobile();
-
-  const headers = ["Cliente", "DNI", "Telefono", "Direccion", "Acciones"];
-
-  const actionsIcons = [{ Icon: Pencil, label: "Editar" }];
-
-  const columns =
-    "grid grid-cols-[1fr_0.5fr_0.7fr_1fr_0.2fr] items-center gap-x-4";
-
-  if (isMobile) {
-    return (
-      <div className="grid gap-3">
-        {clients.map((client) => (
-          <ClientItemMobile
-            key={`client-mobile-${client.id}`}
-            client={client}
-            actionsIcons={actionsIcons}
-          />
-        ))}
-      </div>
-    );
-  }
 
   return (
-    <>
-      <section className="bg-card border-background-soft rounded-lg border">
-        <ul
-          className={`border-background-soft text-secondary-foreground ${columns} border-b p-2 text-sm`}
-        >
-          {headers.map((header) => (
-            <li key={header}>{header}</li>
-          ))}
-        </ul>
-        <ul className="[&>li]:not-first:border-background-soft text-sm [&>li]:not-first:border-t">
-          {clients.map((client) => {
-            return (
-              <ClientItem
-                key={`client-${client.id}`}
-                client={client}
-                columns={columns}
-                actionsIcons={actionsIcons}
-              />
-            );
-          })}
-        </ul>
-      </section>
-    </>
+    <EntityListShell
+      items={clients}
+      getKey={(client) => client.id}
+      headers={HEADERS}
+      columns={COLUMNS}
+      renderMobile={(client) => (
+        <ClientItemMobile client={client} actionsIcons={ACTIONS_ICONS} />
+      )}
+      renderDesktop={(client) => (
+        <ClientItem
+          client={client}
+          columns={COLUMNS}
+          actionsIcons={ACTIONS_ICONS}
+        />
+      )}
+    />
   );
 };
