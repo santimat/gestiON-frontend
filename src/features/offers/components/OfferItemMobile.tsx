@@ -3,12 +3,8 @@ import { Button } from "@mantine/core";
 
 import type { Offer } from "@features/offers/types";
 import { useOffer } from "@features/offers/hooks/useOffer";
+import { formatOfferValue } from "@features/offers/utils/offerUtils";
 import { OfferStatusBadge } from "@features/offers/components/OfferStatusBadge";
-// import {
-//   formatOfferPeriod,
-//   formatOfferTargets,
-//   formatOfferValue,
-// } from "@features/offers/utils/offerUtils";
 
 type OfferItemMobileProps = {
   offer: Offer;
@@ -22,7 +18,7 @@ export const OfferItemMobile = ({ offer }: OfferItemMobileProps) => {
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0 flex-1">
           <p className="font-semibold tabular-nums">
-            {/*{formatOfferValue(offer)}*/}
+            {formatOfferValue(offer)}
           </p>
           <p className="text-secondary-foreground truncate text-xs">
             {/*{formatOfferTargets(offer)}*/}

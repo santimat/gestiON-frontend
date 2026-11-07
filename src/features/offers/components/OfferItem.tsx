@@ -2,7 +2,9 @@ import { Pencil } from "lucide-react";
 
 import type { Offer } from "@features/offers/types";
 import { useOffer } from "@features/offers/hooks/useOffer";
+import { formatOfferValue } from "@features/offers/utils/offerUtils";
 import { OfferStatusBadge } from "@features/offers/components/OfferStatusBadge";
+import { OfferActiveRangeDate } from "@features/offers/components/OfferActiveRangeDate";
 
 type OfferItemProps = {
   offer: Offer;
@@ -15,17 +17,14 @@ export const OfferItem = ({ offer, columns }: OfferItemProps) => {
   return (
     <li className={`p-2 ${columns} hover:bg-background-soft transition-colors`}>
       <div>
-        <p className="font-medium tabular-nums">{"10%"}</p>
-        <p className="text-secondary-foreground text-xs">
-          {offer.discountType === "PERCENTAGE" ? "Porcentaje" : "Monto fijo"}
-        </p>
+        <p className="font-semibold tabular-nums">{formatOfferValue(offer)}</p>
       </div>
       <p className="text-secondary-foreground truncate">
-        {/*{formatOfferTargets(offer)}*/}
+        {/* SE APLICA A: */}
+        {/* TODO */}
+        {JSON.stringify(offer.paymentMethods)}
       </p>
-      <p className="text-secondary-foreground tabular-nums">
-        {/*{formatOfferPeriod(offer)}*/}
-      </p>
+      <OfferActiveRangeDate offer={offer} />
       <OfferStatusBadge offer={offer} />
       <div className="justify-center">
         <button

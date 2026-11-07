@@ -1,18 +1,15 @@
 import z from "zod";
 
-// Convierte un string de fecha en formato Mantine ("YYYY-MM-DD HH:mm:ss")
-// u otro ISO válido a un ISO-8601 absoluto en UTC puro. No se aplica ninguna
-// conversión de zona horaria: el valor se interpreta directamente como UTC.
-function toUtcIso(value: string): string {
-  return new Date(value).toISOString();
+function normalizeOfferDate(value: string): string {
+  return value.trim().replace(" ", "T");
 }
 
 function isValidDate(value: string): boolean {
-  const normalized = value.trim().replace(" ", "T");
-  const withOffset = /[zZ]|[+-]\d{2}:?\d{2}$/.test(normalized)
-    ? normalized
-    : `${normalized}Z`;
-  return !Number.isNaN(new Date(withOffset).getTime());
+  return !Number.isNaN(new Date(normalizeOfferDate(value)).getTime());
+}
+
+function toUtcIso(value: string): string {
+  return new Date(normalizeOfferDate(value)).toISOString();
 }
 
 export const OfferSchema = z

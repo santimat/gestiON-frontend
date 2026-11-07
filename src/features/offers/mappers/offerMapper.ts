@@ -8,14 +8,12 @@ export const offerMapper = {
   toForm: (offer: Offer): OfferFormValues => ({
     discountType: offer.discountType ?? "PERCENTAGE",
     value: offer.value,
-    startDate: new Date(offer.startDate)
-      .toISOString()
-      .slice(0, 19)
-      .replace("T", " "),
-    endDate: new Date(offer.endDate)
-      .toISOString()
-      .slice(0, 19)
-      .replace("T", " "),
+    startDate: new Date(offer.startDate).toLocaleString("es-AR", {
+      timeZone: "America/Argentina/Buenos_Aires",
+    }),
+    endDate: new Date(offer.endDate).toLocaleString("es-AR", {
+      timeZone: "America/Argentina/Buenos_Aires",
+    }),
     status: offer.status,
     paymentMethods: offer.paymentMethods,
   }),
