@@ -42,5 +42,11 @@ export const ErrorDictionary = {
   UNSUPPORTED_MEDIA_TYPE: "El tipo de contenido no es compatible.",
   DATA_INTEGRITY_VIOLATION:
     "La operación viola las restricciones de integridad de datos.",
+  PRODUCT_SALE_PRICE_BELOW_COST:
+    "El precio de venta no puede ser menor al costo.",
+  SALE_NOT_PENDING: "Solo las ventas pendientes pueden marcarse como pagadas.",
+  INVALID_DATE: "La fecha no es válida.",
+  DISCOUNT_PERCENTAGE_EXCEEDS_100:
+    "El descuento porcentual no puede superar el 100%.",
   INTERNAL_ERROR: "No se pudieron cargar los datos.",
 } as const;
