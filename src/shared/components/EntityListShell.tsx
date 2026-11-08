@@ -44,7 +44,7 @@ export const EntityListShell = <T,>({
   return (
     <section className="bg-card border-background-soft overflow-hidden rounded-lg border">
       <ul
-        className={`border-background-soft text-secondary-foreground ${columns} border-b p-2 text-sm`}
+        className={`border-background-soft bg-background-soft text-secondary-foreground ${columns} border-b p-2 text-sm`}
       >
         {headers.map((header) =>
           typeof header === "string" ? (
