@@ -9,12 +9,21 @@ import { OfferList } from "@features/offers/components/OfferList";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { useOfferSearch } from "@features/offers/hooks/useOfferSearch";
+import { useOfferAssigment } from "@features/offers/hooks/useOfferAssigment";
 import { OffersFilterBar } from "@features/offers/components/OffersFilterBar";
 
 const OfferForm = lazy(() =>
   import("@features/offers/components/OfferForm").then((module) => ({
     default: module.OfferForm,
   })),
+);
+
+const OfferAssignmentDialog = lazy(() =>
+  import("@features/offers/components/OfferAssignmentDialog").then(
+    (module) => ({
+      default: module.OfferAssignmentDialog,
+    }),
+  ),
 );
 
 export const Offers = () => {
@@ -28,6 +37,8 @@ export const Offers = () => {
     openCreate,
     closeFormModal,
   } = useOffer();
+  const { assignOffer, isAssignModalOpen, closeAssignModal } =
+    useOfferAssigment();
   const { filters, setFilters, isFiltered } = useOfferSearch();
 
   const canCreate = authenticatedUser?.role === "OWNER";
@@ -35,6 +46,10 @@ export const Offers = () => {
   useEffect(() => {
     return () => closeFormModal();
   }, [closeFormModal]);
+
+  useEffect(() => {
+    return () => closeAssignModal();
+  }, [closeAssignModal]);
 
   usePageHeader({
     title: "Ofertas",
@@ -59,6 +74,20 @@ export const Offers = () => {
         entityKey={formOffer?.id ?? "create"}
       >
         <OfferForm offer={formOffer} closeModal={closeFormModal} />
+      </EntityFormModal>
+
+      <EntityFormModal
+        opened={isAssignModalOpen}
+        closeModal={closeAssignModal}
+        size="md"
+        entityKey={assignOffer?.id ?? "assign"}
+      >
+        {assignOffer ? (
+          <OfferAssignmentDialog
+            offer={assignOffer}
+            closeModal={closeAssignModal}
+          />
+        ) : null}
       </EntityFormModal>
 
       <main className="flex flex-col gap-6 p-6">

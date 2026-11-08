@@ -9,6 +9,8 @@ export const ErrorDictionary = {
   CATEGORY_NOT_FOUND: "Categoría no encontrada.",
   CATEGORY_NAME_ALREADY_EXISTS: "Esa categoría ya existe.",
   PRODUCT_NOT_FOUND: "Producto no encontrado.",
+  OFFER_NOT_FOUND: "Oferta no encontrada.",
+  PRODUCTS_OFFER_NOT_FOUND: "Algunos productos no se encontraron.",
   COMMERCE_NOT_FOUND: "Comercio no encontrado.",
   SELL_POINT_NOT_FOUND: "Punto de venta no encontrado.",
   SALE_NOT_FOUND: "Venta no encontrada.",
@@ -49,5 +51,7 @@ export const ErrorDictionary = {
   DISCOUNT_PERCENTAGE_EXCEEDS_100:
     "El descuento porcentual no puede superar el 100%.",
   OFFER_OVERLAP: "Ya existe una oferta con las mismas caracteristicas.",
+  OFFER_HAS_PAYMENT_METHODS:
+    "No se pueden asignar productos a ofertas con métodos de pago.",
   INTERNAL_ERROR: "No se pudieron cargar los datos.",
 } as const;

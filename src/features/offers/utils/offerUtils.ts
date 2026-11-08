@@ -1,5 +1,11 @@
 import type { Offer } from "@features/offers/types";
 
+export function canAssignProducts(
+  offer: Pick<Offer, "paymentMethods">,
+): boolean {
+  return (offer.paymentMethods ?? []).length === 0;
+}
+
 export const getToday = () =>
   new Date().toLocaleString("sv-SE", {
     timeZone: "America/Argentina/Buenos_Aires",

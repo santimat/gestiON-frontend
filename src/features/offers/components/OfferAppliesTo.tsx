@@ -1,10 +1,15 @@
 import type { PaymentMethod } from "@/features/sales";
 import { PAYMENT_METHODS_LABELS } from "@features/sales";
+
 type OfferAppliesToProps = {
   paymentMethods: PaymentMethod[];
+  productIds?: number[];
 };
 
-export const OfferAppliesTo = ({ paymentMethods }: OfferAppliesToProps) => {
+export const OfferAppliesTo = ({
+  paymentMethods,
+  productIds,
+}: OfferAppliesToProps) => {
   if (paymentMethods.length) {
     return (
       <div className="flex flex-wrap items-center gap-2">
@@ -20,6 +25,16 @@ export const OfferAppliesTo = ({ paymentMethods }: OfferAppliesToProps) => {
           );
         })}
       </div>
+    );
+  }
+
+  if (productIds && productIds.length > 0) {
+    return (
+      <p className="truncate">
+        {productIds.length} producto{productIds.length === 1 ? "" : "s"}{" "}
+        asignado
+        {productIds.length === 1 ? "" : "s"}
+      </p>
     );
   }
 

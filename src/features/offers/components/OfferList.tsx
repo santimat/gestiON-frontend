@@ -22,7 +22,7 @@ type OfferListProps = {
 const HEADERS = ["Descuento", "Aplica a", "Vigencia", "Estado", "Acciones"];
 
 const COLUMNS =
-  "grid grid-cols-[0.2fr_0.6fr_0.6fr_0.2fr_0.2fr] items-center gap-x-4";
+  "grid grid-cols-[0.1fr_0.35fr_0.4fr_0.1fr_0.1fr] items-center gap-x-4";
 
 export const OfferList = ({ offers }: OfferListProps) => (
   <EntityListShell

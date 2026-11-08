@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 import type { AppError } from "@shared/types";
-import { offerService } from "@features/offers/services/offerService";
 import type { UseOfferStore } from "@features/offers/stores/types";
+import { offerService } from "@features/offers/services/offerService";
 
 export const useOfferStore = create<UseOfferStore>((set, get) => ({
   offers: [],
@@ -10,11 +10,15 @@ export const useOfferStore = create<UseOfferStore>((set, get) => ({
   error: null,
   formOffer: null,
   isFormModalOpen: false,
+  assignOffer: null,
+  isAssignModalOpen: false,
   lastFilters: {},
   openCreate: () => set({ formOffer: null, isFormModalOpen: true }),
   openEdit: (offer) => set({ formOffer: offer, isFormModalOpen: true }),
-  // el modal sigue montado durante el fade de salida: solo apagamos el flag
+
+  openAssign: (offer) => set({ assignOffer: offer, isAssignModalOpen: true }),
   closeFormModal: () => set({ isFormModalOpen: false }),
+  closeAssignModal: () => set({ isAssignModalOpen: false }),
 
   getOffers: async (filters) => {
     set({ isLoading: true, error: null, lastFilters: filters });
@@ -29,7 +33,6 @@ export const useOfferStore = create<UseOfferStore>((set, get) => ({
 
   createOffer: async (offer) => {
     const createdOffer = await offerService.createOffer(offer);
-    // refrescamos para respetar el orden por fecha de fin y el filtro activo
     await get().getOffers(get().lastFilters);
     return createdOffer;
   },
@@ -38,5 +41,19 @@ export const useOfferStore = create<UseOfferStore>((set, get) => ({
     const updatedOffer = await offerService.updateOffer(offerId, offer);
     await get().getOffers(get().lastFilters);
     return updatedOffer;
+  },
+
+  assignOfferProducts: async (offerId, productIds) => {
+    set({ isLoading: true, error: null });
+    try {
+      await offerService.assignOfferProducts(offerId, productIds);
+      await get().getOffers(get().lastFilters);
+    } catch (error) {
+      const appError = error as AppError;
+      set({ error: appError.message });
+      throw error;
+    } finally {
+      set({ isLoading: false });
+    }
   },
 }));
