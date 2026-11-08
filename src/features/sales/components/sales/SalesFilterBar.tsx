@@ -8,7 +8,7 @@ import type {
   SalesFilter,
   SaleStatus,
 } from "@features/sales/types";
-import { PAYMENT_METHODS, STATUS_PAYMENT } from "@features/sales/dictionary";
+import { PAYMENT_METHODS_LABELS, STATUS_PAYMENT } from "@features/sales/dictionary";
 
 const STATUS_OPTIONS: { value: SaleStatus | ""; label: string }[] = [
   { value: "PAYED", label: STATUS_PAYMENT.PAYED },
@@ -16,7 +16,7 @@ const STATUS_OPTIONS: { value: SaleStatus | ""; label: string }[] = [
 ];
 
 const PAYMENT_METHOD_OPTIONS: { value: PaymentMethod; label: string }[] =
-  Object.entries(PAYMENT_METHODS).map(([value, label]) => ({
+  Object.entries(PAYMENT_METHODS_LABELS).map(([value, label]) => ({
     value: value as PaymentMethod,
     label,
   }));

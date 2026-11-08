@@ -2,14 +2,17 @@ import { Select } from "@mantine/core";
 
 import type { OffersFilter } from "@features/offers/types";
 
-const STATUS_OPTIONS: { value: OffersFilter["status"]; label: string }[] = [
+const STATUS_OPTIONS: {
+  value: NonNullable<OffersFilter["status"]>;
+  label: string;
+}[] = [
   { value: "ACTIVE", label: "Vigentes" },
   { value: "EXPIRED", label: "Vencidas" },
   { value: "SCHEDULED", label: "Programadas" },
 ];
 
 const PAYMENT_METHODS_OPTIONS: {
-  value: OffersFilter["paymentMethod"];
+  value: NonNullable<OffersFilter["paymentMethod"]>;
   label: string;
 }[] = [
   { value: "CASH", label: "Efectivo" },

@@ -2,7 +2,7 @@ import { BadgePercent } from "lucide-react";
 import { DateTimePicker } from "@mantine/dates";
 import { MultiSelect, NumberInput, Select } from "@mantine/core";
 
-import { PAYMENT_METHODS } from "@features/sales";
+import { PAYMENT_METHODS_LABELS } from "@features/sales";
 import { useOffer } from "@features/offers/hooks/useOffer";
 import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { ModalHeader } from "@shared/components/ModalHeader";
@@ -17,7 +17,7 @@ const DISCOUNT_TYPE_OPTIONS: { value: DiscountType; label: string }[] = [
   { value: "FIXED_AMOUNT", label: "Monto fijo ($)" },
 ];
 
-const PAYMENT_METHOD_OPTIONS = Object.entries(PAYMENT_METHODS).map(
+const PAYMENT_METHOD_OPTIONS = Object.entries(PAYMENT_METHODS_LABELS).map(
   ([value, label]) => ({ value, label }),
 );
 
@@ -110,7 +110,7 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
           {/* DATES */}
           <div className="grid grid-cols-2 gap-3">
             <DateTimePicker
-              minDate={getToday()}
+              minDate={isEditing ? undefined : getToday()}
               label="Fecha de inicio"
               value={offerForm.startDate}
               error={errors.startDate}
@@ -125,7 +125,7 @@ export const OfferForm = ({ offer, closeModal }: OfferFormProps) => {
               timePickerProps={{ withDropdown: true, format: "24h" }}
             />
             <DateTimePicker
-              minDate={getToday()}
+              minDate={offerForm.startDate}
               label="Fecha de finalización"
               value={offerForm.endDate}
               error={errors.endDate}

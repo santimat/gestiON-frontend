@@ -1,4 +1,4 @@
-export const PAYMENT_METHODS = {
+export const PAYMENT_METHODS_LABELS = {
   CASH: "Efectivo",
   CREDIT_ACCOUNT: "Cuenta corriente",
   TRANSFER: "Transferencia",

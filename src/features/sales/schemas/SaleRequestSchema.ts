@@ -1,9 +1,15 @@
 import z from "zod";
+import { PAYMENT_METHODS, DISCOUNT_TYPES } from "@features/sales/constants";
+
+// enum requerido reutilizable: inferimos DiscountType desde acá (ver types.ts)
+export const DiscountTypeSchema = z.enum(DISCOUNT_TYPES, {
+  message: "El tipo de descuento es inválido",
+});
 
 // el backend usa un Set para los detalles: sin productos duplicados (el carrito ya lo garantiza)
 export const SaleRequestSchema = z
   .object({
-    paymentMethod: z.enum(["CASH", "CARD", "TRANSFER", "CREDIT_ACCOUNT"], {
+    paymentMethod: z.enum(PAYMENT_METHODS, {
       message: "El método de pago es inválido",
     }),
     details: z
@@ -31,11 +37,7 @@ export const SaleRequestSchema = z
       .string("Las observaciones deben ser un texto")
       .max(200, "Las observaciones no pueden superar los 200 caracteres")
       .optional(),
-    discountType: z
-      .enum(["FIXED_AMOUNT", "PERCENTAGE"], {
-        message: "El tipo de descuento es inválido",
-      })
-      .optional(),
+    discountType: DiscountTypeSchema.optional(),
     discount: z
       .number("El descuento debe ser un número")
       .gt(0, "El descuento debe ser mayor que cero")

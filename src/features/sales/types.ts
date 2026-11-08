@@ -1,7 +1,13 @@
-import type { z } from "zod";
+import z from "zod";
 
-import { SaleRequestSchema } from "@features/sales/schemas/SaleRequestSchema";
+import {
+  SaleRequestSchema,
+  DiscountTypeSchema,
+} from "@features/sales/schemas/SaleRequestSchema";
 import { SalesFilterSchema } from "@features/sales/schemas/SalesFilterSchema";
+import { SALE_STATUS } from "@features/sales/constants";
+
+export const SaleStatusSchema = z.enum(SALE_STATUS);
 
 export type CartLine = {
   productId: number;
@@ -12,9 +18,11 @@ export type CartLine = {
   qty: number;
 };
 
-export type PaymentMethod = "CASH" | "CARD" | "TRANSFER" | "CREDIT_ACCOUNT";
+export type PaymentMethod = z.infer<
+  typeof SaleRequestSchema.shape.paymentMethod
+>;
 
-export type DiscountType = "FIXED_AMOUNT" | "PERCENTAGE";
+export type DiscountType = z.infer<typeof DiscountTypeSchema>;
 
 export type SaleDraft = {
   discount: number;
@@ -26,7 +34,7 @@ export type SaleDraft = {
 
 export type SaleRequest = z.infer<typeof SaleRequestSchema>;
 
-export type SaleStatus = "PAYED" | "PENDING";
+export type SaleStatus = z.infer<typeof SaleStatusSchema>;
 
 export type SaleDetail = {
   id: number;

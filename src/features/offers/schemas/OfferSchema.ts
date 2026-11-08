@@ -1,5 +1,7 @@
 import z from "zod";
 
+import { DISCOUNT_TYPES, PAYMENT_METHODS } from "@features/sales";
+
 function normalizeOfferDate(value: string): string {
   return value.trim().replace(" ", "T");
 }
@@ -14,7 +16,7 @@ function toUtcIso(value: string): string {
 
 export const OfferSchema = z
   .object({
-    discountType: z.enum(["FIXED_AMOUNT", "PERCENTAGE"], {
+    discountType: z.enum(DISCOUNT_TYPES, {
       message: "El tipo de descuento es inválido",
     }),
     value: z
@@ -37,7 +39,7 @@ export const OfferSchema = z
       })
       .transform(toUtcIso),
     paymentMethods: z.array(
-      z.enum(["CASH", "CARD", "TRANSFER", "CREDIT_ACCOUNT"], {
+      z.enum(PAYMENT_METHODS, {
         message: "El método de pago es inválido",
       }),
     ),
@@ -48,4 +50,8 @@ export const OfferSchema = z
       message: "El porcentaje no puede superar 100",
       path: ["value"],
     },
-  );
+  )
+  .refine((offer) => offer.endDate >= offer.startDate, {
+    message: "La fecha de fin debe ser posterior a la de inicio",
+    path: ["endDate"],
+  });

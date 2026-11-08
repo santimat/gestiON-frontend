@@ -1,5 +1,5 @@
 import type { PaymentMethod } from "@/features/sales";
-import { PAYMENT_METHODS } from "@/features/sales";
+import { PAYMENT_METHODS_LABELS } from "@features/sales";
 type OfferAppliesToProps = {
   paymentMethods: PaymentMethod[];
 };
@@ -15,7 +15,7 @@ export const OfferAppliesTo = ({ paymentMethods }: OfferAppliesToProps) => {
               key={key}
               className="bg-primary/40 text-primary rounded-full px-2"
             >
-              {PAYMENT_METHODS[method]}
+              {PAYMENT_METHODS_LABELS[method]}
             </span>
           );
         })}

@@ -3,7 +3,7 @@ import { ChevronRight } from "lucide-react";
 import { formatDate } from "@shared/utils/dates";
 import { formatCurrency } from "@shared/utils/money";
 import type { SaleSummary } from "@features/sales/types";
-import { PAYMENT_METHODS } from "@features/sales/dictionary";
+import { PAYMENT_METHODS_LABELS } from "@features/sales/dictionary";
 import { useSaleDetails } from "@features/sales/hooks/useSaleDetails";
 import { SaleStatusBadge } from "@features/sales/components/sales/SaleStatusBadge";
 
@@ -18,7 +18,7 @@ export const SaleItem = ({ sale, desktopColumns }: SaleItemProps) => {
   const date = new Date(sale.createdAt);
   const createdDate = formatDate(date);
   const createdHour = `${date.getHours()}:${date.getMinutes()}`;
-  const paymentMethod = PAYMENT_METHODS[sale.paymentMethod];
+  const paymentMethod = PAYMENT_METHODS_LABELS[sale.paymentMethod];
 
   const handleClick = async () => {
     await getSaleWithDetails(sale.id);

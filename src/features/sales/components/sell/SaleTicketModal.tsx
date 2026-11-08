@@ -3,7 +3,7 @@ import { Button, Modal } from "@mantine/core";
 
 import { formatCurrency } from "@shared/utils/money";
 import type { SaleSummary } from "@features/sales/types";
-import { PAYMENT_METHODS } from "@features/sales/dictionary";
+import { PAYMENT_METHODS_LABELS } from "@features/sales/dictionary";
 import { SaleTicketModalRow } from "@features/sales/components/sell/SaleTickModalRow";
 
 type SaleTicketModalProps = {
@@ -20,7 +20,7 @@ export const SaleTicketModal = ({
   onNewSale,
 }: SaleTicketModalProps) => {
   const paymentMethod = sale?.paymentMethod
-    ? PAYMENT_METHODS[sale.paymentMethod]
+    ? PAYMENT_METHODS_LABELS[sale.paymentMethod]
     : "";
   const dicountText =
     sale?.discountType === "PERCENTAGE"
