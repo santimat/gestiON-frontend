@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Button, Modal } from "@mantine/core";
 import { ReceiptText } from "lucide-react";
+import { toast } from "sonner";
 
 import type { Sale } from "@features/sales/types";
 import { formatCurrency } from "@shared/utils/money";
@@ -7,6 +9,9 @@ import { ModalHeader } from "@shared/components/ModalHeader";
 import { SaleStatusBadge } from "@/features/sales/components/sales/SaleStatusBadge";
 import { SaleDetailModalList } from "@features/sales/components/sales/SaleDetailModalList";
 import { SaleDetailModalField } from "@features/sales/components/sales/SaleDetailModalField";
+import { useSales } from "@features/sales/hooks/useSales";
+import { useSaleDetailsStore } from "@features/sales/stores/useSaleDetailsStore";
+import { toastAppError } from "@shared/utils/toastAppError";
 
 type SaleDetailModalProps = {
   opened: boolean;
@@ -19,6 +24,29 @@ export const SaleDetailModal = ({
   sale,
   closeModal,
 }: SaleDetailModalProps) => {
+  const { markSalePaid } = useSales();
+  const [isMarking, setIsMarking] = useState(false);
+
+  const handleMarkPaid = async () => {
+    if (!sale?.id) return;
+    setIsMarking(true);
+    try {
+      await markSalePaid(sale.id);
+      useSaleDetailsStore.setState((prev) => {
+        if (prev.saleWithDetails?.id !== sale.id) return prev;
+        return {
+          ...prev,
+          saleWithDetails: { ...prev.saleWithDetails, status: "PAYED" },
+        };
+      });
+      toast.success("Venta marcada como pagada.");
+    } catch (error) {
+      toastAppError(error, "No se pudo marcar la venta como pagada.");
+    } finally {
+      setIsMarking(false);
+    }
+  };
+
   if (!sale?.id) return null;
 
   const sellPointName = sale.sellPointName ?? "Vendido por el dueño";
@@ -80,6 +108,16 @@ export const SaleDetailModal = ({
           <p className="font-semibold">Total</p>
           <p className="text-xl font-semibold tabular-nums">{total}</p>
         </div>
+
+        {sale.status === "PENDING" && (
+          <Button
+            className="h-10 w-full"
+            onClick={handleMarkPaid}
+            loading={isMarking}
+          >
+            Marcar como paga
+          </Button>
+        )}
 
         <Button
           variant="default"

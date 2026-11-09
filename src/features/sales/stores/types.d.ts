@@ -1,5 +1,6 @@
 import type { Client } from "@features/clients/types";
 import type { ProductWithOffer } from "@features/products";
+import type { SaleStatus } from "@features/sales/types";
 import type {
   CartLine,
   Sale,
@@ -26,6 +27,9 @@ export type UseSalesStore = {
   isLoading: boolean;
   error: string | null;
   getSales: (filters: SalesFilter) => Promise<void>;
+  markSalePaid: (
+    saleId: number,
+  ) => Promise<{ id: number; status: SaleStatus }>;
 };
 
 export type UseSaleDetailsStore = {

@@ -1,12 +1,17 @@
-import { useEffect } from "react";
+import { toast } from "sonner";
+import { UserPen } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button, Loader, Modal, NumberFormatter } from "@mantine/core";
 
+import { useSales } from "@features/sales";
 import { usePendingSales } from "@features/sales";
 import type { Sale } from "@features/sales/types";
 import type { Client } from "@features/clients/types";
-import { PAYMENT_METHODS_LABELS } from "@features/sales/dictionary";
+import { toastAppError } from "@shared/utils/toastAppError";
 import { ModalHeader } from "@/shared/components/ModalHeader";
-import { UserPen } from "lucide-react";
+import { PAYMENT_METHODS_LABELS } from "@features/sales/dictionary";
+import { useClientStore } from "@features/clients/stores/useClientStore";
+import { usePendingSalesStore } from "@features/sales/stores/usePendingSalesStore";
 
 type ClientPendingSalesModalProps = {
   opened: boolean;
@@ -28,11 +33,49 @@ export const ClientPendingSalesModal = ({
     getPendingSalesWithDetailsByClient,
   } = usePendingSales();
 
+  const { markSalePaid } = useSales();
+
+  const [markingSaleId, setMarkingSaleId] = useState<number | null>(null);
+
   useEffect(() => {
     if (opened && client) {
       getPendingSalesWithDetailsByClient(client.id).catch(() => {});
     }
   }, [opened, client, getPendingSalesWithDetailsByClient]);
+
+  const handleMarkPaid = async (sale: Sale) => {
+    if (!client) return;
+    setMarkingSaleId(sale.id);
+    try {
+      await markSalePaid(sale.id);
+      await getPendingSalesWithDetailsByClient(client.id);
+      const {
+        pendingSales: remaining,
+        totalPending: updatedTotal,
+        pendingSalesCount: updatedCount,
+      } = usePendingSalesStore.getState();
+      useClientStore.setState((prev) => ({
+        clients: prev.clients.map((prevClient) => {
+          if (prevClient.id === client.id)
+            return {
+              ...prevClient,
+              totalPending: updatedTotal,
+              pendingSalesCount: updatedCount,
+            };
+
+          return prevClient;
+        }),
+      }));
+      if (remaining.length === 0) {
+        onClose();
+      }
+      toast.success("Venta marcada como pagada.");
+    } catch (err) {
+      toastAppError(err, "No se pudo marcar la venta como pagada.");
+    } finally {
+      setMarkingSaleId(null);
+    }
+  };
 
   return (
     <Modal
@@ -122,6 +165,18 @@ export const ClientPendingSalesModal = ({
                     </li>
                   ))}
                 </ul>
+                <div className="mt-3 flex justify-end">
+                  <Button
+                    size="xs"
+                    onClick={() => handleMarkPaid(sale)}
+                    loading={markingSaleId === sale.id}
+                    disabled={
+                      markingSaleId !== null && markingSaleId !== sale.id
+                    }
+                  >
+                    Marcar como paga
+                  </Button>
+                </div>
               </li>
             ))}
             {pendingSales.length === 0 ? (
