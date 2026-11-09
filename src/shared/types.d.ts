@@ -22,3 +22,5 @@ export type AppError = {
 };
 
 export type FieldErrors = Record<string, string | undefined>;
+
+export type StatusTone = "success" | "warning" | "destructive" | "primary";

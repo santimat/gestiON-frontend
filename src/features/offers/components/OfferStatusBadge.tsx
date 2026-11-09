@@ -1,6 +1,6 @@
 import { StatusBadge } from "@shared/components/StatusBadge";
 import type { OfferStatus } from "@features/offers/types";
-import type { StatusTone } from "@shared/components/StatusBadge";
+import type { StatusTone } from "@shared/types";
 
 const OFFER_STATUS_LABELS: Record<OfferStatus, string> = {
   ACTIVE: "Vigente",

@@ -1,4 +1,4 @@
-export type StatusTone = "success" | "warning" | "destructive" | "primary";
+import type { StatusTone } from "@shared/types";
 
 const TONE_CLASSES: Record<StatusTone, string> = {
   warning: "bg-warning/30 text-warning",
