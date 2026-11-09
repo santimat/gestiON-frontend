@@ -29,4 +29,8 @@ export const offerService = {
       backendAPI.put(`/offers/${offerId}/products`, { productIds }),
     );
   },
+
+  getOfferPaymentMethods: async () => {
+    return executeApiCall(() => backendAPI.get("/offers/payment-methods"));
+  },
 };

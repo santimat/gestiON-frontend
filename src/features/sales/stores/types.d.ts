@@ -1,4 +1,4 @@
-import type { Product } from "@features/products";
+import type { ProductWithOffer } from "@features/products";
 import type {
   CartLine,
   Sale,
@@ -10,7 +10,7 @@ import type {
 export type UseSaleStore = {
   cart: CartLine[];
   saleDraft: SaleDraft;
-  addToCart: (product: Product) => void;
+  addToCart: (product: ProductWithOffer) => void;
   setQty: (productId: number, qty: number) => void;
   removeLine: (productId: number) => void;
   clearCart: () => void;

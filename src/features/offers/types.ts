@@ -20,7 +20,6 @@ export type Offer = {
   endDate: string;
   status: OfferStatus;
   paymentMethods: PaymentMethod[];
-  productIds?: number[];
 };
 
 export type OfferFormValues = {
@@ -30,4 +29,10 @@ export type OfferFormValues = {
   endDate: string;
   status: OfferStatus | null;
   paymentMethods: PaymentMethod[];
+};
+
+export type OfferPaymentMethod = {
+  paymentMethod: PaymentMethod;
+  value: number;
+  discountType: DiscountType;
 };

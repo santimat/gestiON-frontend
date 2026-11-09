@@ -3,12 +3,12 @@ import { PAYMENT_METHODS_LABELS } from "@features/sales";
 
 type OfferAppliesToProps = {
   paymentMethods: PaymentMethod[];
-  productIds?: number[];
+  assignedProductCount?: number;
 };
 
 export const OfferAppliesTo = ({
   paymentMethods,
-  productIds,
+  assignedProductCount,
 }: OfferAppliesToProps) => {
   if (paymentMethods.length) {
     return (
@@ -28,12 +28,12 @@ export const OfferAppliesTo = ({
     );
   }
 
-  if (productIds && productIds.length > 0) {
+  if (assignedProductCount && assignedProductCount > 0) {
     return (
       <p className="truncate">
-        {productIds.length} producto{productIds.length === 1 ? "" : "s"}{" "}
-        asignado
-        {productIds.length === 1 ? "" : "s"}
+        {assignedProductCount} producto
+        {assignedProductCount === 1 ? "" : "s"} asignado
+        {assignedProductCount === 1 ? "" : "s"}
       </p>
     );
   }

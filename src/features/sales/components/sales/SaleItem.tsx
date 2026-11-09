@@ -17,7 +17,11 @@ export const SaleItem = ({ sale, desktopColumns }: SaleItemProps) => {
 
   const date = new Date(sale.createdAt);
   const createdDate = formatDate(date);
-  const createdHour = `${date.getHours()}:${date.getMinutes()}`;
+  const createdHour = date.toLocaleTimeString("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
   const paymentMethod = PAYMENT_METHODS_LABELS[sale.paymentMethod];
 
   const handleClick = async () => {

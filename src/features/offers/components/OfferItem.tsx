@@ -1,5 +1,7 @@
 import { Pencil, Tags } from "lucide-react";
 
+import { useProduct } from "@features/products";
+import type { Product } from "@features/products";
 import {
   canAssignProducts,
   formatOfferValue,
@@ -19,6 +21,11 @@ type OfferItemProps = {
 export const OfferItem = ({ offer, columns }: OfferItemProps) => {
   const { openEdit } = useOffer();
   const { openAssign } = useOfferAssigment();
+  const { products } = useProduct();
+
+  const assignedProductCount = products.filter(
+    (product: Product) => product.offerId === offer.id,
+  ).length;
 
   const hasAssignment = canAssignProducts(offer);
 
@@ -29,7 +36,7 @@ export const OfferItem = ({ offer, columns }: OfferItemProps) => {
       </p>
       <OfferAppliesTo
         paymentMethods={offer.paymentMethods}
-        productIds={offer.productIds}
+        assignedProductCount={assignedProductCount}
       />
       <OfferActiveRangeDate
         startDate={offer.startDate}

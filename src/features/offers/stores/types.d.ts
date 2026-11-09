@@ -1,9 +1,15 @@
-import type { Offer, OfferRequest, OffersFilter } from "@features/offers/types";
+import type {
+  Offer,
+  OfferPaymentMethod,
+  OfferRequest,
+  OffersFilter,
+} from "@features/offers/types";
 
 export type UseOfferStore = {
   offers: Offer[];
   isLoading: boolean;
   error: string | null;
+  assignError: string | null;
   formOffer: Offer | null;
   isFormModalOpen: boolean;
   assignOffer: Offer | null;
@@ -19,4 +25,11 @@ export type UseOfferStore = {
   createOffer: (offer: OfferRequest) => Promise<Offer>;
   updateOffer: (offerId: number, offer: OfferRequest) => Promise<Offer>;
   assignOfferProducts: (offerId: number, productIds: number[]) => Promise<void>;
+};
+
+export type UseOfferPaymentMethodStore = {
+  offerPaymentMethods: OfferPaymentMethod[];
+  isLoading: boolean;
+  error: string | null;
+  getOfferPaymentMethods: () => Promise<void>;
 };

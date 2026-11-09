@@ -1,11 +1,12 @@
 import { lazy, useEffect, useState } from "react";
 
 import { useClient } from "@features/clients";
+import { useOfferPaymentMethod } from "@features/offers";
 import { useSale } from "@features/sales/hooks/useSale";
+import { toastAppError } from "@shared/utils/toastAppError";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { SaleCart } from "@features/sales/components/sell/SaleCart";
 import { SaleSummary } from "@features/sales/components/sell/SaleSummary";
-import { toastAppError } from "@shared/utils/toastAppError";
 import type { SaleSummary as SaleSummaryData } from "@features/sales/types";
 import { ProductSearch } from "@features/sales/components/sell/ProductSearch";
 
@@ -21,10 +22,14 @@ export const Sell = () => {
 
   const { cart, saleDraft, createSale, resetSale, clearCart } = useSale();
   const { getClients } = useClient();
+  const { getOfferPaymentMethods } = useOfferPaymentMethod();
 
   useEffect(() => {
     getClients();
-  }, [getClients]);
+    getOfferPaymentMethods().catch((error) => {
+      toastAppError(error, "No se pudieron cargar las ofertas de pago.");
+    });
+  }, [getClients, getOfferPaymentMethods]);
 
   usePageHeader({ title: "Punto de venta" });
 
@@ -37,13 +42,17 @@ export const Sell = () => {
         (acc, line) => acc + line.salePrice * line.qty,
         0,
       );
+
       const hasDiscount = saleDraft.discount > 0;
-      const discount = hasDiscount
-        ? saleDraft.discountType === "PERCENTAGE"
-          ? // el backend admite 100% (venta gratis); el cap evita negativos por error de tipeo
-            Math.min(saleDraft.discount, 100)
-          : Math.min(saleDraft.discount, subtotal)
-        : undefined;
+
+      let discount = undefined;
+      if (hasDiscount) {
+        if (saleDraft.discountType === "PERCENTAGE") {
+          discount = Math.min(saleDraft.discount, 100);
+        } else {
+          discount = Math.min(saleDraft.discount, subtotal);
+        }
+      }
 
       // consumidor final: clientId null; el backend infiere el punto de venta
       const sale = await createSale({

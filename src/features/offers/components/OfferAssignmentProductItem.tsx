@@ -6,7 +6,7 @@ import type { ChangeEvent } from "react";
 type OfferAssignmentProductItem = {
   product: Product;
   selected: number[];
-  setSelected: React.Dispatch<React.SetStateAction<number[]>>;
+  setSelected: (updater: (prev: number[]) => number[]) => void;
 };
 
 export const OfferAssignmentProductItem = ({

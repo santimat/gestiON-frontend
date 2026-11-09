@@ -3,18 +3,21 @@ import { useEffect, useState } from "react";
 import { TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 
+import {
+  useProductWithOffer,
+  useProductWithOfferSearch,
+} from "@features/products";
 import { useSale } from "@features/sales/hooks/useSale";
-import { useProduct, useProductSearch } from "@features/products";
-import { ProductSellCard } from "@features/sales/components/sell/ProductSellCard";
 import { ListContainer } from "@shared/components/ListContainer";
+import { ProductSellCard } from "@features/sales/components/sell/ProductSellCard";
 
 const SEARCH_DEBOUNCE_MS = 350;
 
 export const ProductSearch = () => {
   const { addToCart, cart } = useSale();
 
-  const { isLoading, products, error } = useProduct();
-  const { filters, setFilters } = useProductSearch(cart);
+  const { isLoading, products, error } = useProductWithOffer();
+  const { filters, setFilters } = useProductWithOfferSearch(cart);
 
   const [searchText, setSearchText] = useState(filters.searchText ?? "");
   const [debouncedSearch] = useDebouncedValue(searchText, SEARCH_DEBOUNCE_MS);

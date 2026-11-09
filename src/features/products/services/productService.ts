@@ -32,4 +32,10 @@ export const productService = {
       backendAPI.get("/products", { params: filters }),
     );
   },
+
+  getProductsWithOffer: async (filters?: ProductFilters) => {
+    return executeApiCall(() =>
+      backendAPI.get("/products/with-offer", { params: filters }),
+    );
+  },
 };

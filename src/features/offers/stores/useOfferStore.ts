@@ -8,6 +8,7 @@ export const useOfferStore = create<UseOfferStore>((set, get) => ({
   offers: [],
   isLoading: false,
   error: null,
+  assignError: null,
   formOffer: null,
   isFormModalOpen: false,
   assignOffer: null,
@@ -44,13 +45,13 @@ export const useOfferStore = create<UseOfferStore>((set, get) => ({
   },
 
   assignOfferProducts: async (offerId, productIds) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true, assignError: null });
     try {
       await offerService.assignOfferProducts(offerId, productIds);
       await get().getOffers(get().lastFilters);
     } catch (error) {
       const appError = error as AppError;
-      set({ error: appError.message });
+      set({ assignError: appError.message });
       throw error;
     } finally {
       set({ isLoading: false });

@@ -53,5 +53,7 @@ export const ErrorDictionary = {
   OFFER_OVERLAP: "Ya existe una oferta con las mismas caracteristicas.",
   OFFER_HAS_PAYMENT_METHODS:
     "No se pueden asignar productos a ofertas con métodos de pago.",
-  INTERNAL_ERROR: "No se pudieron cargar los datos.",
+  OFFER_HAS_PRODUCTS:
+    "No se pueden asignar métodos de pago a ofertas con productos asignados.",
+  INTERNAL_ERROR: "Hubo un error por parte del servidor.",
 } as const;

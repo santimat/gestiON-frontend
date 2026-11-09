@@ -41,7 +41,7 @@ export const useSaleStore = create<UseSaleStore>((set) => ({
           {
             productId: product.id,
             name: product.name,
-            salePrice: product.salePrice,
+            salePrice: product.discountedPrice,
             currentStock: product.currentStock,
             qty: 1,
           },

@@ -1,8 +1,9 @@
 import type { z } from "zod";
 
+import type { DiscountType } from "@features/sales";
+import type { Category } from "@features/categories";
 import { ProductSchema } from "@features/products/schemas/ProductSchema";
 import { ProductFiltersSchema } from "@features/products/schemas/ProductFiltersSchema";
-import type { Category } from "@features/categories";
 
 export type ProductRequest = z.infer<typeof ProductSchema>;
 
@@ -16,18 +17,20 @@ export type Product = {
   minStock: number;
   currentStock: number;
   profitMultiplier: number;
+  offerId: number | null;
   category: Category;
   active: boolean;
   updatedAt: Date;
 };
 
+export type ProductWithOffer = Product & {
+  offerValue: number | null;
+  offerDiscountType: DiscountType | null;
+  discountedPrice: number;
+};
+
 export type ProductForm = ProductRequest;
 
-/**
- * Estado del formulario de producto: en creación parte de DEFAULT_PRODUCT_FORM
- * con null en los campos numéricos todavía no escritos, y al editar recibe
- * productMapper.toForm. ProductForm (el request) es asignable a este tipo.
- */
 export type ProductFormValues = {
   name: string;
   description?: string;

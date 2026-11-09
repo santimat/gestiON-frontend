@@ -22,15 +22,18 @@ export const SaleTicketModal = ({
   const paymentMethod = sale?.paymentMethod
     ? PAYMENT_METHODS_LABELS[sale.paymentMethod]
     : "";
+  const discount = sale?.discount ?? 0;
+  const subtotal = sale?.subtotal ?? 0;
+  const total = sale?.total ?? 0;
   const dicountText =
     sale?.discountType === "PERCENTAGE"
-      ? `${sale.discount}%`
+      ? `${discount}%`
       : sale
-        ? formatCurrency(sale.discount)
+        ? formatCurrency(discount)
         : "";
 
-  const subtTotal = sale ? formatCurrency(sale.subtotal) : "";
-  const total = sale ? formatCurrency(sale.total) : "";
+  const subtTotal = sale ? formatCurrency(subtotal) : "";
+  const totalText = sale ? formatCurrency(total) : "";
 
   return (
     <Modal
@@ -68,7 +71,7 @@ export const SaleTicketModal = ({
               color="destructive"
             />
           )}
-          <SaleTicketModalRow title="Total" content={total} />
+          <SaleTicketModalRow title="Total" content={totalText} />
         </div>
       )}
 

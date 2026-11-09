@@ -1,11 +1,11 @@
 import { NumberFormatter } from "@mantine/core";
 
-import type { Product } from "@features/products";
+import type { ProductWithOffer } from "@features/products";
 import { StatusBadge } from "@shared/components/StatusBadge";
 
 type ProductSellCardProps = {
-  product: Product;
-  addToCart: (product: Product) => void;
+  product: ProductWithOffer;
+  addToCart: (product: ProductWithOffer) => void;
 };
 
 export const ProductSellCard = ({
@@ -14,6 +14,7 @@ export const ProductSellCard = ({
 }: ProductSellCardProps) => {
   const isLowStock = product.currentStock <= product.minStock;
   const isOutOfStock = product.currentStock === 0;
+
   return (
     <button
       key={`product-${product.id}`}
@@ -37,10 +38,15 @@ export const ProductSellCard = ({
         )}
         <NumberFormatter
           prefix="$"
-          value={product.salePrice}
+          value={product.discountedPrice}
           thousandSeparator
           className="text-sm font-semibold tabular-nums"
         />
+        {product.offerDiscountType && (
+          <span className="text-secondary-foreground text-xs line-through">
+            ${product.salePrice}
+          </span>
+        )}
       </div>
     </button>
   );

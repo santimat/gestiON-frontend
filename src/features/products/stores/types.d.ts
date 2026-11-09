@@ -1,4 +1,4 @@
-import type { Product, ProductFilters } from "@features/products/types";
+import type { Product, ProductFilters, ProductWithOffer } from "@features/products/types";
 
 export type UseProductStore = {
   formProduct: Product | null;
@@ -14,4 +14,12 @@ export type UseProductStore = {
   getProducts: (filters?: ProductFilters) => Promise<void>;
   updateProduct: (productId: number, product: FormData) => Promise<void>;
   toggleActive: (productId: number) => Promise<void>;
+};
+
+export type UseProductWithOfferStore = {
+  products: ProductWithOffer[];
+  totalProducts: number;
+  isLoading: boolean;
+  error: string | null;
+  getProductsWithOffer: (filters?: ProductFilters) => Promise<void>;
 };

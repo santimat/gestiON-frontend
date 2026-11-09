@@ -5,6 +5,7 @@ import { Button, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 
 import type { Offer } from "@features/offers/types";
+import type { Product } from "@features/products";
 import { useLocalFilters } from "@shared/hooks/useLocalFilters";
 import { formatOfferValue } from "@features/offers/utils/offerUtils";
 import { useOfferAssigment } from "@features/offers/hooks/useOfferAssigment";
@@ -24,13 +25,19 @@ export const OfferAssignmentDialog = ({
   const { assignOfferProducts, products, isLoadingProducts, getProducts } =
     useOfferAssigment();
 
-  const [selected, setSelected] = useState<number[]>(offer.productIds ?? []);
-  const [isSaving, setIsSaving] = useState(false);
+  // Derivar la selección base desde el backend y mantenerla comoDrafts cuando el usuráio cambia
+  const selectedIds = products
+    .filter((product: Product) => product.offerId === offer.id)
+    .flatMap((product: Product) => product.id); // ✔️ ahora refleja siempre el backend
 
+  const [isSaving, setIsSaving] = useState(false);
   const { filters, setFilters } = useLocalFilters(ProductFiltersSchema);
   const [searchText, setSearchText] = useState(filters.searchText ?? "");
-
   const [debouncedSearch] = useDebouncedValue(searchText, 300);
+
+  // selección editable del usuario
+  const [checkedIds, setCheckedIds] = useState<number[] | null>(null);
+  const selected = checkedIds ?? selectedIds;
 
   useEffect(() => {
     if (debouncedSearch === (filters.searchText ?? "")) return;
@@ -98,7 +105,9 @@ export const OfferAssignmentDialog = ({
                 <OfferAssignmentProductItem
                   product={product}
                   selected={selected}
-                  setSelected={setSelected}
+                  setSelected={(updater) =>
+                    setCheckedIds((prev) => updater(prev ?? selectedIds))
+                  }
                 />
               </li>
             ))}

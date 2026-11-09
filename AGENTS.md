@@ -47,3 +47,9 @@ Data flow: feature `pages/`/`components/` → feature `hooks/useX.ts` → featur
 - **Sale discount contract** (aligned with `gestiON-backend` `SaleRequest`): `discountType: "FIXED_AMOUNT" | "PERCENTAGE"` + `discount: number > 0`, **both-or-neither** (zod `.refine` in `SaleRequestSchema` + backend 400 otherwise). Send them only when the draft has a discount; when sending, cap to match the `SaleSummary` preview exactly (`%` → `min(discount, 100)` — 100% is a valid "free" sale; amount → `min(discount, subtotal)`) so the registered total always equals what the cashier saw. Backend `PERCENTAGE` currently doesn't reject `> 100` via API (total would go negative) — the frontend cap is the only guard; backend-side fix pending. `Sale` responses return `discountType (nullable)` and `totalAfterDiscount`; the four backend discount error codes (`INVALID_DISCOUNT`, `DISCOUNT_WITHOUT_TYPE`, `TYPE_WITHOUT_DISCOUNT`, `DISCOUNT_EXCEEDS_SUBTOTAL`) are in `errorDictionary.ts`.
 - **Commerce naming:** the commerce entity field is **`name`** everywhere in the API surface (`CommerceWithOwner.name`, `CurrentCommerce.name`, request keys for POST/PUT `/commerces*`) — renamed from `businessName` on 2026-10-28. The `business*` prefixed fields (`businessLogo`, `businessLogoUrl`, `businessActive`) keep their names. Don't reintroduce `businessName`.
 - Skills live in `.agents/skills/` (registered in `skills-lock.json`): `vercel-react-best-practices` and `lovable-mcp` (how to drive the Lovable MCP). The Lovable project **Swift Stock** (`f20db5cf-bbb4-4695-aa42-e486aa2a9ef5`, workspace "santi's Lovable") is the design source this repo implements — read designs from it with `lovable.read_file` before building a view from scratch.
+
+## OUTPUTS
+
+- After a code implementation is requested, you must submit the modified/created files, the changes, and the reason in table format.
+- Table format:
+  |File|Changes|Reason|

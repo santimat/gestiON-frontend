@@ -1,4 +1,10 @@
-import { Button, NumberFormatter, NumberInput, Select } from "@mantine/core";
+import {
+  Badge,
+  Button,
+  NumberFormatter,
+  NumberInput,
+  Select,
+} from "@mantine/core";
 import {
   ArrowLeftRight,
   Banknote,
@@ -8,8 +14,10 @@ import {
 } from "lucide-react";
 
 import { useClient } from "@features/clients";
+import { useOfferPaymentMethod } from "@features/offers";
 import { useSale } from "@features/sales/hooks/useSale";
 import type { DiscountType, PaymentMethod } from "@features/sales/types";
+import { StatusBadge } from "@shared/components/StatusBadge";
 
 type PaymentOption = {
   value: PaymentMethod;
@@ -35,8 +43,14 @@ export const SaleSummary = ({
 }: SaleSummaryProps) => {
   const { cart, saleDraft, setSaleDraft } = useSale();
   const { clients } = useClient();
+  const { offerPaymentMethods } = useOfferPaymentMethod();
 
   const { discount, discountType, paymentMethod, clientId } = saleDraft;
+
+  const selectedPaymentOffer = offerPaymentMethods.find(
+    (offer) => offer.paymentMethod === paymentMethod,
+  );
+  const hasPaymentOffer = selectedPaymentOffer !== undefined;
 
   const SelectedIcon = PAYMENT_OPTIONS.find(
     (option) => option.value === paymentMethod,
@@ -49,7 +63,7 @@ export const SaleSummary = ({
     0,
   );
 
-  const discountValue =
+  const manualDiscountValue =
     discountType === "PERCENTAGE"
       ? Math.round(
           (subtotal *
@@ -59,6 +73,19 @@ export const SaleSummary = ({
         )
       : // se asegura que el descuento no supere el subtotal
         Math.min(discount, subtotal);
+
+  const paymentOfferValue = selectedPaymentOffer
+    ? selectedPaymentOffer.discountType === "PERCENTAGE"
+      ? Math.round(
+          (subtotal * Math.min(Number(selectedPaymentOffer.value), 100)) / 100,
+        )
+      : Math.min(Number(selectedPaymentOffer.value), subtotal)
+    : 0;
+
+  // si el método elegido tiene oferta, esta prevalece sobre el descuento manual
+  const discountValue = hasPaymentOffer
+    ? paymentOfferValue
+    : manualDiscountValue;
 
   // informativo, el descuento real lo calcula el backend
   const total = Math.max(0, subtotal - discountValue);
@@ -94,6 +121,7 @@ export const SaleSummary = ({
           <NumberInput
             min={0}
             value={discount}
+            disabled={hasPaymentOffer}
             onChange={(value) => setSaleDraft({ discount: Number(value) || 0 })}
             aria-label="Importe del descuento"
           />
@@ -102,12 +130,13 @@ export const SaleSummary = ({
               <button
                 key={type}
                 type="button"
+                disabled={hasPaymentOffer}
                 onClick={() => setSaleDraft({ discountType: type })}
                 className={`rounded-md px-2.5 text-sm font-medium transition-colors ${
                   discountType === type
                     ? "bg-primary-soft text-primary"
                     : "text-secondary-foreground hover:bg-background-soft"
-                }`}
+                } ${hasPaymentOffer ? "opacity-50" : ""}`}
               >
                 {type === "FIXED_AMOUNT" ? "$" : "%"}
               </button>
@@ -147,7 +176,59 @@ export const SaleSummary = ({
           leftSection={
             SelectedIcon ? <SelectedIcon size={18} strokeWidth={1.75} /> : null
           }
+          renderOption={(props) => {
+            const optionValue = String(props.option.value);
+            const option = PAYMENT_OPTIONS.find(
+              (paymentOption) => paymentOption.value === optionValue,
+            );
+            const Icon = option?.Icon;
+            const offer = offerPaymentMethods.find(
+              (item) => item.paymentMethod === optionValue,
+            );
+            return (
+              <div className="flex items-center gap-2">
+                {Icon ? <Icon size={16} strokeWidth={1.75} /> : null}
+                <span>{props.option.label}</span>
+                {offer ? (
+                  <Badge size="xs" color="violet" variant="light">
+                    {offer.discountType === "PERCENTAGE"
+                      ? `${offer.value}%`
+                      : `$${offer.value}`}
+                  </Badge>
+                ) : null}
+              </div>
+            );
+          }}
         />
+        {hasPaymentOffer && selectedPaymentOffer ? (
+          <p className="text-primary text-xs font-medium">
+            Oferta aplicada al total:{" "}
+            {selectedPaymentOffer.discountType === "PERCENTAGE"
+              ? `${selectedPaymentOffer.value}% de descuento`
+              : `$${selectedPaymentOffer.value} de descuento`}
+          </p>
+        ) : null}
+        {offerPaymentMethods.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {offerPaymentMethods.map((offer) => {
+              const option = PAYMENT_OPTIONS.find(
+                (item) => item.value === offer.paymentMethod,
+              );
+              return (
+                <StatusBadge
+                  key={offer.paymentMethod}
+                  tone="primary"
+                  size="xs"
+                  label={`${option?.label ?? offer.paymentMethod}: ${
+                    offer.discountType === "PERCENTAGE"
+                      ? `${offer.value}%`
+                      : `$${offer.value}`
+                  }`}
+                />
+              );
+            })}
+          </div>
+        ) : null}
         <p className="text-secondary-foreground text-xs">
           El cobro se realiza fuera del sistema: el método queda registrado como
           dato informativo.

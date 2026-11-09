@@ -11,7 +11,7 @@ export const useOfferAssigment = () => {
     closeAssignModal,
     assignOfferProducts,
     isLoading: isOffersLoading,
-    error: offerError,
+    error: assignError,
   } = useOfferStore(
     useShallow((s) => ({
       assignOffer: s.assignOffer,
@@ -20,7 +20,7 @@ export const useOfferAssigment = () => {
       closeAssignModal: s.closeAssignModal,
       assignOfferProducts: s.assignOfferProducts,
       isLoading: s.isLoading,
-      error: s.error,
+      error: s.assignError,
     })),
   );
 
@@ -38,7 +38,7 @@ export const useOfferAssigment = () => {
     closeAssignModal,
     assignOfferProducts,
     isOffersLoading,
-    offerError,
+    assignError,
     products,
     isLoadingProducts,
     productsError,
