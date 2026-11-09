@@ -12,6 +12,7 @@ export const ALLOWEDS_ROUTES_BY_ROLE = {
     "/sell",
     "/sales",
     "/clients",
+    "/settings",
   ],
   CASHIER: ["/sell", "/sales", "/products", "/clients", "/offers"],
 };

@@ -4,6 +4,7 @@ import {
   Package,
   ReceiptText,
   ScanBarcode,
+  Settings,
   ShoppingCart,
   StoreIcon,
   Tags,
@@ -54,4 +55,5 @@ export const SIDEBAR_ITEMS: NavItem[] = [
     href: "/sell-point",
   },
   { icon: Users, text: "Cajeros", short: "Cajeros", href: "/cashiers" },
+  { icon: Settings, text: "Configuración", short: "Config", href: "/settings" },
 ];

@@ -85,6 +85,12 @@ const NotFoundPage = lazy(() =>
   })),
 );
 
+const SettingsPage = lazy(() =>
+  import("@features/settings/pages/Settings").then((module) => ({
+    default: module.Settings,
+  })),
+);
+
 const App = () => {
   return (
     <>
@@ -152,9 +158,16 @@ const App = () => {
           >
             <Route path="/dashboard" element={<p> Dashboard </p>} />
           </Route>
+          <Route
+            element={
+              <ProtectedRoute allowedRoles={getRolesForRoute("/settings")} />
+            }
+          >
+            <Route path="/settings" element={<SettingsPage />} />
+          </Route>
         </Route>
-        {/* vistas full-screen, fuera de MainLayout */}
 
+        {/* vistas full-screen, fuera de MainLayout */}
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
