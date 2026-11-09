@@ -9,6 +9,7 @@ export const productMapper = {
     salePrice: product.salePrice,
     currentStock: product.currentStock,
     minStock: product.minStock,
+    profitMultiplier: product.profitMultiplier,
     image: null,
   }),
 };

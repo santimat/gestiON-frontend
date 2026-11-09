@@ -25,6 +25,7 @@ import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { useCategory, SelectCategory } from "@features/categories";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 import { productMapper } from "@features/products/mappers/productMapper";
+import { parseMultiplier } from "@features/products/utils/parseMultiplier";
 
 const DEFAULT_PRODUCT_FORM = {
   name: "",
@@ -88,7 +89,9 @@ export const ProductForm = ({
   });
 
   const profitMultiplier =
-    product?.profitMultiplier ?? currentCommerce?.profitMultiplier ?? 1;
+    productForm.profitMultiplier != null
+      ? parseMultiplier(productForm.profitMultiplier)
+      : (currentCommerce?.profitMultiplier ?? 1);
   const suggestedPrice = Math.round(
     (productForm.costPrice ?? 0) * profitMultiplier,
   );
@@ -173,7 +176,18 @@ export const ProductForm = ({
           <NumberInput
             leftSection={<BanknoteArrowUp size={20} />}
             name="profitMultiplier"
-            label="Margen de ganancia"
+            label="Margen de ganancia (%)"
+            rightSection={
+              <Tooltip
+                label={
+                  <>
+                    <p>Porcentaje del 0 al 100%</p>
+                  </>
+                }
+              >
+                <InfoIcon size={20} />
+              </Tooltip>
+            }
             placeholder="15"
             value={productForm.profitMultiplier ?? ""}
             onChange={(value) => handleNumberChange("profitMultiplier", value)}
@@ -193,19 +207,6 @@ export const ProductForm = ({
             required
           />
 
-          <NumberInput
-            leftSection={<DollarSign size={20} />}
-            label="Precio de Venta"
-            name="salePrice"
-            placeholder="0.00"
-            error={errors.salePrice}
-            min={0}
-            decimalScale={2}
-            value={productForm.salePrice ?? ""}
-            onChange={(value) => handleNumberChange("salePrice", value)}
-            required
-          />
-
           <TextInput
             leftSection={<DollarSign size={20} />}
             label="Precio Sugerido"
@@ -216,12 +217,12 @@ export const ProductForm = ({
                 label={
                   <>
                     <p>
-                      El precio sugerido se calcula multiplicando el precio de
-                      costo por el multiplicador de ganancia del comercio.
+                      Precio sugerido = precio costo + (precio costo * margen de
+                      ganancia).
                     </p>
                     <p>
                       Si no se ha establecido un multiplicador de ganancia, se
-                      utilizará el valor por defecto de 1.
+                      utilizará el valor por defecto de 0%.
                     </p>
                   </>
                 }
@@ -234,6 +235,19 @@ export const ProductForm = ({
             }
             readOnly
             leftSectionPointerEvents="none"
+          />
+
+          <NumberInput
+            leftSection={<DollarSign size={20} />}
+            label="Precio de Venta"
+            name="salePrice"
+            placeholder="0.00"
+            error={errors.salePrice}
+            min={0}
+            decimalScale={2}
+            value={productForm.salePrice ?? ""}
+            onChange={(value) => handleNumberChange("salePrice", value)}
+            required
           />
 
           <NumberInput
