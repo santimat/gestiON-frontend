@@ -1,3 +1,4 @@
+export { usePendingSales } from "@features/sales/hooks/usePendingSales";
 export { useSale } from "@features/sales/hooks/useSale";
 export { useSales } from "@features/sales/hooks/useSales";
 export { useSalesSearch } from "@features/sales/hooks/useSalesSearch";
@@ -15,4 +16,5 @@ export type {
   SalesFilter,
   PaymentMethod,
   DiscountType,
+  PendingSalesWithDetails,
 } from "@features/sales/types";

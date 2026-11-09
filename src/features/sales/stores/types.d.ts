@@ -1,3 +1,4 @@
+import type { Client } from "@features/clients/types";
 import type { ProductWithOffer } from "@features/products";
 import type {
   CartLine,
@@ -35,4 +36,19 @@ export type UseSaleDetailsStore = {
   closeDetailModal: () => void;
   getSaleWithDetails: (saleId: number) => Promise<void>;
   saleWithDetails: Sale | null;
+};
+
+export type UsePendingSalesStore = {
+  pendingSales: Sale[];
+  pendingSalesCount: number;
+  totalPending: number;
+  isLoading: boolean;
+  error: string | null;
+  selectedPendingSale: Sale | null;
+  isDetailModalOpen: boolean;
+  pendingSalesClient: Client | null;
+  setPendingSalesClient: (client: Client | null) => void;
+  getPendingSalesWithDetailsByClient: (clientId: number) => Promise<void>;
+  openDetailModal: (sale: Sale) => void;
+  closeDetailModal: () => void;
 };

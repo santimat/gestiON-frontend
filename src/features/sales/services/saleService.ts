@@ -5,6 +5,12 @@ import type { SaleRequest, SalesFilter } from "@features/sales/types";
 import { SaleRequestSchema } from "@features/sales/schemas/SaleRequestSchema";
 
 export const saleService = {
+  getPendingSalesWithDetailsByClient: async (clientId: number) => {
+    return executeApiCall(() =>
+      backendAPI.get(`/clients/${clientId}/pending-sales-with-details`),
+    );
+  },
+
   createSale: async (sale: SaleRequest) => {
     const parsedData = parseOrThrow(SaleRequestSchema, sale);
     return executeApiCall(() => backendAPI.post("/sales", parsedData));
