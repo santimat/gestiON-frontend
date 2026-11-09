@@ -5,6 +5,7 @@ import {
 import { executeApiCall } from "@shared/utils/apiClient";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
 import { backendAPI } from "@shared/services/axiosConfig";
+import type { CurrentCommerce } from "@features/commerces/types";
 
 export const commerceService = {
   createCommerceWithOwner: async (commerceWithOwner: FormData) => {
@@ -46,6 +47,12 @@ export const commerceService = {
 
     return executeApiCall(() =>
       backendAPI.put(`/commerces/${commerceId}/user/${userId}`, formData),
+    );
+  },
+
+  patchCommerce: async (formData: FormData) => {
+    return executeApiCall<CurrentCommerce>(() =>
+      backendAPI.patch("/commerces", formData),
     );
   },
 };

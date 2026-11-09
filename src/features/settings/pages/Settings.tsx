@@ -1,4 +1,5 @@
 import { usePageHeader } from "@/shared/layout/hooks/usePageHeader";
+import { StoreIcon } from "lucide-react";
 
 export const Settings = () => {
   usePageHeader({
@@ -8,7 +9,12 @@ export const Settings = () => {
 
   return (
     <main className="p-6">
-      <h1>Hola soy configuraciones</h1>
+      <section>
+        <header className="flex gap-2">
+          <StoreIcon size={24} />
+          Comercio
+        </header>
+      </section>
     </main>
   );
 };

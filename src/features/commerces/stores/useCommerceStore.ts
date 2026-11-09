@@ -78,4 +78,10 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
       ),
     }));
   },
+
+  patchCommerce: async (formData: FormData) => {
+    const updatedCommerce = await commerceService.patchCommerce(formData);
+    set(() => ({ currentCommerce: updatedCommerce }));
+    return updatedCommerce;
+  },
 }));

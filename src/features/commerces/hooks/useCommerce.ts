@@ -16,6 +16,7 @@ export const useCommerce = () => {
     getCommerceStats,
     getCurrentCommerce,
     updateCommerceWithOwner,
+    patchCommerce,
     openEdit,
     openCreate,
     closeFormModal,
@@ -33,6 +34,7 @@ export const useCommerce = () => {
       getCommerceStats: s.getCommerceStats,
       getCurrentCommerce: s.getCurrentCommerce,
       updateCommerceWithOwner: s.updateCommerceWithOwner,
+      patchCommerce: s.patchCommerce,
       openEdit: s.openEdit,
       openCreate: s.openCreate,
       closeFormModal: s.closeFormModal,
@@ -58,6 +60,10 @@ export const useCommerce = () => {
     await updateCommerceWithOwner({ commerceId, userId, formData });
   };
 
+  const handlePatchCommerce = async (formData: FormData) => {
+    await patchCommerce(formData);
+  };
+
   return {
     commercesWithOwner,
     commerceStats,
@@ -68,9 +74,11 @@ export const useCommerce = () => {
     isFormModalOpen,
     handleUpdateCommerceWithOwner,
     handleCreateCommerceWithOwner,
+    handlePatchCommerce,
     getCommercesWithOwner,
     getCommerceStats,
     getCurrentCommerce,
+    patchCommerce,
     openEdit,
     openCreate,
     closeFormModal,

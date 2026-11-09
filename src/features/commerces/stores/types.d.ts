@@ -31,4 +31,5 @@ export type UseCommerceStore = {
     userId: number;
     formData: FormData;
   }) => Promise<void>;
+  patchCommerce: (formData: FormData) => Promise<CurrentCommerce>;
 };
