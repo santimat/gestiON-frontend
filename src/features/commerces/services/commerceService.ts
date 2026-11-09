@@ -1,4 +1,5 @@
 import {
+  CommercePatchSchema,
   CommerceWithOwnerUpdateSchema,
   CommerceWithOwnerRequestSchema,
 } from "@features/commerces/schemas";
@@ -51,6 +52,9 @@ export const commerceService = {
   },
 
   patchCommerce: async (formData: FormData) => {
+    const objectToParse = Object.fromEntries(formData.entries());
+    parseOrThrow(CommercePatchSchema, objectToParse);
+
     return executeApiCall<CurrentCommerce>(() =>
       backendAPI.patch("/commerces", formData),
     );

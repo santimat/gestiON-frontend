@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { toast } from "sonner";
+import { Button } from "@mantine/core";
+import { useState, type SubmitEvent } from "react";
 
+import type { AppError, FieldErrors } from "@/shared/types";
+import { toastAppError } from "@/shared/utils/toastAppError";
 import { usePageHeader } from "@/shared/layout/hooks/usePageHeader";
 import { useCommerce, type CurrentCommerce } from "@/features/commerces";
 import { NameAndImageSection } from "@/features/settings/components/NameAndImageSection";
 import { ProfitMultiplierSection } from "@features/settings/components/ProfitMultiplierSection";
-import { Button } from "@mantine/core";
 
 export const Settings = () => {
-  const { currentCommerce } = useCommerce();
+  const { currentCommerce, patchCommerce } = useCommerce();
+
+  const [errors, setErrors] = useState<FieldErrors>({});
 
   const [commerceForm, setCommerceForm] = useState<CurrentCommerce | null>(
     null,
@@ -30,14 +35,33 @@ export const Settings = () => {
     );
   }
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("name", commerceForm.name);
+    formData.append("profitMultiplier", String(commerceForm.profitMultiplier));
+    if (commerceForm.businessImage) {
+      formData.append("image", commerceForm.businessImage);
+    }
+
+    try {
+      await patchCommerce(formData);
+      toast.success("Información del comercio actualizada correctamente");
+    } catch (error) {
+      const appError = error as AppError;
+      if (appError?.fieldErrors) return setErrors(appError.fieldErrors);
+      toastAppError(error, "Error al actualizar la información del comercio");
+    }
+  };
 
   return (
     <main className="mx-auto max-w-200 px-4 py-6 md:px-2">
       <form className="grid gap-6" onSubmit={handleSubmit}>
-        <NameAndImageSection {...{ commerceForm, setCommerceForm }} />
-        <ProfitMultiplierSection {...{ commerceForm, setCommerceForm }} />
-        <Button>Guardar cambios</Button>
+        <NameAndImageSection {...{ commerceForm, setCommerceForm, errors }} />
+        <ProfitMultiplierSection
+          {...{ commerceForm, setCommerceForm, errors }}
+        />
+        <Button type="submit">Guardar cambios</Button>
       </form>
     </main>
   );

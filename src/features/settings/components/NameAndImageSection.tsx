@@ -1,6 +1,7 @@
 import { Image, StoreIcon, UploadIcon } from "lucide-react";
 import { Avatar, FileInput, TextInput } from "@mantine/core";
 
+import type { FieldErrors } from "@/shared/types";
 import type { CurrentCommerce } from "@/features/commerces";
 
 type CommerceForm = CurrentCommerce & { businessImage?: File | null };
@@ -8,11 +9,13 @@ type CommerceForm = CurrentCommerce & { businessImage?: File | null };
 type NameAndImageFormProps = {
   commerceForm: CommerceForm | null;
   setCommerceForm: React.Dispatch<React.SetStateAction<CommerceForm | null>>;
+  errors: FieldErrors;
 };
 
 export const NameAndImageSection = ({
   commerceForm,
   setCommerceForm,
+  errors,
 }: NameAndImageFormProps) => {
   const avatarSrc = commerceForm?.businessImage
     ? URL.createObjectURL(commerceForm.businessImage)
@@ -43,6 +46,8 @@ export const NameAndImageSection = ({
                   : prev) as CommerceForm,
             )
           }
+          name="name"
+          error={errors.name}
         />
         <div className="col-span-2 flex items-end gap-4 md:col-span-1">
           <Avatar
@@ -56,8 +61,10 @@ export const NameAndImageSection = ({
               <Image className="text-secondary-foreground" size={40} />
             </span>
           </Avatar>
-          <div>
+          <div className="w-full">
             <FileInput
+              error={errors.image}
+              name="image"
               aria-label="Subir foto del comercio"
               label="Foto del comercio"
               className="w-full"

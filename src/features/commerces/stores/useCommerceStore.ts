@@ -53,9 +53,6 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
       try {
         const currentCommerce = await commerceService.getCurrentCommerce();
         set(() => ({ currentCommerce }));
-      } catch (error) {
-        currentCommercePromise = null;
-        throw error;
       } finally {
         currentCommercePromise = null;
       }

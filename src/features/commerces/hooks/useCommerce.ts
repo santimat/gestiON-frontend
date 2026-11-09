@@ -60,10 +60,6 @@ export const useCommerce = () => {
     await updateCommerceWithOwner({ commerceId, userId, formData });
   };
 
-  const handlePatchCommerce = async (formData: FormData) => {
-    await patchCommerce(formData);
-  };
-
   return {
     commercesWithOwner,
     commerceStats,
@@ -74,7 +70,6 @@ export const useCommerce = () => {
     isFormModalOpen,
     handleUpdateCommerceWithOwner,
     handleCreateCommerceWithOwner,
-    handlePatchCommerce,
     getCommercesWithOwner,
     getCommerceStats,
     getCurrentCommerce,
