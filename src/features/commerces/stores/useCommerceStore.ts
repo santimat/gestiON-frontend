@@ -4,6 +4,8 @@ import type { AppError } from "@shared/types";
 import { commerceService } from "@features/commerces/services/commerceService";
 import type { UseCommerceStore } from "@features/commerces/stores/types";
 
+let currentCommercePromise: Promise<void> | null = null;
+
 export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   formCommerce: null,
   isFormModalOpen: false,
@@ -41,10 +43,25 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
     set(() => ({ commerceStats: stats }));
   },
   getCurrentCommerce: async () => {
-    if (get().currentCommerce?.id) return;
+    if (get().currentCommerce?.name) return;
 
-    const currentCommerce = await commerceService.getCurrentCommerce();
-    set(() => ({ currentCommerce }));
+    if (currentCommercePromise) {
+      return currentCommercePromise;
+    }
+
+    currentCommercePromise = (async () => {
+      try {
+        const currentCommerce = await commerceService.getCurrentCommerce();
+        set(() => ({ currentCommerce }));
+      } catch (error) {
+        currentCommercePromise = null;
+        throw error;
+      } finally {
+        currentCommercePromise = null;
+      }
+    })();
+
+    return currentCommercePromise;
   },
   toggleCommerceActive: async (commerceId: number) => {
     const newStatus = await commerceService.toggleCommerceActive(commerceId);

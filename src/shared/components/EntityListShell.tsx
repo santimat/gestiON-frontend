@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment, Suspense, type ReactNode } from "react";
 
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
 
@@ -31,7 +31,9 @@ export const EntityListShell = <T,>({
 
   if (isMobile && renderMobile) {
     const rows = items.map((item) => (
-      <Fragment key={getKey(item)}>{renderMobile(item)}</Fragment>
+      <Fragment key={getKey(item)}>
+        <Suspense fallback={null}>{renderMobile(item)}</Suspense>
+      </Fragment>
     ));
 
     if (mobileContainer === "ul") {
@@ -58,7 +60,9 @@ export const EntityListShell = <T,>({
       </ul>
       <ul className="[&>li]:not-first:border-background-soft text-sm [&>li]:not-first:border-t">
         {items.map((item) => (
-          <Fragment key={getKey(item)}>{renderDesktop(item)}</Fragment>
+          <Fragment key={getKey(item)}>
+            <Suspense fallback={null}>{renderDesktop(item)}</Suspense>
+          </Fragment>
         ))}
       </ul>
     </section>

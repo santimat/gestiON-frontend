@@ -31,6 +31,7 @@ export type CurrentCommerce = {
   id: number;
   name: string;
   businessLogoUrl: string;
+  businessImage: File | null;
   businessActive: boolean;
   profitMultiplier: number;
 };

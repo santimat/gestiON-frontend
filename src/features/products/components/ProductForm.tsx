@@ -17,15 +17,15 @@ import {
 } from "@mantine/core";
 import { useEffect, type ChangeEvent } from "react";
 
-import type { Product, ProductFormValues } from "@features/products/types";
 import type { CurrentCommerce } from "@features/commerces";
-import { ModalHeader } from "@shared/components/ModalHeader";
-import { useProduct } from "@features/products/hooks/useProduct";
 import { useEntityForm } from "@shared/hooks/useEntityForm";
+import { ModalHeader } from "@shared/components/ModalHeader";
+import { parseMultiplier } from "@shared/utils/parseMultiplier";
+import { useProduct } from "@features/products/hooks/useProduct";
 import { useCategory, SelectCategory } from "@features/categories";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 import { productMapper } from "@features/products/mappers/productMapper";
-import { parseMultiplier } from "@features/products/utils/parseMultiplier";
+import type { Product, ProductFormValues } from "@features/products/types";
 
 const DEFAULT_PRODUCT_FORM = {
   name: "",
