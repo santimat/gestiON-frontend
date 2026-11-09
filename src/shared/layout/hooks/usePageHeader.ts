@@ -28,8 +28,15 @@ export const usePageHeader = (content: PageHeaderContent) => {
     setHeader(content);
   }, [content, setHeader]);
 
-  // al desmontar la vista dejamos el header vacio
-  useEffect(() => () => clearHeader(), [clearHeader]);
+  // al desmontar la vista dejamos el header vacio; reseteamos el ref para que el
+  // siguiente mount (p. ej. en Strict Mode) vuelva a invocar setHeader.
+  useEffect(
+    () => () => {
+      lastContent.current = null;
+      clearHeader();
+    },
+    [clearHeader],
+  );
 };
 
 export const useHeaderContent = () => {

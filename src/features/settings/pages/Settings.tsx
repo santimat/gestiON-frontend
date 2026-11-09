@@ -8,7 +8,7 @@ export const Settings = () => {
   });
 
   return (
-    <main className="p-6">
+    <main className="p-12">
       <section>
         <header className="flex gap-2">
           <StoreIcon size={24} />
