@@ -14,5 +14,9 @@ export type Client = {
   address: string;
   phoneNumber: string;
   dni: string;
+  salesCount: number | null;
+  pendingSalesCount: number | null;
+  totalSpent: number | null;
+  totalPending: number | null;
   updatedAt: Date;
 };

@@ -10,10 +10,17 @@ import { ClientsSearchBar } from "@features/clients/components/ClientsSearchBar"
 import { useFilters } from "@shared/hooks/useFilters";
 import { ClientFiltersSchema } from "@features/clients/schemas/ClientFiltersSchema";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+import { usePendingSales } from "@features/sales";
 
 const ClientForm = lazy(() =>
   import("@features/clients/components/ClientForm").then((module) => ({
     default: module.ClientForm,
+  })),
+);
+
+const ClientPendingSalesModal = lazy(() =>
+  import("@features/clients/components/ClientPendingSalesModal").then((module) => ({
+    default: module.ClientPendingSalesModal,
   })),
 );
 
@@ -30,6 +37,8 @@ export const Clients = () => {
   } = useClient();
 
   const { filters } = useFilters(ClientFiltersSchema);
+
+  const { pendingSalesClient, setPendingSalesClient } = usePendingSales();
 
   useEffect(() => {
     getClients(filters).catch(() => {});
@@ -63,6 +72,12 @@ export const Clients = () => {
       >
         <ClientForm client={formClient} closeModal={closeFormModal} />
       </EntityFormModal>
+
+      <ClientPendingSalesModal
+        opened={pendingSalesClient !== null}
+        client={pendingSalesClient}
+        onClose={() => setPendingSalesClient(null)}
+      />
 
       <main className="flex flex-col gap-6 p-6">
         <ClientsSearchBar />

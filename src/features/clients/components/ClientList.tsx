@@ -16,10 +16,18 @@ const ClientItemMobile = lazy(() =>
   })),
 );
 
-const HEADERS = ["Cliente", "DNI", "Telefono", "Direccion", "Acciones"];
+const HEADERS = [
+  "Cliente",
+  "DNI",
+  "Telefono",
+  "Direccion",
+  "Compras",
+  "Estado",
+  "Acciones",
+];
 
 const COLUMNS =
-  "grid grid-cols-[1fr_0.5fr_0.7fr_1fr_0.2fr] items-center gap-x-4";
+  "grid grid-cols-[0.5fr_0.5fr_0.7fr_0.5fr_0.5fr_0.3fr_0.2fr] items-center gap-x-4";
 
 const ACTIONS_ICONS = [{ Icon: Pencil, label: "Editar" }];
 
