@@ -1,5 +1,5 @@
 import { ClientSchema } from "@features/clients/schemas/ClientSchema";
-import type { ClientRequest } from "@features/clients/types";
+import type { ClientFilters, ClientRequest } from "@features/clients/types";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { executeApiCall } from "@shared/utils/apiClient";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
@@ -13,7 +13,9 @@ export const clientService = {
     parseOrThrow(ClientSchema, client);
     return executeApiCall(() => backendAPI.put(`/clients/${clientId}`, client));
   },
-  getClients: async () => {
-    return executeApiCall(() => backendAPI.get("/clients"));
+  getClients: async (filters?: ClientFilters) => {
+    return executeApiCall(() =>
+      backendAPI.get("/clients", { params: filters }),
+    );
   },
 };

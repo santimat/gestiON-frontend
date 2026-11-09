@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import type { AppError } from "@shared/types";
-import type { ClientRequest } from "@features/clients/types";
+import type { ClientFilters, ClientRequest } from "@features/clients/types";
 import { clientService } from "@features/clients/services/clientService";
 import type { UseClientStore } from "@features/clients/stores/types";
 
@@ -31,13 +31,13 @@ export const useClientStore = create<UseClientStore>((set) => ({
       ),
     }));
   },
-  getClients: async () => {
+  getClients: async (filters?: ClientFilters) => {
     set({ isLoading: true });
     try {
-      const data = await clientService.getClients();
+      const data = await clientService.getClients(filters);
       set(() => ({
-        clients: data?.content,
-        totalClients: data?.page.totalElements,
+        clients: data?.content ?? [],
+        totalClients: data?.page?.totalElements ?? data?.content?.length ?? 0,
         isLoading: false,
         error: null,
       }));
