@@ -2,10 +2,11 @@ import { Link } from "react-router";
 
 import { useAuth } from "@features/auth";
 import { SIDEBAR_ITEMS } from "@shared/config/navigation";
+import { GestiONLogo } from "@shared/components/GestiONLogo";
 import { getRolesForRoute } from "@shared/config/permissions";
 import { SideBarItem } from "@shared/layout/components/sidebar/SiderBarItem";
 import { SidebarFooter } from "@shared/layout/components/sidebar/SideBarFooter";
-import { GestiONLogo } from "@shared/components/GestiONLogo";
+
 export const SideBar = () => {
   const { authenticatedUser, handleLogout } = useAuth();
   if (!authenticatedUser?.email) return;

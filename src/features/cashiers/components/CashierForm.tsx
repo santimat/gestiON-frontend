@@ -2,13 +2,13 @@ import type { ChangeEvent } from "react";
 import { PasswordInput, TextInput } from "@mantine/core";
 import { KeyRound, Mail, Phone, UserPen, UserRound } from "lucide-react";
 
-import { cashierMapper } from "@features/cashiers/mappers/cashierMapper";
-import { useCashier } from "@features/cashiers/hooks/useCashier";
+import type { User } from "@features/auth";
 import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { ModalHeader } from "@shared/components/ModalHeader";
-import { ModalFormActions } from "@shared/components/ModalFormActions";
-import type { User } from "@features/auth";
 import type { CashierRequest } from "@features/cashiers/types";
+import { useCashier } from "@features/cashiers/hooks/useCashier";
+import { ModalFormActions } from "@shared/components/ModalFormActions";
+import { cashierMapper } from "@features/cashiers/mappers/cashierMapper";
 
 type NewCashierProps = {
   cashier: User | null;
@@ -76,6 +76,16 @@ export const CashierForm = ({ cashier, closeModal }: NewCashierProps) => {
             onChange={handleChange}
             required
           />
+          <TextInput
+            leftSection={<Phone size={20} />}
+            name="phoneNumber"
+            label="Telefono"
+            placeholder="2346589631"
+            value={cashierForm.phoneNumber}
+            error={errors.phoneNumber}
+            onChange={handleChange}
+            required
+          />
 
           <TextInput
             leftSection={<Mail size={20} />}
@@ -99,17 +109,6 @@ export const CashierForm = ({ cashier, closeModal }: NewCashierProps) => {
             error={errors.password}
             onChange={handleChange}
             required={!isEditing}
-          />
-
-          <TextInput
-            leftSection={<Phone size={20} />}
-            name="phoneNumber"
-            label="Telefono"
-            placeholder="2346589631"
-            value={cashierForm.phoneNumber}
-            error={errors.phoneNumber}
-            onChange={handleChange}
-            required
           />
         </div>
         <ModalFormActions

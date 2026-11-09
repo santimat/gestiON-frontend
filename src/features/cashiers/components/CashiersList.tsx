@@ -15,7 +15,7 @@ const CashierItemMobile = lazy(() =>
   })),
 );
 
-const HEADERS = ["Cajero", "Email", "Actualizado", "Estado", "Acceso"];
+const HEADERS = ["Cajero", "Email", "Actualizado", "Acceso", "Acciones"];
 
 const COLUMNS =
   "grid grid-cols-[1fr_1fr_0.6fr_0.5fr_0.3fr] items-center gap-x-4";

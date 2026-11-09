@@ -36,6 +36,12 @@ export const SIDEBAR_ITEMS: NavItem[] = [
   { icon: Tags, text: "Categorías", short: "Categorías", href: "/categories" },
   { icon: BadgePercent, text: "Ofertas", short: "Ofertas", href: "/offers" },
   {
+    icon: UserGroupIcon,
+    text: "Clientes",
+    short: "Clientes",
+    href: "/clients",
+  },
+  {
     icon: StoreIcon,
     text: "Comercios",
     short: "Comercios",
@@ -48,10 +54,4 @@ export const SIDEBAR_ITEMS: NavItem[] = [
     href: "/sell-point",
   },
   { icon: Users, text: "Cajeros", short: "Cajeros", href: "/cashiers" },
-  {
-    icon: UserGroupIcon,
-    text: "Clientes",
-    short: "Clientes",
-    href: "/clients",
-  },
 ];
