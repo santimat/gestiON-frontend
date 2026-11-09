@@ -1,10 +1,10 @@
 import { lazy, type ReactNode } from "react";
 
-import { SideBar } from "@shared/layout/components/sidebar/SideBar";
-import { BottomNav } from "@shared/layout/components/sidebar/BottomNav";
-import { useHeaderContent } from "@shared/layout/hooks/usePageHeader";
 import { useIsMobile } from "@shared/hooks/useMediaQuery";
-// lazy: el topbar mobile y el header de página se cargan sólo cuando se muestran
+import { SideBar } from "@shared/layout/components/sidebar/SideBar";
+import { useHeaderContent } from "@shared/layout/hooks/usePageHeader";
+import { BottomNav } from "@shared/layout/components/sidebar/BottomNav";
+
 const MobileTopbar = lazy(() =>
   import("@shared/layout/components/sidebar/MobileTopbar").then((module) => ({
     default: module.MobileTopbar,
