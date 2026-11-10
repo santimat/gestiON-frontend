@@ -74,7 +74,7 @@ export const SellPoints = () => {
         leftSection={<Plus />}
         onClick={openCreate}
         disabled={!hasCommerce}
-        className="bg-primary rounded-md p-2 text-white"
+        className="bg-primary text-primary-foreground rounded-md p-2"
       >
         <span className="hidden sm:inline">Nuevo punto de venta</span>
       </Button>

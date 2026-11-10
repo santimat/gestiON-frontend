@@ -1,25 +1,33 @@
 @import "tailwindcss";
+
+/* La variante `dark:` sigue a Mantine, que escribe
+   `data-mantine-color-scheme` en <html>. */
+@custom-variant dark (&:is([data-mantine-color-scheme="dark"] *));
+
+/* Los tokens de color apuntan a variables CSS para que el tema se cambie en
+   runtime (ver :root y :root[data-mantine-color-scheme="dark"] más abajo). */
+@theme inline {
+  --color-background: var(--background);
+  --color-background-soft: var(--background-soft);
+  --color-card: var(--card);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-foreground: var(--foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+}
+
 @theme {
-  --color-background: #f8fafc;
-  --color-card: #ffffff;
-  --color-border: #e5e3e9;
-  --color-background-soft: #e5e3e9;
-  --color-secondary-foreground: #726d7a;
-  --color-foreground: #1b1622;
-  --color-primary: #156cdd;
-  --color-primary-soft: #e2efff;
-  --color-success: #039256;
-  --color-warning: #dd9314;
-  --color-destructive: #db2b33;
-
-  --color-surface: #ffffff;
-  --color-input: #e5e3e9;
-
   --font-display: "Inter", sans-serif;
 
-  --shadow-card: 0 2px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.2);
-  --shadow-raised:
-    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-card: 0 1px 2px 0 oklch(0.2 0.02 260 / 6%);
+  --shadow-raised: 0 4px 12px -4px oklch(0.2 0.02 260 / 12%);
 
   --default-font-family: "Inter", sans-serif;
 }
@@ -27,4 +35,62 @@
 :root {
   /* evitar salto cuando aparece la barra de scroll */
   scroll-behavior: smooth;
+
+  --background: oklch(0.985 0.002 260);
+  --background-soft: oklch(0.922 0.005 260);
+  --card: oklch(1 0 0);
+  --surface: oklch(1 0 0);
+  --border: oklch(0.922 0.005 260);
+  --input: oklch(0.9 0.006 260);
+  --foreground: oklch(0.22 0.015 260);
+  --secondary-foreground: oklch(0.55 0.014 260);
+  --primary: oklch(0.55 0.19 258);
+  --primary-soft: oklch(0.95 0.03 258);
+  --primary-foreground: oklch(0.99 0.002 260);
+  --success: oklch(0.58 0.14 156);
+  --warning: oklch(0.72 0.15 72);
+  --destructive: oklch(0.58 0.21 25);
+}
+
+:root[data-mantine-color-scheme="dark"] {
+  --background: oklch(0.19 0.012 260);
+  --background-soft: oklch(1 0 0 / 10%);
+  --card: oklch(0.235 0.014 260);
+  --surface: oklch(0.235 0.014 260);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --foreground: oklch(0.97 0.003 260);
+  --secondary-foreground: oklch(0.74 0.014 260);
+  --primary: oklch(0.66 0.16 258);
+  --primary-soft: oklch(0.32 0.08 258);
+  --primary-foreground: oklch(0.16 0.02 260);
+  --success: oklch(0.68 0.13 156);
+  --warning: oklch(0.78 0.14 72);
+  --destructive: oklch(0.65 0.19 25);
+}
+
+/* Muestras de apariencia: muestran un esquema fijo (claro u oscuro) sea cual
+   sea el tema activo, para poder comparar las dos opciones. */
+.theme-preview {
+  --preview-background: oklch(0.985 0.004 260);
+  --preview-heading: oklch(0.43 0.015 260);
+  --preview-line: var(--primary);
+  --preview-border: oklch(0.922 0.005 260);
+  background: var(--preview-background);
+  border-color: var(--preview-border);
+}
+
+.theme-preview-dark {
+  --preview-background: oklch(0.16 0.015 260);
+  --preview-heading: oklch(0.7 0.014 260);
+  --preview-line: oklch(0.93 0.005 260);
+  --preview-border: oklch(0.3 0.015 260);
+}
+
+.theme-preview-heading {
+  background: var(--preview-heading);
+}
+
+.theme-preview-line {
+  background: var(--preview-line);
 }

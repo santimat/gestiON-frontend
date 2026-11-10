@@ -59,16 +59,19 @@ export const SidebarFooter = ({
           }
         />
         <div className="flex flex-1 flex-col text-sm">
-          <p className="font-bold text-black capitalize">
+          <p className="text-foreground font-bold capitalize">
             {authenticatedUser?.name}
           </p>
-          <p className="line-clamp-1 text-gray-500" title={roleToShow}>
+          <p
+            className="text-secondary-foreground line-clamp-1"
+            title={roleToShow}
+          >
             {roleToShow}
           </p>
         </div>
         <button
           onClick={handleClick}
-          className="hover:bg-background-soft cursor-pointer rounded-lg p-1 text-gray-400 transition-transform active:scale-95"
+          className="hover:bg-background-soft text-secondary-foreground cursor-pointer rounded-lg p-1 transition-transform active:scale-95"
         >
           <LogOut />
         </button>

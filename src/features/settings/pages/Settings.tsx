@@ -8,6 +8,7 @@ import { usePageHeader } from "@/shared/layout/hooks/usePageHeader";
 import { useCommerce, type CurrentCommerce } from "@/features/commerces";
 import { NameAndImageSection } from "@/features/settings/components/NameAndImageSection";
 import { ProfitMultiplierSection } from "@features/settings/components/ProfitMultiplierSection";
+import { ThemeSection } from "@features/settings/components/ThemeSection";
 
 export const Settings = () => {
   const { currentCommerce, patchCommerce } = useCommerce();
@@ -63,6 +64,11 @@ export const Settings = () => {
         />
         <Button type="submit">Guardar cambios</Button>
       </form>
+
+      {/* el tema no forma parte del payload del comercio: va fuera del form */}
+      <div className="mt-6">
+        <ThemeSection />
+      </div>
     </main>
   );
 };

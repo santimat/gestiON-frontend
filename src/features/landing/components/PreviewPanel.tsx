@@ -18,7 +18,11 @@ export const PreviewPanel = () => {
       <div className="border-background-soft flex items-center justify-between border-b px-5 py-3">
         <div className="flex items-center gap-2">
           <span className="bg-primary text-primary-foreground grid h-6 w-6 place-items-center rounded-md">
-            <StoreIcon className="h-auto w-4" color="white" strokeWidth={2} />
+            <StoreIcon
+              className="h-auto w-4"
+              color="currentColor"
+              strokeWidth={2}
+            />
           </span>
           <p className="text-sm font-medium">MaxiKiosco Don Juan</p>
         </div>

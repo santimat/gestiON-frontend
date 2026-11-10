@@ -50,7 +50,7 @@ export const ProductItem = ({
         </Avatar>
         <div>
           <p>{product.name}</p>
-          <p className="text-sm text-gray-500">ID:{product.id}</p>
+          <p className="text-secondary-foreground text-sm">ID:{product.id}</p>
         </div>
         <p>{product.category.name}</p>
         <Tooltip label={product.description || "----"}>

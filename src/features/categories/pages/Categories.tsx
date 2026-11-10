@@ -51,7 +51,7 @@ export const Categories = () => {
       <Button
         leftSection={<TagPlus />}
         onClick={openCreate}
-        className="bg-primary rounded-md p-2 text-white"
+        className="bg-primary text-primary-foreground rounded-md p-2"
       >
         <span className="hidden sm:inline">Nueva categoría</span>
       </Button>

@@ -57,7 +57,7 @@ export const Products = () => {
       <Button
         leftSection={<PackagePlus />}
         onClick={openCreate}
-        className="bg-primary rounded-md p-2 text-white"
+        className="bg-primary text-primary-foreground rounded-md p-2"
       >
         <span className="hidden sm:inline">Nuevo Producto</span>
       </Button>

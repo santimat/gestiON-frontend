@@ -43,7 +43,7 @@ export const MobileSidebar = ({ opened, close }: MobileSidebarProps) => {
         </Link>
       </header>
 
-      <main className="w-full flex-1 overflow-y-auto px-4 py-4 text-gray-600">
+      <main className="text-secondary-foreground w-full flex-1 overflow-y-auto px-4 py-4">
         <ul className="flex flex-col gap-4">
           {sidebarItemsToShow.map((itemProps) => (
             <SideBarItem

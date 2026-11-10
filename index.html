@@ -9,6 +9,26 @@
       content="GestiON es tu aliado de confianza a la hora de realizar el control de stock y controlar los ingresos de tu negocio."
     />
     <title>GestiON</title>
+    <script>
+      // Aplica el tema antes del primer pintado para evitar el destello
+      // del tema claro. La clave debe coincidir con
+      // src/shared/theme/themeColorSchemeManager.ts
+      (function () {
+        try {
+          var stored = localStorage.getItem("gestiON-theme");
+          var scheme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute(
+            "data-mantine-color-scheme",
+            scheme,
+          );
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
