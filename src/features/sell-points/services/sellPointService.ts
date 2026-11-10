@@ -4,6 +4,8 @@ import { backendAPI } from "@shared/services/axiosConfig";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
 import type { SellPoint, SellPointRequest } from "@features/sell-points/types";
 import { SellPointRequestSchema } from "@features/sell-points/schemas/SellPointSchema";
+import { toPageParams } from "@shared/utils/pagination";
+import type { SellPointFilters } from "@features/sell-points/types";
 
 export const sellPointService = {
   createSellPoint: async (sellPoint: SellPointRequest) => {
@@ -22,12 +24,15 @@ export const sellPointService = {
     return data as SellPoint;
   },
 
-  getSellPoints: async () => {
-    const data = await executeApiCall(() => backendAPI.get("/sell-points"));
+  getSellPoints: async (filters?: SellPointFilters) => {
+    const data = await executeApiCall(() =>
+      backendAPI.get("/sell-points", { params: toPageParams(filters ?? {}) }),
+    );
     const sellPoints: SellPoint[] = data?.content ?? [];
-    const totalSellPoints: number = data?.page?.totalElements;
+    const totalSellPoints: number = data?.page?.totalElements ?? 0;
+    const totalPages: number = data?.page?.totalPages ?? 0;
 
-    return { sellPoints, totalSellPoints };
+    return { sellPoints, totalSellPoints, totalPages };
   },
 
   getSellPointCashiers: async (sellPointId: number) => {

@@ -1,6 +1,7 @@
 import type { z } from "zod";
 
 import { SellPointRequestSchema } from "@features/sell-points/schemas/SellPointSchema";
+import { SellPointFiltersSchema } from "@features/sell-points/schemas/SellPointFiltersSchema";
 
 export type SellPoint = {
   id: number;
@@ -12,3 +13,5 @@ export type SellPoint = {
 };
 
 export type SellPointRequest = z.infer<typeof SellPointRequestSchema>;
+
+export type SellPointFilters = z.infer<typeof SellPointFiltersSchema>;

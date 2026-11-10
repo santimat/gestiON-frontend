@@ -7,6 +7,7 @@ export const useSellPoint = () => {
   const {
     sellPoints,
     totalSellPoints,
+    totalPages,
     formSellPoint,
     isFormModalOpen,
     openEdit,
@@ -27,6 +28,7 @@ export const useSellPoint = () => {
     useShallow((s) => ({
       sellPoints: s.sellPoints,
       totalSellPoints: s.totalSellPoints,
+      totalPages: s.totalPages,
       formSellPoint: s.formSellPoint,
       isFormModalOpen: s.isFormModalOpen,
       isLoading: s.isLoading,
@@ -62,6 +64,7 @@ export const useSellPoint = () => {
   return {
     sellPoints,
     totalSellPoints,
+    totalPages,
     formSellPoint,
     isFormModalOpen,
     openEdit,

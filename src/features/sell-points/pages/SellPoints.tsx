@@ -4,11 +4,14 @@ import { MonitorIcon, Plus, StoreIcon } from "lucide-react";
 
 import { useAuth } from "@features/auth";
 import { ListContainer } from "@shared/components/ListContainer";
+import { ListPagination } from "@shared/components/ListPagination";
 import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { SellPointsList } from "@features/sell-points/components/SellPointsList";
 import { useCommerce } from "@features/commerces";
 import { useSellPoint } from "@features/sell-points/hooks/useSellPoint";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+import { useFilters } from "@shared/hooks/useFilters";
+import { SellPointFiltersSchema } from "@features/sell-points/schemas/SellPointFiltersSchema";
 
 const SellPointForm = lazy(() =>
   import("@features/sell-points/components/SellPointForm").then((module) => ({
@@ -30,6 +33,7 @@ export const SellPoints = () => {
   const {
     sellPoints,
     totalSellPoints,
+    totalPages,
     formSellPoint,
     isFormModalOpen,
     openCreate,
@@ -42,8 +46,10 @@ export const SellPoints = () => {
     getSellPoints,
   } = useSellPoint();
 
+  const { filters, setFilters } = useFilters(SellPointFiltersSchema);
+
   useEffect(() => {
-    getSellPoints();
+    getSellPoints(filters);
     if (authenticatedUser?.commerceId) getCurrentCommerce();
     return () => {
       closeFormModal();
@@ -55,6 +61,7 @@ export const SellPoints = () => {
     authenticatedUser,
     closeFormModal,
     closeCashiersModal,
+    filters,
   ]);
 
   const hasCommerce = Boolean(currentCommerce);
@@ -96,7 +103,7 @@ export const SellPoints = () => {
         />
       </EntityFormModal>
 
-      <main className="flex flex-col gap-6 p-6">
+      <main className="flex flex-col gap-6">
         {!hasCommerce && (
           <div className="border-background-soft bg-card flex items-center gap-3 rounded-xl border border-dashed p-4">
             <StoreIcon
@@ -120,6 +127,14 @@ export const SellPoints = () => {
         >
           <SellPointsList sellPoints={sellPoints} />
         </ListContainer>
+
+        <ListPagination
+          filters={filters}
+          setFilters={setFilters}
+          totalItems={totalSellPoints}
+          totalPages={totalPages}
+          itemLabel="puntos de venta"
+        />
       </main>
     </>
   );

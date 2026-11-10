@@ -1,9 +1,16 @@
 import type { User } from "@features/auth";
-import type { SellPoint, SellPointRequest } from "@features/sell-points/types";
+import type {
+  SellPoint,
+  SellPointFilters,
+  SellPointRequest,
+} from "@features/sell-points/types";
 
 export type UseSellPointStore = {
   sellPoints: SellPoint[];
   totalSellPoints: number;
+  totalPages: number;
+  // filtros de la última búsqueda: al crear refrescamos con los mismos
+  lastFilters: SellPointFilters;
   formSellPoint: SellPoint | null;
   isFormModalOpen: boolean;
   isLoading: boolean;
@@ -20,7 +27,7 @@ export type UseSellPointStore = {
     sellPointId: number,
     sellPoint: SellPointRequest,
   ) => Promise<void>;
-  getSellPoints: () => Promise<void>;
+  getSellPoints: (filters?: SellPointFilters) => Promise<void>;
   getSellPointCashiers: (sellPointId: number) => Promise<User[]>;
   toggleActive: (sellPointId: number) => Promise<void>;
 };

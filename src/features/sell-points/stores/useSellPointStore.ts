@@ -1,13 +1,20 @@
 import { create } from "zustand";
 
 import type { AppError } from "@shared/types";
-import type { SellPoint, SellPointRequest } from "@features/sell-points/types";
+import type {
+  SellPoint,
+  SellPointFilters,
+  SellPointRequest,
+} from "@features/sell-points/types";
 import { sellPointService } from "@features/sell-points/services/sellPointService";
 import type { UseSellPointStore } from "@features/sell-points/stores/types";
 
-export const useSellPointStore = create<UseSellPointStore>((set) => ({
+export const useSellPointStore = create<UseSellPointStore>((set, get) => ({
   sellPoints: [],
   totalSellPoints: 0,
+  totalPages: 0,
+  // filtros de la última búsqueda: al crear refrescamos con los mismos
+  lastFilters: {},
   formSellPoint: null,
   isFormModalOpen: false,
   isLoading: false,
@@ -40,14 +47,17 @@ export const useSellPointStore = create<UseSellPointStore>((set) => ({
       throw error;
     }
   },
-  getSellPoints: async () => {
-    set({ isLoading: true });
+  getSellPoints: async (filters?: SellPointFilters) => {
+    const appliedFilters = filters ?? get().lastFilters;
+
+    set({ isLoading: true, lastFilters: appliedFilters });
     try {
-      const { sellPoints, totalSellPoints } =
-        await sellPointService.getSellPoints();
+      const { sellPoints, totalSellPoints, totalPages } =
+        await sellPointService.getSellPoints(appliedFilters);
       set(() => ({
         sellPoints,
         totalSellPoints,
+        totalPages,
         isLoading: false,
         error: null,
       }));
