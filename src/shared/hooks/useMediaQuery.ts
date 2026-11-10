@@ -1,10 +1,10 @@
 import { useSyncExternalStore } from "react";
 
-// corte de las listas: md de Tailwind = 48rem = 768px (isMobile = width < 768px)
-export const MOBILE_QUERY = "(max-width: 767.98px)";
+// corte de las listas: lg de Tailwind
+export const MOBILE_QUERY = "(max-width: 1023.98px)";
 
-// corte del shell (colapso del sidebar): lg de Tailwind = 64rem = 1024px
-export const SHELL_QUERY = "(max-width: 1023.98px)";
+// corte del shell (colapso del sidebar): xl de Tailwind
+export const SHELL_QUERY = "(max-width: 1279.98px)";
 
 // cache de MediaQueryList: getSnapshot no debe crear una por render
 const mediaQueryLists = new Map<string, MediaQueryList>();

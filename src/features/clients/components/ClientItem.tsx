@@ -34,13 +34,15 @@ export const ClientItem = ({
       <p className="tabular-nums">{client.dni}</p>
       <p className="tabular-nums">{client.phoneNumber || "----"}</p>
       <p className="line-clamp-1">{client.address || "----"}</p>
-      <p className="font-semibold tabular-nums">
-        {client.salesCount || "----"} ㆍ {totalSpent || "----"}
-      </p>
-      <ClientStatusBadge
-        totalPending={client.totalPending}
-        client={client}
-      />
+
+      <div>
+        <p className="font-semibold tabular-nums">
+          {client.salesCount == 0
+            ? "No hay pagos"
+            : `${client.salesCount} ㆍ ${totalSpent}`}
+        </p>
+      </div>
+      <ClientStatusBadge totalPending={client.totalPending} client={client} />
       <ProductItemActions
         actionsIcons={actionsIcons}
         onEdit={() => openEdit(client)}
