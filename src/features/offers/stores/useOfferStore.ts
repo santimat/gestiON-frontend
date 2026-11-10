@@ -6,6 +6,8 @@ import { offerService } from "@features/offers/services/offerService";
 
 export const useOfferStore = create<UseOfferStore>((set, get) => ({
   offers: [],
+  totalOffers: 0,
+  totalPages: 0,
   isLoading: false,
   error: null,
   assignError: null,
@@ -25,7 +27,13 @@ export const useOfferStore = create<UseOfferStore>((set, get) => ({
     set({ isLoading: true, error: null, lastFilters: filters });
     try {
       const data = await offerService.getOffers(filters);
-      set({ offers: data.content, isLoading: false, error: null });
+      set({
+        offers: data.content,
+        totalOffers: data.page?.totalElements ?? 0,
+        totalPages: data.page?.totalPages ?? 0,
+        isLoading: false,
+        error: null,
+      });
     } catch (error) {
       const appError = error as AppError;
       set({ isLoading: false, error: appError.message });

@@ -7,6 +7,8 @@ import type {
 
 export type UseOfferStore = {
   offers: Offer[];
+  totalOffers: number;
+  totalPages: number;
   isLoading: boolean;
   error: string | null;
   assignError: string | null;

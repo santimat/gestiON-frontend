@@ -5,6 +5,7 @@ import { BadgePercent, Plus } from "lucide-react";
 import { useAuth } from "@features/auth";
 import { useOffer } from "@features/offers/hooks/useOffer";
 import { ListContainer } from "@shared/components/ListContainer";
+import { ListPagination } from "@shared/components/ListPagination";
 import { OfferList } from "@features/offers/components/OfferList";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { EntityFormModal } from "@shared/components/EntityFormModal";
@@ -30,6 +31,8 @@ export const Offers = () => {
   const { authenticatedUser } = useAuth();
   const {
     offers,
+    totalOffers,
+    totalPages,
     isLoading,
     error,
     formOffer,
@@ -53,7 +56,7 @@ export const Offers = () => {
 
   usePageHeader({
     title: "Ofertas",
-    subtitle: `${offers.length} ${offers.length === 1 ? "oferta" : "ofertas"}`,
+    subtitle: `${totalOffers} ${totalOffers === 1 ? "oferta" : "ofertas"}`,
     actions: canCreate ? (
       <Button
         leftSection={<Plus />}
@@ -90,7 +93,7 @@ export const Offers = () => {
         ) : null}
       </EntityFormModal>
 
-      <main className="flex flex-col gap-6 p-6">
+      <main className="flex flex-col gap-6">
         <OffersFilterBar filters={filters} setFilters={setFilters} />
 
         <ListContainer
@@ -106,6 +109,14 @@ export const Offers = () => {
         >
           <OfferList offers={offers} />
         </ListContainer>
+
+        <ListPagination
+          filters={filters}
+          setFilters={setFilters}
+          totalItems={totalOffers}
+          totalPages={totalPages}
+          itemLabel="ofertas"
+        />
       </main>
     </>
   );

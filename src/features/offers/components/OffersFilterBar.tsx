@@ -43,6 +43,7 @@ export const OffersFilterBar = ({
         onChange={(value) =>
           setFilters({
             status: value as OffersFilter["status"],
+            page: 1,
           })
         }
       />
@@ -57,6 +58,7 @@ export const OffersFilterBar = ({
         onChange={(value) =>
           setFilters({
             paymentMethod: value as OffersFilter["paymentMethod"],
+            page: 1,
           })
         }
       />

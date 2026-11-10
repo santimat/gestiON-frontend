@@ -5,6 +5,8 @@ import { useOfferStore } from "@features/offers/stores/useOfferStore";
 export const useOffer = () => {
   const {
     offers,
+    totalOffers,
+    totalPages,
     formOffer,
     isFormModalOpen,
     isLoading,
@@ -18,6 +20,8 @@ export const useOffer = () => {
   } = useOfferStore(
     useShallow((s) => ({
       offers: s.offers,
+      totalOffers: s.totalOffers,
+      totalPages: s.totalPages,
       formOffer: s.formOffer,
       isFormModalOpen: s.isFormModalOpen,
       isLoading: s.isLoading,
@@ -33,6 +37,8 @@ export const useOffer = () => {
 
   return {
     offers,
+    totalOffers,
+    totalPages,
     formOffer,
     isFormModalOpen,
     isLoading,

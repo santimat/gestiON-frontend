@@ -3,11 +3,12 @@ import type { OfferRequest, OffersFilter } from "@features/offers/types";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { executeApiCall } from "@shared/utils/apiClient";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
+import { toPageParams } from "@shared/utils/pagination";
 
 export const offerService = {
   getOffers: async (filters: OffersFilter) => {
     return executeApiCall(() =>
-      backendAPI.get("/offers", { params: { ...filters, size: 20 } }),
+      backendAPI.get("/offers", { params: toPageParams(filters) }),
     );
   },
 
