@@ -16,7 +16,8 @@ export const ClientsSearchBar = () => {
   useEffect(() => {
     if (debouncedSearch === (filters.searchText ?? "")) return;
 
-    setFilters({ searchText: debouncedSearch });
+    // al cambiar el texto de búsqueda volvemos a la primera página (en el mismo setFilters: un solo request)
+    setFilters({ searchText: debouncedSearch, page: 1 });
   }, [debouncedSearch, filters.searchText, setFilters]);
 
   return (

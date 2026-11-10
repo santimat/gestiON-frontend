@@ -1,4 +1,8 @@
-import type { Client, ClientFilters, ClientRequest } from "@features/clients/types";
+import type {
+  Client,
+  ClientFilters,
+  ClientRequest,
+} from "@features/clients/types";
 
 export type UseClientStore = {
   // Estado de UI: modal de alta/edición de cliente
@@ -10,6 +14,9 @@ export type UseClientStore = {
 
   clients: Client[];
   totalClients: number;
+  totalPages: number;
+  // filtros de la última búsqueda: al crear refrescamos con los mismos
+  lastFilters: ClientFilters;
   isLoading: boolean;
   error: string | null;
   createClient: (client: ClientRequest) => Promise<void>;

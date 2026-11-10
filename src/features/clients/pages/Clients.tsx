@@ -4,6 +4,7 @@ import { Button } from "@mantine/core";
 
 import { useClient } from "@features/clients/hooks/useClient";
 import { ListContainer } from "@shared/components/ListContainer";
+import { ListPagination } from "@shared/components/ListPagination";
 import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { ClientList } from "@features/clients/components/ClientList";
 import { ClientsSearchBar } from "@features/clients/components/ClientsSearchBar";
@@ -19,15 +20,18 @@ const ClientForm = lazy(() =>
 );
 
 const ClientPendingSalesModal = lazy(() =>
-  import("@features/clients/components/ClientPendingSalesModal").then((module) => ({
-    default: module.ClientPendingSalesModal,
-  })),
+  import("@features/clients/components/ClientPendingSalesModal").then(
+    (module) => ({
+      default: module.ClientPendingSalesModal,
+    }),
+  ),
 );
 
 export const Clients = () => {
   const {
     getClients,
     totalClients,
+    totalPages,
     isLoading,
     error,
     formClient,
@@ -36,7 +40,7 @@ export const Clients = () => {
     closeFormModal,
   } = useClient();
 
-  const { filters } = useFilters(ClientFiltersSchema);
+  const { filters, setFilters } = useFilters(ClientFiltersSchema);
 
   const { pendingSalesClient, setPendingSalesClient } = usePendingSales();
 
@@ -79,7 +83,7 @@ export const Clients = () => {
         onClose={() => setPendingSalesClient(null)}
       />
 
-      <main className="flex flex-col gap-6 p-6">
+      <main className="flex flex-col gap-6">
         <ClientsSearchBar />
         <ListContainer
           isLoading={isLoading}
@@ -90,6 +94,14 @@ export const Clients = () => {
         >
           <ClientList />
         </ListContainer>
+
+        <ListPagination
+          filters={filters}
+          setFilters={setFilters}
+          totalItems={totalClients}
+          totalPages={totalPages}
+          itemLabel="clientes"
+        />
       </main>
     </>
   );

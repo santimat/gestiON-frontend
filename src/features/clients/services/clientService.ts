@@ -3,6 +3,7 @@ import type { ClientFilters, ClientRequest } from "@features/clients/types";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { executeApiCall } from "@shared/utils/apiClient";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
+import { toPageParams } from "@shared/utils/pagination";
 
 export const clientService = {
   createClient: async (client: ClientRequest) => {
@@ -15,7 +16,7 @@ export const clientService = {
   },
   getClients: async (filters?: ClientFilters) => {
     return executeApiCall(() =>
-      backendAPI.get("/clients", { params: filters }),
+      backendAPI.get("/clients", { params: toPageParams(filters ?? {}) }),
     );
   },
 };

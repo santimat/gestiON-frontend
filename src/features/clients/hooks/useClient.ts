@@ -7,6 +7,7 @@ export const useClient = () => {
   const {
     clients,
     totalClients,
+    totalPages,
     isLoading,
     error,
     formClient,
@@ -21,6 +22,7 @@ export const useClient = () => {
     useShallow((s) => ({
       clients: s.clients,
       totalClients: s.totalClients,
+      totalPages: s.totalPages,
       isLoading: s.isLoading,
       error: s.error,
       formClient: s.formClient,
@@ -45,6 +47,7 @@ export const useClient = () => {
     error,
     clients,
     totalClients,
+    totalPages,
     formClient,
     isFormModalOpen,
     handleCreateClient,

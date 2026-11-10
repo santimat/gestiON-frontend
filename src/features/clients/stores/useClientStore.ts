@@ -5,7 +5,7 @@ import type { ClientFilters, ClientRequest } from "@features/clients/types";
 import { clientService } from "@features/clients/services/clientService";
 import type { UseClientStore } from "@features/clients/stores/types";
 
-export const useClientStore = create<UseClientStore>((set) => ({
+export const useClientStore = create<UseClientStore>((set, get) => ({
   formClient: null,
   isFormModalOpen: false,
   openEdit: (client) =>
@@ -16,6 +16,9 @@ export const useClientStore = create<UseClientStore>((set) => ({
 
   clients: [],
   totalClients: 0,
+  totalPages: 0,
+  // filtros de la última búsqueda: al crear refrescamos con los mismos
+  lastFilters: {},
   isLoading: false,
   error: null,
   createClient: async (client: ClientRequest) => {
@@ -32,12 +35,15 @@ export const useClientStore = create<UseClientStore>((set) => ({
     }));
   },
   getClients: async (filters?: ClientFilters) => {
-    set({ isLoading: true });
+    const appliedFilters = filters ?? get().lastFilters;
+
+    set({ isLoading: true, lastFilters: appliedFilters });
     try {
-      const data = await clientService.getClients(filters);
+      const data = await clientService.getClients(appliedFilters);
       set(() => ({
         clients: data?.content ?? [],
         totalClients: data?.page?.totalElements ?? data?.content?.length ?? 0,
+        totalPages: data?.page?.totalPages ?? 0,
         isLoading: false,
         error: null,
       }));
