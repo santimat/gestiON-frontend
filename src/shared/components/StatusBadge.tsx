@@ -16,7 +16,7 @@ type StatusBadgeProps = {
 // badge reutilizable para mostrar el estado de un item (ej: vendido, pendiente, stock, oferta, etc.)
 export const StatusBadge = ({ label, tone, size = "sm" }: StatusBadgeProps) => (
   <span
-    className={`${TONE_CLASSES[tone]} ${size === "xs" ? "py-0.5 text-xs font-medium" : "text-sm"} w-fit rounded-full px-2`}
+    className={`${TONE_CLASSES[tone]} ${size === "xs" ? "py-0.5 text-xs" : "text-sm"} w-fit rounded-full px-2 font-medium`}
   >
     {label}
   </span>
