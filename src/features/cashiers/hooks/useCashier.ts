@@ -7,6 +7,7 @@ export const useCashier = () => {
   const {
     cashiers,
     totalCashiers,
+    totalPages,
     isLoading,
     error,
     formCashier,
@@ -22,6 +23,7 @@ export const useCashier = () => {
     useShallow((s) => ({
       cashiers: s.cashiers,
       totalCashiers: s.totalCashiers,
+      totalPages: s.totalPages,
       isLoading: s.isLoading,
       error: s.error,
       formCashier: s.formCashier,
@@ -45,6 +47,7 @@ export const useCashier = () => {
   return {
     cashiers,
     totalCashiers,
+    totalPages,
     isLoading,
     error,
     formCashier,

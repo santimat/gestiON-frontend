@@ -5,7 +5,7 @@ import type { CashierRequest } from "@features/cashiers/types";
 import { cashierService } from "@features/cashiers/services/cashierService";
 import type { UseCashierStore } from "@features/cashiers/stores/types";
 
-export const useCashierStore = create<UseCashierStore>((set) => ({
+export const useCashierStore = create<UseCashierStore>((set, get) => ({
   formCashier: null,
   isFormModalOpen: false,
   openEdit: (cashier) =>
@@ -15,19 +15,26 @@ export const useCashierStore = create<UseCashierStore>((set) => ({
     set(() => ({ formCashier: null, isFormModalOpen: false })),
 
   totalCashiers: 0,
+  totalPages: 0,
+  // filtros de la última búsqueda: al crear refrescamos con los mismos
+  lastFilters: {},
   cashiers: [],
   isLoading: false,
   error: null,
   createCashier: async (cashier: CashierRequest) => {
     await cashierService.createCashier(cashier);
   },
-  getCashiers: async () => {
-    set({ isLoading: true });
+  getCashiers: async (filters) => {
+    const appliedFilters = filters ?? get().lastFilters;
+
+    set({ isLoading: true, lastFilters: appliedFilters });
     try {
-      const { cashiers, totalCashiers } = await cashierService.getCashiers();
+      const { cashiers, totalCashiers, totalPages } =
+        await cashierService.getCashiers(appliedFilters);
       set(() => ({
         cashiers,
         totalCashiers,
+        totalPages,
         isLoading: false,
         error: null,
       }));

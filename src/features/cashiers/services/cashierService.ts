@@ -3,8 +3,13 @@ import { executeApiCall } from "@shared/utils/apiClient";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
 import { CashierSchema } from "@features/cashiers/schemas/CashierSchema";
-import type { CashierRequest, CashierUpdate } from "@features/cashiers/types";
+import type {
+  CashierFilters,
+  CashierRequest,
+  CashierUpdate,
+} from "@features/cashiers/types";
 import { CashierUpdateSchema } from "@features/cashiers/schemas/CashierUpdateSchema";
+import { toPageParams } from "@shared/utils/pagination";
 
 export const cashierService = {
   createCashier: async (cashier: CashierRequest) => {
@@ -19,13 +24,16 @@ export const cashierService = {
     );
     return data as User;
   },
-  getCashiers: async () => {
-    const data = await executeApiCall(() => backendAPI.get("/cashiers"));
+  getCashiers: async (filters?: CashierFilters) => {
+    const data = await executeApiCall(() =>
+      backendAPI.get("/cashiers", { params: toPageParams(filters ?? {}) }),
+    );
     const cashiers: User[] = data?.content ?? [];
     const totalCashiers: number =
       data?.totalElements ?? data?.page?.totalElements ?? cashiers.length;
+    const totalPages: number = data?.page?.totalPages ?? 0;
 
-    return { cashiers, totalCashiers };
+    return { cashiers, totalCashiers, totalPages };
   },
   toggleActive: async (userId: number) => {
     return executeApiCall(() =>

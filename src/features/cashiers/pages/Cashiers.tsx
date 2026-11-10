@@ -3,9 +3,13 @@ import { lazy, useEffect } from "react";
 import { Button } from "@mantine/core";
 
 import { useCashier } from "@features/cashiers/hooks/useCashier";
+import { useFilters } from "@shared/hooks/useFilters";
 import { ListContainer } from "@shared/components/ListContainer";
+import { ListPagination } from "@shared/components/ListPagination";
 import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { CashiersList } from "@features/cashiers/components/CashiersList";
+import { CashiersFilterBar } from "@features/cashiers/components/CashiersFilterBar";
+import { CashierFiltersSchema } from "@features/cashiers/schemas/CashierFiltersSchema";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 
 const CashierForm = lazy(() =>
@@ -17,6 +21,7 @@ const CashierForm = lazy(() =>
 export const Cashiers = () => {
   const {
     totalCashiers,
+    totalPages,
     isLoading,
     error,
     getCashiers,
@@ -26,11 +31,13 @@ export const Cashiers = () => {
     closeFormModal,
   } = useCashier();
 
+  const { filters, setFilters, hasFilters } = useFilters(CashierFiltersSchema);
+
   useEffect(() => {
-    getCashiers();
+    getCashiers(filters);
     // usamos el close para limpiar el estado
     return () => closeFormModal();
-  }, [getCashiers, closeFormModal]);
+  }, [getCashiers, closeFormModal, filters]);
 
   usePageHeader({
     title: "Cajeros",
@@ -56,16 +63,29 @@ export const Cashiers = () => {
         <CashierForm cashier={formCashier} closeModal={closeFormModal} />
       </EntityFormModal>
 
-      <main className="flex flex-col gap-6 p-6">
+      <main className="flex flex-col gap-6 p-4">
+        <CashiersFilterBar filters={filters} setFilters={setFilters} />
         <ListContainer
           isLoading={isLoading}
           error={error}
           isEmpty={totalCashiers === 0}
           icon={BuildingComplexIcon}
-          emptyMessage="No hay cajeros para mostrar"
+          emptyMessage={
+            hasFilters
+              ? "No se encontraron cajeros con ese filtro"
+              : "No hay cajeros para mostrar"
+          }
         >
           <CashiersList />
         </ListContainer>
+
+        <ListPagination
+          filters={filters}
+          setFilters={setFilters}
+          totalItems={totalCashiers}
+          totalPages={totalPages}
+          itemLabel="cajeros"
+        />
       </main>
     </>
   );

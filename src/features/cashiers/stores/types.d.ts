@@ -1,4 +1,8 @@
-import type { CashierRequest, CashierUpdate } from "@features/cashiers/types";
+import type {
+  CashierFilters,
+  CashierRequest,
+  CashierUpdate,
+} from "@features/cashiers/types";
 import type { User } from "@features/auth";
 
 export type UseCashierStore = {
@@ -10,11 +14,14 @@ export type UseCashierStore = {
   closeFormModal: () => void;
 
   totalCashiers: number;
+  totalPages: number;
+  // filtros de la última búsqueda: al crear refrescamos con los mismos
+  lastFilters: CashierFilters;
   cashiers: User[];
   isLoading: boolean;
   error: string | null;
   createCashier: (cashier: CashierRequest) => Promise<void>;
-  getCashiers: () => Promise<void>;
+  getCashiers: (filters?: CashierFilters) => Promise<void>;
   updateCashier: ({
     cashierId,
     cashier,
