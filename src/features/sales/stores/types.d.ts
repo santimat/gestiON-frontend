@@ -24,12 +24,11 @@ export type UseSaleStore = {
 export type UseSalesStore = {
   sales: SaleSummary[];
   totalSales: number;
+  totalPages: number;
   isLoading: boolean;
   error: string | null;
   getSales: (filters: SalesFilter) => Promise<void>;
-  markSalePaid: (
-    saleId: number,
-  ) => Promise<{ id: number; status: SaleStatus }>;
+  markSalePaid: (saleId: number) => Promise<{ id: number; status: SaleStatus }>;
 };
 
 export type UseSaleDetailsStore = {

@@ -84,7 +84,7 @@ export const Sell = () => {
 
   return (
     <>
-      <main className="grid flex-1 gap-4 overflow-auto p-6 lg:items-start xl:grid-cols-[minmax(0,1.15fr)_22rem]">
+      <main className="grid flex-1 gap-4 overflow-auto lg:items-start xl:grid-cols-[minmax(0,1.15fr)_22rem]">
         <div className="flex flex-col gap-4">
           <ProductSearch />
           <SaleCart />

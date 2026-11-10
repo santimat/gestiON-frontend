@@ -7,6 +7,7 @@ import type {
   SaleStatus,
 } from "@features/sales/types";
 import { SaleRequestSchema } from "@features/sales/schemas/SaleRequestSchema";
+import { toPageParams } from "@shared/utils/pagination";
 
 export const saleService = {
   getPendingSalesWithDetailsByClient: async (clientId: number) => {
@@ -22,7 +23,7 @@ export const saleService = {
 
   getSales: async (filters: SalesFilter) => {
     return executeApiCall(() =>
-      backendAPI.get("/sales", { params: { ...filters, size: 20 } }),
+      backendAPI.get("/sales", { params: toPageParams(filters) }),
     );
   },
 

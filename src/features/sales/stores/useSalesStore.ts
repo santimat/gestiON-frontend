@@ -7,6 +7,7 @@ import { saleService } from "@features/sales/services/saleService";
 export const useSalesStore = create<UseSalesStore>((set) => ({
   sales: [],
   totalSales: 0,
+  totalPages: 0,
   isLoading: false,
   error: null,
   getSales: async (filters: SalesFilter) => {
@@ -14,7 +15,8 @@ export const useSalesStore = create<UseSalesStore>((set) => ({
     const data = await saleService.getSales(filters);
     set({
       sales: data.content,
-      totalSales: data.page.totalElements,
+      totalSales: data.page?.totalElements ?? 0,
+      totalPages: data.page?.totalPages ?? 0,
       isLoading: false,
       error: null,
     });

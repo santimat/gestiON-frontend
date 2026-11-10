@@ -59,6 +59,7 @@ export type Sale = {
   observations: string | null;
   status: SaleStatus;
   details: SaleDetail[];
+  itemCount: number;
 };
 
 export type SaleSummary = {

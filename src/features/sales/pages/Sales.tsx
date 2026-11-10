@@ -4,6 +4,7 @@ import { ReceiptText } from "lucide-react";
 
 import { useSales } from "@features/sales/hooks/useSales";
 import { ListContainer } from "@shared/components/ListContainer";
+import { ListPagination } from "@shared/components/ListPagination";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { useSalesSearch } from "@features/sales/hooks/useSalesSearch";
 import { useSaleDetails } from "@features/sales/hooks/useSaleDetails";
@@ -17,7 +18,7 @@ const SaleDetailModal = lazy(() =>
 );
 
 export const Sales = () => {
-  const { sales, totalSales, isLoading, error } = useSales();
+  const { sales, totalSales, totalPages, isLoading, error } = useSales();
   const { isFiltered, setFilters, filters } = useSalesSearch();
   const { saleWithDetails, closeDetailModal, isDetailModalOpen } =
     useSaleDetails();
@@ -41,7 +42,7 @@ export const Sales = () => {
         closeModal={closeDetailModal}
       />
 
-      <main className="flex flex-col gap-4 p-6">
+      <main className="flex flex-col gap-4">
         <SalesFilterBar filters={filters} setFilters={setFilters} />
 
         <ListContainer
@@ -57,6 +58,14 @@ export const Sales = () => {
         >
           <SalesList sales={sales} />
         </ListContainer>
+
+        <ListPagination
+          filters={filters}
+          setFilters={setFilters}
+          totalItems={totalSales}
+          totalPages={totalPages}
+          itemLabel="ventas"
+        />
       </main>
     </>
   );
