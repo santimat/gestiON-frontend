@@ -19,6 +19,12 @@ const AuthPage = lazy(() =>
   })),
 );
 
+const DashboardPage = lazy(() =>
+  import("@features/dashboard/pages/Dashboard").then((module) => ({
+    default: module.Dashboard,
+  })),
+);
+
 const CashiersPage = lazy(() =>
   import("@features/cashiers/pages/Cashiers").then((module) => ({
     default: module.Cashiers,
@@ -156,7 +162,7 @@ const App = () => {
               <ProtectedRoute allowedRoles={getRolesForRoute("/dashboard")} />
             }
           >
-            <Route path="/dashboard" element={<p> Dashboard </p>} />
+            <Route path="/dashboard" element={<DashboardPage />} />
           </Route>
           <Route
             element={
