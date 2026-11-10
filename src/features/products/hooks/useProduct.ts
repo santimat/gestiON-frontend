@@ -5,6 +5,7 @@ export const useProduct = () => {
   const {
     products,
     totalProducts,
+    totalPages,
     isLoading,
     error,
     formProduct,
@@ -20,6 +21,7 @@ export const useProduct = () => {
     useShallow((s) => ({
       products: s.products,
       totalProducts: s.totalProducts,
+      totalPages: s.totalPages,
       isLoading: s.isLoading,
       error: s.error,
       formProduct: s.formProduct,
@@ -45,6 +47,7 @@ export const useProduct = () => {
     error,
     products,
     totalProducts,
+    totalPages,
     formProduct,
     isFormModalOpen,
     handleCreateProduct,

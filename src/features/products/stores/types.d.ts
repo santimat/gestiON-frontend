@@ -1,4 +1,9 @@
-import type { Product, ProductFilters, ProductWithOffer } from "@features/products/types";
+import type {
+  LowStockProduct,
+  Product,
+  ProductFilters,
+  ProductWithOffer,
+} from "@features/products/types";
 
 export type UseProductStore = {
   formProduct: Product | null;
@@ -8,6 +13,9 @@ export type UseProductStore = {
   closeFormModal: () => void;
   products: Product[];
   totalProducts: number;
+  totalPages: number;
+  // filtros de la última búsqueda: al crear refrescamos con los mismos
+  lastFilters: ProductFilters;
   isLoading: boolean;
   error: string | null;
   createProduct: (product: FormData) => Promise<void>;
@@ -22,4 +30,11 @@ export type UseProductWithOfferStore = {
   isLoading: boolean;
   error: string | null;
   getProductsWithOffer: (filters?: ProductFilters) => Promise<void>;
+};
+
+export type UseProductStatsStore = {
+  lowStockProducts: LowStockProduct[];
+  isLoading: boolean;
+  error: string | null;
+  getLowStockProducts: () => Promise<void>;
 };

@@ -1,8 +1,9 @@
 import { ProductSchema } from "@features/products/schemas/ProductSchema";
-import type { ProductFilters } from "@features/products/types";
+import type { LowStockProduct, ProductFilters } from "@features/products/types";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { executeApiCall } from "@shared/utils/apiClient";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
+import { toPageParams } from "@shared/utils/pagination";
 
 export const productService = {
   createProduct: async (product: FormData) => {
@@ -29,13 +30,19 @@ export const productService = {
 
   getProducts: async (filters?: ProductFilters) => {
     return executeApiCall(() =>
-      backendAPI.get("/products", { params: filters }),
+      backendAPI.get("/products", { params: toPageParams(filters ?? {}) }),
     );
   },
 
   getProductsWithOffer: async (filters?: ProductFilters) => {
     return executeApiCall(() =>
       backendAPI.get("/products/with-offer", { params: filters }),
+    );
+  },
+
+  getLowStockProducts: async () => {
+    return executeApiCall(() =>
+      backendAPI.get<LowStockProduct[]>("/products/low-stock"),
     );
   },
 };

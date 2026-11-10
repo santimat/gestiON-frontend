@@ -252,7 +252,7 @@ export const ProductForm = ({
 
           <NumberInput
             leftSection={<LayersArrowUp size={20} />}
-            label="Stock Inicial"
+            label="Stock Actual"
             name="currentStock"
             placeholder="0"
             min={0}

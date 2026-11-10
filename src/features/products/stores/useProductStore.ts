@@ -4,7 +4,7 @@ import type { AppError } from "@shared/types";
 import { productService } from "@features/products/services/productService";
 import type { UseProductStore } from "@features/products/stores/types";
 
-export const useProductStore = create<UseProductStore>((set) => ({
+export const useProductStore = create<UseProductStore>((set, get) => ({
   formProduct: null,
   isFormModalOpen: false,
   openEdit: (product) =>
@@ -15,6 +15,9 @@ export const useProductStore = create<UseProductStore>((set) => ({
 
   products: [],
   totalProducts: 0,
+  totalPages: 0,
+  // filtros de la última búsqueda: al crear refrescamos con los mismos
+  lastFilters: {},
   isLoading: false,
   error: null,
   createProduct: async (product: FormData) => {
@@ -43,12 +46,15 @@ export const useProductStore = create<UseProductStore>((set) => ({
   },
 
   getProducts: async (filters) => {
-    set({ isLoading: true, error: null });
+    const appliedFilters = filters ?? get().lastFilters;
+
+    set({ isLoading: true, error: null, lastFilters: appliedFilters });
     try {
-      const data = await productService.getProducts(filters);
+      const data = await productService.getProducts(appliedFilters);
       set(() => ({
-        products: data?.content,
-        totalProducts: data?.page.totalElements,
+        products: data?.content ?? [],
+        totalProducts: data?.page?.totalElements ?? 0,
+        totalPages: data?.page?.totalPages ?? 0,
         error: null,
       }));
     } catch (error) {

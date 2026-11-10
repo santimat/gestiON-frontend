@@ -29,6 +29,13 @@ export type ProductWithOffer = Product & {
   discountedPrice: number;
 };
 
+export type LowStockProduct = {
+  productId: number;
+  productName: string;
+  minStock: number;
+  currentStock: number;
+};
+
 export type ProductForm = ProductRequest;
 
 export type ProductFormValues = {

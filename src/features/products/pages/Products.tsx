@@ -4,11 +4,15 @@ import { Package, PackagePlus } from "lucide-react";
 
 import { useAuth } from "@features/auth";
 import { useCommerce } from "@features/commerces";
+import { useFilters } from "@shared/hooks/useFilters";
 import { ListContainer } from "@shared/components/ListContainer";
+import { ListPagination } from "@shared/components/ListPagination";
 import { useProduct } from "@features/products/hooks/useProduct";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { ProductList } from "@features/products/components/ProductList";
+import { ProductsFilterBar } from "@features/products/components/ProductsFilterBar";
+import { ProductFiltersSchema } from "@features/products/schemas/ProductFiltersSchema";
 
 const ProductForm = lazy(() =>
   import("@features/products/components/ProductForm").then((module) => ({
@@ -21,6 +25,7 @@ export const Products = () => {
   const {
     products,
     totalProducts,
+    totalPages,
     isLoading,
     error,
     formProduct,
@@ -30,13 +35,20 @@ export const Products = () => {
     closeFormModal,
   } = useProduct();
   const { getCurrentCommerce, currentCommerce } = useCommerce();
+  const { filters, setFilters, hasFilters } = useFilters(ProductFiltersSchema);
 
   useEffect(() => {
-    getProducts();
+    getProducts(filters);
     if (authenticatedUser?.commerceId) getCurrentCommerce();
     // usamos el close para limpiar el estado
     return () => closeFormModal();
-  }, [getProducts, getCurrentCommerce, authenticatedUser, closeFormModal]);
+  }, [
+    getProducts,
+    getCurrentCommerce,
+    authenticatedUser,
+    closeFormModal,
+    filters,
+  ]);
 
   usePageHeader({
     title: "Productos",
@@ -66,16 +78,29 @@ export const Products = () => {
         />
       </EntityFormModal>
 
-      <main className="flex flex-col gap-6 p-6">
+      <main className="flex flex-col gap-6">
+        <ProductsFilterBar filters={filters} setFilters={setFilters} />
         <ListContainer
           isLoading={isLoading}
           error={error}
           isEmpty={totalProducts === 0}
           icon={Package}
-          emptyMessage="No hay productos para mostrar"
+          emptyMessage={
+            hasFilters
+              ? "No se encontraron productos con ese filtro"
+              : "No hay productos para mostrar"
+          }
         >
           <ProductList products={products} />
         </ListContainer>
+
+        <ListPagination
+          filters={filters}
+          setFilters={setFilters}
+          totalItems={totalProducts}
+          totalPages={totalPages}
+          itemLabel="productos"
+        />
       </main>
     </>
   );

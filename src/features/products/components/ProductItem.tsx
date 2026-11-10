@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import { type LucideIcon, PackageIcon } from "lucide-react";
 import { useDisclosure } from "@mantine/hooks";
 import { Avatar, NumberFormatter, Switch, Tooltip } from "@mantine/core";
 
@@ -45,7 +45,9 @@ export const ProductItem = ({
           onClick={openImageViewer}
           className="hover:cursor-pointer"
           component="button"
-        />
+        >
+          <PackageIcon size={20} />
+        </Avatar>
         <div>
           <p>{product.name}</p>
           <p className="text-sm text-gray-500">ID:{product.id}</p>
