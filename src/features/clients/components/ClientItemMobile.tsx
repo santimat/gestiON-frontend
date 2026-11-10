@@ -4,6 +4,7 @@ import { formatCurrency } from "@shared/utils/money";
 import type { Client } from "@features/clients/types";
 import { useClient } from "@features/clients/hooks/useClient";
 import { ProductItemActions } from "@shared/components/ProductItemActions";
+import { ClientStatusBadge } from "@features/clients/components/ClientStatusBadge";
 
 type ClientItemMobileProps = {
   client: Client;
@@ -39,12 +40,18 @@ export const ClientItemMobile = ({
               {client.address || "Sin dirección"}
             </p>
           </div>
-          <p className="mt-2 text-[14px]">
-            <span className="text-secondary-foreground">
-              Compras: {client.salesCount}
-            </span>{" "}
-            ㆍ Total gastado: {totalSpent}
-          </p>
+          <div className="mt-2 flex items-center justify-between gap-2">
+            <p className="text-[14px]">
+              {/*TODO: MOSTRAR MENSAJE DE AUN NO GASTÓ*/}
+              {client.salesCount == 0
+                ? "No hay pagos"
+                : `${client.salesCount} ㆍ ${totalSpent}`}
+            </p>
+            <ClientStatusBadge
+              totalPending={client.totalPending}
+              client={client}
+            />
+          </div>
         </div>
         <ProductItemActions
           actionsIcons={actionsIcons}

@@ -8,10 +8,14 @@ import App from "@/App.tsx";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import "@mantine/charts/styles.css";
+import { themeColorSchemeManager } from "@shared/theme/themeColorSchemeManager";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <MantineProvider>
+    <MantineProvider
+      colorSchemeManager={themeColorSchemeManager}
+      defaultColorScheme="auto"
+    >
       <App />
       <Toaster visibleToasts={1} richColors position="bottom-right" />
     </MantineProvider>

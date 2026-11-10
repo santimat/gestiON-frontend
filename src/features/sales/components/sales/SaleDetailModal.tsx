@@ -121,7 +121,7 @@ export const SaleDetailModal = ({
 
         <Button
           variant="default"
-          className="hover:bg-background-soft! h-10 w-full shadow-2xl shadow-gray-400"
+          className="hover:bg-background-soft! shadow-raised h-10 w-full"
           onClick={closeModal}
         >
           Cerrar

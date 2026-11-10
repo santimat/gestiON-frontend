@@ -24,7 +24,7 @@ export const SideBar = () => {
         <h3 className="text-2xl font-semibold">GestiON</h3>
       </header>
 
-      <main className="w-full px-4 text-gray-600">
+      <main className="text-secondary-foreground w-full px-4">
         <ul className="flex flex-col gap-4">
           {sidebarItemsToShow.map((itemProps) => (
             <SideBarItem {...itemProps} key={`item-${itemProps.text}`} />

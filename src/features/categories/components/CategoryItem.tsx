@@ -18,12 +18,14 @@ export const CategoryItem = ({ category, columns }: CategoryItemProps) => {
     <li className={`p-2 ${columns}`}>
       <p className="font-medium">{category.name}</p>
       <Tooltip label={category.description} position="bottom" withArrow>
-        <p className="line-clamp-1 text-gray-500">
+        <p className="text-secondary-foreground line-clamp-1">
           {category.description || "----"}
         </p>
       </Tooltip>
-      <p className="text-gray-500">{category.productCount} productos</p>
-      <p className="text-gray-500">{updatedAt}</p>
+      <p className="text-secondary-foreground">
+        {category.productCount} productos
+      </p>
+      <p className="text-secondary-foreground">{updatedAt}</p>
       <div className="justify-center">
         <ProductItemActions
           actionsIcons={[{ Icon: Pencil, label: `Editar ${category.name}` }]}

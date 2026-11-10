@@ -25,12 +25,12 @@ export const MobileTopbar = ({ onOpenMenu }: MobileTopbarProps) => {
           onClick={onOpenMenu}
           aria-label="Abrir menú"
           title="Abrir menú"
-          className="hover:bg-background-soft cursor-pointer rounded-lg p-1 text-gray-600 transition-transform active:scale-95"
+          className="hover:bg-background-soft text-secondary-foreground cursor-pointer rounded-lg p-1 transition-transform active:scale-95"
         >
           <Menu size={24} />
         </button>
         <Link to="/" className="flex items-center gap-3">
-          <StoreIcon className="bg-primary h-8 w-8 rounded-md p-1 text-white" />
+          <StoreIcon className="bg-primary text-primary-foreground h-8 w-8 rounded-md p-1" />
           <span className="text-lg font-semibold">GestiON</span>
         </Link>
       </div>
@@ -38,7 +38,7 @@ export const MobileTopbar = ({ onOpenMenu }: MobileTopbarProps) => {
         onClick={handleClick}
         aria-label="Cerrar sesión"
         title="Cerrar sesión"
-        className="hover:bg-background-soft cursor-pointer rounded-lg p-1 text-gray-400 transition-transform active:scale-95"
+        className="hover:bg-background-soft text-secondary-foreground cursor-pointer rounded-lg p-1 transition-transform active:scale-95"
       >
         <LogOut className="pointer-events-none" size={22} />
       </button>

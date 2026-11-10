@@ -44,7 +44,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
           />
         ) : null}
         <div className="flex-1 overflow-y-auto">
-          <div className="md:mx-auto md:w-[80%] [&>main]:p-4">{children}</div>
+          <div className="xl:mx-auto xl:w-[80%] [&>main]:p-4">{children}</div>
         </div>
       </section>
     </div>
