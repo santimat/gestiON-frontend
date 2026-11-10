@@ -4,9 +4,12 @@ import { Button } from "@mantine/core";
 
 import { useCategory } from "@features/categories/hooks/useCategory";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
+import { useFilters } from "@shared/hooks/useFilters";
 import { ListContainer } from "@shared/components/ListContainer";
 import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { CategoryList } from "@features/categories/components/CategoryList";
+import { CategoriesFilterBar } from "@features/categories/components/CategoriesFilterBar";
+import { CategoryFiltersSchema } from "@features/categories/schemas/CategoryFiltersSchema";
 
 const CategoryForm = lazy(() =>
   import("@features/categories/components/CategoryForm").then((module) => ({
@@ -26,6 +29,13 @@ export const Categories = () => {
     error,
   } = useCategory();
 
+  const { filters, setFilters, hasFilters } = useFilters(CategoryFiltersSchema);
+
+  // el backend todavía no filtra categorías: por ahora el filtro se aplica acá
+  const visibleCategories = filters.categoryId
+    ? categories.filter((category) => category.id === filters.categoryId)
+    : categories;
+
   useEffect(() => {
     getCategories();
 
@@ -36,7 +46,7 @@ export const Categories = () => {
 
   usePageHeader({
     title: "Categorías",
-    subtitle: `${categories.length} categorías`,
+    subtitle: `${visibleCategories.length} categorías`,
     actions: (
       <Button
         leftSection={<TagPlus />}
@@ -59,14 +69,24 @@ export const Categories = () => {
         <CategoryForm category={formCategory} closeModal={closeFormModal} />
       </EntityFormModal>
 
-      <main className="flex flex-col gap-6 p-6">
+      <main className="flex flex-col gap-6">
+        <CategoriesFilterBar
+          filters={filters}
+          setFilters={setFilters}
+          categories={categories}
+        />
         <ListContainer
           isLoading={isLoading}
           error={error}
-          isEmpty={categories.length === 0}
+          isEmpty={visibleCategories.length === 0}
           icon={Tags}
+          emptyMessage={
+            hasFilters
+              ? "Ninguna categoría coincide con el filtro"
+              : "No hay categorías para mostrar"
+          }
         >
-          <CategoryList categories={categories} />
+          <CategoryList categories={visibleCategories} />
         </ListContainer>
       </main>
     </>
