@@ -55,7 +55,7 @@ export const Settings = () => {
   };
 
   return (
-    <main className="mx-auto max-w-200 px-4 py-6 md:px-2">
+    <main className="md:px-2">
       <form className="grid gap-6" onSubmit={handleSubmit}>
         <NameAndImageSection {...{ commerceForm, setCommerceForm, errors }} />
         <ProfitMultiplierSection
