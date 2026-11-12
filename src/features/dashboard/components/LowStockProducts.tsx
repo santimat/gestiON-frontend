@@ -12,17 +12,15 @@ export const LowStockProducts = ({
   const lowStockProductsCount = lowStockProducts?.length ?? 0;
 
   return (
-    <div className="border-background-soft rounded-xl border p-4">
-      <div className="mb-4">
+    <div className="border-background-soft scrollbar-thumb-background-soft w-full scrollbar-thin overflow-y-auto rounded-xl border">
+      <div className="bg-background sticky top-0 z-10 mb-4 px-4 py-2">
         <p className="font-semibold">Productos con bajo stock</p>
         <p className="text-secondary-foreground text-sm">
           Qué productos hay que reponer
         </p>
       </div>
       {lowStockProductsCount > 0 ? (
-        <ul
-          className={`flex flex-col gap-2 ${lowStockProductsCount > 0 ? "max-h-50 scrollbar-thin scrollbar-gutter-stable overflow-y-auto" : "h-50"}`}
-        >
+        <ul className={`flex flex-col gap-2 p-4`}>
           {lowStockProducts.map((product: LowStockProduct) => (
             <li
               key={`${product.productName}-${product.productId}`}

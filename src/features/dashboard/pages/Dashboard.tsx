@@ -69,7 +69,7 @@ export const Dashboard = () => {
         />
         <TopProductsBarChart {...{ topProductsSold }} />
       </div>
-      <div className="grid grid-cols-1 gap-4 pb-4 xl:grid-cols-2">
+      <div className="grid grid-cols-1 grid-rows-[400px] gap-4 pb-4 xl:grid-cols-2">
         <LowStockProducts {...{ lowStockProducts }} />
         <div className="border-background-soft rounded-xl border p-4">
           <p className="font-semibold">Ultimas {sales.length} ventas</p>
