@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "ab45b025-a881-45b9-82e1-32949e73f29b",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\vscode\\proyecto-finalisimo\\gestiON-frontend\\.archify\\architecture-gestion-20261113-132300\\candidate.json",
+  "output": "C:\\vscode\\proyecto-finalisimo\\gestiON-frontend\\docs\\gestiON-architecture.html",
+  "specification": {
+    "sha256": "01b5fb631c758c37a175e6315d7c80add5e437fdbb2f815f910e9c4c9d002e19",
+    "bytes": 6004
+  },
+  "artifact": {
+    "sha256": "215f833fc6bead6dd7856faf4834579df3bf54e437bf0edd6f06282d91a38250",
+    "bytes": 875097
+  }
+}

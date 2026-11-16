@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "GestiON — Sistema de gestión de stock y ventas",
+    "subtitle": "Arquitectura frontend React 19 + backend Spring Boot",
+    "locale": "es",
+    "output": "docs/gestiON-architecture.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "sudo", "type": "external", "label": "Administrador", "sublabel": "SUDO", "pos": [40, 40], "size": [130, 60] },
+    { "id": "owner", "type": "external", "label": "Dueño", "sublabel": "OWNER", "pos": [40, 140], "size": [130, 60] },
+    { "id": "cashier", "type": "external", "label": "Cajero", "sublabel": "CASHIER", "pos": [40, 240], "size": [130, 60] },
+    { "id": "landing", "type": "frontend", "label": "Landing", "sublabel": "Página pública", "pos": [240, 190], "size": [130, 60] },
+    { "id": "auth", "type": "security", "label": "Autenticación", "sublabel": "Cookie HTTP-only", "pos": [440, 190], "size": [140, 90], "tag": "Zod + Axios" },
+    { "id": "dashboard", "type": "frontend", "label": "Dashboard", "sublabel": "Panel de ventas", "pos": [660, 40], "size": [130, 60] },
+    { "id": "pos", "type": "frontend", "label": "Punto de Venta", "sublabel": "POS / Cobro", "pos": [660, 140], "size": [130, 60] },
+    { "id": "sales", "type": "frontend", "label": "Historial Ventas", "sublabel": "Búsqueda y filtros", "pos": [660, 240], "size": [130, 60] },
+    { "id": "products", "type": "frontend", "label": "Productos", "sublabel": "CRUD catálogo", "pos": [660, 340], "size": [130, 60] },
+    { "id": "clients", "type": "frontend", "label": "Clientes", "sublabel": "Fichas y cuentas", "pos": [660, 440], "size": [130, 60] },
+    { "id": "categories", "type": "frontend", "label": "Categorías", "sublabel": "Organización", "pos": [870, 340], "size": [130, 60] },
+    { "id": "offers", "type": "frontend", "label": "Ofertas", "sublabel": "Descuentos", "pos": [870, 440], "size": [130, 60] },
+    { "id": "cashiers", "type": "frontend", "label": "Cajeros", "sublabel": "Permisos", "pos": [870, 140], "size": [130, 60] },
+    { "id": "sellpoints", "type": "frontend", "label": "Puntos Venta", "sublabel": "Terminales", "pos": [870, 240], "size": [130, 60] },
+    { "id": "commerces", "type": "frontend", "label": "Comercios", "sublabel": "Gestión", "pos": [870, 40], "size": [130, 60] },
+    { "id": "settings", "type": "frontend", "label": "Configuración", "sublabel": "Datos del comercio", "pos": [870, 540], "size": [130, 60] },
+    { "id": "zustand", "type": "database", "label": "Zustand", "sublabel": "Estado global", "pos": [440, 340], "size": [130, 60], "tag": "React hooks" },
+    { "id": "axios", "type": "backend", "label": "Axios Client", "sublabel": "backendAPI", "pos": [440, 440], "size": [130, 60] },
+    { "id": "spring", "type": "backend", "label": "Spring Boot", "sublabel": "REST API :8080", "pos": [1080, 240], "size": [140, 60] },
+    { "id": "lovable", "type": "external", "label": "Lovable", "sublabel": "Diseño Swift Stock", "pos": [1080, 440], "size": [130, 60] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "GestiON Frontend (React 19 SPA)", "wraps": ["landing", "auth", "dashboard", "pos", "sales", "products", "clients", "categories", "offers", "cashiers", "sellpoints", "commerces", "settings", "zustand", "axios"] },
+    { "kind": "security-group", "label": "Capa compartida (shared/)", "wraps": ["zustand", "axios"] }
+  ],
+  "connections": [
+    { "id": "sudo-to-auth", "from": "sudo", "to": "auth", "label": "login" },
+    { "id": "owner-to-auth", "from": "owner", "to": "auth", "label": "login" },
+    { "id": "cashier-to-auth", "from": "cashier", "to": "auth", "label": "login" },
+    { "id": "landing-to-auth", "from": "landing", "to": "auth", "label": "acceder" },
+    { "id": "auth-to-dashboard", "from": "auth", "to": "dashboard", "label": "autenticado" },
+    { "id": "auth-to-pos", "from": "auth", "to": "pos" },
+    { "id": "auth-to-sales", "from": "auth", "to": "sales" },
+    { "id": "auth-to-products", "from": "auth", "to": "products" },
+    { "id": "auth-to-clients", "from": "auth", "to": "clients" },
+    { "id": "auth-to-cashiers", "from": "auth", "to": "cashiers" },
+    { "id": "auth-to-commerces", "from": "auth", "to": "commerces" },
+    { "id": "dashboard-to-pos", "from": "dashboard", "to": "pos" },
+    { "id": "pos-to-sales", "from": "pos", "to": "sales" },
+    { "id": "products-to-categories", "from": "products", "to": "categories" },
+    { "id": "products-to-offers", "from": "products", "to": "offers" },
+    { "id": "clients-to-sales", "from": "clients", "to": "sales", "label": "ventas" },
+    { "id": "cashiers-to-sellpoints", "from": "cashiers", "to": "sellpoints" },
+    { "id": "features-to-zustand", "from": "dashboard", "to": "zustand", "label": "estado", "variant": "dashed" },
+    { "id": "zustand-to-axios", "from": "zustand", "to": "axios", "label": "servicios" },
+    { "id": "axios-to-spring", "from": "axios", "to": "spring", "label": "REST + cookie", "variant": "emphasis" },
+    { "id": "lovable-to-frontend", "from": "lovable", "to": "landing", "label": "diseño referencia", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Frontend", "items": ["React 19 + Vite 8 + TypeScript 6", "Tailwind CSS v4 + Mantine 9", "react-router v8 · Zustand · Zod 4", "React Compiler (auto-memoización)"] },
+    { "dot": "emerald", "title": "Arquitectura", "items": ["Layout por features (src/features/<recurso>/)", "Flujo: componentes → hooks → stores → services → API", "Permisos: ALLOWEDS_ROUTES_BY_ROLE (única fuente)", "Filtros en URL con schema Zod"] },
+    { "dot": "amber", "title": "Roles", "items": ["SUDO: gestiona comercios del sistema", "OWNER: acceso completo al dashboard y módulos", "CASHIER: POS, ventas, productos, clientes y ofertas"] },
+    { "dot": "rose", "title": "Backend", "items": ["Spring Boot en http://localhost:8080/api", "Autenticación por cookie HTTP-only", "Sin localStorage ni .env files"] }
+  ]
+}
