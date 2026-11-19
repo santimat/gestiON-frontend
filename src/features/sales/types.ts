@@ -32,6 +32,8 @@ export type SaleDraft = {
   clientId: number | null;
 };
 
+export type SetSaleDraft = (draft: Partial<SaleDraft>) => void;
+
 export type SaleRequest = z.infer<typeof SaleRequestSchema>;
 
 export type SaleStatus = z.infer<typeof SaleStatusSchema>;
