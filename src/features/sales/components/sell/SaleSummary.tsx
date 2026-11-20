@@ -27,7 +27,6 @@ export const SaleSummary = ({
     total,
     hasPaymentOffer,
     selectedPaymentOffer,
-    SelectedIcon,
     clientId,
     paymentMethod,
     discount,
@@ -61,7 +60,6 @@ export const SaleSummary = ({
         hasPaymentOffer={hasPaymentOffer}
         selectedPaymentOffer={selectedPaymentOffer}
         offerPaymentMethods={offerPaymentMethods}
-        SelectedIcon={SelectedIcon}
         onChange={setSaleDraft}
       />
 

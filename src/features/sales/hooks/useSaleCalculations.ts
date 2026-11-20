@@ -21,26 +21,12 @@ type UseSaleCalculationsInput = {
   offerPaymentMethods: OfferPaymentMethod[];
 };
 
-type PAYMENT_OPTION = {
-  value: PaymentMethod;
-  label: string;
-  Icon: React.ComponentType<{ size?: number; strokeWidth?: number }>;
-};
-
-const PAYMENT_OPTIONS: PAYMENT_OPTION[] = [
-  { value: "CASH", label: "Efectivo", Icon: () => null },
-  { value: "CARD", label: "Tarjeta", Icon: () => null },
-  { value: "TRANSFER", label: "Transferencia", Icon: () => null },
-  { value: "CREDIT_ACCOUNT", label: "Cuenta corriente", Icon: () => null },
-];
-
 export type UseSaleCalculationsOutput = {
   subtotal: number;
   discountValue: number;
   total: number;
   hasPaymentOffer: boolean;
   selectedPaymentOffer: OfferPaymentMethod | undefined;
-  SelectedIcon: React.ComponentType<{ size?: number; strokeWidth?: number }> | undefined;
   clientId: number | null;
   paymentMethod: PaymentMethod;
   discount: number;
@@ -55,16 +41,14 @@ export const useSaleCalculations = ({
   const { discount, discountType, paymentMethod, clientId } = saleDraft;
 
   const selectedPaymentOffer = useMemo(
-    () => offerPaymentMethods.find((offer) => offer.paymentMethod === paymentMethod),
+    () =>
+      offerPaymentMethods.find(
+        (offer) => offer.paymentMethod === paymentMethod,
+      ),
     [offerPaymentMethods, paymentMethod],
   );
 
   const hasPaymentOffer = selectedPaymentOffer !== undefined;
-
-  const SelectedIcon = useMemo(
-    () => PAYMENT_OPTIONS.find((option) => option.value === paymentMethod)?.Icon,
-    [paymentMethod],
-  );
 
   const subtotal = useMemo(
     () => cart.reduce((acc, line) => acc + line.salePrice * line.qty, 0),
@@ -87,7 +71,9 @@ export const useSaleCalculations = ({
     return Math.min(value, subtotal);
   }, [selectedPaymentOffer, subtotal]);
 
-  const discountValue = hasPaymentOffer ? paymentOfferValue : manualDiscountValue;
+  const discountValue = hasPaymentOffer
+    ? paymentOfferValue
+    : manualDiscountValue;
   const total = Math.max(0, subtotal - discountValue);
 
   return {
@@ -96,7 +82,6 @@ export const useSaleCalculations = ({
     total,
     hasPaymentOffer,
     selectedPaymentOffer,
-    SelectedIcon,
     clientId,
     paymentMethod,
     discount,
