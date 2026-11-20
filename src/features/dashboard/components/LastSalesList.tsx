@@ -21,7 +21,7 @@ export const LastSalesList = ({ sales }: LastSalesListProps) => {
     );
 
   return (
-    <ul className="max-h-50 scrollbar-thin scrollbar-gutter-stable overflow-y-auto">
+    <ul>
       {sales.map((sale: Sale) => {
         const date = new Date(sale.createdAt);
         const createdDate = formatDate(date);
