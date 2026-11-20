@@ -16,11 +16,10 @@ import { OfferActiveRangeDate } from "@features/offers/components/OfferActiveRan
 type OfferItemProps = {
   offer: Offer;
   columns: string;
-  canEdit: boolean;
 };
 
-export const OfferItem = ({ offer, columns, canEdit }: OfferItemProps) => {
-  const { openEdit } = useOffer();
+export const OfferItem = ({ offer, columns }: OfferItemProps) => {
+  const { openEdit, canEdit } = useOffer();
   const { openAssign } = useOfferAssigment();
   const { products } = useProduct();
 

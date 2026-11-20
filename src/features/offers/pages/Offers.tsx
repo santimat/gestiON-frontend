@@ -38,7 +38,6 @@ export const Offers = () => {
     openCreate,
     closeFormModal,
     canCreate,
-    canEdit,
   } = useOffer();
   const { assignOffer, isAssignModalOpen, closeAssignModal } =
     useOfferAssigment();
@@ -105,7 +104,7 @@ export const Offers = () => {
           }
           icon={BadgePercent}
         >
-          <OfferList offers={offers} canEdit={canEdit} />
+          <OfferList offers={offers} />
         </ListContainer>
 
         <ListPagination

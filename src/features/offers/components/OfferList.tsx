@@ -17,7 +17,6 @@ const OfferItemMobile = lazy(() =>
 
 type OfferListProps = {
   offers: Offer[];
-  canEdit: boolean;
 };
 
 const HEADERS = ["Descuento", "Aplica a", "Vigencia", "Estado", "Acciones"];
@@ -25,13 +24,13 @@ const HEADERS = ["Descuento", "Aplica a", "Vigencia", "Estado", "Acciones"];
 const COLUMNS =
   "grid grid-cols-[0.1fr_0.35fr_0.4fr_0.1fr_0.1fr] items-center gap-x-4";
 
-export const OfferList = ({ offers, canEdit }: OfferListProps) => (
+export const OfferList = ({ offers }: OfferListProps) => (
   <EntityListShell
     items={offers}
     getKey={(offer) => offer.id}
     headers={HEADERS}
     columns={COLUMNS}
-    renderMobile={(offer) => <OfferItemMobile offer={offer} canEdit={canEdit} />}
-    renderDesktop={(offer) => <OfferItem offer={offer} columns={COLUMNS} canEdit={canEdit} />}
+    renderMobile={(offer) => <OfferItemMobile offer={offer} />}
+    renderDesktop={(offer) => <OfferItem offer={offer} columns={COLUMNS} />}
   />
 );
