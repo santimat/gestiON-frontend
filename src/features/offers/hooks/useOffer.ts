@@ -1,8 +1,12 @@
 import { useShallow } from "zustand/shallow";
 
+import { useAuth } from "@features/auth";
 import { useOfferStore } from "@features/offers/stores/useOfferStore";
 
 export const useOffer = () => {
+  const { authenticatedUser } = useAuth();
+  const isOwner = authenticatedUser?.role === "OWNER";
+
   const {
     offers,
     totalOffers,
@@ -49,5 +53,7 @@ export const useOffer = () => {
     openCreate,
     openEdit,
     closeFormModal,
+    canCreate: isOwner,
+    canEdit: isOwner,
   };
 };

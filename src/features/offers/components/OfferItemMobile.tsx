@@ -13,9 +13,10 @@ import { OfferActiveRangeDate } from "@features/offers/components/OfferActiveRan
 
 type OfferItemMobileProps = {
   offer: Offer;
+  canEdit: boolean;
 };
 
-export const OfferItemMobile = ({ offer }: OfferItemMobileProps) => {
+export const OfferItemMobile = ({ offer, canEdit }: OfferItemMobileProps) => {
   const { openEdit } = useOffer();
   const { openAssign } = useOfferAssigment();
   const { products } = useProduct();
@@ -51,15 +52,17 @@ export const OfferItemMobile = ({ offer }: OfferItemMobileProps) => {
             Asignar
           </Button>
         )}
-        <Button
-          variant="outline"
-          size="sm"
-          className="flex-1"
-          onClick={() => openEdit(offer)}
-        >
-          <Pencil size={14} />
-          Editar
-        </Button>
+        {canEdit && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex-1"
+            onClick={() => openEdit(offer)}
+          >
+            <Pencil size={14} />
+            Editar
+          </Button>
+        )}
       </div>
     </div>
   );

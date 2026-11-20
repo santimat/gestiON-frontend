@@ -2,7 +2,6 @@ import { Button } from "@mantine/core";
 import { lazy, useEffect } from "react";
 import { BadgePercent, Plus } from "lucide-react";
 
-import { useAuth } from "@features/auth";
 import { useOffer } from "@features/offers/hooks/useOffer";
 import { ListContainer } from "@shared/components/ListContainer";
 import { ListPagination } from "@shared/components/ListPagination";
@@ -28,7 +27,6 @@ const OfferAssignmentDialog = lazy(() =>
 );
 
 export const Offers = () => {
-  const { authenticatedUser } = useAuth();
   const {
     offers,
     totalOffers,
@@ -39,12 +37,12 @@ export const Offers = () => {
     isFormModalOpen,
     openCreate,
     closeFormModal,
+    canCreate,
+    canEdit,
   } = useOffer();
   const { assignOffer, isAssignModalOpen, closeAssignModal } =
     useOfferAssigment();
   const { filters, setFilters, isFiltered } = useOfferSearch();
-
-  const canCreate = authenticatedUser?.role === "OWNER";
 
   useEffect(() => {
     return () => closeFormModal();
@@ -107,7 +105,7 @@ export const Offers = () => {
           }
           icon={BadgePercent}
         >
-          <OfferList offers={offers} />
+          <OfferList offers={offers} canEdit={canEdit} />
         </ListContainer>
 
         <ListPagination
