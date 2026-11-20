@@ -1,4 +1,3 @@
-import type { Client } from "@features/clients/types";
 import type { ProductWithOffer } from "@features/products";
 import type { SaleStatus } from "@features/sales/types";
 import type {
@@ -47,11 +46,6 @@ export type UsePendingSalesStore = {
   totalPending: number;
   isLoading: boolean;
   error: string | null;
-  selectedPendingSale: Sale | null;
-  isDetailModalOpen: boolean;
-  pendingSalesClient: Client | null;
-  setPendingSalesClient: (client: Client | null) => void;
   getPendingSalesWithDetailsByClient: (clientId: number) => Promise<void>;
-  openDetailModal: (sale: Sale) => void;
-  closeDetailModal: () => void;
+  markSalePaid: (saleId: number, clientId: number) => Promise<{ id: number; status: SaleStatus }>;
 };

@@ -25,7 +25,7 @@ export const Sell = () => {
   const { getOfferPaymentMethods } = useOfferPaymentMethod();
 
   useEffect(() => {
-    getClients();
+    getClients({ sortBy: "createdAt", sortDir: "desc" });
     getOfferPaymentMethods().catch((error) => {
       toastAppError(error, "No se pudieron cargar las ofertas de pago.");
     });

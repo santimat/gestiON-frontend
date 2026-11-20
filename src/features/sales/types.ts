@@ -82,5 +82,9 @@ export type SalesFilter = z.infer<typeof SalesFilterSchema>;
 export type PendingSalesWithDetails = {
   pendingSalesCount: number;
   totalPending: number;
-  pendingSales: Sale[];
+  pendingSales: {
+    content: Sale[];
+    totalElements: number;
+    totalPages: number;
+  };
 };
