@@ -1,5 +1,5 @@
+import { useNavigate } from "react-router";
 import type { Client } from "@features/clients/types";
-import { usePendingSales } from "@features/sales";
 
 type ClientStatusBadgeProps = {
   totalPending: number | null;
@@ -7,7 +7,7 @@ type ClientStatusBadgeProps = {
 };
 
 export const ClientStatusBadge = ({ totalPending, client }: ClientStatusBadgeProps) => {
-  const { setPendingSalesClient } = usePendingSales();
+  const navigate = useNavigate();
 
   const owes = totalPending != null && totalPending > 0;
 
@@ -16,16 +16,18 @@ export const ClientStatusBadge = ({ totalPending, client }: ClientStatusBadgePro
     ? "bg-warning/30 text-warning underline hover:cursor-pointer hover:underline-offset-2"
     : "bg-success/30 text-success";
 
-  if (owes)
+  if (owes) {
+    const searchText = `${client.name} ${client.lastName}`.replace(/\s+/g, "+");
     return (
       <button
         type="button"
         className={`${bg} w-fit rounded-full px-2 whitespace-nowrap`}
-        onClick={() => setPendingSalesClient(client)}
+        onClick={() => navigate(`/sales?searchText=${searchText}&status=PENDING`)}
       >
         {statusLabel}
       </button>
     );
+  }
 
   return <span className={`${bg} w-fit rounded-full px-2`}>{statusLabel}</span>;
 };
