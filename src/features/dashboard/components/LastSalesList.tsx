@@ -32,12 +32,14 @@ export const LastSalesList = ({ sales }: LastSalesListProps) => {
         });
 
         const paymentMethod = PAYMENT_METHODS_LABELS[sale.paymentMethod];
+        const showPending = sale.status === "PENDING" || sale.status === "PARTIAL_PAYED";
+
         return (
           <li
             key={`${sale.clientName}-${sale.clientId}`}
             className="not-last:border-background-soft flex items-center justify-between gap-2 p-2 not-last:border-b"
           >
-            <div>
+            <div className="min-w-0">
               <p>#{sale.id}</p>
               <p className="text-secondary-foreground text-sm">
                 <span>
@@ -46,8 +48,13 @@ export const LastSalesList = ({ sales }: LastSalesListProps) => {
                 ㆍ<span>{sale.itemCount} productos</span>ㆍ
                 <span>{paymentMethod}</span>
               </p>
+              {showPending && sale.totalPending != null && (
+                <p className="text-warning text-xs font-medium">
+                  Pendiente: {formatCurrency(sale.totalPending)}
+                </p>
+              )}
             </div>
-            <p className="font-semibold">{formatCurrency(sale.total)}</p>
+            <p className="font-semibold shrink-0">{formatCurrency(sale.total)}</p>
           </li>
         );
       })}
