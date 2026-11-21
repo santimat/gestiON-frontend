@@ -28,10 +28,11 @@ const HEADERS = [
   "Metodo de pago",
   "Estado",
   "Total",
+  "Pendiente",
 ];
 
 const DESKTOP_COLUMNS =
-  "grid grid-cols-[0.2fr_0.2fr_0.2fr_0.5fr_0.2fr_0.4fr_0.3fr_0.2fr_0.1fr] items-center gap-x-4";
+  "grid grid-cols-[0.2fr_0.2fr_0.2fr_0.5fr_0.2fr_0.4fr_0.3fr_0.2fr_0.2fr_0.1fr] items-center gap-x-4";
 
 export const SalesList = ({ sales }: SalesListProps) => (
   <EntityListShell

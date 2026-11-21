@@ -59,6 +59,10 @@ export const SaleDetailModal = ({
       }`
     : null;
   const total = formatCurrency(sale.total);
+  const showPending = sale.status === "PENDING" || sale.status === "PARTIAL_PAYED";
+  const totalPending = showPending && sale.totalPending != null
+    ? formatCurrency(sale.totalPending)
+    : null;
 
   return (
     <Modal
@@ -108,6 +112,13 @@ export const SaleDetailModal = ({
           <p className="font-semibold">Total</p>
           <p className="text-xl font-semibold tabular-nums">{total}</p>
         </div>
+
+        {totalPending && (
+          <div className="flex items-center justify-between text-warning">
+            <p className="font-semibold">Pendiente</p>
+            <p className="text-xl font-semibold tabular-nums">{totalPending}</p>
+          </div>
+        )}
 
         {sale.status === "PENDING" && (
           <Button

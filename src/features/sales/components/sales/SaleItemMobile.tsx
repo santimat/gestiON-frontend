@@ -11,6 +11,7 @@ export const SaleItemMobile = ({ sale }: SaleItemMobileProps) => {
   const handleClick = async () => {
     await getSaleWithDetails(sale.id);
   };
+  const showPending = sale.status === "PENDING" || sale.status === "PARTIAL_PAYED";
 
   return (
     <li
@@ -25,6 +26,11 @@ export const SaleItemMobile = ({ sale }: SaleItemMobileProps) => {
         <p className="text-secondary-foreground text-xs">
           {sale.itemCount} ítems
         </p>
+        {showPending && (
+          <p className="text-warning text-xs font-medium">
+            Pendiente: {formatCurrency(sale.totalPending)}
+          </p>
+        )}
       </div>
       <span className="shrink-0 font-semibold tabular-nums">
         {formatCurrency(sale.total)}

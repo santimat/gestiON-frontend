@@ -23,6 +23,7 @@ export const SaleItem = ({ sale, desktopColumns }: SaleItemProps) => {
     hour12: false,
   });
   const paymentMethod = PAYMENT_METHODS_LABELS[sale.paymentMethod];
+  const showPending = sale.status === "PENDING" || sale.status === "PARTIAL_PAYED";
 
   const handleClick = async () => {
     await getSaleWithDetails(sale.id);
@@ -42,6 +43,11 @@ export const SaleItem = ({ sale, desktopColumns }: SaleItemProps) => {
       <p>{paymentMethod}</p>
       <SaleStatusBadge status={sale.status} />
       <p className="font-semibold">{formatCurrency(sale.total)}</p>
+      {showPending ? (
+        <p className="text-warning font-medium">{formatCurrency(sale.totalPending)}</p>
+      ) : (
+        <p className="text-secondary-foreground">—</p>
+      )}
       <ChevronRight size={20} className="text-secondary-foreground" />
     </li>
   );
