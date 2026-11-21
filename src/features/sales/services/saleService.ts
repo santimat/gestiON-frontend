@@ -4,7 +4,8 @@ import { parseOrThrow } from "@shared/utils/parseOrThrow";
 import type {
   SaleRequest,
   SalesFilter,
-  SaleStatus,
+  TransactionResponse,
+  RegisterPaymentRequest,
 } from "@features/sales/types";
 import { SaleRequestSchema } from "@features/sales/schemas/SaleRequestSchema";
 import { toPageParams } from "@shared/utils/pagination";
@@ -31,9 +32,10 @@ export const saleService = {
     return executeApiCall(() => backendAPI.get(`/sales/${saleId}`));
   },
 
-  markSalePaid: async (saleId: number) => {
-    return executeApiCall<{ id: number; status: SaleStatus }>(() =>
-      backendAPI.patch(`/sales/${saleId}/mark-paid`),
+  registerPayment: async (saleId: number, amount: number) => {
+    const request: RegisterPaymentRequest = { amount };
+    return executeApiCall<TransactionResponse>(() =>
+      backendAPI.post(`/sales/${saleId}/payments`, request),
     );
   },
 };

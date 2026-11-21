@@ -10,6 +10,8 @@ export const useSaleDetails = () => {
     getSaleWithDetails,
     closeDetailModal,
     openDetailModal,
+    isRegisteringPayment,
+    registerPayment,
   } = useSaleDetailsStore(
     useShallow((s) => ({
       isLoading: s.isLoading,
@@ -19,6 +21,8 @@ export const useSaleDetails = () => {
       openDetailModal: s.openDetailModal,
       closeDetailModal: s.closeDetailModal,
       getSaleWithDetails: s.getSaleWithDetails,
+      isRegisteringPayment: s.isRegisteringPayment,
+      registerPayment: s.registerPayment,
     })),
   );
 
@@ -30,5 +34,7 @@ export const useSaleDetails = () => {
     getSaleWithDetails,
     closeDetailModal,
     openDetailModal,
+    isRegisteringPayment,
+    registerPayment,
   };
 };

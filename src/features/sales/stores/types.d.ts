@@ -1,5 +1,4 @@
 import type { ProductWithOffer } from "@features/products";
-import type { SaleStatus } from "@features/sales/types";
 import type {
   CartLine,
   Sale,
@@ -27,16 +26,17 @@ export type UseSalesStore = {
   isLoading: boolean;
   error: string | null;
   getSales: (filters: SalesFilter) => Promise<void>;
-  markSalePaid: (saleId: number) => Promise<{ id: number; status: SaleStatus }>;
 };
 
 export type UseSaleDetailsStore = {
   isLoading: boolean;
   error: string | null;
   isDetailModalOpen: boolean;
+  isRegisteringPayment: boolean;
   openDetailModal: () => void;
   closeDetailModal: () => void;
   getSaleWithDetails: (saleId: number) => Promise<void>;
+  registerPayment: (saleId: number, amount: number) => Promise<TransactionResponse>;
   saleWithDetails: Sale | null;
 };
 
@@ -46,6 +46,7 @@ export type UsePendingSalesStore = {
   totalPending: number;
   isLoading: boolean;
   error: string | null;
+  currentClientId: number | null;
   getPendingSalesWithDetailsByClient: (clientId: number) => Promise<void>;
-  markSalePaid: (saleId: number, clientId: number) => Promise<{ id: number; status: SaleStatus }>;
+  registerPayment: (saleId: number, amount: number) => Promise<TransactionResponse>;
 };

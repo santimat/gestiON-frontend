@@ -21,14 +21,4 @@ export const useSalesStore = create<UseSalesStore>((set) => ({
       error: null,
     });
   },
-
-  markSalePaid: async (saleId: number) => {
-    const data = await saleService.markSalePaid(saleId);
-    set((prevState) => ({
-      sales: prevState.sales.map((sale) =>
-        sale.id === saleId ? { ...sale, status: data.status } : sale,
-      ),
-    }));
-    return data;
-  },
 }));

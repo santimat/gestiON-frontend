@@ -4,7 +4,6 @@ import type { AppError } from "@shared/types";
 import { saleService } from "@features/sales/services/saleService";
 import type { UsePendingSalesStore } from "@features/sales/stores/types";
 import type { PendingSalesWithDetails } from "@features/sales/types";
-import { useClientStore } from "@features/clients/stores/useClientStore";
 
 export const usePendingSalesStore = create<UsePendingSalesStore>(
   (set, get) => ({
@@ -13,9 +12,10 @@ export const usePendingSalesStore = create<UsePendingSalesStore>(
     totalPending: 0,
     isLoading: false,
     error: null,
+    currentClientId: null,
 
     getPendingSalesWithDetailsByClient: async (clientId: number) => {
-      set({ isLoading: true, error: null });
+      set({ isLoading: true, error: null, currentClientId: clientId });
       try {
         const data = (await saleService.getPendingSalesWithDetailsByClient(
           clientId,
@@ -34,37 +34,13 @@ export const usePendingSalesStore = create<UsePendingSalesStore>(
       }
     },
 
-    markSalePaid: async (saleId: number, clientId: number) => {
-      const data = await saleService.markSalePaid(saleId);
-      // Obtener estado actual para calcular nuevos valores
-      const { pendingSales } = get();
-      const updatedPendingSales = pendingSales.filter(
-        (sale) => sale.id !== saleId,
-      );
-      const updatedTotalPending = updatedPendingSales.reduce(
-        (acc, sale) => acc + sale.total,
-        0,
-      );
-      const updatedPendingSalesCount = updatedPendingSales.length;
-
-      set({
-        pendingSales: updatedPendingSales,
-        pendingSalesCount: updatedPendingSalesCount,
-        totalPending: updatedTotalPending,
-      });
-
-      // Actualizar store de clientes
-      useClientStore.setState((prev) => ({
-        clients: prev.clients.map((prevClient) =>
-          prevClient.id === clientId
-            ? {
-                ...prevClient,
-                totalPending: updatedTotalPending,
-                pendingSalesCount: updatedPendingSalesCount,
-              }
-            : prevClient,
-        ),
-      }));
+    registerPayment: async (saleId: number, amount: number) => {
+      const data = await saleService.registerPayment(saleId, amount);
+      // Refrescar lista desde backend (fuente de verdad para totalPending)
+      const { currentClientId } = get();
+      if (currentClientId != null) {
+        await get().getPendingSalesWithDetailsByClient(currentClientId);
+      }
       return data;
     },
   }),

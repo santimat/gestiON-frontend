@@ -10,7 +10,6 @@ export const useSales = () => {
     isLoading,
     error,
     getSales,
-    markSalePaid,
   } = useSalesStore(
     useShallow((s) => ({
       sales: s.sales,
@@ -19,7 +18,6 @@ export const useSales = () => {
       isLoading: s.isLoading,
       error: s.error,
       getSales: s.getSales,
-      markSalePaid: s.markSalePaid,
     })),
   );
 
@@ -30,6 +28,5 @@ export const useSales = () => {
     isLoading,
     error,
     getSales,
-    markSalePaid,
   };
 };

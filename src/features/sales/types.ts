@@ -90,3 +90,17 @@ export type PendingSalesWithDetails = {
     totalPages: number;
   };
 };
+
+export type TransactionType = "PAYMENT" | "SALE" | "GIFT" | "REFUND";
+
+export type TransactionResponse = {
+  id: number;
+  amount: number;
+  type: TransactionType;
+  saleId: number;
+  createdAt: string;
+};
+
+export type RegisterPaymentRequest = {
+  amount: number;
+};

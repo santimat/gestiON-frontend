@@ -10,7 +10,7 @@ export const usePendingSales = () => {
     isLoading,
     error,
     getPendingSalesWithDetailsByClient,
-    markSalePaid,
+    registerPayment,
   } = usePendingSalesStore(
     useShallow((s) => ({
       pendingSales: s.pendingSales,
@@ -19,7 +19,7 @@ export const usePendingSales = () => {
       isLoading: s.isLoading,
       error: s.error,
       getPendingSalesWithDetailsByClient: s.getPendingSalesWithDetailsByClient,
-      markSalePaid: s.markSalePaid,
+      registerPayment: s.registerPayment,
     })),
   );
 
@@ -30,6 +30,6 @@ export const usePendingSales = () => {
     isLoading,
     error,
     getPendingSalesWithDetailsByClient,
-    markSalePaid,
+    registerPayment,
   };
 };
