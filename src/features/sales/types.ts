@@ -57,6 +57,7 @@ export type Sale = {
   discountType: DiscountType | null;
   discount: number | null;
   total: number;
+  totalPending: number | null;
   createdAt: Date;
   observations: string | null;
   status: SaleStatus;
@@ -75,6 +76,7 @@ export type SaleSummary = {
   discount: number;
   discountType: string;
   total: number;
+  totalPending: number;
 };
 
 export type SalesFilter = z.infer<typeof SalesFilterSchema>;
