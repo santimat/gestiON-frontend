@@ -15,7 +15,10 @@ export const SaleDetailModalList = ({ details }: SaleDetailModalListProps) => {
       </p>
       <ul className="[&>li]:not-last:border-border max-h-60 overflow-y-auto [&>li]:not-last:border-b">
         {details.map((product) => (
-          <SaleDetailModalItem product={product} />
+          <SaleDetailModalItem
+            key={`product-${product.id}`}
+            product={product}
+          />
         ))}
       </ul>
     </div>

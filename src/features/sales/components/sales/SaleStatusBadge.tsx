@@ -5,8 +5,8 @@ import { StatusBadge } from "@shared/components/StatusBadge";
 const STATUS_TONES: Record<SaleStatus, "success" | "warning" | "primary"> = {
   PAYED: "success",
   PENDING: "warning",
-  PARTIAL_PAYED: "primary",
-  GIFTED: "success",
+  PARTIAL_PAYED: "warning",
+  GIFTED: "primary",
 };
 
 type StatusBadgeProps = {

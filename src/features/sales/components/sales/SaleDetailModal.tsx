@@ -6,11 +6,12 @@ import { toast } from "sonner";
 import type { Sale } from "@features/sales/types";
 import { formatCurrency } from "@shared/utils/money";
 import { ModalHeader } from "@shared/components/ModalHeader";
-import { SaleStatusBadge } from "@/features/sales/components/sales/SaleStatusBadge";
+import { SaleStatusBadge } from "@features/sales/components/sales/SaleStatusBadge";
 import { SaleDetailModalList } from "@features/sales/components/sales/SaleDetailModalList";
 import { SaleDetailModalField } from "@features/sales/components/sales/SaleDetailModalField";
 import { useSaleDetails } from "@features/sales/hooks/useSaleDetails";
 import { toastAppError } from "@shared/utils/toastAppError";
+import { validatePaymentAmount } from "@features/sales/utils/paymentUtils";
 
 type SaleDetailModalProps = {
   opened: boolean;
@@ -46,18 +47,16 @@ export const SaleDetailModal = ({
     ? sale.totalPending
     : null;
 
-  const validateAmount = (value: string): boolean => {
-    const num = Number(value);
-    if (value === "" || num <= 0) {
-      setAmountError("El monto debe ser mayor a 0");
-      return false;
-    }
-    if (totalPending != null && num > totalPending) {
-      setAmountError(`El monto no puede superar el pendiente ($${formatCurrency(totalPending)})`);
-      return false;
-    }
+  const handleClose = () => {
+    setAmount("");
     setAmountError("");
-    return true;
+    closeModal();
+  };
+
+  const validateAmount = (value: string): boolean => {
+    const error = validatePaymentAmount(value, totalPending);
+    setAmountError(error);
+    return error === "";
   };
 
   const handleRegisterPayment = async () => {
@@ -67,7 +66,7 @@ export const SaleDetailModal = ({
     try {
       await registerPayment(sale.id, amountNum);
       toast.success("Pago registrado correctamente");
-      closeModal();
+      handleClose();
       onPaymentSuccess?.();
     } catch (error) {
       toastAppError(error, "No se pudo registrar el pago.");
@@ -77,7 +76,7 @@ export const SaleDetailModal = ({
   return (
     <Modal
       opened={opened}
-      onClose={closeModal}
+      onClose={handleClose}
       centered
       size="md"
       transitionProps={{ transition: "fade-down", duration: 300 }}
@@ -136,7 +135,10 @@ export const SaleDetailModal = ({
               label="Monto a pagar"
               placeholder="$0"
               value={amount}
-              onChange={(value) => setAmount(value?.toString() ?? "")}
+              onChange={(value) => {
+                setAmount(value?.toString() ?? "");
+                if (amountError) setAmountError("");
+              }}
               error={amountError ? amountError : undefined}
               min={0.01}
               max={totalPending ?? undefined}
@@ -158,7 +160,7 @@ export const SaleDetailModal = ({
         <Button
           variant="default"
           className="hover:bg-background-soft! shadow-raised h-10 w-full"
-          onClick={closeModal}
+          onClick={handleClose}
         >
           Cerrar
         </Button>

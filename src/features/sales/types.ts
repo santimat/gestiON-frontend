@@ -91,7 +91,7 @@ export type PendingSalesWithDetails = {
   };
 };
 
-export type TransactionType = "PAYMENT" | "SALE" | "GIFT" | "REFUND";
+export type TransactionType = "PAYMENT" | "SALE";
 
 export type TransactionResponse = {
   id: number;
