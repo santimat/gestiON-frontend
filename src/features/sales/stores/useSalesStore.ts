@@ -1,5 +1,6 @@
 import { create } from "zustand";
 
+import type { AppError } from "@shared/types";
 import type { SalesFilter } from "@features/sales/types";
 import type { UseSalesStore } from "@features/sales/stores/types";
 import { saleService } from "@features/sales/services/saleService";
@@ -12,13 +13,19 @@ export const useSalesStore = create<UseSalesStore>((set) => ({
   error: null,
   getSales: async (filters: SalesFilter) => {
     set({ isLoading: true, error: null });
-    const data = await saleService.getSales(filters);
-    set({
-      sales: data.content,
-      totalSales: data.page?.totalElements ?? 0,
-      totalPages: data.page?.totalPages ?? 0,
-      isLoading: false,
-      error: null,
-    });
+    try {
+      const data = await saleService.getSales(filters);
+      set({
+        sales: data.content,
+        totalSales: data.page?.totalElements ?? 0,
+        totalPages: data.page?.totalPages ?? 0,
+        isLoading: false,
+        error: null,
+      });
+    } catch (error) {
+      const appError = error as AppError;
+      set({ isLoading: false, error: appError.message });
+      throw error;
+    }
   },
 }));
