@@ -20,7 +20,7 @@ export const LowStockProducts = ({
         </p>
       </div>
       {lowStockProductsCount > 0 ? (
-        <ul className={`flex flex-col gap-2 px-4 py-2`}>
+        <ul className={`flex flex-col gap-2 p-4`}>
           {lowStockProducts.map((product: LowStockProduct) => (
             <li
               key={`${product.productName}-${product.productId}`}

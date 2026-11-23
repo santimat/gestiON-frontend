@@ -69,7 +69,7 @@ export const Dashboard = () => {
         />
         <TopProductsBarChart {...{ topProductsSold }} />
       </div>
-      <div className="grid grid-cols-1 gap-4 pb-4 xl:grid-cols-2">
+      <div className="grid grid-cols-1 grid-rows-[400px] gap-4 pb-4 xl:grid-cols-2">
         <LowStockProducts {...{ lowStockProducts }} />
         <div className="border-background-soft scrollbar-thumb-background-soft max-h-70 scrollbar-thin overflow-y-auto rounded-xl border">
           <p className="bg-card sticky top-0 px-4 py-2 font-semibold">

@@ -37,6 +37,8 @@ export const ErrorDictionary = {
   VALIDATION_ERROR: "La validación de la solicitud falló.",
   INVALID_DISCOUNT_PREFIX_ZERO: "El descuento no puede ser cero.",
   INVALID_DISCOUNT: "El descuento es inválido.",
+  OFFER_EXCEEDS_PRODUCT_PRICE:
+    "El descuento de la oferta no puede superar el precio de venta del producto, ya que lo dejaría en negativo.",
   DISCOUNT_WITHOUT_TYPE:
     "El descuento requiere especificar el tipo de descuento.",
   TYPE_WITHOUT_DISCOUNT:
