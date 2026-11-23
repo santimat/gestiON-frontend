@@ -59,6 +59,13 @@ export const SaleDetailModal = ({
     return error === "";
   };
 
+  const handleSetTotalAmount = () => {
+    if (totalPending != null) {
+      setAmount(totalPending.toString());
+      setAmountError("");
+    }
+  };
+
   const handleRegisterPayment = async () => {
     if (!validateAmount(amount)) return;
 
@@ -130,7 +137,7 @@ export const SaleDetailModal = ({
         )}
 
         {showPending && (
-          <div className="space-y-2 pt-2">
+          <div className="grid grid-cols-2 gap-2 pt-2">
             <NumberInput
               label="Monto a pagar"
               placeholder="$0"
@@ -147,7 +154,15 @@ export const SaleDetailModal = ({
               className="w-full"
             />
             <Button
-              className="h-10 w-full"
+              variant="outline"
+              className="h-10"
+              onClick={handleSetTotalAmount}
+              disabled={isRegisteringPayment || totalPending == null}
+            >
+              Total
+            </Button>
+            <Button
+              className="col-span-2 h-10"
               onClick={handleRegisterPayment}
               loading={isRegisteringPayment}
               disabled={isRegisteringPayment}
