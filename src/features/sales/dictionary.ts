@@ -8,4 +8,6 @@ export const PAYMENT_METHODS_LABELS = {
 export const STATUS_PAYMENT = {
   PAYED: "Pago",
   PENDING: "Pendiente",
+  PARTIAL_PAYED: "Parcial",
+  GIFTED: "Regalado",
 };

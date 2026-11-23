@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\vscode\\proyecto-finalisimo\\gestiON-frontend\\.archify\\architecture-gestion-20261113-132300\\candidate.json",
+    "sha256": "01b5fb631c758c37a175e6315d7c80add5e437fdbb2f815f910e9c4c9d002e19",
+    "bytes": 6004
+  },
+  "artifact": {
+    "path": "C:\\vscode\\proyecto-finalisimo\\gestiON-frontend\\docs\\gestiON-architecture.html",
+    "sha256": "215f833fc6bead6dd7856faf4834579df3bf54e437bf0edd6f06282d91a38250",
+    "bytes": 875097
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\vscode\\proyecto-finalisimo\\gestiON-frontend\\docs\\gestion-architecture.finalize.json",
+    "summaryReceipt": "C:\\vscode\\proyecto-finalisimo\\gestiON-frontend\\docs\\gestion-architecture.finalize-summary.json",
+    "browserCheckReceipt": "C:\\vscode\\proyecto-finalisimo\\gestiON-frontend\\docs\\gestion-architecture.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-13T16:17:42.466Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 8589,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 13,
+      "routesOverSuggestedBends": 3,
+      "routesOverSuggestedStretch": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "cashier-to-auth",
+            "from": "cashier",
+            "to": "auth",
+            "label": "login",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "right": {
+            "id": "lovable-to-frontend",
+            "from": "lovable",
+            "to": "landing",
+            "label": "diseño referencia",
+            "collectionIndex": 20,
+            "artifactIndex": 21
+          },
+          "point": [
+            305,
+            256
+          ]
+        },
+        {
+          "left": {
+            "id": "auth-to-dashboard",
+            "from": "auth",
+            "to": "dashboard",
+            "label": "autenticado",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "right": {
+            "id": "auth-to-commerces",
+            "from": "auth",
+            "to": "commerces",
+            "label": "",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "point": [
+            524,
+            70
+          ],
+          "sharedNode": "auth"
+        },
+        {
+          "left": {
+            "id": "auth-to-pos",
+            "from": "auth",
+            "to": "pos",
+            "label": "",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "right": {
+            "id": "features-to-zustand",
+            "from": "dashboard",
+            "to": "zustand",
+            "label": "estado",
+            "collectionIndex": 17,
+            "artifactIndex": 18
+          },
+          "point": [
+            608,
+            170
+          ]
+        },
+        {
+          "left": {
+            "id": "auth-to-sales",
+            "from": "auth",
+            "to": "sales",
+            "label": "",
+            "collectionIndex": 6,
+            "artifactIndex": 7
+          },
+          "right": {
+            "id": "features-to-zustand",
+            "from": "dashboard",
+            "to": "zustand",
+            "label": "estado",
+            "collectionIndex": 17,
+            "artifactIndex": 18
+          },
+          "point": [
+            608,
+            250
+          ]
+        },
+        {
+          "left": {
+            "id": "auth-to-products",
+            "from": "auth",
+            "to": "products",
+            "label": "",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "right": {
+            "id": "features-to-zustand",
+            "from": "dashboard",
+            "to": "zustand",
+            "label": "estado",
+            "collectionIndex": 17,
+            "artifactIndex": 18
+          },
+          "point": [
+            604,
+            315.27272727272725
+          ]
+        },
+        {
+          "left": {
+            "id": "auth-to-products",
+            "from": "auth",
+            "to": "products",
+            "label": "",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "right": {
+            "id": "axios-to-spring",
+            "from": "axios",
+            "to": "spring",
+            "label": "REST + cookie",
+            "collectionIndex": 19,
+            "artifactIndex": 20
+          },
+          "point": [
+            657,
+            370
+          ]
+        },
+        {
+          "left": {
+            "id": "auth-to-clients",
+            "from": "auth",
+            "to": "clients",
+            "label": "",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "right": {
+            "id": "zustand-to-axios",
+            "from": "zustand",
+            "to": "axios",
+            "label": "servicios",
+            "collectionIndex": 18,
+            "artifactIndex": 19
+          },
+          "point": [
+            505,
+            432
+          ]
+        },
+        {
+          "left": {
+            "id": "auth-to-clients",
+            "from": "auth",
+            "to": "clients",
+            "label": "",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "right": {
+            "id": "axios-to-spring",
+            "from": "axios",
+            "to": "spring",
+            "label": "REST + cookie",
+            "collectionIndex": 19,
+            "artifactIndex": 20
+          },
+          "point": [
+            520.0499999999993,
+            432
+          ]
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "auth-to-clients",
+            "from": "auth",
+            "to": "clients",
+            "label": "",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "bends": 5,
+          "stretch": 1.665
+        },
+        {
+          "relationship": {
+            "id": "features-to-zustand",
+            "from": "dashboard",
+            "to": "zustand",
+            "label": "estado",
+            "collectionIndex": 17,
+            "artifactIndex": 18
+          },
+          "bends": 4,
+          "stretch": 1
+        },
+        {
+          "relationship": {
+            "id": "axios-to-spring",
+            "from": "axios",
+            "to": "spring",
+            "label": "REST + cookie",
+            "collectionIndex": 19,
+            "artifactIndex": 20
+          },
+          "bends": 5,
+          "stretch": 1
+        }
+      ],
+      "truncated": true
+    },
+    "hints": [
+      "auth has 6 relationships facing its right side, which fits 5 ports: make that side at least 102px, or move some of those neighbours so they face another side of auth.",
+      "cashier → auth crosses lovable → landing: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "auth → dashboard and auth → commerces cross next to auth: move node dashboard or commerces so the two reach auth from different sides (for example one level with it, one directly above or below it).",
+      "auth → pos crosses dashboard → zustand: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "auth → sales crosses dashboard → zustand: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "auth → products crosses dashboard → zustand: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "auth → products crosses axios → spring: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "auth → clients crosses zustand → axios: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

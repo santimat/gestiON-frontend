@@ -32,6 +32,8 @@ export type SaleDraft = {
   clientId: number | null;
 };
 
+export type SetSaleDraft = (draft: Partial<SaleDraft>) => void;
+
 export type SaleRequest = z.infer<typeof SaleRequestSchema>;
 
 export type SaleStatus = z.infer<typeof SaleStatusSchema>;
@@ -55,6 +57,7 @@ export type Sale = {
   discountType: DiscountType | null;
   discount: number | null;
   total: number;
+  totalPending: number | null;
   createdAt: Date;
   observations: string | null;
   status: SaleStatus;
@@ -73,6 +76,7 @@ export type SaleSummary = {
   discount: number;
   discountType: string;
   total: number;
+  totalPending: number;
 };
 
 export type SalesFilter = z.infer<typeof SalesFilterSchema>;
@@ -80,5 +84,23 @@ export type SalesFilter = z.infer<typeof SalesFilterSchema>;
 export type PendingSalesWithDetails = {
   pendingSalesCount: number;
   totalPending: number;
-  pendingSales: Sale[];
+  pendingSales: {
+    content: Sale[];
+    totalElements: number;
+    totalPages: number;
+  };
+};
+
+export type TransactionType = "PAYMENT" | "SALE";
+
+export type TransactionResponse = {
+  id: number;
+  amount: number;
+  type: TransactionType;
+  saleId: number;
+  createdAt: string;
+};
+
+export type RegisterPaymentRequest = {
+  amount: number;
 };

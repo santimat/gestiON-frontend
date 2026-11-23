@@ -8,7 +8,9 @@ import { toPageParams } from "@shared/utils/pagination";
 export const offerService = {
   getOffers: async (filters: OffersFilter) => {
     return executeApiCall(() =>
-      backendAPI.get("/offers", { params: toPageParams(filters) }),
+      backendAPI.get("/offers", {
+        params: toPageParams(filters),
+      }),
     );
   },
 

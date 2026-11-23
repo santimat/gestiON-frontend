@@ -2,9 +2,11 @@ import type { SaleStatus } from "@features/sales/types";
 import { STATUS_PAYMENT } from "@features/sales/dictionary";
 import { StatusBadge } from "@shared/components/StatusBadge";
 
-const STATUS_TONES: Record<SaleStatus, "success" | "warning"> = {
+const STATUS_TONES: Record<SaleStatus, "success" | "warning" | "primary"> = {
   PAYED: "success",
   PENDING: "warning",
+  PARTIAL_PAYED: "warning",
+  GIFTED: "primary",
 };
 
 type StatusBadgeProps = {

@@ -19,7 +19,7 @@ type OfferItemProps = {
 };
 
 export const OfferItem = ({ offer, columns }: OfferItemProps) => {
-  const { openEdit } = useOffer();
+  const { openEdit, canEdit } = useOffer();
   const { openAssign } = useOfferAssigment();
   const { products } = useProduct();
 
@@ -54,14 +54,16 @@ export const OfferItem = ({ offer, columns }: OfferItemProps) => {
             <Tags pointerEvents="none" size={20} />
           </button>
         )}
-        <button
-          aria-label={`Editar oferta ${""}`}
-          title="Editar"
-          onClick={() => openEdit(offer)}
-          className={`hover:bg-background-soft rounded-md p-2 transition-transform hover:scale-110 hover:cursor-pointer active:scale-95 ${hasAssignment ? "" : "col-start-2"}`}
-        >
-          <Pencil pointerEvents="none" size={20} />
-        </button>
+        {canEdit && (
+          <button
+            aria-label={`Editar oferta ${offer.id}`}
+            title="Editar"
+            onClick={() => openEdit(offer)}
+            className={`hover:bg-background-soft rounded-md p-2 transition-transform hover:scale-110 hover:cursor-pointer active:scale-95 ${hasAssignment ? "" : "col-start-2"}`}
+          >
+            <Pencil pointerEvents="none" size={20} />
+          </button>
+        )}
       </div>
     </li>
   );

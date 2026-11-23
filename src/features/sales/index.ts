@@ -17,4 +17,5 @@ export type {
   PaymentMethod,
   DiscountType,
   PendingSalesWithDetails,
+  SetSaleDraft,
 } from "@features/sales/types";

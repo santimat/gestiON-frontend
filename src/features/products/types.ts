@@ -66,3 +66,7 @@ export type ProductFieldErrors = Partial<
 >;
 
 export type ProductFilters = z.infer<typeof ProductFiltersSchema>;
+
+export type StockStatus = z.infer<
+  typeof ProductFiltersSchema.shape.stockStatus
+>;

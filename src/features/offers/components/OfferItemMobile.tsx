@@ -16,7 +16,7 @@ type OfferItemMobileProps = {
 };
 
 export const OfferItemMobile = ({ offer }: OfferItemMobileProps) => {
-  const { openEdit } = useOffer();
+  const { openEdit, canEdit } = useOffer();
   const { openAssign } = useOfferAssigment();
   const { products } = useProduct();
 
@@ -51,15 +51,17 @@ export const OfferItemMobile = ({ offer }: OfferItemMobileProps) => {
             Asignar
           </Button>
         )}
-        <Button
-          variant="outline"
-          size="sm"
-          className="flex-1"
-          onClick={() => openEdit(offer)}
-        >
-          <Pencil size={14} />
-          Editar
-        </Button>
+        {canEdit && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex-1"
+            onClick={() => openEdit(offer)}
+          >
+            <Pencil size={14} />
+            Editar
+          </Button>
+        )}
       </div>
     </div>
   );

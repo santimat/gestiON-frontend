@@ -12,8 +12,8 @@ export const LowStockProducts = ({
   const lowStockProductsCount = lowStockProducts?.length ?? 0;
 
   return (
-    <div className="border-background-soft scrollbar-thumb-background-soft w-full scrollbar-thin overflow-y-auto rounded-xl border">
-      <div className="bg-background sticky top-0 z-10 mb-4 px-4 py-2">
+    <div className="border-background-soft scrollbar-thumb-background-soft max-h-70 scrollbar-thin overflow-y-auto rounded-xl border">
+      <div className="bg-card sticky top-0 mb-4 px-4 py-2">
         <p className="font-semibold">Productos con bajo stock</p>
         <p className="text-secondary-foreground text-sm">
           Qué productos hay que reponer

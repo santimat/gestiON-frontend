@@ -8,15 +8,18 @@ import type {
   SalesFilter,
   SaleStatus,
 } from "@features/sales/types";
+import { SALE_STATUS } from "@features/sales/constants";
 import {
   PAYMENT_METHODS_LABELS,
   STATUS_PAYMENT,
 } from "@features/sales/dictionary";
 
-const STATUS_OPTIONS: { value: SaleStatus | ""; label: string }[] = [
-  { value: "PAYED", label: STATUS_PAYMENT.PAYED },
-  { value: "PENDING", label: STATUS_PAYMENT.PENDING },
-];
+const STATUS_OPTIONS: { value: SaleStatus; label: string }[] = SALE_STATUS.map(
+  (status) => ({
+    value: status,
+    label: STATUS_PAYMENT[status],
+  }),
+);
 
 const PAYMENT_METHOD_OPTIONS: { value: PaymentMethod; label: string }[] =
   Object.entries(PAYMENT_METHODS_LABELS).map(([value, label]) => ({
@@ -72,13 +75,16 @@ export const SalesFilterBar = ({
       />
       <Select
         aria-label="Filtrar por estado de pago"
-        placeholder="Pago o pendiente"
-        className="sm:w-40"
+        placeholder="Todos los estados"
+        className="sm:w-44"
         clearable
         value={filters.status ?? null}
         data={STATUS_OPTIONS}
         onChange={(value) =>
-          setFilters({ status: value as SaleStatus, page: 1 })
+          setFilters({
+            status: value ? (value as SaleStatus) : undefined,
+            page: 1,
+          })
         }
       />
     </div>

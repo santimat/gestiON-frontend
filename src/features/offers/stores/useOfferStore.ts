@@ -3,6 +3,7 @@ import { create } from "zustand";
 import type { AppError } from "@shared/types";
 import type { UseOfferStore } from "@features/offers/stores/types";
 import { offerService } from "@features/offers/services/offerService";
+import type { OffersFilter } from "../types";
 
 export const useOfferStore = create<UseOfferStore>((set, get) => ({
   offers: [],
@@ -23,7 +24,7 @@ export const useOfferStore = create<UseOfferStore>((set, get) => ({
   closeFormModal: () => set({ isFormModalOpen: false }),
   closeAssignModal: () => set({ isAssignModalOpen: false }),
 
-  getOffers: async (filters) => {
+  getOffers: async (filters: OffersFilter) => {
     set({ isLoading: true, error: null, lastFilters: filters });
     try {
       const data = await offerService.getOffers(filters);

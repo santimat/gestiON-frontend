@@ -18,10 +18,14 @@ const SaleDetailModal = lazy(() =>
 );
 
 export const Sales = () => {
-  const { sales, totalSales, totalPages, isLoading, error } = useSales();
+  const { sales, totalSales, totalPages, isLoading, error, getSales } = useSales();
   const { isFiltered, setFilters, filters } = useSalesSearch();
   const { saleWithDetails, closeDetailModal, isDetailModalOpen } =
     useSaleDetails();
+
+  const handlePaymentSuccess = () => {
+    getSales(filters);
+  };
 
   usePageHeader({
     title: "Ventas",
@@ -40,6 +44,7 @@ export const Sales = () => {
         opened={isDetailModalOpen}
         sale={saleWithDetails}
         closeModal={closeDetailModal}
+        onPaymentSuccess={handlePaymentSuccess}
       />
 
       <main className="flex flex-col gap-4">

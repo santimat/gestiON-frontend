@@ -1,51 +1,34 @@
 import { useState } from "react";
-import { Button, Modal } from "@mantine/core";
+import { Button, Modal, NumberInput } from "@mantine/core";
 import { ReceiptText } from "lucide-react";
 import { toast } from "sonner";
 
 import type { Sale } from "@features/sales/types";
 import { formatCurrency } from "@shared/utils/money";
 import { ModalHeader } from "@shared/components/ModalHeader";
-import { SaleStatusBadge } from "@/features/sales/components/sales/SaleStatusBadge";
+import { SaleStatusBadge } from "@features/sales/components/sales/SaleStatusBadge";
 import { SaleDetailModalList } from "@features/sales/components/sales/SaleDetailModalList";
 import { SaleDetailModalField } from "@features/sales/components/sales/SaleDetailModalField";
-import { useSales } from "@features/sales/hooks/useSales";
-import { useSaleDetailsStore } from "@features/sales/stores/useSaleDetailsStore";
+import { useSaleDetails } from "@features/sales/hooks/useSaleDetails";
 import { toastAppError } from "@shared/utils/toastAppError";
+import { validatePaymentAmount } from "@features/sales/utils/paymentUtils";
 
 type SaleDetailModalProps = {
   opened: boolean;
   sale: Sale | null;
   closeModal: () => void;
+  onPaymentSuccess?: () => void;
 };
 
 export const SaleDetailModal = ({
   opened,
   sale,
   closeModal,
+  onPaymentSuccess,
 }: SaleDetailModalProps) => {
-  const { markSalePaid } = useSales();
-  const [isMarking, setIsMarking] = useState(false);
-
-  const handleMarkPaid = async () => {
-    if (!sale?.id) return;
-    setIsMarking(true);
-    try {
-      await markSalePaid(sale.id);
-      useSaleDetailsStore.setState((prev) => {
-        if (prev.saleWithDetails?.id !== sale.id) return prev;
-        return {
-          ...prev,
-          saleWithDetails: { ...prev.saleWithDetails, status: "PAYED" },
-        };
-      });
-      toast.success("Venta marcada como pagada.");
-    } catch (error) {
-      toastAppError(error, "No se pudo marcar la venta como pagada.");
-    } finally {
-      setIsMarking(false);
-    }
-  };
+  const { registerPayment, isRegisteringPayment } = useSaleDetails();
+  const [amount, setAmount] = useState("");
+  const [amountError, setAmountError] = useState("");
 
   if (!sale?.id) return null;
 
@@ -59,11 +42,48 @@ export const SaleDetailModal = ({
       }`
     : null;
   const total = formatCurrency(sale.total);
+  const showPending = sale.status === "PENDING" || sale.status === "PARTIAL_PAYED";
+  const totalPending = showPending && sale.totalPending != null
+    ? sale.totalPending
+    : null;
+
+  const handleClose = () => {
+    setAmount("");
+    setAmountError("");
+    closeModal();
+  };
+
+  const validateAmount = (value: string): boolean => {
+    const error = validatePaymentAmount(value, totalPending);
+    setAmountError(error);
+    return error === "";
+  };
+
+  const handleSetTotalAmount = () => {
+    if (totalPending != null) {
+      setAmount(totalPending.toString());
+      setAmountError("");
+    }
+  };
+
+  const handleRegisterPayment = async () => {
+    if (!validateAmount(amount)) return;
+
+    const amountNum = Number(amount);
+    try {
+      await registerPayment(sale.id, amountNum);
+      toast.success("Pago registrado correctamente");
+      handleClose();
+      onPaymentSuccess?.();
+    } catch (error) {
+      toastAppError(error, "No se pudo registrar el pago.");
+    }
+  };
 
   return (
     <Modal
       opened={opened}
-      onClose={closeModal}
+      onClose={handleClose}
       centered
       size="md"
       transitionProps={{ transition: "fade-down", duration: 300 }}
@@ -109,20 +129,53 @@ export const SaleDetailModal = ({
           <p className="text-xl font-semibold tabular-nums">{total}</p>
         </div>
 
-        {sale.status === "PENDING" && (
-          <Button
-            className="h-10 w-full"
-            onClick={handleMarkPaid}
-            loading={isMarking}
-          >
-            Marcar como paga
-          </Button>
+        {totalPending != null && (
+          <div className="flex items-center justify-between text-warning">
+            <p className="font-semibold">Pendiente</p>
+            <p className="text-xl font-semibold tabular-nums">{formatCurrency(totalPending)}</p>
+          </div>
+        )}
+
+        {showPending && (
+          <div className="grid grid-cols-2 gap-2 pt-2">
+            <NumberInput
+              label="Monto a pagar"
+              placeholder="$0"
+              value={amount}
+              onChange={(value) => {
+                setAmount(value?.toString() ?? "");
+                if (amountError) setAmountError("");
+              }}
+              error={amountError ? amountError : undefined}
+              min={0.01}
+              max={totalPending ?? undefined}
+              step={0.01}
+              required
+              className="w-full"
+            />
+            <Button
+              variant="outline"
+              className="h-10"
+              onClick={handleSetTotalAmount}
+              disabled={isRegisteringPayment || totalPending == null}
+            >
+              Total
+            </Button>
+            <Button
+              className="col-span-2 h-10"
+              onClick={handleRegisterPayment}
+              loading={isRegisteringPayment}
+              disabled={isRegisteringPayment}
+            >
+              Registrar pago
+            </Button>
+          </div>
         )}
 
         <Button
           variant="default"
           className="hover:bg-background-soft! shadow-raised h-10 w-full"
-          onClick={closeModal}
+          onClick={handleClose}
         >
           Cerrar
         </Button>

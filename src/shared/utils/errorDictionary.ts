@@ -4,6 +4,7 @@ export const ErrorDictionary = {
   ACCOUNT_DISABLED: "La cuenta está deshabilitada.",
   UNAUTHORIZED: "Se requiere estar autenticado para realizar esta acción.",
   ACCESS_DENIED: "No tienes permisos para acceder a este recurso.",
+  COMMERCE_NOT_AVAILABLE: "El usuario no tiene un comercio asociado.",
   USER_NOT_FOUND: "Usuario no encontrado.",
   CLIENT_NOT_FOUND: "Cliente no encontrado.",
   CATEGORY_NOT_FOUND: "Categoría no encontrada.",
@@ -22,6 +23,18 @@ export const ErrorDictionary = {
   COMMERCE_CUIT_ALREADY_EXISTS: "El CUIT del comercio ya está registrado.",
   SELL_POINT_NAME_ALREADY_EXISTS: "Ya existe un punto de venta con ese nombre.",
   INSUFFICIENT_STOCK: "No hay stock suficiente para la cantidad solicitada.",
+  CONCURRENT_STOCK_UPDATE:
+    "El stock fue modificado por otra transacción, por favor reintentá.",
+  PRODUCT_INACTIVE: "El producto no está disponible para la venta.",
+  PRODUCT_SALE_PRICE_BELOW_COST:
+    "El precio de venta no puede ser menor al costo.",
+  SALE_NOT_PENDING: "Solo las ventas pendientes pueden marcarse como pagadas.",
+  INVALID_FILE_TYPE: "Tipo de archivo no permitido.",
+  FILE_TOO_LARGE: "El tamaño del archivo excede el límite máximo.",
+  FILE_UPLOAD_FAILED: "No se pudo subir el archivo.",
+  FILE_DELETE_FAILED: "No se pudo eliminar el archivo.",
+  FILE_PROCESSING_FAILED: "No se pudo procesar el archivo.",
+  VALIDATION_ERROR: "La validación de la solicitud falló.",
   INVALID_DISCOUNT_PREFIX_ZERO: "El descuento no puede ser cero.",
   INVALID_DISCOUNT: "El descuento es inválido.",
   OFFER_EXCEEDS_PRODUCT_PRICE:
@@ -32,30 +45,34 @@ export const ErrorDictionary = {
     "El tipo de descuento requiere especificar el monto del descuento.",
   DISCOUNT_EXCEEDS_SUBTOTAL:
     "El descuento no puede superar el subtotal de la venta.",
-  PRODUCT_INACTIVE: "El producto no está disponible para la venta.",
-  INVALID_FILE_TYPE: "Tipo de archivo no permitido.",
-  FILE_TOO_LARGE: "El tamaño del archivo excede el límite máximo.",
-  FILE_UPLOAD_FAILED: "No se pudo subir el archivo.",
-  FILE_DELETE_FAILED: "No se pudo eliminar el archivo.",
-  FILE_PROCESSING_FAILED: "No se pudo procesar el archivo.",
-  VALIDATION_ERROR: "La validación de la solicitud falló.",
-  INVALID_REQUEST_BODY: "El cuerpo de la solicitud está malformado.",
-  INVALID_PARAMETER: "Un campo de la solicitud es inválido.",
-  MISSING_PARAMETER: "Falta un campo requerido en la solicitud.",
-  METHOD_NOT_ALLOWED: "Acción invalida para este recurso.",
-  UNSUPPORTED_MEDIA_TYPE: "El tipo de contenido no es compatible.",
-  DATA_INTEGRITY_VIOLATION:
-    "La operación viola las restricciones de integridad de datos.",
-  PRODUCT_SALE_PRICE_BELOW_COST:
-    "El precio de venta no puede ser menor al costo.",
-  SALE_NOT_PENDING: "Solo las ventas pendientes pueden marcarse como pagadas.",
+  OFFER_EXCEEDS_PRODUCT_PRICE:
+    "El descuento de la oferta no puede superar el precio de venta del producto.",
+  PAYMENT_METHOD_OFFER_EXCEEDS_SALE_SUBTOTAL:
+    "El descuento de la oferta de método de pago no puede superar el subtotal de la venta.",
   INVALID_DATE: "La fecha no es válida.",
   DISCOUNT_PERCENTAGE_EXCEEDS_100:
     "El descuento porcentual no puede superar el 100%.",
-  OFFER_OVERLAP: "Ya existe una oferta con las mismas caracteristicas.",
+  OFFER_OVERLAP: "Ya existe una oferta con las mismas características.",
   OFFER_HAS_PAYMENT_METHODS:
     "No se pueden asignar productos a ofertas con métodos de pago.",
   OFFER_HAS_PRODUCTS:
     "No se pueden asignar métodos de pago a ofertas con productos asignados.",
+  OBSERVATION_REQUIRED_FOR_GIFT:
+    "La observación es obligatoria al marcar una venta como regalo.",
+  GIFT_ONLY_FOR_OWNER: "Solo los dueños pueden marcar una venta como regalo.",
+  CLIENT_REQUIRED_FOR_CREDIT_ACCOUNT:
+    "Se requiere seleccionar un cliente para usar cuenta corriente.",
+  PARTIAL_PAYMENT_EXCEEDS_TOTAL:
+    "El pago parcial no puede superar el total de la venta.",
+  SALE_ALREADY_PAYED: "La venta ya está completamente pagada.",
+  INVALID_PAYMENT_AMOUNT:
+    "El monto del pago debe ser mayor a cero y no superar el pendiente.",
+  INVALID_REQUEST_BODY: "El cuerpo de la solicitud está malformado.",
+  INVALID_PARAMETER: "Un campo de la solicitud es inválido.",
+  MISSING_PARAMETER: "Falta un campo requerido en la solicitud.",
+  METHOD_NOT_ALLOWED: "Acción inválida para este recurso.",
+  UNSUPPORTED_MEDIA_TYPE: "El tipo de contenido no es compatible.",
+  DATA_INTEGRITY_VIOLATION:
+    "La operación viola las restricciones de integridad de datos.",
   INTERNAL_ERROR: "Hubo un error por parte del servidor.",
 } as const;

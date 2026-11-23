@@ -24,6 +24,7 @@ export const useSaleStore = create<UseSaleStore>((set) => ({
       const existingLine = prevState.cart.find(
         (line) => line.productId === product.id,
       );
+
       if (existingLine) {
         // cap: nunca superamos el stock disponible
         const qty = Math.min(existingLine.qty + 1, product.currentStock);

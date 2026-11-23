@@ -9,13 +9,8 @@ export const usePendingSales = () => {
     totalPending,
     isLoading,
     error,
-    selectedPendingSale,
-    isDetailModalOpen,
-    pendingSalesClient,
-    setPendingSalesClient,
     getPendingSalesWithDetailsByClient,
-    openDetailModal,
-    closeDetailModal,
+    registerPayment,
   } = usePendingSalesStore(
     useShallow((s) => ({
       pendingSales: s.pendingSales,
@@ -23,13 +18,8 @@ export const usePendingSales = () => {
       totalPending: s.totalPending,
       isLoading: s.isLoading,
       error: s.error,
-      selectedPendingSale: s.selectedPendingSale,
-      isDetailModalOpen: s.isDetailModalOpen,
-      pendingSalesClient: s.pendingSalesClient,
-      setPendingSalesClient: s.setPendingSalesClient,
       getPendingSalesWithDetailsByClient: s.getPendingSalesWithDetailsByClient,
-      openDetailModal: s.openDetailModal,
-      closeDetailModal: s.closeDetailModal,
+      registerPayment: s.registerPayment,
     })),
   );
 
@@ -39,12 +29,7 @@ export const usePendingSales = () => {
     totalPending,
     isLoading,
     error,
-    selectedPendingSale,
-    isDetailModalOpen,
-    pendingSalesClient,
-    setPendingSalesClient,
     getPendingSalesWithDetailsByClient,
-    openDetailModal,
-    closeDetailModal,
+    registerPayment,
   };
 };
