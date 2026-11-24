@@ -5,6 +5,8 @@ import { useCommerceStore } from "@features/commerces/stores/useCommerceStore";
 export const useCommerce = () => {
   const {
     commercesWithOwner,
+    totalCommerces,
+    totalPages,
     commerceStats,
     currentCommerce,
     isLoading,
@@ -23,6 +25,8 @@ export const useCommerce = () => {
   } = useCommerceStore(
     useShallow((s) => ({
       commercesWithOwner: s.commercesWithOwner,
+      totalCommerces: s.totalCommerces,
+      totalPages: s.totalPages,
       commerceStats: s.commerceStats,
       currentCommerce: s.currentCommerce,
       isLoading: s.isLoading,
@@ -62,6 +66,8 @@ export const useCommerce = () => {
 
   return {
     commercesWithOwner,
+    totalCommerces,
+    totalPages,
     commerceStats,
     currentCommerce,
     isLoading,

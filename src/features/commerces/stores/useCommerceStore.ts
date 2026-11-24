@@ -16,6 +16,8 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
     set(() => ({ formCommerce: null, isFormModalOpen: false })),
 
   commercesWithOwner: [],
+  totalCommerces: 0,
+  totalPages: 0,
   // filtros de la última búsqueda: al crear refrescamos con los mismos
   lastFilters: {},
   commerceStats: null,
@@ -29,10 +31,12 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
     const appliedFilters = filters ?? get().lastFilters;
     set(() => ({ isLoading: true, lastFilters: appliedFilters }));
     try {
-      const commercesWOwner =
+      const { commercesWithOwner, totalCommerces, totalPages } =
         await commerceService.getCommercesWithOwner(appliedFilters);
       set(() => ({
-        commercesWithOwner: commercesWOwner,
+        commercesWithOwner,
+        totalCommerces,
+        totalPages,
         error: null,
       }));
     } catch (error) {

@@ -14,6 +14,8 @@ export type UseCommerceStore = {
   closeFormModal: () => void;
 
   commercesWithOwner: CommerceWithOwner[];
+  totalCommerces: number;
+  totalPages: number;
   lastFilters: CommerceFilters;
   commerceStats?: CommerceStats | null;
   currentCommerce?: CurrentCommerce | null;

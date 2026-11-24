@@ -28,7 +28,8 @@ export const CommerceFilterBar = ({
   useEffect(() => {
     if (debouncedSearch === (filters.searchText ?? "")) return;
 
-    setFilters({ searchText: debouncedSearch });
+    // al cambiar el filtro volvemos a la primera página (en el mismo setFilters: un solo request)
+    setFilters({ searchText: debouncedSearch, page: 1 });
   }, [debouncedSearch, filters.searchText, setFilters]);
 
   return (
@@ -50,6 +51,7 @@ export const CommerceFilterBar = ({
         onChange={(value) =>
           setFilters({
             active: value === null ? undefined : value === "true",
+            page: 1,
           })
         }
       />

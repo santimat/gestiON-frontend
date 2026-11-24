@@ -11,6 +11,7 @@ import { useCommerce } from "@features/commerces/hooks/useCommerce";
 import { useFilters } from "@shared/hooks/useFilters";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { ListContainer } from "@shared/components/ListContainer";
+import { ListPagination } from "@shared/components/ListPagination";
 import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { CommerceList } from "@features/commerces/components/CommerceList";
 import { CommerceStatsCard } from "@features/commerces/components/CommerceStatsCard";
@@ -27,6 +28,8 @@ export const Commerces = () => {
   const {
     commerceStats,
     commercesWithOwner,
+    totalCommerces,
+    totalPages,
     isLoading,
     error,
     formCommerce,
@@ -102,7 +105,7 @@ export const Commerces = () => {
         <ListContainer
           isLoading={isLoading}
           error={error}
-          isEmpty={commercesWithOwner.length === 0}
+          isEmpty={totalCommerces === 0}
           icon={StoreIcon}
           emptyMessage={
             hasFilters
@@ -112,6 +115,14 @@ export const Commerces = () => {
         >
           <CommerceList commercesWithOwner={commercesWithOwner} />
         </ListContainer>
+
+        <ListPagination
+          filters={filters}
+          setFilters={setFilters}
+          totalItems={totalCommerces}
+          totalPages={totalPages}
+          itemLabel="comercios"
+        />
       </main>
     </>
   );

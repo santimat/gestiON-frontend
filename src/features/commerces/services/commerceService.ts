@@ -6,8 +6,10 @@ import {
 import { executeApiCall } from "@shared/utils/apiClient";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
 import { backendAPI } from "@shared/services/axiosConfig";
+import { toPageParams } from "@shared/utils/pagination";
 import type {
   CommerceFilters,
+  CommerceWithOwner,
   CurrentCommerce,
 } from "@features/commerces/types";
 
@@ -21,10 +23,17 @@ export const commerceService = {
     );
   },
   getCommercesWithOwner: async (filters?: CommerceFilters) => {
-    const { content } = await executeApiCall(() =>
-      backendAPI.get("/commerces", { params: filters }),
+    const data = await executeApiCall(() =>
+      backendAPI.get("/commerces", { params: toPageParams(filters ?? {}) }),
     );
-    return content;
+    const commercesWithOwner: CommerceWithOwner[] = data?.content ?? [];
+    const totalCommerces: number =
+      data?.page?.totalElements ??
+      data?.totalElements ??
+      commercesWithOwner.length;
+    const totalPages: number = data?.page?.totalPages ?? data?.totalPages ?? 0;
+
+    return { commercesWithOwner, totalCommerces, totalPages };
   },
   getCommerceStats: async () => {
     return executeApiCall(() => backendAPI.get("/commerces/stats"));
