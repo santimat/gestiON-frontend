@@ -18,9 +18,10 @@ const ProductItemMobile = lazy(() =>
 
 type ProductListProps = {
   products: Product[];
+  canManage: boolean;
 };
 
-const HEADERS = [
+const READONLY_HEADERS = [
   "Foto",
   "Producto",
   "Categoría",
@@ -29,27 +30,39 @@ const HEADERS = [
   "Stock Actual",
   "Stock Mínimo",
   "Estado",
-  "Acciones",
 ];
+
+const HEADERS = [...READONLY_HEADERS, "Acciones"];
+
+const READONLY_COLUMNS =
+  "grid grid-cols-[0.2fr_1fr_0.5fr_1fr_0.4fr_0.4fr_0.4fr_0.4fr] items-center gap-x-4";
 
 const COLUMNS =
   "grid grid-cols-[0.2fr_1fr_0.5fr_1fr_0.4fr_0.4fr_0.4fr_0.4fr_0.2fr] items-center gap-x-4";
 
 const ACTIONS_ICONS = [{ Icon: Pencil, label: "Editar" }];
 
-export const ProductList = ({ products }: ProductListProps) => (
-  <EntityListShell
-    items={products}
-    getKey={(product) => product.id}
-    headers={HEADERS}
-    columns={COLUMNS}
-    renderMobile={(product) => <ProductItemMobile product={product} />}
-    renderDesktop={(product) => (
-      <ProductItem
-        product={product}
-        columns={COLUMNS}
-        actionsIcons={ACTIONS_ICONS}
-      />
-    )}
-  />
-);
+export const ProductList = ({ products, canManage }: ProductListProps) => {
+  const headers = canManage ? HEADERS : READONLY_HEADERS;
+  const columns = canManage ? COLUMNS : READONLY_COLUMNS;
+
+  return (
+    <EntityListShell
+      items={products}
+      getKey={(product) => product.id}
+      headers={headers}
+      columns={columns}
+      renderMobile={(product) => (
+        <ProductItemMobile product={product} canManage={canManage} />
+      )}
+      renderDesktop={(product) => (
+        <ProductItem
+          product={product}
+          columns={columns}
+          actionsIcons={ACTIONS_ICONS}
+          canManage={canManage}
+        />
+      )}
+    />
+  );
+};

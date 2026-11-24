@@ -37,15 +37,20 @@ export const Products = () => {
   const { getCurrentCommerce, currentCommerce } = useCommerce();
   const { filters, setFilters, hasFilters } = useFilters(ProductFiltersSchema);
 
+  const canManageProducts = authenticatedUser?.role === "OWNER";
+
   useEffect(() => {
     getProducts(filters);
-    if (authenticatedUser?.commerceId) getCurrentCommerce();
+    if (canManageProducts && authenticatedUser?.commerceId) {
+      getCurrentCommerce();
+    }
     // usamos el close para limpiar el estado
     return () => closeFormModal();
   }, [
     getProducts,
     getCurrentCommerce,
     authenticatedUser,
+    canManageProducts,
     closeFormModal,
     filters,
   ]);
@@ -53,7 +58,7 @@ export const Products = () => {
   usePageHeader({
     title: "Productos",
     subtitle: `${totalProducts} productos cargados`,
-    actions: (
+    actions: canManageProducts ? (
       <Button
         leftSection={<PackagePlus />}
         onClick={openCreate}
@@ -61,22 +66,24 @@ export const Products = () => {
       >
         <span className="hidden sm:inline">Nuevo Producto</span>
       </Button>
-    ),
+    ) : null,
   });
 
   return (
     <>
-      <EntityFormModal
-        opened={isFormModalOpen}
-        closeModal={closeFormModal}
-        entityKey={formProduct?.id ?? "create"}
-      >
-        <ProductForm
-          product={formProduct}
-          currentCommerce={currentCommerce ?? null}
+      {canManageProducts ? (
+        <EntityFormModal
+          opened={isFormModalOpen}
           closeModal={closeFormModal}
-        />
-      </EntityFormModal>
+          entityKey={formProduct?.id ?? "create"}
+        >
+          <ProductForm
+            product={formProduct}
+            currentCommerce={currentCommerce ?? null}
+            closeModal={closeFormModal}
+          />
+        </EntityFormModal>
+      ) : null}
 
       <main className="flex flex-col gap-6">
         <ProductsFilterBar filters={filters} setFilters={setFilters} />
@@ -91,7 +98,7 @@ export const Products = () => {
               : "No hay productos para mostrar"
           }
         >
-          <ProductList products={products} />
+          <ProductList products={products} canManage={canManageProducts} />
         </ListContainer>
 
         <ListPagination

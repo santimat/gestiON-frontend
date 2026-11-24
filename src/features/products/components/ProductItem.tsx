@@ -4,6 +4,7 @@ import { Avatar, NumberFormatter, Switch, Tooltip } from "@mantine/core";
 
 import { useProductItem } from "@features/products/hooks/useProduct";
 import { ProductItemActions } from "@shared/components/ProductItemActions";
+import { StatusBadge } from "@shared/components/StatusBadge";
 import { useToggleActive } from "@shared/hooks/useToggleActive";
 import type { Product } from "@features/products/types";
 import { ImageViewer } from "@shared/components/ImageViewer";
@@ -15,12 +16,14 @@ type ProductItemsProps = {
     label: string;
   }[];
   columns: string;
+  canManage: boolean;
 };
 
 export const ProductItem = ({
   product,
   actionsIcons,
   columns,
+  canManage,
 }: ProductItemsProps) => {
   const [opened, { open: openImageViewer, close: closeImageViewer }] =
     useDisclosure(false);
@@ -63,18 +66,27 @@ export const ProductItem = ({
         />
         <p>{product.currentStock}</p>
         <p>{product.minStock}</p>
-        <Switch
-          aria-label="Cambiar estado del producto"
-          title="Cambiar estado del producto"
-          color="green"
-          checked={product.active}
-          disabled={isToggling}
-          onChange={() => handleToggle(() => toggleActive(product.id))}
-        />
-        <ProductItemActions
-          actionsIcons={actionsIcons}
-          onEdit={() => openEdit(product)}
-        />
+        {canManage ? (
+          <Switch
+            aria-label="Cambiar estado del producto"
+            title="Cambiar estado del producto"
+            color="green"
+            checked={product.active}
+            disabled={isToggling}
+            onChange={() => handleToggle(() => toggleActive(product.id))}
+          />
+        ) : (
+          <StatusBadge
+            label={product.active ? "Activo" : "Inactivo"}
+            tone={product.active ? "success" : "destructive"}
+          />
+        )}
+        {canManage ? (
+          <ProductItemActions
+            actionsIcons={actionsIcons}
+            onEdit={() => openEdit(product)}
+          />
+        ) : null}
       </li>
     </>
   );

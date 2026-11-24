@@ -10,9 +10,13 @@ import { ProductItemActions } from "@shared/components/ProductItemActions";
 
 type ProductItemMobileProps = {
   product: Product;
+  canManage: boolean;
 };
 
-export const ProductItemMobile = ({ product }: ProductItemMobileProps) => {
+export const ProductItemMobile = ({
+  product,
+  canManage,
+}: ProductItemMobileProps) => {
   const { toggleActive, openEdit } = useProductItem();
   const { isToggling, handleToggle } = useToggleActive(
     "Estado del producto actualizado con éxito",
@@ -62,20 +66,28 @@ export const ProductItemMobile = ({ product }: ProductItemMobileProps) => {
               Stock mínimo: {product.minStock}
             </p>
           )}
-          <div className="flex items-center gap-3">
-            <ProductItemActions
-              actionsIcons={[{ Icon: PencilIcon, label: "Editar producto" }]}
-              onEdit={() => openEdit(product)}
+          {canManage ? (
+            <div className="flex items-center gap-3">
+              <ProductItemActions
+                actionsIcons={[{ Icon: PencilIcon, label: "Editar producto" }]}
+                onEdit={() => openEdit(product)}
+              />
+              <Switch
+                aria-label="Cambiar estado del producto"
+                title="Cambiar estado del producto"
+                color="green"
+                checked={product.active}
+                disabled={isToggling}
+                onChange={() => handleToggle(() => toggleActive(product.id))}
+              />
+            </div>
+          ) : (
+            <StatusBadge
+              label={product.active ? "Activo" : "Inactivo"}
+              tone={product.active ? "success" : "destructive"}
+              size="xs"
             />
-            <Switch
-              aria-label="Cambiar estado del producto"
-              title="Cambiar estado del producto"
-              color="green"
-              checked={product.active}
-              disabled={isToggling}
-              onChange={() => handleToggle(() => toggleActive(product.id))}
-            />
-          </div>
+          )}
         </div>
       </div>
     </>
