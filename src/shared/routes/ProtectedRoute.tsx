@@ -13,8 +13,10 @@ export const ProtectedRoute = ({
   const { checkAuth, authenticatedUser, hasHydrated } = useAuth();
 
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+    if (!hasHydrated) {
+      checkAuth();
+    }
+  }, [hasHydrated, checkAuth]);
 
   if (!hasHydrated) {
     return <LoadingPage />;

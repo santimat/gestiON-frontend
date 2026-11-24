@@ -22,18 +22,21 @@ export const useAuthStore = create<UseAuthStore>((set, get) => ({
     }
   },
   hydrateUser: async () => {
-    // la bandera evita repetir el GET /auth/me en cada navegación
-    if (get().hasHydrated) return;
+    if (get().hasHydrated || get().isCheckingAuth) return;
 
     set({ isCheckingAuth: true });
     try {
       const authenticatedUser = await authService.checkAuth();
       set({ authenticatedUser, isCheckingAuth: false, hasHydrated: true });
     } catch {
-      set({ isCheckingAuth: false, hasHydrated: true });
+      set({
+        authenticatedUser: null,
+        isCheckingAuth: false,
+        hasHydrated: true,
+      });
     }
   },
   clearAuthenticatedUser: () => {
-    set({authenticatedUser: null, hasHydrated: false})
-  }
+    set({ authenticatedUser: null, hasHydrated: false });
+  },
 }));

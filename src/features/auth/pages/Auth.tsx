@@ -9,8 +9,10 @@ export const AuthPage = () => {
   const { checkAuth, isCheckingAuth, hasHydrated } = useAuth();
 
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+    if (!hasHydrated) {
+      checkAuth();
+    }
+  }, [hasHydrated, checkAuth]);
 
   // esperamos a saber si hay sesión para no mostrar el formulario y redirigir después
   if (isCheckingAuth || !hasHydrated) return <LoadingPage />;
