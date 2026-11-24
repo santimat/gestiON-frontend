@@ -5,13 +5,12 @@ import { Button, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 
 import type { Offer } from "@features/offers/types";
-import type { Product } from "@features/products";
 import { useLocalFilters } from "@shared/hooks/useLocalFilters";
 import { formatOfferValue } from "@features/offers/utils/offerUtils";
 import { useOfferAssigment } from "@features/offers/hooks/useOfferAssigment";
 import { ProductFiltersSchema } from "@features/products/schemas/ProductFiltersSchema";
 import { OfferAssignmentProductItem } from "@features/offers/components/OfferAssignmentProductItem";
-import { toastAppError } from "@/shared/utils/toastAppError";
+import { toastAppError } from "@shared/utils/toastAppError";
 
 type OfferAssignmentDialogProps = {
   offer: Offer;
@@ -22,22 +21,29 @@ export const OfferAssignmentDialog = ({
   offer,
   closeModal,
 }: OfferAssignmentDialogProps) => {
-  const { assignOfferProducts, products, isLoadingProducts, getProducts } =
-    useOfferAssigment();
-
-  // Derivar la selección base desde el backend y mantenerla comoDrafts cuando el usuráio cambia
-  const selectedIds = products
-    .filter((product: Product) => product.offerId === offer.id)
-    .flatMap((product: Product) => product.id); // ✔️ ahora refleja siempre el backend
+  const {
+    assignOfferProducts,
+    assignedProductIds,
+    isLoadingAssignedProductIds,
+    assignedProductIdsError,
+    getOfferProductIds,
+    products,
+    isLoadingProducts,
+    getProducts,
+  } = useOfferAssigment();
 
   const [isSaving, setIsSaving] = useState(false);
   const { filters, setFilters } = useLocalFilters(ProductFiltersSchema);
   const [searchText, setSearchText] = useState(filters.searchText ?? "");
   const [debouncedSearch] = useDebouncedValue(searchText, 300);
 
-  // selección editable del usuario
+  // selección editable del usuario (parte de todos los IDs asignados en backend)
   const [checkedIds, setCheckedIds] = useState<number[] | null>(null);
-  const selected = checkedIds ?? selectedIds;
+  const selected = checkedIds ?? assignedProductIds;
+
+  useEffect(() => {
+    getOfferProductIds(offer.id);
+  }, [getOfferProductIds, offer.id]);
 
   useEffect(() => {
     if (debouncedSearch === (filters.searchText ?? "")) return;
@@ -101,12 +107,12 @@ export const OfferAssignmentDialog = ({
         {!isLoadingProducts && (
           <ul className="[&>li]:border-background-soft [&>li]:not-last:border-b">
             {products.map((product) => (
-              <li>
+              <li key={product.id}>
                 <OfferAssignmentProductItem
                   product={product}
                   selected={selected}
                   setSelected={(updater) =>
-                    setCheckedIds((prev) => updater(prev ?? selectedIds))
+                    setCheckedIds((prev) => updater(prev ?? assignedProductIds))
                   }
                 />
               </li>
@@ -115,9 +121,16 @@ export const OfferAssignmentDialog = ({
         )}
       </div>
 
+      {assignedProductIdsError && (
+        <p className="text-destructive mt-2 text-sm" role="alert">
+          {assignedProductIdsError}
+        </p>
+      )}
+
       <p className="text-secondary-foreground mt-2 text-sm" aria-live="polite">
-        {count} producto{count === 1 ? "" : "s"} seleccionado
-        {count === 1 ? "" : "s"}
+        {isLoadingAssignedProductIds
+          ? "Cargando selección..."
+          : `${count} producto${count === 1 ? "" : "s"} seleccionado${count === 1 ? "" : "s"}`}
       </p>
 
       <div className="flex justify-end gap-4 pt-6">
@@ -128,7 +141,13 @@ export const OfferAssignmentDialog = ({
         >
           Cancelar
         </Button>
-        <Button loading={isSaving} onClick={handleAssign}>
+        <Button
+          loading={isSaving}
+          disabled={
+            isLoadingAssignedProductIds || Boolean(assignedProductIdsError)
+          }
+          onClick={handleAssign}
+        >
           Asignar
         </Button>
       </div>

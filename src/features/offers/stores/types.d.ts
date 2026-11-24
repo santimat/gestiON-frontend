@@ -16,6 +16,9 @@ export type UseOfferStore = {
   isFormModalOpen: boolean;
   assignOffer: Offer | null;
   isAssignModalOpen: boolean;
+  assignedProductIds: number[];
+  isLoadingAssignedProductIds: boolean;
+  assignedProductIdsError: string | null;
   // filtros de la última búsqueda: al crear o editar refrescamos con los mismos
   lastFilters: OffersFilter;
   openCreate: () => void;
@@ -26,6 +29,7 @@ export type UseOfferStore = {
   getOffers: (filters: OffersFilter) => Promise<void>;
   createOffer: (offer: OfferRequest) => Promise<Offer>;
   updateOffer: (offerId: number, offer: OfferRequest) => Promise<Offer>;
+  getOfferProductIds: (offerId: number) => Promise<void>;
   assignOfferProducts: (offerId: number, productIds: number[]) => Promise<void>;
 };
 

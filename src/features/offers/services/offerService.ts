@@ -33,6 +33,12 @@ export const offerService = {
     );
   },
 
+  getOfferProductIds: async (offerId: number) => {
+    return executeApiCall(() =>
+      backendAPI.get<number[]>(`/offers/${offerId}/product-ids`),
+    );
+  },
+
   getOfferPaymentMethods: async () => {
     return executeApiCall(() => backendAPI.get("/offers/payment-methods"));
   },

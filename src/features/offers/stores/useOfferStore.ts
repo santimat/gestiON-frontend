@@ -16,11 +16,20 @@ export const useOfferStore = create<UseOfferStore>((set, get) => ({
   isFormModalOpen: false,
   assignOffer: null,
   isAssignModalOpen: false,
+  assignedProductIds: [],
+  isLoadingAssignedProductIds: false,
+  assignedProductIdsError: null,
   lastFilters: {},
   openCreate: () => set({ formOffer: null, isFormModalOpen: true }),
   openEdit: (offer) => set({ formOffer: offer, isFormModalOpen: true }),
 
-  openAssign: (offer) => set({ assignOffer: offer, isAssignModalOpen: true }),
+  openAssign: (offer) =>
+    set({
+      assignOffer: offer,
+      isAssignModalOpen: true,
+      assignedProductIds: [],
+      assignedProductIdsError: null,
+    }),
   closeFormModal: () => set({ isFormModalOpen: false }),
   closeAssignModal: () => set({ isAssignModalOpen: false }),
 
@@ -51,6 +60,24 @@ export const useOfferStore = create<UseOfferStore>((set, get) => ({
     const updatedOffer = await offerService.updateOffer(offerId, offer);
     await get().getOffers(get().lastFilters);
     return updatedOffer;
+  },
+
+  getOfferProductIds: async (offerId) => {
+    set({ isLoadingAssignedProductIds: true, assignedProductIdsError: null });
+    try {
+      const productIds = await offerService.getOfferProductIds(offerId);
+      set({
+        assignedProductIds: productIds,
+        isLoadingAssignedProductIds: false,
+      });
+    } catch (error) {
+      const appError = error as AppError;
+      set({
+        isLoadingAssignedProductIds: false,
+        assignedProductIdsError:
+          appError.message ?? "Error al obtener los productos de la oferta",
+      });
+    }
   },
 
   assignOfferProducts: async (offerId, productIds) => {
