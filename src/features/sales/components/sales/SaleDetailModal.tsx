@@ -42,10 +42,10 @@ export const SaleDetailModal = ({
       }`
     : null;
   const total = formatCurrency(sale.total);
-  const showPending = sale.status === "PENDING" || sale.status === "PARTIAL_PAYED";
-  const totalPending = showPending && sale.totalPending != null
-    ? sale.totalPending
-    : null;
+  const showPending =
+    sale.status === "PENDING" || sale.status === "PARTIAL_PAYED";
+  const totalPending =
+    showPending && sale.totalPending != null ? sale.totalPending : null;
 
   const handleClose = () => {
     setAmount("");
@@ -130,14 +130,16 @@ export const SaleDetailModal = ({
         </div>
 
         {totalPending != null && (
-          <div className="flex items-center justify-between text-warning">
+          <div className="text-warning flex items-center justify-between">
             <p className="font-semibold">Pendiente</p>
-            <p className="text-xl font-semibold tabular-nums">{formatCurrency(totalPending)}</p>
+            <p className="text-xl font-semibold tabular-nums">
+              {formatCurrency(totalPending)}
+            </p>
           </div>
         )}
 
         {showPending && (
-          <div className="grid grid-cols-2 gap-2 pt-2">
+          <div className="grid grid-cols-3 items-end gap-2 pt-2">
             <NumberInput
               label="Monto a pagar"
               placeholder="$0"
@@ -151,18 +153,18 @@ export const SaleDetailModal = ({
               max={totalPending ?? undefined}
               step={0.01}
               required
-              className="w-full"
+              className="col-span-2 w-full"
             />
             <Button
               variant="outline"
-              className="h-10"
+              className="hover:bg-primary! hover:text-card!"
               onClick={handleSetTotalAmount}
               disabled={isRegisteringPayment || totalPending == null}
             >
               Total
             </Button>
             <Button
-              className="col-span-2 h-10"
+              className="col-span-3"
               onClick={handleRegisterPayment}
               loading={isRegisteringPayment}
               disabled={isRegisteringPayment}
