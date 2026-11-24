@@ -1,4 +1,4 @@
-import type { PaymentMethod } from "@/features/sales";
+import type { PaymentMethod } from "@features/sales";
 import { PAYMENT_METHODS_LABELS } from "@features/sales";
 
 type OfferAppliesToProps = {
@@ -38,6 +38,9 @@ export const OfferAppliesTo = ({
     );
   }
 
-  //TODO: falta la logica para mostrar los productos a los que pertenece esta oferta
-  return <p className="truncate">Todavía falta conectar los productos</p>;
+  return (
+    <p className="text-secondary-foreground truncate">
+      Sin productos asignados
+    </p>
+  );
 };

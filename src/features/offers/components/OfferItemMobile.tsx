@@ -2,8 +2,6 @@ import { Button } from "@mantine/core";
 import { Pencil, Tags } from "lucide-react";
 
 import type { Offer } from "@features/offers/types";
-import type { Product } from "@features/products";
-import { useProduct } from "@features/products";
 import { useOffer } from "@features/offers/hooks/useOffer";
 import { canAssignProducts } from "@features/offers/utils/offerUtils";
 import { OfferAppliesTo } from "@features/offers/components/OfferAppliesTo";
@@ -18,21 +16,16 @@ type OfferItemMobileProps = {
 export const OfferItemMobile = ({ offer }: OfferItemMobileProps) => {
   const { openEdit, canEdit } = useOffer();
   const { openAssign } = useOfferAssigment();
-  const { products } = useProduct();
-
-  const assignedProductCount = products.filter(
-    (product: Product) => product.offerId === offer.id,
-  ).length;
 
   return (
     <div className="border-background-soft bg-card shadow-card flex flex-col rounded-xl border p-4">
       <div className="flex items-start justify-between gap-2">
-        <p className="text-secondary-foreground truncate text-xs">
+        <div className="text-secondary-foreground min-w-0 truncate text-xs">
           <OfferAppliesTo
             paymentMethods={offer.paymentMethods}
-            assignedProductCount={assignedProductCount}
+            assignedProductCount={offer.productCount}
           />
-        </p>
+        </div>
         <OfferStatusBadge status={offer.status} />
       </div>
       <OfferActiveRangeDate
