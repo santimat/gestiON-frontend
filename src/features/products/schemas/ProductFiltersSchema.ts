@@ -10,5 +10,10 @@ export const ProductFiltersSchema = z.object({
     .positive("El ID de la categoría debe ser un número positivo")
     .optional(),
   stockStatus: z.enum(STOCK_STATUS).optional(),
+  prioritizeOfferId: z.coerce
+    .number("El ID de la oferta debe ser un número")
+    .int("El ID de la oferta debe ser un número entero")
+    .positive("El ID de la oferta debe ser un número positivo")
+    .optional(),
   ...FiltersBaseSchema.shape,
 });

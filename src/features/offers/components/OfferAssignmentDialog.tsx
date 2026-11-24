@@ -52,8 +52,13 @@ export const OfferAssignmentDialog = ({
   }, [debouncedSearch, setFilters, filters.searchText]);
 
   useEffect(() => {
-    getProducts({ ...filters, active: true, size: 20 });
-  }, [getProducts, filters]);
+    getProducts({
+      ...filters,
+      active: true,
+      size: 20,
+      prioritizeOfferId: offer.id,
+    });
+  }, [getProducts, filters, offer.id]);
 
   const count = selected.length;
 
