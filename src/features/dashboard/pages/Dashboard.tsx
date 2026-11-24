@@ -11,6 +11,7 @@ import { KpiCardsSection } from "@features/dashboard/components/KpiCardsSection"
 import { LowStockProducts } from "@features/dashboard/components/LowStockProducts";
 import { TopProductsBarChart } from "@features/dashboard/components/TopProductsBarChart";
 import { SoldProductsLineChart } from "@features/dashboard/components/SoldProductsLineChart";
+import { NoSalesBanner } from "@features/dashboard/components/NoSalesBanner";
 import { PeriodSegmentedControl } from "@features/dashboard/components/PeriodSegmentedControl";
 import { DashboardStatsByPeriodFiltersSchema } from "@/features/dashboard/schemas/DashboardStatsByPeriodFiltersSchema";
 
@@ -18,6 +19,7 @@ export const Dashboard = () => {
   const {
     getSalesStatsByPeriod,
     dashboardByPeriodStats,
+    isLoading,
     getTopProductsSold,
     topProductsSold,
   } = useDashboard();
@@ -34,6 +36,7 @@ export const Dashboard = () => {
   const periodShort = PERIOD_SHORTS[statsByPeriodFilters?.granularity];
 
   const lowStockProductsCount = lowStockProducts?.length ?? 0;
+  const hasNoSales = !isLoading && dashboardByPeriodStats?.salesCount === 0;
 
   useEffect(() => {
     getSalesStatsByPeriod(statsByPeriodFilters);
@@ -57,6 +60,7 @@ export const Dashboard = () => {
 
   return (
     <main className="flex flex-col gap-4">
+      {hasNoSales ? <NoSalesBanner /> : null}
       <KpiCardsSection
         {...{ dashboardByPeriodStats, periodLabel, lowStockProductsCount }}
       />
