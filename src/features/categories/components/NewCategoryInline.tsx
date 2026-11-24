@@ -53,7 +53,7 @@ export const NewCategoryInline = ({
         value={newCategoryName}
         onChange={(e) => setNewCategoryName(e.target.value)}
       />
-      <Button className="self-end" onClick={handleClick}>
+      <Button type="button" className="self-end" onClick={handleClick}>
         Crear
       </Button>
     </div>
