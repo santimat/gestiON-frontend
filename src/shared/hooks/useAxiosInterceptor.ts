@@ -2,12 +2,11 @@ import { isAxiosError } from "axios";
 import { useLayoutEffect, useRef } from "react";
 
 import { useAuth } from "@features/auth";
-import type { AuthUser } from "@features/auth";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { normalizeUrl } from "@features/auth/utils/normalizeUrl";
-import { isAuthEndpoint } from "@features/auth/utils/checkEndpoint"
-import { AUTH_ENDPOINT_PREFIX, FORBIDDEN_COOLDOWN_MS} from "@features/auth/constants"
-import { ForbiddenRecord, AuthSnapshot } from "@features/auth/types"
+import { isAuthEndpoint } from "@features/auth/utils/checkEndpoint";
+import { FORBIDDEN_COOLDOWN_MS } from "@features/auth/constants";
+import type { ForbiddenRecord, AuthSnapshot } from "@features/auth/types";
 
 export const useAxiosInterceptor = (): void => {
   const {
