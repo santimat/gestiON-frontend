@@ -1,5 +1,6 @@
 import { lazy, useEffect, useState } from "react";
 
+import { useAuth } from "@features/auth";
 import { useClient } from "@features/clients";
 import { useOfferPaymentMethod } from "@features/offers";
 import { useSale } from "@features/sales/hooks/useSale";
@@ -9,6 +10,7 @@ import { SaleCart } from "@features/sales/components/sell/SaleCart";
 import { SaleSummary } from "@features/sales/components/sell/SaleSummary";
 import type { SaleSummary as SaleSummaryData } from "@features/sales/types";
 import { ProductSearch } from "@features/sales/components/sell/ProductSearch";
+import { SellPointWarningBanner } from "@features/sales/components/sell/SellPointWarningBanner";
 
 const SaleTicketModal = lazy(() =>
   import("@features/sales/components/sell/SaleTicketModal").then((module) => ({
@@ -20,9 +22,14 @@ export const Sell = () => {
   const [ticket, setTicket] = useState<SaleSummaryData | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { authenticatedUser } = useAuth();
   const { cart, saleDraft, createSale, resetSale, clearCart } = useSale();
   const { getClients } = useClient();
   const { getOfferPaymentMethods } = useOfferPaymentMethod();
+
+  const isCashierWithoutSellPoint =
+    authenticatedUser?.role === "CASHIER" &&
+    authenticatedUser.sellPointId == null;
 
   useEffect(() => {
     getClients({ sortBy: "createdAt", sortDir: "desc" });
@@ -34,6 +41,8 @@ export const Sell = () => {
   usePageHeader({ title: "Punto de venta" });
 
   const handleConfirmSale = async () => {
+    if (isCashierWithoutSellPoint) return;
+
     setIsSubmitting(true);
     try {
       // caps de descuento idénticos a los del preview del resumen:
@@ -84,15 +93,20 @@ export const Sell = () => {
 
   return (
     <>
-      <main className="grid flex-1 gap-4 overflow-auto lg:items-start xl:grid-cols-[minmax(0,1.15fr)_22rem]">
-        <div className="flex flex-col gap-4">
-          <ProductSearch />
-          <SaleCart />
+      <main className="flex flex-1 flex-col gap-4 overflow-auto">
+        {isCashierWithoutSellPoint ? <SellPointWarningBanner /> : null}
+
+        <div className="grid flex-1 gap-4 lg:items-start xl:grid-cols-[minmax(0,1.15fr)_22rem]">
+          <div className="flex flex-col gap-4">
+            <ProductSearch />
+            <SaleCart />
+          </div>
+          <SaleSummary
+            onConfirm={handleConfirmSale}
+            isSubmitting={isSubmitting}
+            isConfirmDisabled={isCashierWithoutSellPoint}
+          />
         </div>
-        <SaleSummary
-          onConfirm={handleConfirmSale}
-          isSubmitting={isSubmitting}
-        />
       </main>
 
       <SaleTicketModal

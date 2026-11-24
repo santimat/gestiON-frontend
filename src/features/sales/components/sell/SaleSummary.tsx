@@ -14,11 +14,13 @@ import { PaymentMethodSelector } from "@features/sales/components/sell/PaymentMe
 type SaleSummaryProps = {
   onConfirm: () => void;
   isSubmitting?: boolean;
+  isConfirmDisabled?: boolean;
 };
 
 export const SaleSummary = ({
   onConfirm,
   isSubmitting = false,
+  isConfirmDisabled = false,
 }: SaleSummaryProps) => {
   const { cart, saleDraft, setSaleDraft } = useSale();
   const { clients } = useClient();
@@ -53,12 +55,12 @@ export const SaleSummary = ({
 
       {showPendingWarning && (
         <div
-          className="mb-4 flex items-center gap-2 rounded-md bg-warning/10 p-3 text-warning border border-warning/20"
+          className="bg-warning/10 text-warning border-warning/20 mb-4 flex items-center gap-2 rounded-md border p-3"
           role="alert"
         >
           <AlertCircle size={18} strokeWidth={2} aria-hidden="true" />
-          <div className="flex-1 min-w-0">
-            <p className="font-medium text-sm">
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium">
               El cliente adeuda{" "}
               <span className="tabular-nums">
                 {formatCurrency(selectedClient.totalPending ?? 0)}
@@ -99,6 +101,7 @@ export const SaleSummary = ({
       <ConfirmButton
         cart={cart}
         isSubmitting={isSubmitting}
+        disabled={isConfirmDisabled}
         onConfirm={onConfirm}
       />
     </div>

@@ -14,6 +14,7 @@ export type User = {
   role: UserRole;
   active: boolean;
   commerceId?: number;
+  sellPointId?: number | null;
 };
 
 export type AuthUser = Omit<User, "phoneNumber" | "updatedAt">;
