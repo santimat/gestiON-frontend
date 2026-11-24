@@ -46,7 +46,7 @@ export type ProductFormValues = {
   salePrice: number | null;
   profitMultiplier?: number | null;
   currentStock: number | null;
-  minStock: number | null;
+  minStock?: number | null;
   image?: File | null;
 };
 

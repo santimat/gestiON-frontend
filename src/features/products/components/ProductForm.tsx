@@ -75,6 +75,10 @@ export const ProductForm = ({
         formData.delete("image");
       }
 
+      if (form.minStock == null || form.minStock === 0) {
+        formData.delete("minStock");
+      }
+
       if (isEditing && product) await updateProduct(product.id, formData);
       else await handleCreateProduct(formData);
     },
@@ -263,16 +267,22 @@ export const ProductForm = ({
             required
           />
           <NumberInput
-            label="Stock Minimo"
+            label="Stock Mínimo"
             name="minStock"
-            placeholder="0"
+            placeholder={String(currentCommerce?.defaultMinStock ?? 3)}
             min={0}
             error={errors.minStock}
             value={productForm.minStock ?? ""}
             onChange={(value) => handleNumberChange("minStock", value)}
             decimalScale={0}
-            required
             leftSection={<CircleAlert size={20} />}
+            rightSection={
+              <Tooltip
+                label={`Si se deja vacío o en 0, se usará el stock mínimo por defecto del comercio (${currentCommerce?.defaultMinStock ?? 3}).`}
+              >
+                <InfoIcon size={20} />
+              </Tooltip>
+            }
           />
         </div>
         <ModalFormActions

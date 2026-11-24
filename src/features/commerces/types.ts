@@ -17,6 +17,7 @@ export type CommerceWithOwner = {
   businessLogoUrl: string;
   businessActive: boolean;
   profitMultiplier: number;
+  defaultMinStock: number;
   updatedAt: Date;
 };
 
@@ -37,4 +38,5 @@ export type CurrentCommerce = {
   businessImage: File | null;
   businessActive: boolean;
   profitMultiplier: number;
+  defaultMinStock: number;
 };

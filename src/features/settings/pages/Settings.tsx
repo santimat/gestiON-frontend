@@ -6,8 +6,9 @@ import type { AppError, FieldErrors } from "@/shared/types";
 import { toastAppError } from "@/shared/utils/toastAppError";
 import { usePageHeader } from "@/shared/layout/hooks/usePageHeader";
 import { useCommerce, type CurrentCommerce } from "@/features/commerces";
-import { NameAndImageSection } from "@/features/settings/components/NameAndImageSection";
+import { NameAndImageSection } from "@features/settings/components/NameAndImageSection";
 import { ProfitMultiplierSection } from "@features/settings/components/ProfitMultiplierSection";
+import { ProductsSection } from "@features/settings/components/ProductsSection";
 import { ThemeSection } from "@features/settings/components/ThemeSection";
 
 export const Settings = () => {
@@ -38,9 +39,11 @@ export const Settings = () => {
 
   const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setErrors({});
     const formData = new FormData();
     formData.append("name", commerceForm.name);
     formData.append("profitMultiplier", String(commerceForm.profitMultiplier));
+    formData.append("defaultMinStock", String(commerceForm.defaultMinStock));
     if (commerceForm.businessImage) {
       formData.append("image", commerceForm.businessImage);
     }
@@ -62,6 +65,7 @@ export const Settings = () => {
         <ProfitMultiplierSection
           {...{ commerceForm, setCommerceForm, errors }}
         />
+        <ProductsSection {...{ commerceForm, setCommerceForm, errors }} />
         <Button type="submit">Guardar cambios</Button>
       </form>
 

@@ -12,6 +12,11 @@ export const CommercePatchSchema = z.object({
     .number("El multiplicador de ganancias debe ser un número.")
     .positive("El multiplicador de ganancias debe ser un número positivo.")
     .optional(),
+  defaultMinStock: z.coerce
+    .number("El stock mínimo por defecto debe ser un número.")
+    .int("El stock mínimo por defecto debe ser un número entero.")
+    .positive("El stock mínimo por defecto debe ser mayor a 0.")
+    .optional(),
   image: z
     .file("El archivo debe ser una imagen.")
     .max(10 * 1024 * 1024, "El tamaño máximo del archivo es de 10MB.")
