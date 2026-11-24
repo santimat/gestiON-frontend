@@ -8,8 +8,10 @@ export const GuestRoute = () => {
   const { checkAuth, authenticatedUser, hasHydrated } = useAuth();
 
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+    if (!hasHydrated) {
+      checkAuth();
+    }
+  }, [hasHydrated, checkAuth]);
 
   // mientras no sepamos si hay sesión dejamos pasar (landing y login públicos)
   if (hasHydrated && authenticatedUser) {

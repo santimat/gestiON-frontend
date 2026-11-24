@@ -17,3 +17,14 @@ export type User = {
 };
 
 export type AuthUser = Omit<User, "phoneNumber" | "updatedAt">;
+
+type ForbiddenRecord = {
+  userKey: string;
+  expiresAt: number;
+};
+
+type AuthSnapshot = {
+  authenticatedUser: AuthUser | null;
+  hasHydrated: boolean;
+  isCheckingAuth: boolean;
+};

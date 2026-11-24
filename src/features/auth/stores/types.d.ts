@@ -8,4 +8,5 @@ export type UseAuthStore = {
   login: (loginRequest: LoginDTO) => Promise<UserRole | undefined>;
   logout: () => Promise<void>;
   hydrateUser: () => Promise<void>;
+  clearAuthenticatedUser: () => void;
 };

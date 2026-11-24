@@ -6,6 +6,7 @@ import { GuestRoute } from "@shared/routes/GuestRoute";
 import { MainLayout } from "@shared/layout/MainLayout";
 import { ProtectedRoute } from "@shared/routes/ProtectedRoute";
 import { getRolesForRoute } from "@shared/config/permissions";
+import { AxiosInterceptor } from "@shared/components/AxiosInterceptor";
 
 const LandingPage = lazy(() =>
   import("@features/landing/pages/Landing").then((module) => ({
@@ -100,6 +101,7 @@ const SettingsPage = lazy(() =>
 const App = () => {
   return (
     <>
+      <AxiosInterceptor />
       <Routes>
         <Route element={<GuestRoute />}>
           <Route index element={<LandingPage />} />
