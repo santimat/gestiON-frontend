@@ -16,6 +16,8 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
     set(() => ({ formCommerce: null, isFormModalOpen: false })),
 
   commercesWithOwner: [],
+  // filtros de la última búsqueda: al crear refrescamos con los mismos
+  lastFilters: {},
   commerceStats: null,
   currentCommerce: null,
   isLoading: false,
@@ -23,10 +25,12 @@ export const useCommerceStore = create<UseCommerceStore>((set, get) => ({
   createCommerceWithOwner: async (commercesWithOwner: FormData) => {
     await commerceService.createCommerceWithOwner(commercesWithOwner);
   },
-  getCommercesWithOwner: async () => {
-    set(() => ({ isLoading: true }));
+  getCommercesWithOwner: async (filters) => {
+    const appliedFilters = filters ?? get().lastFilters;
+    set(() => ({ isLoading: true, lastFilters: appliedFilters }));
     try {
-      const commercesWOwner = await commerceService.getCommercesWithOwner();
+      const commercesWOwner =
+        await commerceService.getCommercesWithOwner(appliedFilters);
       set(() => ({
         commercesWithOwner: commercesWOwner,
         error: null,

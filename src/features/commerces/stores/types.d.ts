@@ -1,4 +1,5 @@
 import type {
+  CommerceFilters,
   CommerceStats,
   CommerceWithOwner,
   CurrentCommerce,
@@ -13,12 +14,13 @@ export type UseCommerceStore = {
   closeFormModal: () => void;
 
   commercesWithOwner: CommerceWithOwner[];
+  lastFilters: CommerceFilters;
   commerceStats?: CommerceStats | null;
   currentCommerce?: CurrentCommerce | null;
   isLoading: boolean;
   error: string | null;
   createCommerceWithOwner: (commercesWithOwner: FormData) => Promise<void>;
-  getCommercesWithOwner: () => Promise<void>;
+  getCommercesWithOwner: (filters?: CommerceFilters) => Promise<void>;
   getCommerceStats: () => Promise<void>;
   getCurrentCommerce: () => Promise<void>;
   toggleCommerceActive: (commerceId: number) => Promise<void>;

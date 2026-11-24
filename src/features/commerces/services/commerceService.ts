@@ -6,7 +6,10 @@ import {
 import { executeApiCall } from "@shared/utils/apiClient";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
 import { backendAPI } from "@shared/services/axiosConfig";
-import type { CurrentCommerce } from "@features/commerces/types";
+import type {
+  CommerceFilters,
+  CurrentCommerce,
+} from "@features/commerces/types";
 
 export const commerceService = {
   createCommerceWithOwner: async (commerceWithOwner: FormData) => {
@@ -17,9 +20,9 @@ export const commerceService = {
       backendAPI.post("/commerces", commerceWithOwner),
     );
   },
-  getCommercesWithOwner: async () => {
+  getCommercesWithOwner: async (filters?: CommerceFilters) => {
     const { content } = await executeApiCall(() =>
-      backendAPI.get("/commerces"),
+      backendAPI.get("/commerces", { params: filters }),
     );
     return content;
   },

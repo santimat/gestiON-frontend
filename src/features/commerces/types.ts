@@ -1,6 +1,9 @@
 import type { z } from "zod";
 
+import { CommerceFiltersSchema } from "@features/commerces/schemas/CommerceFiltersSchema";
 import { CommerceWithOwnerRequestSchema } from "@features/commerces/schemas/CommerceWithOwnerRequestSchema";
+
+export type CommerceFilters = z.infer<typeof CommerceFiltersSchema>;
 
 export type CommerceWithOwner = {
   userId: number;

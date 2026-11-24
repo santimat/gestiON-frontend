@@ -8,11 +8,14 @@ import { Button } from "@mantine/core";
 import { lazy, useEffect } from "react";
 
 import { useCommerce } from "@features/commerces/hooks/useCommerce";
+import { useFilters } from "@shared/hooks/useFilters";
 import { usePageHeader } from "@shared/layout/hooks/usePageHeader";
 import { ListContainer } from "@shared/components/ListContainer";
 import { EntityFormModal } from "@shared/components/EntityFormModal";
 import { CommerceList } from "@features/commerces/components/CommerceList";
 import { CommerceStatsCard } from "@features/commerces/components/CommerceStatsCard";
+import { CommerceFilterBar } from "@features/commerces/components/CommerceFilterBar";
+import { CommerceFiltersSchema } from "@features/commerces/schemas";
 
 const CommerceForm = lazy(() =>
   import("@features/commerces/components/CommerceForm").then((module) => ({
@@ -33,13 +36,17 @@ export const Commerces = () => {
     openCreate,
     closeFormModal,
   } = useCommerce();
+  const { filters, setFilters, hasFilters } = useFilters(CommerceFiltersSchema);
 
   useEffect(() => {
     getCommerceStats();
-    getCommercesWithOwner();
     // Al desmontar la sección dejamos el modal del form cerrado y sin comercio cargado.
     return () => closeFormModal();
-  }, [getCommercesWithOwner, getCommerceStats, closeFormModal]);
+  }, [getCommerceStats, closeFormModal]);
+
+  useEffect(() => {
+    getCommercesWithOwner(filters);
+  }, [getCommercesWithOwner, filters]);
 
   usePageHeader({
     title: "Comercios",
@@ -91,12 +98,17 @@ export const Commerces = () => {
             }}
           />
         </div>
+        <CommerceFilterBar filters={filters} setFilters={setFilters} />
         <ListContainer
           isLoading={isLoading}
           error={error}
           isEmpty={commercesWithOwner.length === 0}
           icon={StoreIcon}
-          emptyMessage="No hay comercios para mostrar"
+          emptyMessage={
+            hasFilters
+              ? "No se encontraron comercios con ese filtro"
+              : "No hay comercios para mostrar"
+          }
         >
           <CommerceList commercesWithOwner={commercesWithOwner} />
         </ListContainer>
