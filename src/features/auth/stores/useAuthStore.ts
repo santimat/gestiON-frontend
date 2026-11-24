@@ -33,4 +33,7 @@ export const useAuthStore = create<UseAuthStore>((set, get) => ({
       set({ isCheckingAuth: false, hasHydrated: true });
     }
   },
+  clearAuthenticatedUser: () => {
+    set({authenticatedUser: null, hasHydrated: false})
+  }
 }));

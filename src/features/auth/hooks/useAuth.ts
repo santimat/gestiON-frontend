@@ -12,6 +12,7 @@ export const useAuth = () => {
     authenticatedUser,
     isCheckingAuth,
     hasHydrated,
+    clearAuthenticatedUser
   } = useAuthStore(
     useShallow(
       ({
@@ -21,6 +22,7 @@ export const useAuth = () => {
         authenticatedUser,
         isCheckingAuth,
         hasHydrated,
+        clearAuthenticatedUser
       }) => ({
         login,
         hydrateUser,
@@ -28,6 +30,7 @@ export const useAuth = () => {
         isCheckingAuth,
         hasHydrated,
         logout,
+        clearAuthenticatedUser
       }),
     ),
   );
@@ -56,5 +59,6 @@ export const useAuth = () => {
     authenticatedUser,
     isCheckingAuth,
     hasHydrated,
+    clearAuthenticatedUser
   };
 };
