@@ -6,15 +6,19 @@ import { useCategory } from "@features/categories/hooks/useCategory";
 import { toastAppError } from "@shared/utils/toastAppError";
 import type { AppError, FieldErrors } from "@shared/types";
 import type { ProductFormValues } from "@features/products";
+import type { Category } from "@features/categories/types";
 
 type NewCategoryInlineProps = {
   setIsNewCategory: React.Dispatch<React.SetStateAction<boolean>>;
   setProductForm: React.Dispatch<React.SetStateAction<ProductFormValues>>;
+  // avisa al select para que la nueva categoría quede visible de inmediato
+  onCreated?: (category: Category) => void;
 };
 
 export const NewCategoryInline = ({
   setProductForm,
   setIsNewCategory,
+  onCreated,
 }: NewCategoryInlineProps) => {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [newCategoryName, setNewCategoryName] = useState("");
@@ -30,6 +34,7 @@ export const NewCategoryInline = ({
         ...prevState,
         categoryId: Number(newCategory.id),
       }));
+      onCreated?.(newCategory);
       setErrors({});
       setIsNewCategory(false);
       toast.success("Categoría creada con éxito");

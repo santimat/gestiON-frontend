@@ -1,7 +1,11 @@
 import { executeApiCall } from "@shared/utils/apiClient";
 import { backendAPI } from "@shared/services/axiosConfig";
 import { parseOrThrow } from "@shared/utils/parseOrThrow";
-import type { CategoryRequest } from "@features/categories/types";
+import { toPageParams } from "@shared/utils/pagination";
+import type {
+  CategoryRequest,
+  CategorySearchParams,
+} from "@features/categories/types";
 import { CategorySchema } from "@features/categories/schemas/CategorySchema";
 
 export const categoryService = {
@@ -23,7 +27,22 @@ export const categoryService = {
     );
   },
 
-  getCategories: async () => {
-    return executeApiCall(() => backendAPI.get("/categories"));
+  // sin parámetros mantiene el comportamiento de siempre (paginado por defecto
+  // del backend) para no alterar la página de Categorías
+  getCategories: async (params?: CategorySearchParams) => {
+    const categoryName = params?.categoryName?.trim();
+    return executeApiCall(() =>
+      backendAPI.get(
+        "/categories",
+        params
+          ? {
+              params: toPageParams({
+                ...params,
+                categoryName: categoryName || undefined,
+              }),
+            }
+          : undefined,
+      ),
+    );
   },
 };

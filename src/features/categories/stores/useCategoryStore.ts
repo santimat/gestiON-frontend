@@ -52,7 +52,7 @@ export const useCategoryStore = create<UseCategoryStore>((set) => ({
     set((prevState) => ({
       categories: prevState.categories.map((category) =>
         category.id === updatedCategory?.id
-          ? { active: updatedCategory?.active, ...category }
+          ? { ...category, active: updatedCategory.active }
           : category,
       ),
     }));

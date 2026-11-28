@@ -15,14 +15,14 @@ import {
   Tooltip,
   Textarea,
 } from "@mantine/core";
-import { useEffect, type ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 
 import type { CurrentCommerce } from "@features/commerces";
 import { useEntityForm } from "@shared/hooks/useEntityForm";
 import { ModalHeader } from "@shared/components/ModalHeader";
 import { parseMultiplier } from "@shared/utils/parseMultiplier";
 import { useProduct } from "@features/products/hooks/useProduct";
-import { useCategory, SelectCategory } from "@features/categories";
+import { SelectCategory } from "@features/categories";
 import { ModalFormActions } from "@shared/components/ModalFormActions";
 import { productMapper } from "@features/products/mappers/productMapper";
 import type { Product, ProductFormValues } from "@features/products/types";
@@ -52,7 +52,6 @@ export const ProductForm = ({
 }: NewProductFormProps) => {
   const isEditing = product !== null;
 
-  const { getCategories } = useCategory();
   const { handleCreateProduct, updateProduct } = useProduct();
 
   const {
@@ -95,10 +94,6 @@ export const ProductForm = ({
   const suggestedPrice = Math.round(
     (productForm.costPrice ?? 0) * profitMultiplier,
   );
-
-  useEffect(() => {
-    getCategories();
-  }, [getCategories]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -145,6 +140,7 @@ export const ProductForm = ({
           <SelectCategory
             setProductForm={setProductForm}
             productForm={productForm}
+            initialCategory={product?.category ?? null}
             error={errors.categoryId}
           />
 
